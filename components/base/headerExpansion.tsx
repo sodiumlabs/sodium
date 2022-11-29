@@ -5,10 +5,12 @@ import { useLoginData } from '../../src/data/login';
 import MButton from '../baseUI/mButton';
 import MText from '../baseUI/mText';
 import { useWindowDimensions } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
   const loginData = useLoginData();
   const windowDimension = useWindowDimensions();
+  const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={styles.bar}>
@@ -45,7 +47,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
 
       <View style={styles.button}>
         <MButton title='Settings' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-        <MButton title='Sign Out' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Sign Out' onPress={() => navigation.push('Login')} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
       </View>
       {/* 
      

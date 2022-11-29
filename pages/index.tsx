@@ -8,6 +8,7 @@ import { HistoryScreen } from '../components/screen/historyScreen';
 import { WalletScreen } from '../components/screen/walletScreen';
 import { fetchLoginData } from '../src/data/login';
 import * as eva from '@eva-design/eva';
+import { LoginScreen } from '../components/screen/loginScreen';
 
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ export default function App() {
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           <Stack.Navigator >{/* screenOptions={{ headerShown: false }} */}
+            <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Wallet" component={WalletScreen} />
             <Stack.Screen name="History" component={HistoryScreen} />
           </Stack.Navigator>

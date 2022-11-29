@@ -1,28 +1,30 @@
-import { View, Button, Text, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { Button, StyleSheet } from "react-native";
 import usePost from "../../src/api/Test";
 import { BaseScreen } from "../base/baseScreen";
+import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 
 
 
-export function WalletScreen(props: { navigation: { push: (arg0: string) => void; setOptions: (arg0: { title: string; }) => void; }; }) {
+export function WalletScreen(props: {}) {
 
   const query = usePost(1);
+  const navigation = useNavigation();
 
   return (
-    <BaseScreen>
-      <View style={styles.header} />
+    <BaseScreen >
       <MText>{query.isLoading ? "loading" : "Home Screen"}</MText>
-      <Button
+      <MButton
         title="Go to History"
         // onPress={() => props.navigation.navigate('Details')}
-        onPress={() => props.navigation.push('History')}
+        onPress={() => navigation.push('History')}
       // onPress={() => props.navigation.popToTop()}
       />
 
       <Button
         title="Update the title"
-        onPress={() => props.navigation.setOptions({ title: 'Updated!' })}
+        onPress={() => navigation.setOptions({ title: 'Updated!' })}
       />
     </BaseScreen>
   );
@@ -35,8 +37,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  header: {
-    height: 80
   }
 });

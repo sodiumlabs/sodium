@@ -1,7 +1,7 @@
-import { Pressable, StyleProp, StyleSheet, TextStyle } from 'react-native';
+import { GestureResponderEvent, Pressable, StyleProp, StyleSheet, TextStyle } from 'react-native';
 import MText from './mText';
 
-export default function MButton(props: { onPress: any; title: string; styles: StyleProp<TextStyle> }) {
+export default function MButton(props: { onPress?: (event: GestureResponderEvent) => void; title: string; styles?: StyleProp<TextStyle> }) {
   const { onPress, title, styles = {} } = props;
   return (
     <Pressable style={[localStyles.button, styles]} onPress={onPress}>

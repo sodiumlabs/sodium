@@ -1,13 +1,13 @@
-import { Button, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
+import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 
 export function HistoryScreen(props: { navigation: { popToTop: () => void; }; }) {
   return (
-    <BaseScreen>
-      <MText style={styles.header} />
+    <BaseScreen >
       <MText>History Screen</MText>
-      <Button
+      <MButton
         title="Go to top"
         onPress={() => props.navigation.popToTop()}
       />
@@ -22,8 +22,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  header: {
-    height: 80
   }
 });
