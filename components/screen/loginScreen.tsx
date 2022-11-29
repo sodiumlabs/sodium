@@ -5,7 +5,7 @@ import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 
-export function LoginScreen(props: { navigation: { popToTop: () => void; }; }) {
+export function LoginScreen() {
   const navigation = useNavigation();
   return (
     <BaseScreen isPreset={false}>

@@ -18,6 +18,7 @@ export default function Footer() {
 
 const styles = StyleSheet.create({
   container: {
+    zIndex: 10,
     bottom: 0,
     backgroundColor: '#999',
     alignItems: 'center',

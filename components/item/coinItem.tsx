@@ -23,8 +23,13 @@ export default function CoinItem(props: TextInputProps) {
           <MText>$3.12</MText>
         </MHStack>
 
-        <MHStack>
-
+        <MHStack style={{ flex: 1 }}>
+          <MHStack style={{ flex: 1 }}>
+            <MText>0.02223</MText>
+            <MText> MATIC</MText>
+            <MText> $1.8</MText>
+          </MHStack>
+          <MText>+$3.12%</MText>
         </MHStack>
       </MVStack>
     </MVStack>

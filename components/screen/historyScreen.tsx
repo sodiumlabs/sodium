@@ -3,7 +3,7 @@ import { BaseScreen } from "../base/baseScreen";
 import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 
-export function HistoryScreen(props: { navigation: { popToTop: () => void; }; }) {
+export function HistoryScreen() {
   return (
     <BaseScreen >
       <MText>History Screen</MText>

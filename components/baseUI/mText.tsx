@@ -1,8 +1,12 @@
-import React from 'react';
-import { StyleProp, Text, TextStyle } from 'react-native';
+import { Text, TextProps } from 'react-native';
 
-export default function MText(props: { children?: React.ReactNode, style?: StyleProp<TextStyle> }) {
+
+export default function MText(props: TextProps & { fontSize?: number }) {
+  const { fontSize, style, ...reset } = props;
+  const font = {
+    fontSize: fontSize || 14
+  }
   return (
-    <Text style={props.style} numberOfLines={1} ellipsizeMode={'tail'}> {props.children} </Text>
+    <Text numberOfLines={1} ellipsizeMode={'tail'} style={[style, font]}  {...reset}> {props.children} </Text>
   )
 }

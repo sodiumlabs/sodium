@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet } from "react-native";
+import { StyleSheet, TextStyle } from 'react-native';
 import usePost from "../../src/api/Test";
 import { BaseScreen } from "../base/baseScreen";
 import MHStack from "../baseUI/mHStack";
@@ -11,7 +11,7 @@ import CoinItem from "../item/coinItem";
 
 
 
-export function WalletScreen(props: {}) {
+export function WalletScreen() {
 
   const query = usePost(1);
   const navigation = useNavigation();
@@ -33,6 +33,7 @@ export function WalletScreen(props: {}) {
         <MInput placeholder="Search coins" placeholderTextColor='#999' />
 
         <MVStack stretchW style={styles.coins}>
+          <MText style={{ marginVertical: 15 }}>Coins</MText>
           <CoinItem />
           <CoinItem />
         </MVStack >

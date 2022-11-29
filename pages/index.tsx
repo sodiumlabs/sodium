@@ -7,8 +7,10 @@ import { useEffect } from 'react';
 import { Platform } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { HistoryScreen } from '../components/screen/historyScreen';
+import { LoginScreen } from '../components/screen/loginScreen';
 import { WalletScreen } from '../components/screen/walletScreen';
 import { fetchLoginData } from '../src/data/login';
+import { CoinScreen } from '../components/screen/coinScreen';
 
 
 const queryClient = new QueryClient();
@@ -26,8 +28,10 @@ export default function App() {
 
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
-          <Stack.Navigator screenOptions={{ headerShown: Platform.OS != 'web' }} >
-            {/* <Stack.Screen name="Login" component={LoginScreen} /> */}
+          {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
+          <Stack.Navigator screenOptions={{ headerShown: false }}  >
+            <Stack.Screen name="Coin" component={CoinScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Wallet" component={WalletScreen} />
             <Stack.Screen name="History" component={HistoryScreen} />
           </Stack.Navigator>
