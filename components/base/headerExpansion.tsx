@@ -1,59 +1,60 @@
 
+import { useNavigation } from '@react-navigation/native';
 import { Dispatch, SetStateAction } from 'react';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
 import { useLoginData } from '../../src/data/login';
 import MButton from '../baseUI/mButton';
+import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
-import { useWindowDimensions } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import MVStack from '../baseUI/mVStack';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
   const loginData = useLoginData();
   const windowDimension = useWindowDimensions();
   const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <View style={styles.bar}>
+    <MVStack style={styles.container}>
+      <MHStack style={styles.bar}>
         <Image style={styles.img} source={require('./../../assets/favicon.png')} />
-        <View style={{ flex: 1 }}>
+        <MVStack style={{ flex: 1 }}>
           <MText >{loginData.blockchainAddress}</MText>
-          <View style={{ flexDirection: 'row' }}>
+          <MHStack >
             <MButton title='Copy' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
             <MButton title='Receive' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
-          </View>
-        </View>
+          </MHStack>
+        </MVStack>
         <Pressable onPress={() => props.setIsFold(true)}>
           <Image style={{ 'width': 12, 'height': 12, marginLeft: 20 }} source={require('./../../assets/favicon.png')} />
         </Pressable>
-      </View>
+      </MHStack>
 
       <Pressable>
-        <View style={styles.email}>
+        <MVStack style={styles.email}>
           <MText>Google</MText>
           <MText>Wuyiming27094@gmail.com</MText>
-        </View>
+        </MVStack>
       </Pressable>
 
       <Pressable>
-        <View style={styles.connected}>
+        <MVStack style={styles.connected}>
           <Image style={{ width: 10, height: 10, marginRight: 10 }} source={require('./../../assets/favicon.png')} />
-          <View style={{ flex: 1 }}>
+          <MVStack style={{ flex: 1 }}>
             <MText>Connected</MText>
             <MText>Ethereum</MText>
-          </View>
+          </MVStack>
           <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
-        </View>
+        </MVStack>
       </Pressable>
 
-      <View style={styles.button}>
+      <MHStack style={styles.button}>
         <MButton title='Settings' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
         <MButton title='Sign Out' onPress={() => navigation.push('Login')} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-      </View>
+      </MHStack>
       {/* 
      
       
       <Image style={styles.img} source={require('./../../assets/favicon.png')} /> */}
-    </View>
+    </MVStack>
   );
 }
 
@@ -67,7 +68,6 @@ const styles = StyleSheet.create({
   },
   bar: {
     flex: 1,
-    flexDirection: 'row',
     width: '100%'
   },
   email: {
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
   },
   connected: {
     flex: 1,
-    flexDirection: 'row',
     padding: 15,
     marginBottom: 15,
     backgroundColor: '#fff',
@@ -88,7 +87,6 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    flexDirection: 'row',
   },
   img: {
     width: 48,

@@ -3,17 +3,18 @@ import { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import HeaderExpansion from './headerExpansion';
 import HeaderFold from './headerFold';
+import MVStack from '../baseUI/mVStack';
 
 
 
 export default function Header() {
-  const [isFold, setIsFold] = useState(false);
+  const [isFold, setIsFold] = useState(true);
   return (
-    <View style={styles.container}>
+    <MVStack style={styles.container}>
       {
         isFold ? <HeaderFold setIsFold={setIsFold} /> : <HeaderExpansion setIsFold={setIsFold} />
       }
-    </View>
+    </MVStack>
   );
 }
 

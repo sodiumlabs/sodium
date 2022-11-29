@@ -1,16 +1,18 @@
 
 import { StyleSheet, Text, View } from 'react-native';
 import MenuButton from '../baseUI/menuButton';
+import MHStack from '../baseUI/mHStack';
+import MVStack from '../baseUI/mVStack';
 
 export default function Footer() {
   return (
-    <View style={styles.container}>
-      <View style={styles.list}>
+    <MVStack style={styles.container}>
+      <MHStack style={styles.list}>
         <MenuButton title='wallet' />
         <MenuButton title='history' />
         <MenuButton title='history1' />
-      </View>
-    </View>
+      </MHStack>
+    </MVStack>
   );
 }
 
@@ -24,9 +26,7 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   list: {
-    // flex: 1,
     width: '100%',
-    flexDirection: 'row',
     justifyContent: 'space-around',
   }
 });

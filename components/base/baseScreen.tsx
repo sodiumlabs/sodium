@@ -1,7 +1,8 @@
 
 import { ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import MVStack from '../baseUI/mVStack';
 import Footer from "./footer";
 import Header from "./header";
 
@@ -14,14 +15,14 @@ export function BaseScreen(props: { children?: ReactNode, isPreset?: boolean }) 
         <>
           <Header />
           <Footer />
-          <View style={styles.header} />
+          <MVStack style={styles.header} />
         </>)
       }
-      <View >
+      <MVStack style={{ width: '100%' }}>
         {
           props.children
         }
-      </View>
+      </MVStack>
     </SafeAreaView>
   );
 }
@@ -29,6 +30,7 @@ export function BaseScreen(props: { children?: ReactNode, isPreset?: boolean }) 
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
