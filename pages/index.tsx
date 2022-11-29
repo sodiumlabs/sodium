@@ -20,7 +20,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <QueryClientProvider client={queryClient}>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* screenOptions={{ headerShown: false }} */}
+        <Stack.Navigator >
           <Stack.Screen name="Wallet" component={WalletScreen} />
           <Stack.Screen name="History" component={HistoryScreen} />
         </Stack.Navigator>

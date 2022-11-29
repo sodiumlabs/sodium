@@ -21,14 +21,14 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 10,
     width: '100%',
-    top: '0px',
+    top: 0,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
-    paddingLeft: '15px',
-    paddingRight: '15px',
-    paddingTop: '33px',
-    paddingBottom: '15px',
+    paddingLeft: 15,
+    paddingRight: 12,
+    paddingTop: 33,
+    paddingBottom: 15,
   }
 });

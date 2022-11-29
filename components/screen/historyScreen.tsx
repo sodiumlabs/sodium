@@ -24,6 +24,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    height: '80px'
+    height: 80
   }
 });

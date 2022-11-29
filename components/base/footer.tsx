@@ -17,7 +17,7 @@ export default function Footer() {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    bottom: '0px',
+    bottom: 0,
     backgroundColor: '#999',
     alignItems: 'center',
     justifyContent: 'center',

@@ -17,7 +17,7 @@ const localStyles = StyleSheet.create({
     borderRadius: 4,
     elevation: 3,
     backgroundColor: 'green',
-    paddingVertical: '6px',
-    paddingHorizontal: '6px'
+    paddingVertical: 6,
+    paddingHorizontal: 6
   }
 })
