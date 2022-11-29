@@ -2,15 +2,15 @@
 
 
 
-import { Image, StyleSheet, TextInputProps, View } from 'react-native';
+import { Image, StyleSheet, TextInputProps } from 'react-native';
+import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import MHStack from '../baseUI/mHStack';
 
 export default function CoinItem(props: TextInputProps) {
   const { style, ...reset } = props;
   return (
-    <MVStack style={styles.container}>
+    <MVStack style={styles.container} stretchW>
       <Image style={{ width: 32, height: 32 }} source={require('./../../assets/favicon.png')} />
 
       <MVStack style={{ flex: 1 }}>
@@ -34,17 +34,7 @@ export default function CoinItem(props: TextInputProps) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    width: '100%',
     paddingHorizontal: 15,
     marginBottom: 12
-  },
-  input: {
-    borderStyle: 'solid',
-    borderColor: '#999',
-    borderWidth: 1,
-    borderRadius: 15,
-    height: 65,
-    width: '100%',
-    paddingHorizontal: 20,
   }
 });

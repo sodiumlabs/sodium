@@ -6,8 +6,8 @@ import MVStack from '../baseUI/mVStack';
 
 export default function Footer() {
   return (
-    <MVStack style={styles.container}>
-      <MHStack style={styles.list}>
+    <MVStack stretchW style={styles.container}>
+      <MHStack stretchW style={styles.list}>
         <MenuButton title='wallet' />
         <MenuButton title='history' />
         <MenuButton title='history1' />
@@ -18,7 +18,6 @@ export default function Footer() {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
     bottom: 0,
     backgroundColor: '#999',
     alignItems: 'center',
@@ -26,7 +25,6 @@ const styles = StyleSheet.create({
     position: 'absolute'
   },
   list: {
-    width: '100%',
     justifyContent: 'space-around',
   }
 });

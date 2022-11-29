@@ -10,7 +10,7 @@ import MVStack from '../baseUI/mVStack';
 export default function Header() {
   const [isFold, setIsFold] = useState(true);
   return (
-    <MVStack style={styles.container}>
+    <MVStack stretchW style={styles.container}>
       {
         isFold ? <HeaderFold setIsFold={setIsFold} /> : <HeaderExpansion setIsFold={setIsFold} />
       }
@@ -21,7 +21,6 @@ export default function Header() {
 const styles = StyleSheet.create({
   container: {
     zIndex: 10,
-    width: '100%',
     top: 0,
     backgroundColor: 'transparent',
     alignItems: 'center',

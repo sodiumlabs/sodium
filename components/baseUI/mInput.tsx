@@ -8,7 +8,7 @@ import MHStack from './mHStack';
 export default function MInput(props: TextInputProps) {
   const { style, ...reset } = props;
   return (
-    <MHStack style={styles.container}>
+    <MHStack stretchW style={styles.container}>
       <TextInput style={[styles.input, style]} {...reset} />
     </MHStack>
   )
@@ -16,7 +16,6 @@ export default function MInput(props: TextInputProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%'
   },
   input: {
     borderStyle: 'solid',

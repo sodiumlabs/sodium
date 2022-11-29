@@ -13,7 +13,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
   const windowDimension = useWindowDimensions();
   const navigation = useNavigation();
   return (
-    <MVStack style={styles.container}>
+    <MVStack stretchW style={styles.container}>
       <MHStack style={styles.bar}>
         <Image style={styles.img} source={require('./../../assets/favicon.png')} />
         <MVStack style={{ flex: 1 }}>
@@ -62,13 +62,11 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
 const styles = StyleSheet.create({
   container: {
     borderRadius: 15,
-    width: '100%',
     padding: 10,
     backgroundColor: 'rgba(200,200,200,1)',
   },
   bar: {
     flex: 1,
-    width: '100%'
   },
   email: {
     flex: 1,

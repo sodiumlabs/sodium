@@ -15,10 +15,10 @@ export function BaseScreen(props: { children?: ReactNode, isPreset?: boolean }) 
         <>
           <Header />
           <Footer />
-          <MVStack style={styles.header} />
+          <MVStack style={styles.emptyTop} />
         </>)
       }
-      <MVStack style={{ width: '100%' }}>
+      <MVStack stretchW>
         {
           props.children
         }
@@ -36,9 +36,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
-  header: {
+  emptyTop: {
     height: 80,
-    width: '100%'
   }
 
 });

@@ -18,7 +18,7 @@ export function WalletScreen(props: {}) {
 
   return (
     <BaseScreen >
-      <MVStack style={styles.container}>
+      <MVStack stretchW style={styles.container} >
 
         <MVStack style={styles.balance}>
           <MText>Balance</MText>
@@ -32,7 +32,7 @@ export function WalletScreen(props: {}) {
 
         <MInput placeholder="Search coins" placeholderTextColor='#999' />
 
-        <MVStack style={styles.coins}>
+        <MVStack stretchW style={styles.coins}>
           <CoinItem />
           <CoinItem />
         </MVStack >
@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     alignItems: 'center',
-    width: '100%',
     paddingHorizontal: 15
   },
   balance: {
@@ -58,6 +57,5 @@ const styles = StyleSheet.create({
   },
   coins: {
     marginVertical: 25,
-    width: '100%'
   }
 });
