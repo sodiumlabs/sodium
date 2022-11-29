@@ -1,4 +1,4 @@
-import { Button, StyleSheet, View } from "react-native";
+import { Button, StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 

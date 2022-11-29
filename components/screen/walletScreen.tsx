@@ -1,4 +1,5 @@
 import { View, Button, Text, StyleSheet } from "react-native";
+import usePost from "../../src/api/Test";
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 
@@ -6,11 +7,12 @@ import MText from "../baseUI/mText";
 
 export function WalletScreen(props: { navigation: { push: (arg0: string) => void; setOptions: (arg0: { title: string; }) => void; }; }) {
 
-  // debugger
+  const query = usePost(1);
+
   return (
     <BaseScreen>
       <View style={styles.header} />
-      <MText>Home Screen</MText>
+      <MText>{query.isLoading ? "loading" : "Home Screen"}</MText>
       <Button
         title="Go to History"
         // onPress={() => props.navigation.navigate('Details')}
