@@ -25,7 +25,6 @@ export function WalletScreen(props: { navigation: { push: (arg0: string) => void
         onPress={() => props.navigation.setOptions({ title: 'Updated!' })}
       />
     </BaseScreen>
-
   );
 }
 
