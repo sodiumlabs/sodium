@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import HeaderExpansion from './headerExpansion';
 import HeaderFold from './headerFold';
 

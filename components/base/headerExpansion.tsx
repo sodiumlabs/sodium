@@ -1,16 +1,18 @@
 
 import { Dispatch, SetStateAction } from 'react';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
+import { useLoginData } from '../../src/data/login';
 import MButton from '../baseUI/mButton';
 import MText from '../baseUI/mText';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
+  const loginData = useLoginData();
   return (
     <View style={styles.container}>
       <View style={styles.bar}>
         <Image style={styles.img} source={require('./../../assets/favicon.png')} />
         <View style={{ width: 'calc(100% - 70px)' }}>
-          <MText  >0xa085ac63AfFe1cB76e5Fb23Aad567cAB8E51e</MText>
+          <MText  >{loginData.blockchainAddress}</MText>
           <View style={{ flexDirection: 'row' }}>
             <MButton title='Copy' onPress={undefined} styles={{ 'margin': '5px' }}></MButton>
             <MButton title='Receive' onPress={undefined} styles={{ 'margin': '5px' }}></MButton>
