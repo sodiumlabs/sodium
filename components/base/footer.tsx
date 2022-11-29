@@ -1,14 +1,14 @@
 
 import { StyleSheet, Text, View } from 'react-native';
-import MenuButton from '../button/menuButton';
+import MenuButton from '../baseUI/menuButton';
 
 export default function Footer() {
   return (
     <View style={styles.container}>
       <View style={styles.list}>
-        <MenuButton />
-        <MenuButton />
-        <MenuButton />
+        <MenuButton title='wallet' />
+        <MenuButton title='history' />
+        <MenuButton title='history1' />
       </View>
     </View>
   );
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     bottom: '0px',
-    backgroundColor: '#fff',
+    backgroundColor: '#999',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute'

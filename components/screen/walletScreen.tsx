@@ -1,5 +1,6 @@
 import { View, Button, Text, StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
+import MText from "../baseUI/mText";
 
 
 
@@ -8,7 +9,8 @@ export function WalletScreen(props: { navigation: { push: (arg0: string) => void
   // debugger
   return (
     <BaseScreen>
-      <Text>Home Screen</Text>
+      <View style={styles.header} />
+      <MText>Home Screen</MText>
       <Button
         title="Go to History"
         // onPress={() => props.navigation.navigate('Details')}
@@ -33,4 +35,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header: {
+    height: '80px'
+  }
 });

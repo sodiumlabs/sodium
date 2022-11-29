@@ -6,8 +6,6 @@ import { HistoryScreen } from '../components/screen/historyScreen';
 
 const Stack = createNativeStackNavigator();
 
-
-
 export default function App() {
   return (
     <NavigationContainer>
