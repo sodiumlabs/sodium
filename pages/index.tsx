@@ -36,8 +36,8 @@ export default function App() {
             {
               loginData.isLogin ? (
                 <>
-                  <Stack.Screen name="Wallet" component={WalletScreen} />
                   <Stack.Screen name="History" component={HistoryScreen} />
+                  <Stack.Screen name="Wallet" component={WalletScreen} />
                   <Stack.Screen name="Coin" component={CoinScreen} />
                   <Stack.Screen name="Send" component={SendScreen} />
                 </>

@@ -7,14 +7,17 @@ import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import TranscationItem from "../item/transcationItem";
+import { TranscationModal } from "../modal/transcationModal";
 
 export function CoinScreen() {
+  const [tsModalVisible, setTsModalVisible] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const navigation = useNavigation();
   return (
     <BaseScreen isHeaderBack>
-      <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
+      <MVStack stretchW style={{ alignItems: 'center', marginVertical: 40, paddingHorizontal: 15 }}>
         <Image style={{ width: 64, height: 64 }} source={require('./../../assets/favicon.png')} />
         <MText style={{ marginVertical: 6 }}>USDC</MText>
         <MHStack>
@@ -68,7 +71,16 @@ export function CoinScreen() {
           </MHStack>
         </MVStack>
 
+
+
+        <MVStack stretchW>
+          <MText>Last Week</MText>
+          <TranscationItem onPress={() => setTsModalVisible(true)} />
+        </MVStack>
+
       </MVStack>
+
+      <TranscationModal visible={tsModalVisible} setVisible={setTsModalVisible} />
     </BaseScreen>
   );
 }

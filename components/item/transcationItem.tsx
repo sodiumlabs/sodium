@@ -8,11 +8,11 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { useNavigation } from '@react-navigation/native';
 
-export default function TranscationItem(props: TextInputProps) {
-  const { style, ...reset } = props;
+export default function TranscationItem(props: { onPress: () => void }) {
+  const { onPress } = props;
   const navigation = useNavigation();
   return (
-    <Pressable onPress={() => navigation.navigate('Coin')}>
+    <Pressable onPress={() => onPress()}>
       <MVStack style={styles.container} stretchW>
 
         <MHStack style={{ flex: 1 }}>

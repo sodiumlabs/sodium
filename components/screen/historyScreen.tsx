@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import TranscationItem from "../item/transcationItem";
+import { TranscationModal } from "../modal/transcationModal";
 
 export function HistoryScreen() {
+  const [tsModalVisible, setTsModalVisible] = useState(false);
+
   return (
     <BaseScreen >
       <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
@@ -13,10 +17,11 @@ export function HistoryScreen() {
 
         <MVStack stretchW>
           <MText>Last Week</MText>
-          <TranscationItem />
-          <TranscationItem />
+          <TranscationItem onPress={() => setTsModalVisible(true)} />
         </MVStack>
       </MVStack>
+
+      <TranscationModal visible={tsModalVisible} setVisible={setTsModalVisible} />
     </BaseScreen>
   );
 }
