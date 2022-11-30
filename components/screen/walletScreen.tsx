@@ -26,7 +26,7 @@ export function WalletScreen() {
         </MVStack>
 
         <MHStack style={styles.operate}>
-          <WalletButton title='Send' />
+          <WalletButton title='Send' onPress={() => navigation.navigate('Send', {})} />
           <WalletButton title='Deposit' />
         </MHStack>
 
@@ -54,7 +54,6 @@ const styles = StyleSheet.create({
     marginBottom: 50
   },
   operate: {
-    // flexDirection: 'row'
   },
   coins: {
     marginVertical: 25,

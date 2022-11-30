@@ -7,19 +7,19 @@ import Footer from "./footer";
 import Header from "./header";
 
 
-export function BaseScreen(props: { children?: ReactNode, isPreset?: boolean }) {
-  const isPreset = props.isPreset === undefined ? true : props.isPreset;
+export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: boolean, isHeaderBack?: boolean }) {
+  const hasHeaderFooter = props.hasHeaderFooter === undefined ? true : props.hasHeaderFooter;
   return (
     <SafeAreaView style={styles.container}>
-      {isPreset && (
+      {hasHeaderFooter && (
         <>
-          <Header />
+          <Header isBack={props.isHeaderBack} />
           <Footer />
         </>)
       }
-      <ScrollView style={{ backgroundColor: 'pink' }}>
+      <ScrollView style={{ backgroundColor: 'pink', width: '100%', height: '100%' }}>
 
-        <MVStack stretchW style={{ marginTop: isPreset ? 80 : 0, marginBottom: isPreset ? 60 : 0 }}>
+        <MVStack stretchW style={{ marginTop: hasHeaderFooter ? 80 : 0, marginBottom: hasHeaderFooter ? 60 : 0 }}>
           {
             props.children
           }
@@ -34,7 +34,7 @@ export function BaseScreen(props: { children?: ReactNode, isPreset?: boolean }) 
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    // height: '100%',
+    height: '100%',
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'flex-start',

@@ -48,7 +48,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
 
       <MHStack style={styles.button}>
         <MButton title='Settings' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-        <MButton title='Sign Out' onPress={() => navigation.push('Login')} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Sign Out' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
       </MHStack>
       {/* 
      

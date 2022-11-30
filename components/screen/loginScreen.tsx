@@ -8,12 +8,12 @@ import MVStack from '../baseUI/mVStack';
 export function LoginScreen() {
   const navigation = useNavigation();
   return (
-    <BaseScreen isPreset={false}>
+    <BaseScreen hasHeaderFooter={false}>
       <MText>Login Screen</MText>
       <MVStack>
         <MButton
-          title="Login"
-          onPress={() => navigation.push('Wallet')} />
+          title="Login google"
+          onPress={() => navigation.navigate('Wallet')} />
       </MVStack>
     </BaseScreen>
   );

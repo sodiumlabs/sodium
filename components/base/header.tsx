@@ -8,13 +8,13 @@ import HeaderFold from './headerFold';
 
 
 
-export default function Header() {
+export default function Header(props: { isBack?: boolean }) {
   const [isFold, setIsFold] = useState(true);
   const insets = useSafeAreaInsets();
   return (
     <MVStack stretchW style={[styles.container, { top: insets.top }]}>
       {
-        isFold ? <HeaderFold setIsFold={setIsFold} /> : <HeaderExpansion setIsFold={setIsFold} />
+        isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isBack} /> : <HeaderExpansion setIsFold={setIsFold} />
       }
     </MVStack>
   );

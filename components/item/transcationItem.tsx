@@ -8,33 +8,30 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { useNavigation } from '@react-navigation/native';
 
-export default function CoinItem(props: TextInputProps) {
+export default function TranscationItem(props: TextInputProps) {
   const { style, ...reset } = props;
   const navigation = useNavigation();
   return (
     <Pressable onPress={() => navigation.navigate('Coin')}>
       <MVStack style={styles.container} stretchW>
-        <Image style={{ width: 32, height: 32 }} source={require('./../../assets/favicon.png')} />
 
-        <MVStack style={{ flex: 1 }}>
-          <MHStack >
-            <MHStack style={{ flex: 1 }}>
-              <MText>USDC</MText>
-              <Image style={{ width: 12, height: 12 }} source={require('./../../assets/favicon.png')} />
-              <MText>POLYGON</MText>
-            </MHStack>
-            <MText>$3.12</MText>
-          </MHStack>
-
+        <MHStack style={{ flex: 1 }}>
           <MHStack style={{ flex: 1 }}>
-            <MHStack style={{ flex: 1 }}>
-              <MText>0.02223</MText>
-              <MText> MATIC</MText>
-              <MText> $1.8</MText>
-            </MHStack>
-            <MText>+$3.12%</MText>
+            <MText>Received</MText>
+            <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
+            <MText> $1.8</MText>
           </MHStack>
-        </MVStack>
+          <MText>November 24, 2022</MText>
+        </MHStack>
+
+        <MHStack style={{ flex: 1 }}>
+          <MHStack style={{ flex: 1 }}>
+            <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
+            <MText>USDC</MText>
+          </MHStack>
+          <MText>+ 22</MText>
+        </MHStack>
+
       </MVStack>
     </Pressable>
   )

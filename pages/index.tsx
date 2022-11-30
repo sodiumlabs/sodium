@@ -9,8 +9,9 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { HistoryScreen } from '../components/screen/historyScreen';
 import { LoginScreen } from '../components/screen/loginScreen';
 import { WalletScreen } from '../components/screen/walletScreen';
-import { fetchLoginData } from '../src/data/login';
+import { fetchLoginData, useLoginData } from '../src/data/login';
 import { CoinScreen } from '../components/screen/coinScreen';
+import { SendScreen } from '../components/screen/sendScreen';
 
 
 const queryClient = new QueryClient();
@@ -23,6 +24,8 @@ export default function App() {
     console.log(Platform.OS);
   }, []);
 
+  const loginData = useLoginData();
+
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
 
@@ -30,10 +33,21 @@ export default function App() {
         <QueryClientProvider client={queryClient}>
           {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
           <Stack.Navigator screenOptions={{ headerShown: false }}  >
-            <Stack.Screen name="Coin" component={CoinScreen} />
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Wallet" component={WalletScreen} />
-            <Stack.Screen name="History" component={HistoryScreen} />
+            {
+              loginData.isLogin ? (
+                <>
+                  <Stack.Screen name="History" component={HistoryScreen} />
+                  <Stack.Screen name="Coin" component={CoinScreen} />
+                  <Stack.Screen name="Wallet" component={WalletScreen} />
+                  <Stack.Screen name="Send" component={SendScreen} />
+                </>
+              ) : (
+                <>
+                  <Stack.Screen name="Login" component={LoginScreen} />
+                </>
+              )
+            }
+
           </Stack.Navigator>
         </QueryClientProvider>
       </NavigationContainer>

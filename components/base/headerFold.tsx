@@ -3,25 +3,37 @@ import { Dispatch, SetStateAction } from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useLoginData } from '../../src/data/login';
 import MText from '../baseUI/mText';
+import MHStack from '../baseUI/mHStack';
+import { useNavigation } from '@react-navigation/native';
 
-export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
+export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<boolean>>, isBack?: boolean }) {
   const loginData = useLoginData();
-
+  const navigation = useNavigation();
   return (
-    <Pressable onPress={() => props.setIsFold(false)} style={styles.container}>
-      <Image style={styles.img} source={require('./../../assets/favicon.png')} />
-      <MText style={{ flex: 1 }} >{loginData.blockchainAddress}</MText>
-      <Image style={styles.expand} source={require('./../../assets/favicon.png')} />
-    </Pressable>
+    <MHStack stretchW style={styles.container}>
+      {
+        props.isBack && (
+          <Pressable style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>
+            <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
+          </Pressable>
+        )
+      }
+
+
+      <Pressable style={{ flexDirection: 'row', flex: 1 }} onPress={() => props.setIsFold(false)} >
+        <Image style={styles.img} source={require('./../../assets/favicon.png')} />
+        <MText style={{ flex: 1 }} >{loginData.blockchainAddress}</MText>
+        <Image style={styles.expand} source={require('./../../assets/favicon.png')} />
+      </Pressable>
+    </MHStack>
+
   );
 }
 
 
 const styles = StyleSheet.create({
   container: {
-    // cursor: 'pointer',
     borderRadius: 15,
-    flexDirection: 'row',
     width: '100%',
     padding: 10,
     backgroundColor: 'rgba(200,200,200,1)',

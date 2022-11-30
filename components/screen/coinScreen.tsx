@@ -13,8 +13,8 @@ export function CoinScreen() {
 
   const navigation = useNavigation();
   return (
-    <BaseScreen >
-      <MVStack style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
+    <BaseScreen isHeaderBack>
+      <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
         <Image style={{ width: 64, height: 64 }} source={require('./../../assets/favicon.png')} />
         <MText style={{ marginVertical: 6 }}>USDC</MText>
         <MHStack>

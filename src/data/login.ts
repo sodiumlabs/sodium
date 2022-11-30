@@ -8,8 +8,8 @@ export const loginDataAtom = atom<ILoginData>({});
 export const fetchLoginData = async () => {
 
   // fetch api
-  await waitTime(2000);
-  updateLoginData({ blockchainAddress: "0xa085ac63AfFe1cB76e5Fb23Aad567cAB8E51e" });
+  await waitTime(200);
+  updateLoginData({ blockchainAddress: "0xa085ac63AfFe1cB76e5Fb23Aad567cAB8E51e", isLogin: true });
 }
 
 export const useLoginData = (): ILoginData => {
