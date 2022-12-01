@@ -17,7 +17,11 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
   const [visible, setVisible] = useState(true);
 
   return (
-    <MAnimView hideFinishCb={() => props.setIsFold(true)} visible={visible}>
+    <MAnimView hideFinishCb={() => props.setIsFold(true)} visible={visible} style={{
+      borderRadius: 15,
+      padding: 10,
+      backgroundColor: 'rgba(200,200,200,1)',
+    }}>
       <MHStack style={styles.bar} >
         <Image style={styles.img} source={require('./../../assets/favicon.png')} />
         <MVStack style={{ flex: 1 }}>

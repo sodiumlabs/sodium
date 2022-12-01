@@ -35,7 +35,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, hideModal: () 
           </Animated.View>
         </TouchableWithoutFeedback>
 
-        <MVStack stretchW stretchH style={{ maxWidth: 600, marginTop: 300, backgroundColor: '#888', padding: 15, alignItems: 'center', borderTopLeftRadius: 15, borderTopRightRadius: 15 }}>
+        <MVStack stretchW stretchH style={{ maxWidth: 600, marginTop: 100, backgroundColor: '#888', padding: 15, alignItems: 'center', borderTopLeftRadius: 15, borderTopRightRadius: 15, flex: 1 }}>
           {
             props.children
           }

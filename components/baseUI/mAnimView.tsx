@@ -11,7 +11,7 @@ export default function MAnimView(props: ViewProps & { hideFinishCb?: () => void
     Animated.timing(heightAnim, {
       easing: Easing.quad,
       toValue: viewHeight,
-      duration: 300,
+      duration: 200,
       useNativeDriver: false
     }).start();
   }
@@ -28,7 +28,7 @@ export default function MAnimView(props: ViewProps & { hideFinishCb?: () => void
     Animated.timing(heightAnim, {
       easing: Easing.quad,
       toValue: 0,
-      duration: 300,
+      duration: 200,
       useNativeDriver: false
     }).start(() => {
       props.hideFinishCb && props.hideFinishCb();
@@ -43,7 +43,7 @@ export default function MAnimView(props: ViewProps & { hideFinishCb?: () => void
 
   return (
     <Animated.View
-      style={[styles.container, { width: '100%', overflow: 'hidden', height: isAutoMeasure ? 'auto' : heightAnim, opacity: isAutoMeasure ? 0 : 1 }]}
+      style={[styles.container, { width: '100%', overflow: 'hidden', height: isAutoMeasure ? 'auto' : heightAnim, opacity: isAutoMeasure ? 0 : 1 }, props.style]}
       onLayout={(event) => onLayout(event)}>
       {
         props.children
@@ -58,8 +58,5 @@ export default function MAnimView(props: ViewProps & { hideFinishCb?: () => void
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'column',
-    borderRadius: 15,
-    padding: 10,
-    backgroundColor: 'rgba(200,200,200,1)',
   }
 });

@@ -22,7 +22,7 @@ export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<b
             </Pressable>
           )
         }
-        <Pressable style={{ flexDirection: 'row', flex: 1 }} onPress={() => setVisible(false)} >
+        <Pressable style={{ flexDirection: 'row', flex: 1, paddingVertical: 10 }} onPress={() => setVisible(false)} >
           <Image style={styles.img} source={require('./../../assets/favicon.png')} />
           <MText style={{ flex: 1 }} >{loginData.blockchainAddress}</MText>
           <Image style={styles.expand} source={require('./../../assets/favicon.png')} />
@@ -37,9 +37,10 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 15,
     width: '100%',
-    padding: 10,
+    paddingHorizontal: 10,
     backgroundColor: 'rgba(200,200,200,1)',
     alignItems: 'center',
+    justifyContent: 'center'
   },
   img: {
     width: 24,
