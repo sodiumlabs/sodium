@@ -5,7 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
-import { showTranscationQueueModal } from './screenInit';
+import { showSignModal } from './screenInit';
 
 export default function Footer() {
   const navigation = useNavigation();
@@ -14,8 +14,9 @@ export default function Footer() {
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
       <MHStack stretchW style={styles.list}>
         <MenuButton title='wallet' onPress={() => navigation.navigate('Wallet')} />
-        <MenuButton title='history' onPress={() => navigation.navigate('History')} />
+        {/* <MenuButton title='history' onPress={() => navigation.navigate('History')} /> */}
         {/* <MenuButton title='history' onPress={() => showTranscationQueueModal(true)} /> */}
+        <MenuButton title='history' onPress={() => showSignModal(true)} />
       </MHStack>
     </MVStack>
   );

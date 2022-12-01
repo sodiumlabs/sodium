@@ -8,7 +8,7 @@ import { Divider } from '@ui-kitten/components';
 import MButton from '../baseUI/mButton';
 import { BaseModal } from '../base/baseModal';
 
-export const TranscationModal = (props: { visible?: boolean, hideModal: () => void }) => {
+export const TranscationDetailModal = (props: { visible?: boolean, hideModal: () => void }) => {
   const { visible, hideModal } = props;
   // const { width, height } = Dimensions.get('window');
 

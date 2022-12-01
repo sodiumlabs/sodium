@@ -2,33 +2,40 @@ import { atom } from "nanostores";
 import { useState } from "react";
 import { IModalParam } from "../../src/define";
 import { ComModal } from "../modal/comModal";
-import { TranscationModal } from "../modal/transcationModal";
+import { TranscationDetailModal } from "../modal/transcationDetailModal";
 import { useStore } from '@nanostores/react';
 import { TranscationQueueModal } from "../modal/transcationQueneModal";
+import { SignModal } from '../modal/signModal';
 
-const transcationModalAtom = atom<IModalParam>({ visible: false });
+const transcationDetailModalAtom = atom<IModalParam>({ visible: false });
 const transcationQueueModalAtom = atom<IModalParam>({ visible: false });
 const comModalAtom = atom<IModalParam>({ visible: false });
+const signModalAtom = atom<IModalParam>({ visible: false });
 
 export const showComModal = (visible: boolean) => {
   comModalAtom.set({ ...comModalAtom.get(), visible: visible });
 }
 
 export const showTranscationModal = (visible: boolean) => {
-  transcationModalAtom.set({ ...transcationModalAtom.get(), visible: visible });
+  transcationDetailModalAtom.set({ ...transcationDetailModalAtom.get(), visible: visible });
 }
 export const showTranscationQueueModal = (visible: boolean) => {
   transcationQueueModalAtom.set({ ...transcationQueueModalAtom.get(), visible: visible });
 }
+export const showSignModal = (visible: boolean) => {
+  signModalAtom.set({ ...signModalAtom.get(), visible: visible });
+}
 
 export default function ScreenInit() {
-  const transcationModalParam = useStore(transcationModalAtom);
+  const transcationModalDetailParam = useStore(transcationDetailModalAtom);
   const transcationModalQueueParam = useStore(transcationQueueModalAtom);
   const comModalParam = useStore(comModalAtom);
+  const signModalParam = useStore(signModalAtom);
   return (
     <>
-      <TranscationModal visible={transcationModalParam.visible} hideModal={() => showTranscationModal(false)} />
+      <TranscationDetailModal visible={transcationModalDetailParam.visible} hideModal={() => showTranscationModal(false)} />
       <TranscationQueueModal visible={transcationModalQueueParam.visible} hideModal={() => showTranscationQueueModal(false)} />
+      <SignModal visible={signModalParam.visible} hideModal={() => showSignModal(false)} />
       <ComModal visible={comModalParam.visible} hideModal={() => showComModal(false)} />
     </>
   );
