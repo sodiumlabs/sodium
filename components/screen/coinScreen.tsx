@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Divider, Drawer, DrawerGroup, DrawerItem } from "@ui-kitten/components";
+import { Divider } from "@ui-kitten/components";
 import { useState } from "react";
 import { Image, StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
@@ -8,10 +8,9 @@ import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import TranscationItem from "../item/transcationItem";
-import { TranscationModal } from "../modal/transcationModal";
+import { showTranscationModal } from '../base/screenInit';
 
 export function CoinScreen() {
-  const [tsModalVisible, setTsModalVisible] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(null);
 
   const navigation = useNavigation();
@@ -75,12 +74,10 @@ export function CoinScreen() {
 
         <MVStack stretchW>
           <MText>Last Week</MText>
-          <TranscationItem onPress={() => setTsModalVisible(true)} />
+          <TranscationItem onPress={() => showTranscationModal(true)} />
         </MVStack>
 
       </MVStack>
-
-      <TranscationModal visible={tsModalVisible} setVisible={setTsModalVisible} />
     </BaseScreen>
   );
 }

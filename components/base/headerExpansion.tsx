@@ -1,5 +1,5 @@
 
-import { createRef, Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import { Image, Pressable, StyleSheet } from 'react-native';
 import { useLoginData } from '../../src/data/login';
 import MAnimView from '../baseUI/mAnimView';

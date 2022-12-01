@@ -1,10 +1,11 @@
 
-import { ReactNode } from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { ReactNode } from 'react';
+import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MVStack from '../baseUI/mVStack';
 import Footer from "./footer";
 import Header from "./header";
+import ScreenInit from './screenInit';
 
 
 export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: boolean, isHeaderBack?: boolean }) {
@@ -28,6 +29,7 @@ export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: bool
           </MVStack>
         </ScrollView>
       </MVStack>
+      <ScreenInit />
     </SafeAreaView>
   );
 }
