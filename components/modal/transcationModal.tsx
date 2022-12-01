@@ -9,7 +9,7 @@ import MButton from '../baseUI/mButton';
 
 export const TranscationModal = (props: { visible: boolean, setVisible: Dispatch<SetStateAction<boolean>> }) => {
   const { visible, setVisible } = props;
-  const { width, height } = Dimensions.get('window');
+  // const { width, height } = Dimensions.get('window');
 
   return (
     <Modal
@@ -22,7 +22,7 @@ export const TranscationModal = (props: { visible: boolean, setVisible: Dispatch
       <MVStack stretchW stretchH style={{ justifyContent: 'center', alignItems: 'center' }} >
 
         <TouchableWithoutFeedback onPress={() => setVisible(false)}>
-          <View style={{ position: 'absolute', width, height, top: 0, left: 0, backgroundColor: 'rgba(0,0,0,.1)' }} />
+          <View style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, backgroundColor: 'rgba(0,0,0,.1)' }} />
         </TouchableWithoutFeedback>
 
         <MVStack stretchW stretchH style={{ maxWidth: 600, marginTop: 200, backgroundColor: '#888', padding: 15, alignItems: 'center', borderTopLeftRadius: 15, borderTopRightRadius: 15 }}>

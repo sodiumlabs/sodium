@@ -11,21 +11,23 @@ export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: bool
   const hasHeaderFooter = props.hasHeaderFooter === undefined ? true : props.hasHeaderFooter;
   return (
     <SafeAreaView style={styles.container}>
-      {hasHeaderFooter && (
-        <>
-          <Header isBack={props.isHeaderBack} />
-          <Footer />
-        </>)
-      }
-      <ScrollView style={{ backgroundColor: 'pink', width: '100%', height: '100%' }}>
 
-        <MVStack stretchW style={{ marginTop: hasHeaderFooter ? 80 : 0, marginBottom: hasHeaderFooter ? 60 : 0 }}>
-          {
-            props.children
-          }
-        </MVStack>
-      </ScrollView>
+      <MVStack stretchW style={styles.content}>
+        {hasHeaderFooter && (
+          <>
+            <Header isBack={props.isHeaderBack} />
+            <Footer />
+          </>)
+        }
+        <ScrollView style={{ width: '100%', height: '100%' }}>
 
+          <MVStack stretchW style={{ marginTop: hasHeaderFooter ? 80 : 0, marginBottom: hasHeaderFooter ? 60 : 0 }}>
+            {
+              props.children
+            }
+          </MVStack>
+        </ScrollView>
+      </MVStack>
     </SafeAreaView>
   );
 }
@@ -35,10 +37,16 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#fff',
+    backgroundColor: '#777',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    // position: 'relative'
+  },
+  content: {
+    width: '100%',
+    maxWidth: 700,
+    height: '100%',
+    alignSelf: 'center',
+    backgroundColor: '#777',
   }
 
 });

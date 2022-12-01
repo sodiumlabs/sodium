@@ -8,7 +8,6 @@ import { TranscationModal } from "../modal/transcationModal";
 
 export function HistoryScreen() {
   const [tsModalVisible, setTsModalVisible] = useState(false);
-
   return (
     <BaseScreen >
       <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
