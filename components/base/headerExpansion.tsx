@@ -1,5 +1,5 @@
 
-import { createRef, Dispatch, SetStateAction } from 'react';
+import { createRef, Dispatch, SetStateAction, useState } from 'react';
 import { Image, Pressable, StyleSheet } from 'react-native';
 import { useLoginData } from '../../src/data/login';
 import MAnimView from '../baseUI/mAnimView';
@@ -13,10 +13,11 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
   // const windowDimension = useWindowDimensions();
   // const navigation = useNavigation();
   // const ref = useRef<Function>(null);
-  const hideCbRef = createRef<Function>();
+
+  const [visible, setVisible] = useState(true);
 
   return (
-    <MAnimView hideCb={() => props.setIsFold(true)} cbRef={hideCbRef} >
+    <MAnimView hideFinishCb={() => props.setIsFold(true)} visible={visible}>
       <MHStack style={styles.bar} >
         <Image style={styles.img} source={require('./../../assets/favicon.png')} />
         <MVStack style={{ flex: 1 }}>
@@ -27,7 +28,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
           </MHStack>
         </MVStack>
         <Pressable onPress={() => {
-          hideCbRef.current && hideCbRef.current();
+          setVisible(false);
         }}>
           <Image style={{ 'width': 12, 'height': 12, marginLeft: 20 }} source={require('./../../assets/favicon.png')} />
         </Pressable>

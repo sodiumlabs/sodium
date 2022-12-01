@@ -1,9 +1,9 @@
 
 
-import { MutableRefObject, RefObject, useRef, useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Animated, Easing, LayoutChangeEvent, StyleSheet, ViewProps } from 'react-native';
 
-export default function MAnimView(props: ViewProps & { hideCb?: () => void, cbRef: RefObject<Function> }) {
+export default function MAnimView(props: ViewProps & { hideFinishCb?: () => void, visible: boolean }) {
   const [isAutoMeasure, setIsAutoMeasure] = useState(true);
   const heightAnim = useRef(new Animated.Value(0)).current;
 
@@ -31,13 +31,15 @@ export default function MAnimView(props: ViewProps & { hideCb?: () => void, cbRe
       duration: 300,
       useNativeDriver: false
     }).start(() => {
-      props.hideCb && props.hideCb();
+      props.hideFinishCb && props.hideFinishCb();
     });
   }
 
   useEffect(() => {
-    props.cbRef['current'] = hide;
-  }, []);
+    if (!props.visible) {
+      hide();
+    }
+  }, [props.visible]);
 
   return (
     <Animated.View

@@ -1,5 +1,5 @@
 
-import { createRef, Dispatch, SetStateAction } from 'react';
+import { createRef, Dispatch, SetStateAction, useState } from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useLoginData } from '../../src/data/login';
 import MText from '../baseUI/mText';
@@ -10,10 +10,10 @@ import MAnimView from '../baseUI/mAnimView';
 export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<boolean>>, isBack?: boolean }) {
   const loginData = useLoginData();
   const navigation = useNavigation();
-  const hideCbRef = createRef<Function>();
+  const [visible, setVisible] = useState(true);
 
   return (
-    <MAnimView hideCb={() => props.setIsFold(false)} cbRef={hideCbRef} >
+    <MAnimView hideFinishCb={() => props.setIsFold(false)} visible={visible} >
       <MHStack stretchW style={styles.container}>
         {
           props.isBack && (
@@ -22,7 +22,7 @@ export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<b
             </Pressable>
           )
         }
-        <Pressable style={{ flexDirection: 'row', flex: 1 }} onPress={() => hideCbRef.current && hideCbRef.current()} >
+        <Pressable style={{ flexDirection: 'row', flex: 1 }} onPress={() => setVisible(false)} >
           <Image style={styles.img} source={require('./../../assets/favicon.png')} />
           <MText style={{ flex: 1 }} >{loginData.blockchainAddress}</MText>
           <Image style={styles.expand} source={require('./../../assets/favicon.png')} />
