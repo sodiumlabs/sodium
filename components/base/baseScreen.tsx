@@ -11,14 +11,14 @@ export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: bool
   const hasHeaderFooter = props.hasHeaderFooter === undefined ? true : props.hasHeaderFooter;
   return (
     <SafeAreaView style={styles.container}>
-
+      {hasHeaderFooter && (
+        <>
+          <Header isBack={props.isHeaderBack} />
+          <Footer />
+        </>)
+      }
       <MVStack stretchW style={styles.content}>
-        {hasHeaderFooter && (
-          <>
-            <Header isBack={props.isHeaderBack} />
-            <Footer />
-          </>)
-        }
+
         <ScrollView style={{ width: '100%', height: '100%' }}>
 
           <MVStack stretchW style={{ marginTop: hasHeaderFooter ? 80 : 0, marginBottom: hasHeaderFooter ? 60 : 0 }}>
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
-    maxWidth: 700,
+    maxWidth: 720,
     height: '100%',
     alignSelf: 'center',
     backgroundColor: '#777',

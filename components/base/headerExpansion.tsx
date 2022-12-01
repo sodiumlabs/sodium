@@ -1,8 +1,8 @@
 
-import { useNavigation } from '@react-navigation/native';
-import { Dispatch, SetStateAction } from 'react';
-import { Image, Pressable, StyleSheet, useWindowDimensions } from 'react-native';
+import { createRef, Dispatch, SetStateAction } from 'react';
+import { Image, Pressable, StyleSheet } from 'react-native';
 import { useLoginData } from '../../src/data/login';
+import MAnimView from '../baseUI/mAnimView';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
@@ -10,11 +10,14 @@ import MVStack from '../baseUI/mVStack';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
   const loginData = useLoginData();
-  const windowDimension = useWindowDimensions();
-  const navigation = useNavigation();
+  // const windowDimension = useWindowDimensions();
+  // const navigation = useNavigation();
+  // const ref = useRef<Function>(null);
+  const hideCbRef = createRef<Function>();
+
   return (
-    <MVStack stretchW style={styles.container}>
-      <MHStack style={styles.bar}>
+    <MAnimView hideCb={() => props.setIsFold(true)} cbRef={hideCbRef} >
+      <MHStack style={styles.bar} >
         <Image style={styles.img} source={require('./../../assets/favicon.png')} />
         <MVStack style={{ flex: 1 }}>
           <MText >{loginData.blockchainAddress}</MText>
@@ -23,7 +26,9 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
             <MButton title='Receive' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
           </MHStack>
         </MVStack>
-        <Pressable onPress={() => props.setIsFold(true)}>
+        <Pressable onPress={() => {
+          hideCbRef.current && hideCbRef.current();
+        }}>
           <Image style={{ 'width': 12, 'height': 12, marginLeft: 20 }} source={require('./../../assets/favicon.png')} />
         </Pressable>
       </MHStack>
@@ -50,17 +55,16 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
         <MButton title='Settings' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
         <MButton title='Sign Out' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
       </MHStack>
-      {/* 
-     
-      
-      <Image style={styles.img} source={require('./../../assets/favicon.png')} /> */}
-    </MVStack>
+
+    </MAnimView>
+
   );
 }
 
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'column',
     borderRadius: 15,
     padding: 10,
     backgroundColor: 'rgba(200,200,200,1)',

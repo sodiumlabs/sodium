@@ -16,7 +16,7 @@ export const TranscationModal = (props: { visible: boolean, setVisible: Dispatch
       transparent={true}
       animationType='slide'
       visible={visible}
-      presentationStyle='pageSheet'
+    // presentationStyle='pageSheet'
     >
 
       <MVStack stretchW stretchH style={{ justifyContent: 'center', alignItems: 'center' }} >

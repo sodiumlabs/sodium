@@ -1,32 +1,34 @@
 
-import { Dispatch, SetStateAction } from 'react';
+import { createRef, Dispatch, SetStateAction } from 'react';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { useLoginData } from '../../src/data/login';
 import MText from '../baseUI/mText';
 import MHStack from '../baseUI/mHStack';
 import { useNavigation } from '@react-navigation/native';
+import MAnimView from '../baseUI/mAnimView';
 
 export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<boolean>>, isBack?: boolean }) {
   const loginData = useLoginData();
   const navigation = useNavigation();
+  const hideCbRef = createRef<Function>();
+
   return (
-    <MHStack stretchW style={styles.container}>
-      {
-        props.isBack && (
-          <Pressable style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>
-            <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
-          </Pressable>
-        )
-      }
-
-
-      <Pressable style={{ flexDirection: 'row', flex: 1 }} onPress={() => props.setIsFold(false)} >
-        <Image style={styles.img} source={require('./../../assets/favicon.png')} />
-        <MText style={{ flex: 1 }} >{loginData.blockchainAddress}</MText>
-        <Image style={styles.expand} source={require('./../../assets/favicon.png')} />
-      </Pressable>
-    </MHStack>
-
+    <MAnimView hideCb={() => props.setIsFold(false)} cbRef={hideCbRef} >
+      <MHStack stretchW style={styles.container}>
+        {
+          props.isBack && (
+            <Pressable style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>
+              <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
+            </Pressable>
+          )
+        }
+        <Pressable style={{ flexDirection: 'row', flex: 1 }} onPress={() => hideCbRef.current && hideCbRef.current()} >
+          <Image style={styles.img} source={require('./../../assets/favicon.png')} />
+          <MText style={{ flex: 1 }} >{loginData.blockchainAddress}</MText>
+          <Image style={styles.expand} source={require('./../../assets/favicon.png')} />
+        </Pressable>
+      </MHStack>
+    </MAnimView>
   );
 }
 

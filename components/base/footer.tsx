@@ -1,14 +1,16 @@
 
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
 
 export default function Footer() {
   const navigation = useNavigation();
+  const insets = useSafeAreaInsets();
   return (
-    <MVStack stretchW style={styles.container}>
+    <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
       <MHStack stretchW style={styles.list}>
         <MenuButton title='wallet' onPress={() => navigation.navigate('Wallet')} />
         <MenuButton title='history' onPress={() => navigation.navigate('History')} />

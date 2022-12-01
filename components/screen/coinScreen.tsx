@@ -35,7 +35,7 @@ export function CoinScreen() {
         </MVStack>
 
         <MVStack stretchW style={{ marginVertical: 20 }}>
-          <MButton styles={{ 'width': '100%', height: 50 }} title={"Send USDC"} />
+          <MButton styles={{ 'width': '100%', height: 50 }} title={"Send USDC"} onPress={() => navigation.navigate('Send')} />
         </MVStack>
 
         <MVStack stretchW style={{ marginVertical: 40, backgroundColor: '#999', borderRadius: 15, padding: 15 }}>

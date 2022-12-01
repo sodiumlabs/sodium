@@ -2,6 +2,7 @@
 import { useFocusEffect } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { StyleSheet } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import MVStack from '../baseUI/mVStack';
 import HeaderExpansion from './headerExpansion';
 import HeaderFold from './headerFold';
@@ -10,7 +11,7 @@ import HeaderFold from './headerFold';
 
 export default function Header(props: { isBack?: boolean }) {
   const [isFold, setIsFold] = useState(true);
-  // const insets = useSafeAreaInsets();
+  const insets = useSafeAreaInsets();
   useFocusEffect(
     useCallback(() => {
       // Do something when the screen is focused
@@ -23,7 +24,7 @@ export default function Header(props: { isBack?: boolean }) {
   );
   return (
     // { top: insets.top }
-    <MVStack stretchW style={[styles.container]}>
+    <MVStack stretchW style={[styles.container, { top: insets.top }]}>
       {
         isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isBack} /> : <HeaderExpansion setIsFold={setIsFold} />
       }
