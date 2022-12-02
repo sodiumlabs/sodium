@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { Divider, Drawer, DrawerGroup, DrawerItem } from "@ui-kitten/components";
+import { Divider } from "@ui-kitten/components";
 import { useState } from "react";
 import { Image, StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
@@ -7,6 +7,8 @@ import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import TranscationItem from "../item/transcationItem";
+import { showTranscationModal } from '../base/screenInit';
 
 export function CoinScreen() {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -14,7 +16,7 @@ export function CoinScreen() {
   const navigation = useNavigation();
   return (
     <BaseScreen isHeaderBack>
-      <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
+      <MVStack stretchW style={{ alignItems: 'center', marginVertical: 40, paddingHorizontal: 15 }}>
         <Image style={{ width: 64, height: 64 }} source={require('./../../assets/favicon.png')} />
         <MText style={{ marginVertical: 6 }}>USDC</MText>
         <MHStack>
@@ -32,7 +34,7 @@ export function CoinScreen() {
         </MVStack>
 
         <MVStack stretchW style={{ marginVertical: 20 }}>
-          <MButton styles={{ 'width': '100%', height: 50 }} title={"Send USDC"} />
+          <MButton styles={{ 'width': '100%', height: 50 }} title={"Send USDC"} onPress={() => navigation.navigate('Send')} />
         </MVStack>
 
         <MVStack stretchW style={{ marginVertical: 40, backgroundColor: '#999', borderRadius: 15, padding: 15 }}>
@@ -66,6 +68,13 @@ export function CoinScreen() {
             <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
             <MText>POLYGON</MText>
           </MHStack>
+        </MVStack>
+
+
+
+        <MVStack stretchW>
+          <MText>Last Week</MText>
+          <TranscationItem onPress={() => showTranscationModal(true)} />
         </MVStack>
 
       </MVStack>

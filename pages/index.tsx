@@ -12,10 +12,18 @@ import { WalletScreen } from '../components/screen/walletScreen';
 import { fetchLoginData, useLoginData } from '../src/data/login';
 import { CoinScreen } from '../components/screen/coinScreen';
 import { SendScreen } from '../components/screen/sendScreen';
-
+import { UIManager } from 'react-native';
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
+
+if (
+  Platform.OS === "android" &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
+
 
 export default function App() {
 
@@ -32,12 +40,12 @@ export default function App() {
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
-          <Stack.Navigator screenOptions={{ headerShown: false }}  >
+          <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
             {
               loginData.isLogin ? (
                 <>
-                  <Stack.Screen name="Wallet" component={WalletScreen} />
                   <Stack.Screen name="History" component={HistoryScreen} />
+                  <Stack.Screen name="Wallet" component={WalletScreen} />
                   <Stack.Screen name="Coin" component={CoinScreen} />
                   <Stack.Screen name="Send" component={SendScreen} />
                 </>
