@@ -13,6 +13,9 @@ import { fetchLoginData, useLoginData } from '../src/data/login';
 import { CoinScreen } from '../components/screen/coinScreen';
 import { SendScreen } from '../components/screen/sendScreen';
 import { UIManager } from 'react-native';
+import { SettingScreen } from '../components/screen/settingScreen';
+import { ProfileScreen } from '../components/screen/profileScreen';
+import { SessionScreen } from '../components/screen/sessionScreen';
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
@@ -44,8 +47,11 @@ export default function App() {
             {
               loginData.isLogin ? (
                 <>
-                  <Stack.Screen name="History" component={HistoryScreen} />
                   <Stack.Screen name="Wallet" component={WalletScreen} />
+                  <Stack.Screen name="Setting" component={SettingScreen} />
+                  <Stack.Screen name="Profile" component={ProfileScreen} />
+                  <Stack.Screen name="Session" component={SessionScreen} />
+                  <Stack.Screen name="History" component={HistoryScreen} />
                   <Stack.Screen name="Coin" component={CoinScreen} />
                   <Stack.Screen name="Send" component={SendScreen} />
                 </>

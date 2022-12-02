@@ -4,25 +4,23 @@
 
 
 import { ReactNode } from 'react';
-import { Image, ViewProps } from 'react-native';
+import { ViewProps } from 'react-native';
 import MHStack from './mHStack';
-import MText from './mText';
 
 export default function MLineLR(props: ViewProps & { left: ReactNode, right: ReactNode }) {
 
   return (
-    <MHStack stretchW>
-      <MHStack style={{ flex: 1 }}>
+    <MHStack stretchW style={{ 'alignItems': 'center' }}>
+      <MHStack style={{ flex: 1, 'alignItems': 'center' }}>
         {
           props.left
         }
       </MHStack>
-      <MHStack>
+      <MHStack style={{ 'alignItems': 'center' }}>
         {
           props.right
         }
       </MHStack>
-
 
     </MHStack>
   )

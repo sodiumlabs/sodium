@@ -1,22 +1,16 @@
+import { useNavigation } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
-import { showTranscationModal } from "../base/screenInit";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import HistoryItem from "../item/historyItem";
-import { RequestTranscationItem } from "../item/requestTranscationItem";
+import SettingItem from "../item/settingItem";
 
-export function HistoryScreen() {
+export function SessionScreen() {
+  const navigation = useNavigation();
   return (
-    <BaseScreen >
+    <BaseScreen isHeaderBack>
       <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
-        <MText style={{ marginVertical: 6 }}>History</MText>
-        <RequestTranscationItem />
-
-        <MVStack stretchW>
-          <MText>Last Week</MText>
-          <HistoryItem onPress={() => showTranscationModal(true)} />
-        </MVStack>
+        <MText style={{ marginVertical: 6 }}>Active Sessions</MText>
       </MVStack>
     </BaseScreen>
   );

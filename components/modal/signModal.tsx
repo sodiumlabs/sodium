@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Image } from 'react-native';
+import { ScrollView, StyleSheet, Image, Pressable, Text } from 'react-native';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { BaseModal } from '../base/baseModal';
 import MButton from '../baseUI/mButton';
@@ -8,10 +8,17 @@ import MVStack from '../baseUI/mVStack';
 import MLineLR from '../baseUI/mLineLR';
 import { Divider } from '@ui-kitten/components';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
+import { showTranscationQueueModal, showSignModal } from '../base/screenInit';
+import CoinItem from '../item/coinItem';
+import NetworkFeeItem from '../item/networkFeeItem';
 
 export const SignModal = (props: { visible?: boolean, hideModal: () => void }) => {
   const { visible, hideModal } = props;
   // const { width, height } = Dimensions.get('window');
+  const onClickTranscationQueue = () => {
+    showSignModal(false);
+    showTranscationQueueModal(true);
+  }
 
   return (
     <BaseModal
@@ -24,6 +31,10 @@ export const SignModal = (props: { visible?: boolean, hideModal: () => void }) =
             <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MText>Sign Transaction </MText>
             </MHStack>
+            <Pressable onPress={onClickTranscationQueue}>
+              <MText>Transcation Queue</MText>
+            </Pressable>
+
             <MVStack stretchW>
               <MLineLR
                 left={
@@ -31,15 +42,13 @@ export const SignModal = (props: { visible?: boolean, hideModal: () => void }) =
                     <MText >Network</MText>
                     <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
                   </>}
-                right={<MText >PLOYGON</MText>}
-              />
+                right={<MText >PLOYGON</MText>} />
               <MLineLR
                 left={<MText >Requested at</MText>}
-                right={<MText>December 1, 2022 8:17:14 pm</MText>}
-              />
+                right={<MText>December 1, 2022 8:17:14 pm</MText>} />
             </MVStack>
 
-            <BaseFoldFrame
+            <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
               header={<MText >Transfer(1/1)</MText>}>
 
               <MText>Send</MText>
@@ -55,8 +64,39 @@ export const SignModal = (props: { visible?: boolean, hideModal: () => void }) =
                 <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
                 <MText style={{ flex: 1 }}>0x95bF59b7C60aFfc6fe29E6D1db852Be408f3d085</MText>
               </MHStack>
-
             </BaseFoldFrame>
+
+            <BaseFoldFrame header={<MText>Transcation Data(1)</MText>} style={{ marginTop: 20 }}>
+              <MVStack stretchW style={{ backgroundColor: '#999', borderRadius: 15 }}>
+                <Text>
+                  {
+                    `{
+                      "to": "0x95bF59b7C60aFfc6fe29E6D1db852Be408f3d085",
+                      "signature": "",
+                      "byteSignature": "0x",
+                      "methodName": "",
+                      "args": {},
+                      "objs": [],
+                      "value": "100000000000000000",
+                      "data": "0x"
+                  }`
+                  }
+                </Text>
+              </MVStack>
+            </BaseFoldFrame>
+
+            <MVStack>
+              <MHStack stretchW style={{ alignItems: 'center' }}>
+                <MText>Network Fee</MText>
+                <MHStack style={{ borderRadius: 999, width: 20, height: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: '#bbb' }}>
+                  <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
+                </MHStack>
+              </MHStack>
+
+              <NetworkFeeItem />
+              <NetworkFeeItem />
+
+            </MVStack>
 
           </ScrollView>
         </MVStack>

@@ -1,4 +1,6 @@
 
+export const fixWidth = 720;
+
 export interface ILoginData {
   isLogin?: boolean,
   blockchainAddress?: string,

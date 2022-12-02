@@ -1,7 +1,8 @@
 
+import { useNavigation } from '@react-navigation/native';
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Image, Pressable, StyleSheet } from 'react-native';
-import { useLoginData } from '../../src/data/login';
+import { loginOut, useLoginData } from '../../src/data/login';
 import MAnimView from '../baseUI/mAnimView';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
@@ -11,10 +12,14 @@ import MVStack from '../baseUI/mVStack';
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
   const loginData = useLoginData();
   // const windowDimension = useWindowDimensions();
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   // const ref = useRef<Function>(null);
 
   const [visible, setVisible] = useState(true);
+
+  const close = () => {
+    setVisible(false);
+  }
 
   return (
     <MAnimView hideFinishCb={() => props.setIsFold(true)} visible={visible} style={{
@@ -31,9 +36,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
             <MButton title='Receive' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
           </MHStack>
         </MVStack>
-        <Pressable onPress={() => {
-          setVisible(false);
-        }}>
+        <Pressable onPress={close}>
           <Image style={{ 'width': 12, 'height': 12, marginLeft: 20 }} source={require('./../../assets/favicon.png')} />
         </Pressable>
       </MHStack>
@@ -46,19 +49,19 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
       </Pressable>
 
       <Pressable>
-        <MVStack style={styles.connected}>
+        <MHStack style={styles.connected}>
           <Image style={{ width: 10, height: 10, marginRight: 10 }} source={require('./../../assets/favicon.png')} />
           <MVStack style={{ flex: 1 }}>
             <MText>Connected</MText>
             <MText>Ethereum</MText>
           </MVStack>
           <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
-        </MVStack>
+        </MHStack>
       </Pressable>
 
       <MHStack style={styles.button}>
-        <MButton title='Settings' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-        <MButton title='Sign Out' onPress={undefined} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Settings' onPress={() => { close(); navigation.navigate('Setting'); }} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Sign Out' onPress={() => loginOut()} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
       </MHStack>
 
     </MAnimView>

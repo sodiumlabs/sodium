@@ -7,8 +7,9 @@ import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import TranscationItem from "../item/transcationItem";
+import HistoryItem from "../item/historyItem";
 import { showTranscationModal } from '../base/screenInit';
+import { BaseFoldFrame } from "../base/baseFoldFrame";
 
 export function CoinScreen() {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -37,11 +38,7 @@ export function CoinScreen() {
           <MButton styles={{ 'width': '100%', height: 50 }} title={"Send USDC"} onPress={() => navigation.navigate('Send')} />
         </MVStack>
 
-        <MVStack stretchW style={{ marginVertical: 40, backgroundColor: '#999', borderRadius: 15, padding: 15 }}>
-          <MHStack style={{ marginBottom: 20 }}>
-            <MText style={{ flex: 1 }}>Detail</MText>
-            <Image style={{ width: 12, height: 12 }} source={require('./../../assets/favicon.png')} />
-          </MHStack>
+        <BaseFoldFrame header={<MText >Detail</MText>}>
 
           <MText style={{ marginBottom: 10 }}>Description</MText>
           <MText numberOfLines={undefined} >
@@ -68,13 +65,11 @@ export function CoinScreen() {
             <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
             <MText>POLYGON</MText>
           </MHStack>
-        </MVStack>
-
-
+        </BaseFoldFrame>
 
         <MVStack stretchW>
           <MText>Last Week</MText>
-          <TranscationItem onPress={() => showTranscationModal(true)} />
+          <HistoryItem onPress={() => showTranscationModal(true)} />
         </MVStack>
 
       </MVStack>

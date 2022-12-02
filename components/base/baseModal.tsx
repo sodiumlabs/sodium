@@ -1,18 +1,22 @@
-import { useRef, useEffect } from 'react';
-import { Animated, Easing, Modal, TouchableWithoutFeedback, View, ViewProps } from 'react-native';
+import { useRef, useEffect, useMemo } from 'react';
+import { Animated, Easing, StyleSheet, Modal, TouchableWithoutFeedback, View, ViewProps, Pressable } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { fixWidth } from '../../src/define';
+import { useAdapterWeb } from '../../src/hook/adapter';
 import MVStack from '../baseUI/mVStack';
 
-export const BaseModal = (props: ViewProps & { visible?: boolean, hideModal: () => void }) => {
-  const { visible, hideModal } = props;
+export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void }) => {
+  const { visible, hideModal, isFullScreen, isAnim = true } = props;
   const fadeAnim = useRef(new Animated.Value(0)).current;
-
+  const isAdapterWeb = useAdapterWeb();
+  const insets = useSafeAreaInsets();
   useEffect(() => {
     if (!visible) {
       fadeAnim.setValue(0);
     } else {
       Animated.timing(fadeAnim, {
         easing: Easing.quad,
-        toValue: 0.1,
+        toValue: 0.15,
         duration: 300,
         delay: 100,
         useNativeDriver: false
@@ -20,10 +24,28 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, hideModal: () 
     }
   }, [visible]);
 
+  const adapterStyle = useMemo(() => {
+    if (isAdapterWeb) {
+      return {
+        maxWidth: isFullScreen ? 'auto' : fixWidth,
+        marginVertical: isFullScreen ? 0 : 100,
+        borderRadius: 15
+      }
+    }
+
+    return {
+      maxWidth: isFullScreen ? 'auto' : fixWidth,
+      marginTop: isFullScreen ? 0 : 100,
+      paddingBottom: insets.bottom,
+      borderTopLeftRadius: 15,
+      borderTopRightRadius: 15,
+    }
+  }, [isAdapterWeb]);
+
   return (
     <Modal
       transparent={true}
-      animationType='slide'
+      animationType={isAnim ? 'slide' : 'none'}
       visible={visible}
     // presentationStyle='pageSheet'
     >
@@ -35,12 +57,27 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, hideModal: () 
           </Animated.View>
         </TouchableWithoutFeedback>
 
-        <MVStack stretchW stretchH style={{ maxWidth: 600, marginTop: 100, backgroundColor: '#888', padding: 15, alignItems: 'center', borderTopLeftRadius: 15, borderTopRightRadius: 15, flex: 1 }}>
+        <MVStack stretchW stretchH style={[styles.content, adapterStyle]}>
           {
             props.children
           }
+          <Pressable
+            onPress={() => hideModal()}
+            style={styles.close}>
+          </Pressable>
         </MVStack>
       </MVStack>
     </Modal>
   );
 };
+
+
+
+const styles = StyleSheet.create({
+  content: {
+    backgroundColor: '#888', padding: 15, alignItems: 'center', flex: 1, position: 'relative'
+  },
+  close: {
+    backgroundColor: '#999', width: 30, height: 30, position: 'absolute', top: -40, right: 0, borderRadius: 99
+  }
+});
