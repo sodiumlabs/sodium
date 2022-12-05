@@ -6,6 +6,7 @@ import MText from '../baseUI/mText';
 import MHStack from '../baseUI/mHStack';
 import { useNavigation } from '@react-navigation/native';
 import MAnimView from '../baseUI/mAnimView';
+import MImage from '../baseUI/mImage';
 
 export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<boolean>>, isBack?: boolean }) {
   const loginData = useLoginData();
@@ -18,14 +19,14 @@ export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<b
         {
           props.isBack && (
             <Pressable style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>
-              <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
+              <MImage size={10} />
             </Pressable>
           )
         }
         <Pressable style={{ flexDirection: 'row', flex: 1, paddingVertical: 10 }} onPress={() => setVisible(false)} >
-          <Image style={styles.img} source={require('./../../assets/favicon.png')} />
+          <MImage style={styles.img} />
           <MText style={{ flex: 1 }} >{loginData.blockchainAddress}</MText>
-          <Image style={styles.expand} source={require('./../../assets/favicon.png')} />
+          <MImage style={styles.expand} />
         </Pressable>
       </MHStack>
     </MAnimView>

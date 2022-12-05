@@ -6,6 +6,7 @@ import { loginOut, useLoginData } from '../../src/data/login';
 import MAnimView from '../baseUI/mAnimView';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
@@ -28,7 +29,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
       backgroundColor: 'rgba(200,200,200,1)',
     }}>
       <MHStack style={styles.bar} >
-        <Image style={styles.img} source={require('./../../assets/favicon.png')} />
+        <MImage style={styles.img} />
         <MVStack style={{ flex: 1 }}>
           <MText >{loginData.blockchainAddress}</MText>
           <MHStack >
@@ -37,7 +38,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
           </MHStack>
         </MVStack>
         <Pressable onPress={close}>
-          <Image style={{ 'width': 12, 'height': 12, marginLeft: 20 }} source={require('./../../assets/favicon.png')} />
+          <MImage size={12} style={{ marginLeft: 20 }} />
         </Pressable>
       </MHStack>
 
@@ -50,12 +51,12 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
 
       <Pressable>
         <MHStack style={styles.connected}>
-          <Image style={{ width: 10, height: 10, marginRight: 10 }} source={require('./../../assets/favicon.png')} />
+          <MImage size={10} style={{ marginRight: 10 }} />
           <MVStack style={{ flex: 1 }}>
             <MText>Connected</MText>
             <MText>Ethereum</MText>
           </MVStack>
-          <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
+          <MImage size={10} />
         </MHStack>
       </Pressable>
 

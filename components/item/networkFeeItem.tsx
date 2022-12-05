@@ -3,6 +3,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, StyleSheet, TextInputProps } from 'react-native';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
@@ -13,7 +14,7 @@ export default function NetworkFeeItem(props: TextInputProps) {
   return (
     <Pressable onPress={undefined}>
       <MHStack style={styles.container} stretchW>
-        <Image style={{ width: 32, height: 32 }} source={require('./../../assets/favicon.png')} />
+        <MImage size={32} />
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR left={<MText>Polygon(Matic)</MText>} right={<MText>3.12 Matic</MText>} />

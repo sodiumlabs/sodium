@@ -1,6 +1,7 @@
 import { ReactNode, useRef, useState, useEffect } from 'react';
 import { Animated, Easing, Image, LayoutChangeEvent, Pressable, StyleSheet, ViewProps } from 'react-native';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
 import MVStack from '../baseUI/mVStack';
 
 export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: ReactNode }) => {
@@ -53,7 +54,7 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
             <MHStack style={{ flex: 1 }}>
               {header}
             </MHStack>
-            <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
+            <MImage size={10} />
           </MHStack>
         </Pressable>
 

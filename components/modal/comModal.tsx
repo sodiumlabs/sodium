@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { Image, StyleSheet } from 'react-native';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { BaseModal } from '../base/baseModal';
+import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
@@ -15,7 +16,7 @@ export const ComModal = (props: { visible?: boolean, hideModal: () => void }) =>
       hideModal={hideModal}
     >
       <MVStack stretchH stretchW style={{ 'alignItems': 'center' }}>
-        <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
+        <MImage size={20} />
         <MText>Error</MText>
         <MText>Fail to fetch</MText>
       </MVStack>

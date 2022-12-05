@@ -11,6 +11,7 @@ import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { showTranscationQueueModal, showSignModal } from '../base/screenInit';
 import CoinItem from '../item/coinItem';
 import NetworkFeeItem from '../item/networkFeeItem';
+import MImage from '../baseUI/mImage';
 
 export const SignModal = (props: { visible?: boolean, hideModal: () => void }) => {
   const { visible, hideModal } = props;
@@ -40,7 +41,7 @@ export const SignModal = (props: { visible?: boolean, hideModal: () => void }) =
                 left={
                   <>
                     <MText >Network</MText>
-                    <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
+                    <MImage size={20} />
                   </>}
                 right={<MText >PLOYGON</MText>} />
               <MLineLR
@@ -53,7 +54,7 @@ export const SignModal = (props: { visible?: boolean, hideModal: () => void }) =
 
               <MText>Send</MText>
               <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-                <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
+                <MImage size={20} />
                 <MText style={{ flex: 1 }}>Polygon(Matic)</MText>
                 <MText >1.46666 MATIC</MText>
               </MHStack>
@@ -61,7 +62,7 @@ export const SignModal = (props: { visible?: boolean, hideModal: () => void }) =
               <Divider />
               <MText>To Recipient</MText>
               <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-                <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
+                <MImage size={20} />
                 <MText style={{ flex: 1 }}>0x95bF59b7C60aFfc6fe29E6D1db852Be408f3d085</MText>
               </MHStack>
             </BaseFoldFrame>
@@ -89,7 +90,7 @@ export const SignModal = (props: { visible?: boolean, hideModal: () => void }) =
               <MHStack stretchW style={{ alignItems: 'center' }}>
                 <MText>Network Fee</MText>
                 <MHStack style={{ borderRadius: 999, width: 20, height: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: '#bbb' }}>
-                  <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
+                  <MImage size={10} />
                 </MHStack>
               </MHStack>
 

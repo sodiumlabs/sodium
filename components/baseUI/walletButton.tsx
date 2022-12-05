@@ -1,4 +1,5 @@
 import { GestureResponderEvent, Image, Pressable, StyleSheet } from 'react-native';
+import MImage from './mImage';
 import MText from './mText';
 import MVStack from './mVStack';
 
@@ -7,7 +8,7 @@ export default function WalletButton(props: { onPress?: (event: GestureResponder
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <MVStack style={styles.button}>
-        <Image style={{ width: 12, height: 12 }} source={require('./../../assets/favicon.png')} />
+        <MImage size={12} />
       </MVStack>
       <MText > {title} </MText>
     </Pressable>

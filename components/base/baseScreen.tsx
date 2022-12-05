@@ -23,17 +23,17 @@ export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: bool
       }
       <MVStack stretchW style={styles.content}>
 
-        <ScrollView style={{ width: '100%', height: '100%' }}>
+        <ScrollView style={{ width: '100%', height: '100%', }}>
 
-          <MVStack stretchW style={{ marginTop: hasHeaderFooter ? 80 : 0, marginBottom: hasHeaderFooter ? 60 : 0 }}>
+          <MVStack stretchW style={{ alignSelf: 'center', maxWidth: fixWidth, marginTop: hasHeaderFooter ? 80 : 0, marginBottom: hasHeaderFooter ? 60 : 0 }}>
             {
               props.children
             }
           </MVStack>
         </ScrollView>
-      </MVStack>
+      </MVStack >
       <ScreenInit />
-    </SafeAreaView>
+    </SafeAreaView >
   );
 }
 
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
-    maxWidth: fixWidth,
     height: '100%',
     alignSelf: 'center',
     backgroundColor: '#777',

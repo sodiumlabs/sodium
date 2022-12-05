@@ -28,10 +28,15 @@ export function WalletScreen() {
 
         <MHStack style={styles.operate}>
           <WalletButton title='Send' onPress={() => navigation.navigate('Send', {})} />
-          <WalletButton title='Deposit' />
+          <WalletButton title='Deposit' onPress={() => navigation.navigate('Deposit')} />
         </MHStack>
 
         <RequestTranscationItem />
+
+        <MVStack stretchW style={styles.coins}>
+          <MText style={{ marginVertical: 15 }}>Pending Transcations</MText>
+
+        </MVStack >
 
         <MInput style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
 

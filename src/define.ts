@@ -11,3 +11,12 @@ export interface IModalParam {
   visible?: boolean,
   param?: unknown,
 }
+
+
+export interface IDepositItemData {
+  name: string,
+  paywiths: string[],
+  fee: string,
+  limit: string,
+  currencies: string[]
+}

@@ -16,6 +16,7 @@ import { UIManager } from 'react-native';
 import { SettingScreen } from '../components/screen/settingScreen';
 import { ProfileScreen } from '../components/screen/profileScreen';
 import { SessionScreen } from '../components/screen/sessionScreen';
+import { DepositScreen } from '../components/screen/depositScreen';
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
@@ -54,6 +55,7 @@ export default function App() {
                   <Stack.Screen name="History" component={HistoryScreen} />
                   <Stack.Screen name="Coin" component={CoinScreen} />
                   <Stack.Screen name="Send" component={SendScreen} />
+                  <Stack.Screen name="Deposit" component={DepositScreen} />
                 </>
               ) : (
                 <>

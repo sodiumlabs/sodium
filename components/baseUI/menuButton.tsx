@@ -1,11 +1,12 @@
 import { GestureResponderEvent, Image, Pressable, StyleSheet } from 'react-native';
+import MImage from './mImage';
 import MText from './mText';
 
 export default function MenuButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string; }) {
   const { onPress, title } = props;
   return (
     <Pressable style={styles.button} onPress={onPress}>
-      <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
+      <MImage size={20} />
       <MText> {title} </MText>
     </Pressable>
   )

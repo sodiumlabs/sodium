@@ -10,6 +10,7 @@ import MVStack from "../baseUI/mVStack";
 import HistoryItem from "../item/historyItem";
 import { showTranscationModal } from '../base/screenInit';
 import { BaseFoldFrame } from "../base/baseFoldFrame";
+import MImage from "../baseUI/mImage";
 
 export function CoinScreen() {
   const [selectedIndex, setSelectedIndex] = useState(null);
@@ -18,10 +19,10 @@ export function CoinScreen() {
   return (
     <BaseScreen isHeaderBack>
       <MVStack stretchW style={{ alignItems: 'center', marginVertical: 40, paddingHorizontal: 15 }}>
-        <Image style={{ width: 64, height: 64 }} source={require('./../../assets/favicon.png')} />
+        <MImage size={64} />
         <MText style={{ marginVertical: 6 }}>USDC</MText>
         <MHStack>
-          <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
+          <MImage size={16} />
           <MText>POLYGON</MText>
         </MHStack>
         <MVStack style={{ marginVertical: 25 }}>
@@ -62,7 +63,7 @@ export function CoinScreen() {
           <Divider style={{ marginVertical: 10, backgroundColor: '#888' }} />
           <MHStack>
             <MText style={{ flex: 1 }}>Network</MText>
-            <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
+            <MImage size={16} />
             <MText>POLYGON</MText>
           </MHStack>
         </BaseFoldFrame>
