@@ -17,6 +17,14 @@ export const useLoginData = (): ILoginData => {
 }
 
 export const updateLoginData = (data: ILoginData) => {
-  // const login = loginDataAtom.get();
-  loginDataAtom.set({ ...data });
+  loginDataAtom.set({ ...loginDataAtom.get(), ...data });
+}
+
+export const loginOut = () => {
+  updateLoginData({ isLogin: false });
+}
+
+
+export const loginIn = () => {
+  updateLoginData({ isLogin: true });
 }

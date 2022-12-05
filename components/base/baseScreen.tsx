@@ -2,6 +2,8 @@
 import { ReactNode } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { fixWidth } from '../../src/define';
+import { useAdapterWeb } from '../../src/hook/adapter';
 import MVStack from '../baseUI/mVStack';
 import Footer from "./footer";
 import Header from "./header";
@@ -10,12 +12,13 @@ import ScreenInit from './screenInit';
 
 export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: boolean, isHeaderBack?: boolean }) {
   const hasHeaderFooter = props.hasHeaderFooter === undefined ? true : props.hasHeaderFooter;
+  const isAdapterWeb = useAdapterWeb();
   return (
     <SafeAreaView style={styles.container}>
       {hasHeaderFooter && (
         <>
           <Header isBack={props.isHeaderBack} />
-          <Footer />
+          {!isAdapterWeb && <Footer />}
         </>)
       }
       <MVStack stretchW style={styles.content}>
@@ -45,7 +48,7 @@ const styles = StyleSheet.create({
   },
   content: {
     width: '100%',
-    maxWidth: 720,
+    maxWidth: fixWidth,
     height: '100%',
     alignSelf: 'center',
     backgroundColor: '#777',

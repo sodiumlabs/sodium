@@ -1,5 +1,6 @@
 import { StyleSheet, Image, Pressable } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
+import { showSignModal } from "../base/screenInit";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
@@ -38,7 +39,7 @@ export function SendScreen() {
         <MText style={{ marginVertical: 20 }}>To</MText>
         <MInput placeholder="address" />
 
-        <MButton title={"Continue"} styles={{ marginVertical: 20 }} />
+        <MButton onPress={() => showSignModal(true)} title={"Continue"} styles={{ marginVertical: 20 }} />
 
       </MVStack>
 

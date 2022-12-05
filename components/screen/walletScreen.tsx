@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { StyleSheet, TextStyle } from 'react-native';
+import { Pressable, StyleSheet, TextStyle } from 'react-native';
 import usePost from "../../src/api/Test";
 import { BaseScreen } from "../base/baseScreen";
 import MHStack from "../baseUI/mHStack";
@@ -8,6 +8,7 @@ import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
+import { RequestTranscationItem } from "../item/requestTranscationItem";
 
 
 
@@ -30,7 +31,9 @@ export function WalletScreen() {
           <WalletButton title='Deposit' />
         </MHStack>
 
-        <MInput placeholder="Search coins" placeholderTextColor='#999' />
+        <RequestTranscationItem />
+
+        <MInput style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
 
         <MVStack stretchW style={styles.coins}>
           <MText style={{ marginVertical: 15 }}>Coins</MText>

@@ -5,7 +5,7 @@ import { Animated, Easing, LayoutChangeEvent, StyleSheet, ViewProps } from 'reac
 
 export default function MAnimView(props: ViewProps & { hideFinishCb?: () => void, visible: boolean }) {
   const [isAutoMeasure, setIsAutoMeasure] = useState(true);
-  const heightAnim = useRef(new Animated.Value(0)).current;
+  const heightAnim = useRef(new Animated.Value(50)).current;
 
   const show = (viewHeight: number) => {
     Animated.timing(heightAnim, {
@@ -21,6 +21,7 @@ export default function MAnimView(props: ViewProps & { hideFinishCb?: () => void
       setIsAutoMeasure(false);
       const viewHeight = event.nativeEvent.layout.height;
       show(viewHeight);
+      // heightAnim.setValue(viewHeight);
     }
   }
 

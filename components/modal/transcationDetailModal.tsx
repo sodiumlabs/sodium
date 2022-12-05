@@ -1,12 +1,12 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Dimensions, Image, Modal, ScrollView, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
-import MVStack from '../baseUI/mVStack';
-import MText from '../baseUI/mText';
-import MHStack from '../baseUI/mHStack';
 import { Divider } from '@ui-kitten/components';
-import MButton from '../baseUI/mButton';
 import { BaseModal } from '../base/baseModal';
+import MButton from '../baseUI/mButton';
+import MLineLR from '../baseUI/mLineLR';
+import MText from '../baseUI/mText';
+import MVStack from '../baseUI/mVStack';
+import { TranscationDetailItem } from '../item/transcationDetailItem';
 
 export const TranscationDetailModal = (props: { visible?: boolean, hideModal: () => void }) => {
   const { visible, hideModal } = props;
@@ -17,31 +17,10 @@ export const TranscationDetailModal = (props: { visible?: boolean, hideModal: ()
       visible={visible}
       hideModal={hideModal}
     >
-      <ScrollView>
+      <ScrollView style={{ width: '100%' }}>
         <MText>Transaction Details</MText>
-        <MVStack stretchW style={{ borderRadius: 15, backgroundColor: '#aaa', padding: 15 }}>
-          <MHStack style={{ flex: 1, alignItems: 'center' }}>
-            <MText style={{ flex: 1 }}>Received(1/1)</MText>
-            <Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />
-          </MHStack>
-
-          <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-            <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
-            <MText style={{ flex: 1 }}>USDC</MText>
-            <MText >1.46666 USDC</MText>
-          </MHStack>
-
-          <Divider />
-
-          <MVStack style={styles.marginV}>
-            <MText style={{ marginVertical: 5 }}>To</MText>
-            <MHStack stretchW style={{ padding: 15, backgroundColor: '#fff', borderRadius: 15 }}>
-              <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
-              <MText style={{ flex: 1 }}>0x8BB759Bb68995343FF1e9D57Ac85Ff5c5Fb79</MText>
-              <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
-            </MHStack>
-          </MVStack>
-        </MVStack>
+        <TranscationDetailItem style={styles.marginV} />
+        <TranscationDetailItem style={styles.marginV} />
 
         <MButton styles={{ width: '100%', marginVertical: 20 }} title={'View On Polygon'}></MButton>
 
@@ -55,11 +34,13 @@ export const TranscationDetailModal = (props: { visible?: boolean, hideModal: ()
           <Divider />
 
           <MText>Transaction Hash</MText>
-          <MText>0x805b5aa7018dad01a082eff3d23c218d8fe473daca4b6d4d0021de1d652c652c</MText>
+
+          <MLineLR
+            left={<MText>0x805b5aa7018dad01a082eff3d23c218d8fe473daca4b6d4d0021de1d652c652c</MText>}
+            right={<MButton title={'copy'} />} />
           <Divider />
 
-          <MText>Network</MText>
-          <MText>Polygon</MText>
+          <MLineLR left={<MText>Network</MText>} right={<MText>Polygon</MText>} />
         </MVStack>
       </ScrollView>
 
@@ -69,6 +50,6 @@ export const TranscationDetailModal = (props: { visible?: boolean, hideModal: ()
 
 const styles = StyleSheet.create({
   marginV: {
-    marginVertical: 20
+    marginTop: 20
   }
 });
