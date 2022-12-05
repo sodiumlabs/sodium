@@ -3,6 +3,7 @@
 
 import { GestureResponderEvent, Image, Pressable, StyleSheet, ViewProps } from 'react-native';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
@@ -14,7 +15,7 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
       <MLineLR
         left={
           <MHStack style={{ alignItems: 'center' }}>
-            <Image style={{ width: 20, height: 20 }} source={require('./../../assets/favicon.png')} />
+            <MImage size={20} />
             <MVStack>
               {
                 props.children
@@ -22,7 +23,7 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
             </MVStack>
           </MHStack>
         }
-        right={<Image style={{ width: 10, height: 10 }} source={require('./../../assets/favicon.png')} />} />
+        right={<MImage size={10} />} />
     </Pressable>
   )
 }

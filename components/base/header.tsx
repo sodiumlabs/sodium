@@ -5,6 +5,7 @@ import { StyleSheet, Image, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAdapterWeb } from '../../src/hook/adapter';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
@@ -45,18 +46,18 @@ export default function Header(props: { isBack?: boolean }) {
               }
             </MHStack>
 
-            <Image style={{ width: 40, height: 40, position: 'absolute', left: 0 }} source={require('./../../assets/favicon.png')} />
+            <MImage size={40} style={{ position: 'absolute', left: 0 }} />
 
             <Pressable onPress={() => navigation.navigate('Wallet')}>
               <MLineLR
-                left={<Image style={{ width: 20, height: 20, }} source={require('./../../assets/favicon.png')} />}
+                left={<MImage size={20} />}
                 right={<MText>wallet</MText>}
               />
             </Pressable>
 
             <Pressable onPress={() => navigation.navigate('History')}>
               <MLineLR
-                left={<Image style={{ width: 20, height: 20, }} source={require('./../../assets/favicon.png')} />}
+                left={<MImage size={20} />}
                 right={<MText>history</MText>}
               />
             </Pressable>

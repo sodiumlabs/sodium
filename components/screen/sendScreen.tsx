@@ -3,6 +3,7 @@ import { BaseScreen } from "../base/baseScreen";
 import { showSignModal } from "../base/screenInit";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
+import MImage from "../baseUI/mImage";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
@@ -15,12 +16,12 @@ export function SendScreen() {
 
         <MVStack style={styles.send} stretchW>
           <MHStack style={styles.sendCoin} stretchW>
-            <Image style={{ width: 32, height: 32 }} source={require('./../../assets/favicon.png')} />
+            <MImage size={32} />
 
             <MVStack style={{ flex: 1 }}>
               <MHStack style={{ flex: 1 }}>
                 <MText>USDC</MText>
-                <Image style={{ width: 12, height: 12 }} source={require('./../../assets/favicon.png')} />
+                <MImage size={12} />
                 <MText>POLYGON</MText>
               </MHStack>
 

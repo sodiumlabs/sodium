@@ -8,6 +8,7 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { useNavigation } from '@react-navigation/native';
 import MLineLR from '../baseUI/mLineLR';
+import MImage from '../baseUI/mImage';
 
 export default function CoinItem(props: TextInputProps) {
   const { style, ...reset } = props;
@@ -15,14 +16,14 @@ export default function CoinItem(props: TextInputProps) {
   return (
     <Pressable onPress={() => navigation.navigate('Coin')}>
       <MHStack style={styles.container} stretchW>
-        <Image style={{ width: 32, height: 32 }} source={require('./../../assets/favicon.png')} />
+        <MImage size={32} />
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR
             left={
               <MHStack >
                 <MText>USDC</MText>
-                <Image style={{ width: 12, height: 12 }} source={require('./../../assets/favicon.png')} />
+                <MImage size={12} />
                 <MText>POLYGON</MText>
               </MHStack>
             }

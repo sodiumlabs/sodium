@@ -8,6 +8,7 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { useNavigation } from '@react-navigation/native';
 import MLineLR from '../baseUI/mLineLR';
+import MImage from '../baseUI/mImage';
 
 export default function HistoryItem(props: { onPress: () => void }) {
   const { onPress } = props;
@@ -20,7 +21,7 @@ export default function HistoryItem(props: { onPress: () => void }) {
           left={
             <MHStack style={{ flex: 1 }}>
               <MText>Received</MText>
-              <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
+              <MImage size={16} />
               <MText> $1.8</MText>
             </MHStack>
           }
@@ -30,7 +31,7 @@ export default function HistoryItem(props: { onPress: () => void }) {
         <MLineLR
           left={
             <MHStack style={{ flex: 1 }}>
-              <Image style={{ width: 16, height: 16 }} source={require('./../../assets/favicon.png')} />
+              <MImage size={16} />
               <MText>USDC</MText>
             </MHStack>
           }
