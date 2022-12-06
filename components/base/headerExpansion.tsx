@@ -1,20 +1,22 @@
-
-import { useNavigation } from '@react-navigation/native';
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { Image, Pressable, StyleSheet } from 'react-native';
-import { loginOut, useLoginData } from '../../src/data/login';
+import { loginOut, useAuth } from '../../lib/data/auth';
 import MAnimView from '../baseUI/mAnimView';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { useNavigation } from '../../lib/navigation';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
-  const loginData = useLoginData();
-  // const windowDimension = useWindowDimensions();
+  const authData = useAuth();
   const navigation = useNavigation();
-  // const ref = useRef<Function>(null);
+
+  if (!authData.isLogin) {
+    // TODO 这里应该跳转到登录页
+    return
+  }
 
   const [visible, setVisible] = useState(true);
 
@@ -31,7 +33,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
       <MHStack style={styles.bar} >
         <MImage style={styles.img} />
         <MVStack style={{ flex: 1 }}>
-          <MText >{loginData.blockchainAddress}</MText>
+          <MText >{authData.blockchainAddress}</MText>
           <MHStack >
             <MButton title='Copy' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
             <MButton title='Receive' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
@@ -66,7 +68,6 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
       </MHStack>
 
     </MAnimView>
-
   );
 }
 

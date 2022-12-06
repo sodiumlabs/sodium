@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { Pressable, StyleSheet, TextStyle } from 'react-native';
-import usePost from "../../src/api/Test";
+import usePost from "../../lib/api/Test";
 import { BaseScreen } from "../base/baseScreen";
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";

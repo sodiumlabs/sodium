@@ -2,8 +2,8 @@
 import { ReactNode } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fixWidth } from '../../src/define';
-import { useAdapterWeb } from '../../src/hook/adapter';
+import { fixWidth } from '../../lib/define';
+import { useAdapterWeb } from '../../lib/hook/adapter';
 import MVStack from '../baseUI/mVStack';
 import Footer from "./footer";
 import Header from "./header";
