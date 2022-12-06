@@ -1,8 +1,8 @@
 import { useRef, useEffect, useMemo } from 'react';
 import { Animated, Easing, StyleSheet, Modal, TouchableWithoutFeedback, View, ViewProps, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { fixWidth } from '../../src/define';
-import { useAdapterWeb } from '../../src/hook/adapter';
+import { fixWidth } from '../../lib/define';
+import { useAdapterWeb } from '../../lib/hook/adapter';
 import MVStack from '../baseUI/mVStack';
 
 export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void }) => {

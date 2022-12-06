@@ -1,6 +1,6 @@
 import { Select, IndexPath, SelectItem, SelectProps } from "@ui-kitten/components";
 import { useRef, useEffect, Dispatch, SetStateAction } from "react";
-import { useDimensionSize } from "../../src/hook/dimension";
+import { useDimensionSize } from "../../lib/hook/dimension";
 
 
 export function MSelect(props: SelectProps & { selectIndex: IndexPath; setSelectedIndex: Dispatch<SetStateAction<IndexPath>> }) {

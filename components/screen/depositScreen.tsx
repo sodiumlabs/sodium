@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { StyleSheet } from "react-native";
-import { IDepositItemData } from "../../src/define";
+import { IDepositItemData } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";

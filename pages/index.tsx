@@ -3,19 +3,23 @@ import * as eva from '@eva-design/eva';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApplicationProvider } from '@ui-kitten/components';
-import { Platform, UIManager } from 'react-native';
+import {
+  UIManager, Platform
+} from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Init } from '../components/base/init';
-import { CoinScreen } from '../components/screen/coinScreen';
-import { DepositScreen } from '../components/screen/depositScreen';
-import { HistoryScreen } from '../components/screen/historyScreen';
-import { LoginScreen } from '../components/screen/loginScreen';
-import { ProfileScreen } from '../components/screen/profileScreen';
-import { SendScreen } from '../components/screen/sendScreen';
-import { SessionScreen } from '../components/screen/sessionScreen';
-import { SettingScreen } from '../components/screen/settingScreen';
-import { WalletScreen } from '../components/screen/walletScreen';
-import { useLoginData } from '../src/data/login';
+import { useAuth } from '../lib/data/auth';
+import {
+  CoinScreen,
+  SendScreen,
+  SettingScreen,
+  ProfileScreen,
+  SessionScreen,
+  DepositScreen,
+  HistoryScreen,
+  LoginScreen,
+  WalletScreen
+} from '../components/screen';
+import { Screens } from '../lib/define';
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
@@ -29,39 +33,34 @@ if (
 
 
 export default function App() {
-
-  const loginData = useLoginData();
-
+  const authData = useAuth();
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-      <Init />
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
           <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
             {
-              loginData.isLogin ? (
+              authData.isLogin ? (
                 <>
-                  <Stack.Screen name="Wallet" component={WalletScreen} />
-                  <Stack.Screen name="Setting" component={SettingScreen} />
-                  <Stack.Screen name="Profile" component={ProfileScreen} />
-                  <Stack.Screen name="Session" component={SessionScreen} />
-                  <Stack.Screen name="History" component={HistoryScreen} />
-                  <Stack.Screen name="Coin" component={CoinScreen} />
-                  <Stack.Screen name="Send" component={SendScreen} />
-                  <Stack.Screen name="Deposit" component={DepositScreen} />
+                  <Stack.Screen name={Screens.Wallet} component={WalletScreen} />
+                  <Stack.Screen name={Screens.Setting} component={SettingScreen} />
+                  <Stack.Screen name={Screens.Profile} component={ProfileScreen} />
+                  <Stack.Screen name={Screens.Session} component={SessionScreen} />
+                  <Stack.Screen name={Screens.History} component={HistoryScreen} />
+                  <Stack.Screen name={Screens.Coin} component={CoinScreen} />
+                  <Stack.Screen name={Screens.Send} component={SendScreen} />
+                  <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
                 </>
               ) : (
                 <>
-                  <Stack.Screen name="Login" component={LoginScreen} />
+                  <Stack.Screen name={Screens.Login} component={LoginScreen} />
                 </>
               )
             }
-
           </Stack.Navigator>
         </QueryClientProvider>
       </NavigationContainer>
     </ApplicationProvider>
   );
 }
-

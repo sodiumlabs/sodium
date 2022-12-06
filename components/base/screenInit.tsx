@@ -1,6 +1,6 @@
 import { atom } from "nanostores";
 import { useState } from "react";
-import { IModalParam } from "../../src/define";
+import { IModalParam } from "../../lib/define";
 import { ComModal } from "../modal/comModal";
 import { TranscationDetailModal } from "../modal/transcationDetailModal";
 import { useStore } from '@nanostores/react';

@@ -3,7 +3,7 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { StyleSheet, Image, Pressable } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAdapterWeb } from '../../src/hook/adapter';
+import { useAdapterWeb } from '../../lib/hook/adapter';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
