@@ -8,6 +8,7 @@ import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
+import PendingItem from "../item/pendingItem";
 import { RequestTranscationItem } from "../item/requestTranscationItem";
 
 
@@ -33,10 +34,8 @@ export function WalletScreen() {
 
         <RequestTranscationItem />
 
-        <MVStack stretchW style={styles.coins}>
-          <MText style={{ marginVertical: 15 }}>Pending Transcations</MText>
 
-        </MVStack >
+        <PendingItem />
 
         <MInput style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
 
