@@ -1,9 +1,14 @@
 
 export const fixWidth = 720;
 
+export enum eStorageKey {
+  stoken = "stoken"
+}
+
 export interface ILoginData {
   isLogin?: boolean,
   blockchainAddress?: string,
+  token?: string
 }
 
 

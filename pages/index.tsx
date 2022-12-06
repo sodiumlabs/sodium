@@ -3,20 +3,19 @@ import * as eva from '@eva-design/eva';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApplicationProvider } from '@ui-kitten/components';
-import { useEffect } from 'react';
-import { Platform } from 'react-native';
+import { Platform, UIManager } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Init } from '../components/base/init';
+import { CoinScreen } from '../components/screen/coinScreen';
+import { DepositScreen } from '../components/screen/depositScreen';
 import { HistoryScreen } from '../components/screen/historyScreen';
 import { LoginScreen } from '../components/screen/loginScreen';
-import { WalletScreen } from '../components/screen/walletScreen';
-import { fetchLoginData, useLoginData } from '../src/data/login';
-import { CoinScreen } from '../components/screen/coinScreen';
-import { SendScreen } from '../components/screen/sendScreen';
-import { UIManager } from 'react-native';
-import { SettingScreen } from '../components/screen/settingScreen';
 import { ProfileScreen } from '../components/screen/profileScreen';
+import { SendScreen } from '../components/screen/sendScreen';
 import { SessionScreen } from '../components/screen/sessionScreen';
-import { DepositScreen } from '../components/screen/depositScreen';
+import { SettingScreen } from '../components/screen/settingScreen';
+import { WalletScreen } from '../components/screen/walletScreen';
+import { useLoginData } from '../src/data/login';
 
 const queryClient = new QueryClient();
 const Stack = createNativeStackNavigator();
@@ -31,16 +30,11 @@ if (
 
 export default function App() {
 
-  useEffect(() => {
-    fetchLoginData();
-    console.log(Platform.OS);
-  }, []);
-
   const loginData = useLoginData();
 
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
-
+      <Init />
       <NavigationContainer>
         <QueryClientProvider client={queryClient}>
           {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
