@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet } from "react-native";
-import { showTranscationQueueModal } from "../base/screenInit";
+import { showTranscationQueueModal } from "../base/modalInit";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 

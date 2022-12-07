@@ -6,9 +6,8 @@ import MVStack from "../baseUI/mVStack";
 import SettingItem from "../item/settingItem";
 
 export function SessionScreen() {
-  const navigation = useNavigation();
   return (
-    <BaseScreen isHeaderBack>
+    <BaseScreen isNavigationBarBack>
       <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
         <MText style={{ marginVertical: 6 }}>Active Sessions</MText>
       </MVStack>

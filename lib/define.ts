@@ -1,18 +1,11 @@
-import { WalletRequestHandler } from '@0xsodium/provider';
+import { ConnectOptions, WalletRequestHandler } from '@0xsodium/provider';
 
 export const fixWidth = 720;
 
-export type AuthData = {
-  isLogin: true,
+export interface AuthData {
+  isLogin: boolean,
   blockchainAddress: string,
   wallet: WalletRequestHandler
-} | {
-  isLogin: false
-}
-
-export interface IModalParam {
-  visible?: boolean,
-  param?: unknown,
 }
 
 export interface IDepositItemData {
@@ -32,7 +25,8 @@ export enum Screens {
   Coin = 'Coin',
   Send = 'Send',
   Deposit = 'Deposit',
-  Login = 'Login'
+  Login = 'Login',
+  Connect = 'Connect',
 }
 
 export type ScreenParamList = {
@@ -45,4 +39,40 @@ export type ScreenParamList = {
   Send: undefined,
   Deposit: undefined,
   Login: undefined,
+  Connect: undefined,
+}
+
+export interface IConnectScreenParam {
+  continueClick: () => void,
+  cancelClick: () => void,
+  options: ConnectOptions,
+}
+
+
+// ---------------------modal-------------------------
+export interface IModalParam {
+  visible?: boolean,
+  param?: unknown,
+}
+
+export interface ISignMessageModalParam {
+  // signeeIcon: string,
+  // signeeName: string,
+  // signeeAddress: string,
+  // signMessage: string,
+  continueClick: () => Promise<void>,
+  cancelClick: () => void,
+  options: ConnectOptions,
+}
+
+export interface IDeployConfirmModalParam {
+  continueClick: () => void,
+  cancelClick: () => void,
+  options: ConnectOptions,
+}
+
+export interface ISignTranscationModalParam {
+  continueClick: () => Promise<void>,
+  cancelClick: () => void,
+  options: ConnectOptions,
 }

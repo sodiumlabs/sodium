@@ -4,21 +4,22 @@ import { BaseModal } from '../base/baseModal';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import TranscationQueueItem from '../item/transcationQueueItem';
-import { showTranscationModal, showTranscationQueueModal } from '../base/screenInit';
+import { showTranscationDetailModal, showTranscationQueueModal } from '../base/modalInit';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
+import { IModalParam } from '../../lib/define';
 
-export const TranscationQueueModal = (props: { visible?: boolean, hideModal: () => void }) => {
-  const { visible, hideModal } = props;
-
+export const TranscationQueueModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
+  const { modalParam, hideModal } = props;
+  const param = modalParam.param;
   const onQueueItemClick = () => {
     showTranscationQueueModal(false);
-    showTranscationModal(true);
+    showTranscationDetailModal(true);
   }
 
   return (
     <BaseModal
-      visible={visible}
+      visible={modalParam.visible}
       hideModal={hideModal}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>

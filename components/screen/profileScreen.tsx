@@ -5,9 +5,8 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 
 export function ProfileScreen() {
-  const navigation = useNavigation();
   return (
-    <BaseScreen isHeaderBack >
+    <BaseScreen isNavigationBarBack >
       <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
         <MText style={{ marginVertical: 6 }}>Profile</MText>
 

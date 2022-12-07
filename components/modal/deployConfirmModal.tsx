@@ -1,24 +1,23 @@
 import { StyleSheet } from 'react-native';
-import { IModalParam } from '../../lib/define';
-// import { Button, Card, Modal, Text } from '@ui-kitten/components';
+import { IModalParam, IDeployConfirmModalParam } from '../../lib/define';
 import { BaseModal } from '../base/baseModal';
-import MImage from '../baseUI/mImage';
+import MButton from '../baseUI/mButton';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
-export const ComModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
+export const DeployConfirmModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
-  const param = modalParam.param;
+  const param = modalParam.param as IDeployConfirmModalParam;
   return (
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
-      contentHeight={300}
+      contentHeight={400}
     >
       <MVStack stretchH stretchW style={{ 'alignItems': 'center' }}>
-        <MImage size={20} />
-        <MText>Error</MText>
-        <MText>Fail to fetch</MText>
+        <MText>You Soduim wallet needs to be deployed on ploygon to sign messages.</MText>
+        <MButton title={'Deploy'} />
+        <MButton title={'Cancel'} />
       </MVStack>
     </BaseModal>
   );

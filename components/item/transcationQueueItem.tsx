@@ -2,15 +2,14 @@
 
 
 
-import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, StyleSheet } from 'react-native';
+import { useNavigation } from '../../lib/navigation';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 
 export default function TranscationQueueItem(props: { onPress: () => void }) {
   const { onPress } = props;
-  const navigation = useNavigation();
   return (
     <Pressable onPress={() => onPress()}>
       <MHStack style={styles.container} stretchW>

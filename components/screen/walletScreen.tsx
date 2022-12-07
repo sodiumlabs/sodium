@@ -1,7 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
-import { Pressable, StyleSheet, TextStyle } from 'react-native';
+import { StyleSheet } from 'react-native';
 import usePost from "../../lib/api/Test";
+import { Screens } from '../../lib/define';
 import { BaseScreen } from "../base/baseScreen";
+import { showComModal, showDeployModal } from '../base/modalInit';
+import { navigation } from '../base/navigationInit';
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
@@ -16,7 +18,6 @@ import { RequestTranscationItem } from "../item/requestTranscationItem";
 export function WalletScreen() {
 
   const query = usePost(1);
-  const navigation = useNavigation();
 
   return (
     <BaseScreen >
@@ -28,8 +29,9 @@ export function WalletScreen() {
         </MVStack>
 
         <MHStack style={styles.operate}>
-          <WalletButton title='Send' onPress={() => navigation.navigate('Send', {})} />
-          <WalletButton title='Deposit' onPress={() => navigation.navigate('Deposit')} />
+          <WalletButton title='Send' onPress={() => navigation.navigate(Screens.Send)} />
+          {/* <WalletButton title='Send' onPress={() => navigation.navigate(Screens.Connect, { continueClick: () => console.log("continue"), cancelClick: () => console.log("cancel") })} /> */}
+          <WalletButton title='Deposit' onPress={() => navigation.navigate(Screens.Deposit)} />
         </MHStack>
 
         <RequestTranscationItem />
@@ -46,6 +48,7 @@ export function WalletScreen() {
         </MVStack >
 
       </MVStack>
+
     </BaseScreen>
   );
 }
@@ -58,7 +61,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15
   },
   balance: {
-    marginBottom: 50
+    marginBottom: 50,
+    alignItems: 'center'
   },
   operate: {
   },

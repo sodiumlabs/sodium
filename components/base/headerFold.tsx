@@ -1,16 +1,15 @@
 
-import { createRef, Dispatch, SetStateAction, useState } from 'react';
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 import { useAuth } from '../../lib/data/auth';
-import MText from '../baseUI/mText';
-import MHStack from '../baseUI/mHStack';
-import { useNavigation } from '@react-navigation/native';
 import MAnimView from '../baseUI/mAnimView';
+import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
+import MText from '../baseUI/mText';
+import { navigation } from './navigationInit';
 
 export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<boolean>>, isBack?: boolean }) {
   const authData = useAuth();
-  const navigation = useNavigation();
   const [visible, setVisible] = useState(true);
 
   return (

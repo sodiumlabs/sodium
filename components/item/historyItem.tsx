@@ -6,13 +6,12 @@ import { Image, Pressable, StyleSheet, TextInputProps } from 'react-native';
 import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { useNavigation } from '@react-navigation/native';
 import MLineLR from '../baseUI/mLineLR';
 import MImage from '../baseUI/mImage';
+import { useNavigation } from '../../lib/navigation';
 
 export default function HistoryItem(props: { onPress: () => void }) {
   const { onPress } = props;
-  const navigation = useNavigation();
   return (
     <Pressable onPress={() => onPress()}>
       <MVStack style={styles.container} stretchW>

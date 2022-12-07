@@ -1,16 +1,21 @@
-import { useRef, useEffect, useMemo } from 'react';
-import { Animated, Easing, StyleSheet, Modal, TouchableWithoutFeedback, View, ViewProps, Pressable } from 'react-native';
+import { useEffect, useMemo, useRef } from 'react';
+import { Animated, Dimensions, Easing, Modal, Pressable, StyleSheet, TouchableWithoutFeedback, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
 import MVStack from '../baseUI/mVStack';
 
-export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void }) => {
-  const { visible, hideModal, isFullScreen, isAnim = true } = props;
+export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void, contentHeight?: number }) => {
+  const screenHeight = Dimensions.get('screen').height;
+
+  let { visible, hideModal, isFullScreen, isAnim = true, contentHeight = screenHeight } = props;
+  let marginTop = Math.max(screenHeight - contentHeight, 100);
+
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const isAdapterWeb = useAdapterWeb();
   const insets = useSafeAreaInsets();
   useEffect(() => {
+    // console.log(size[1]);
     if (!visible) {
       fadeAnim.setValue(0);
     } else {
@@ -28,14 +33,14 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
     if (isAdapterWeb) {
       return {
         maxWidth: isFullScreen ? 'auto' : fixWidth,
-        marginVertical: isFullScreen ? 0 : 100,
+        marginVertical: isFullScreen ? 0 : marginTop / 2,
         borderRadius: 15
       }
     }
 
     return {
       maxWidth: isFullScreen ? 'auto' : fixWidth,
-      marginTop: isFullScreen ? 0 : 100,
+      marginTop: isFullScreen ? 0 : marginTop,
       paddingBottom: insets.bottom,
       borderTopLeftRadius: 15,
       borderTopRightRadius: 15,
