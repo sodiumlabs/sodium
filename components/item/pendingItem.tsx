@@ -6,7 +6,6 @@ import { ActivityIndicator, Image, Pressable, StyleSheet, TextInputProps, View }
 import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { useNavigation } from '@react-navigation/native';
 import MLineLR from '../baseUI/mLineLR';
 import MImage from '../baseUI/mImage';
 import { Divider } from '@ui-kitten/components';

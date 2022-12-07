@@ -1,24 +1,81 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
+import { showDeployConfirmModal, showSignMessageModal, showSignTranscationModal } from '../../components/base/modalInit';
+import { navigation } from '../../components/base/navigationInit';
+import { getAuth } from '../data/auth';
+import { IConnectScreenParam, IDeployConfirmModalParam, ISignTranscationModalParam, Screens, ISignMessageModalParam } from '../define';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
-        throw new Error('Method not implemented.');
+        return new Promise((tResolve: (value: PromptConnectDetails) => void, tReject: () => void) => {
+            const continueClick = async () => {
+                const auth = getAuth();
+                const result = await auth.wallet.connect(options) as PromptConnectDetails;
+                tResolve(result);
+            }
+            navigation.navigate(Screens.Connect,
+                {
+                    continueClick: continueClick,
+                    cancelClick: tReject,
+                    options: options
+                } as IConnectScreenParam
+            );
+        });
     }
 
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        throw new Error('Method not implemented.');
+        return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
+            const continueClick = async () => {
+                const auth = getAuth();
+                const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
+                tResolve(result);
+            }
+            showSignTranscationModal(true, {
+                continueClick: continueClick,
+                cancelClick: () => tReject(),
+                options: options
+            } as ISignTranscationModalParam);
+        });
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        throw new Error('Method not implemented.');
+        return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
+            const continueClick = async () => {
+                const auth = getAuth();
+                const txnResponse = await auth.wallet['signer'].sendTransaction(txn, chaindId);
+                tResolve(txnResponse.hash);
+            }
+            showSignTranscationModal(true, {
+                continueClick: continueClick,
+                cancelClick: () => tReject(),
+                options: options
+            } as ISignTranscationModalParam);
+        });
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
-        throw new Error('Method not implemented.');
+
+        return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
+            const continueClick = async () => {
+                const auth = getAuth();
+                const sign = await auth.wallet['signer'].signMessage(message.message, message.chainId);
+                tResolve(sign);
+            }
+            showSignMessageModal(true, {
+                continueClick: continueClick,
+                cancelClick: () => tReject(),
+                options: options
+            } as ISignMessageModalParam);
+        });
     }
 
     promptConfirmWalletDeploy(chainId: number, options?: ConnectOptions | undefined): Promise<boolean> {
-        throw new Error('Method not implemented.');
+        return new Promise((tResolve: (value: boolean) => void, tReject: () => void) => {
+            showDeployConfirmModal(true, {
+                continueClick: () => tResolve(true),
+                cancelClick: () => tReject(),
+                options: options,
+            } as IDeployConfirmModalParam);
+        });
     }
 }

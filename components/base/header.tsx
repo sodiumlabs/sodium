@@ -1,80 +1,38 @@
 
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
-import { useCallback, useState } from 'react';
-import { StyleSheet, Image, Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useAdapterWeb } from '../../lib/hook/adapter';
+import { Screens } from '../../lib/define';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
-import MVStack from '../baseUI/mVStack';
-import HeaderExpansion from './headerExpansion';
-import HeaderFold from './headerFold';
+import { navigation } from './navigationInit';
 
 
-
-export default function Header(props: { isBack?: boolean }) {
-  const [isFold, setIsFold] = useState(true);
+export default function Header(props) {
   const insets = useSafeAreaInsets();
-  const isAdapterWeb = useAdapterWeb();
-  const navigation = useNavigation();
-
-  useFocusEffect(
-    useCallback(() => {
-      // Do something when the screen is focused
-      return () => {
-        // Do something when the screen is unfocused
-        // Useful for cleanup functions
-        setIsFold(true);
-      };
-    }, [])
-  );
-
-
 
   return (
-    // { top: insets.top }
     <MHStack stretchW style={[styles.container, { top: insets.top }]}>
+      <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
 
-      {
-        isAdapterWeb && (
-          <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
-            <MHStack style={{ width: 222, position: 'absolute', right: 0 }}>
-              {
-                isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isBack} /> : <HeaderExpansion setIsFold={setIsFold} />
-              }
-            </MHStack>
+        <MImage size={40} style={{ position: 'absolute', left: 0 }} />
 
-            <MImage size={40} style={{ position: 'absolute', left: 0 }} />
+        <Pressable onPress={() => navigation.navigate(Screens.Wallet)}>
+          <MLineLR
+            left={<MImage size={20} />}
+            right={<MText>wallet</MText>}
+          />
+        </Pressable>
 
-            <Pressable onPress={() => navigation.navigate('Wallet')}>
-              <MLineLR
-                left={<MImage size={20} />}
-                right={<MText>wallet</MText>}
-              />
-            </Pressable>
+        <Pressable onPress={() => navigation.navigate(Screens.History)}>
+          <MLineLR
+            left={<MImage size={20} />}
+            right={<MText>history</MText>}
+          />
+        </Pressable>
 
-            <Pressable onPress={() => navigation.navigate('History')}>
-              <MLineLR
-                left={<MImage size={20} />}
-                right={<MText>history</MText>}
-              />
-            </Pressable>
-
-          </MHStack>
-
-        )
-      }
-      {
-        !isAdapterWeb && (
-          <MHStack stretchW>
-            {
-              isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isBack} /> : <HeaderExpansion setIsFold={setIsFold} />
-            }
-          </MHStack>
-        )
-      }
+      </MHStack>
 
     </MHStack>
   );
@@ -83,7 +41,7 @@ export default function Header(props: { isBack?: boolean }) {
 const styles = StyleSheet.create({
   container: {
     zIndex: 10,
-    top: 0,
+    // top: 0,
     backgroundColor: 'transparent',
     alignItems: 'center',
     justifyContent: 'center',

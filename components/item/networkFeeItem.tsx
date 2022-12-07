@@ -1,7 +1,7 @@
 
 
-import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, StyleSheet, TextInputProps } from 'react-native';
+import { useNavigation } from '../../lib/navigation';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -10,7 +10,6 @@ import MVStack from '../baseUI/mVStack';
 
 export default function NetworkFeeItem(props: TextInputProps) {
   const { style, ...reset } = props;
-  const navigation = useNavigation();
   return (
     <Pressable onPress={undefined}>
       <MHStack style={styles.container} stretchW>

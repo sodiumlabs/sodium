@@ -2,7 +2,6 @@
 
 
 
-import { useNavigation } from '@react-navigation/native';
 import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
 import { useRef, useState, useEffect, useMemo } from 'react';
 import { Pressable, StyleSheet, Image, Linking, TouchableOpacity } from 'react-native';
@@ -16,10 +15,10 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { MDropdown } from '../baseUI/mDropdown';
 import MButton from '../baseUI/mButton';
+import { useNavigation } from '../../lib/navigation';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
-  const navigation = useNavigation();
   const [selectedYouBuyIndex, setSelectedYouBuyIndex] = useState(new IndexPath(0));
   const [selectedYouPayIndex, setSelectedYouPayIndex] = useState(new IndexPath(0));
 
@@ -57,7 +56,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
               <MText>Rate : _</MText>
             </MVStack>
             <MVStack stretchW style={{ alignItems: 'center' }}>
-              <MButton styles={{ 'width': '100%' }} title={'Deposit'} />
+              <MButton style={{ 'width': '100%' }} title={'Deposit'} />
               <MText>You will be redirected to the third party page</MText>
               <MText>The process would take approximately 10 - 15 min</MText>
               <TouchableOpacity onPress={() => Linking.openURL('https://chaingas.shop/')}>

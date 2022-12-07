@@ -1,29 +1,38 @@
-import { ScrollView, StyleSheet, Image, Pressable, Text } from 'react-native';
-// import { Button, Card, Modal, Text } from '@ui-kitten/components';
+import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
+import { Divider } from '@ui-kitten/components';
+import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
+import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
-import MButton from '../baseUI/mButton';
+import { showSignTranscationModal, showTranscationQueueModal } from '../base/modalInit';
+import NetworkFeeItem from '../item/networkFeeItem';
+import { useEffect, useState } from 'react';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
+import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import MLineLR from '../baseUI/mLineLR';
-import { Divider } from '@ui-kitten/components';
-import { BaseFoldFrame } from '../base/baseFoldFrame';
-import { showTranscationQueueModal, showSignModal } from '../base/screenInit';
-import CoinItem from '../item/coinItem';
-import NetworkFeeItem from '../item/networkFeeItem';
-import MImage from '../baseUI/mImage';
 
-export const SignModal = (props: { visible?: boolean, hideModal: () => void }) => {
-  const { visible, hideModal } = props;
-  // const { width, height } = Dimensions.get('window');
+// sign transcation - send transcation - deploy transcation
+
+export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
+
+  const { modalParam, hideModal } = props;
+  const param = modalParam.param as ISignTranscationModalParam;
+  const [isLoading, setIsLoading] = useState(false);
+  // reset
+  useEffect(() => {
+    if (!modalParam.visible) {
+      setIsLoading(false);
+    }
+  }, [modalParam.visible])
+
   const onClickTranscationQueue = () => {
-    showSignModal(false);
+    showSignTranscationModal(false);
     showTranscationQueueModal(true);
   }
-
   return (
     <BaseModal
-      visible={visible}
+      visible={modalParam.visible}
       hideModal={hideModal}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>

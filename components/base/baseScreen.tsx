@@ -5,34 +5,38 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
 import MVStack from '../baseUI/mVStack';
+import Floater from './floater';
 import Footer from "./footer";
 import Header from "./header";
-import ScreenInit from './screenInit';
+import { SingletonInit } from './singletonInit';
 
 
-export function BaseScreen(props: { children?: ReactNode, hasHeaderFooter?: boolean, isHeaderBack?: boolean }) {
-  const hasHeaderFooter = props.hasHeaderFooter === undefined ? true : props.hasHeaderFooter;
+export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boolean, hasFloatingBar?: boolean, isNavigationBarBack?: boolean }) {
+  const hasNavigationBar = props.hasNavigationBar === undefined ? true : props.hasNavigationBar;
+  const hasFloatingBar = props.hasFloatingBar === undefined ? true : props.hasFloatingBar;
+
   const isAdapterWeb = useAdapterWeb();
   return (
     <SafeAreaView style={styles.container}>
-      {hasHeaderFooter && (
-        <>
-          <Header isBack={props.isHeaderBack} />
-          {!isAdapterWeb && <Footer />}
-        </>)
-      }
+      {hasFloatingBar && <Floater isNavigationBarBack={props.isNavigationBarBack} />}
+      {hasNavigationBar && (!isAdapterWeb ? <Footer /> : <Header />)}
+      <SingletonInit />
+      {/* <SingletonInit hasFloatingBar={hasFloatingBar} hasNavigationBar={hasFloatingBar} isNavigationBarBack={props.isNavigationBarBack} /> */}
+
+
       <MVStack stretchW style={styles.content}>
 
         <ScrollView style={{ width: '100%', height: '100%', }}>
 
-          <MVStack stretchW style={{ alignSelf: 'center', maxWidth: fixWidth, marginTop: hasHeaderFooter ? 80 : 0, marginBottom: hasHeaderFooter ? 60 : 0 }}>
+          <MVStack stretchW style={{ alignSelf: 'center', maxWidth: fixWidth, marginTop: hasNavigationBar ? 80 : 0, marginBottom: hasNavigationBar ? 60 : 0 }}>
             {
               props.children
             }
           </MVStack>
         </ScrollView>
+
       </MVStack >
-      <ScreenInit />
+
     </SafeAreaView >
   );
 }

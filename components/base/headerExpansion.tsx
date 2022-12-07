@@ -1,17 +1,17 @@
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet } from 'react-native';
+import { Dispatch, SetStateAction, useState } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
 import { loginOut, useAuth } from '../../lib/data/auth';
+import { Screens } from '../../lib/define';
 import MAnimView from '../baseUI/mAnimView';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { useNavigation } from '../../lib/navigation';
+import { navigation } from './navigationInit';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
   const authData = useAuth();
-  const navigation = useNavigation();
 
   if (!authData.isLogin) {
     // TODO 这里应该跳转到登录页
@@ -35,8 +35,8 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
         <MVStack style={{ flex: 1 }}>
           <MText >{authData.blockchainAddress}</MText>
           <MHStack >
-            <MButton title='Copy' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
-            <MButton title='Receive' onPress={undefined} styles={{ 'margin': 5 }}></MButton>
+            <MButton title='Copy' onPress={undefined} style={{ 'margin': 5 }}></MButton>
+            <MButton title='Receive' onPress={undefined} style={{ 'margin': 5 }}></MButton>
           </MHStack>
         </MVStack>
         <Pressable onPress={close}>
@@ -63,8 +63,8 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
       </Pressable>
 
       <MHStack style={styles.button}>
-        <MButton title='Settings' onPress={() => { close(); navigation.navigate('Setting'); }} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-        <MButton title='Sign Out' onPress={() => loginOut()} styles={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Settings' onPress={() => { close(); navigation.navigate(Screens.Setting); }} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Sign Out' onPress={() => loginOut()} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
       </MHStack>
 
     </MAnimView>

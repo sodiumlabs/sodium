@@ -2,19 +2,19 @@
 
 
 
-import { Image, Pressable, StyleSheet, TextInputProps } from 'react-native';
+import { Pressable, StyleSheet, TextInputProps } from 'react-native';
+import { Screens } from '../../lib/define';
+import { navigation } from '../base/navigationInit';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
+import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { useNavigation } from '@react-navigation/native';
-import MLineLR from '../baseUI/mLineLR';
-import MImage from '../baseUI/mImage';
 
 export default function CoinItem(props: TextInputProps) {
   const { style, ...reset } = props;
-  const navigation = useNavigation();
   return (
-    <Pressable onPress={() => navigation.navigate('Coin')}>
+    <Pressable onPress={() => navigation.navigate(Screens.Coin)}>
       <MHStack style={styles.container} stretchW>
         <MImage size={32} />
 

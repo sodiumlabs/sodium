@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
-import { showTranscationModal } from "../base/screenInit";
+import { showTranscationDetailModal } from "../base/modalInit";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import HistoryItem from "../item/historyItem";
@@ -15,7 +15,7 @@ export function HistoryScreen() {
 
         <MVStack stretchW>
           <MText>Last Week</MText>
-          <HistoryItem onPress={() => showTranscationModal(true)} />
+          <HistoryItem onPress={() => showTranscationDetailModal(true)} />
         </MVStack>
       </MVStack>
     </BaseScreen>

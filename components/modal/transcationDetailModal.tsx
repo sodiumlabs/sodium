@@ -7,14 +7,15 @@ import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { TranscationDetailItem } from '../item/transcationDetailItem';
+import { IModalParam } from '../../lib/define';
 
-export const TranscationDetailModal = (props: { visible?: boolean, hideModal: () => void }) => {
-  const { visible, hideModal } = props;
-  // const { width, height } = Dimensions.get('window');
+export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
+  const { modalParam, hideModal } = props;
+  const param = modalParam.param;
 
   return (
     <BaseModal
-      visible={visible}
+      visible={modalParam.visible}
       hideModal={hideModal}
     >
       <ScrollView style={{ width: '100%' }}>
@@ -22,7 +23,7 @@ export const TranscationDetailModal = (props: { visible?: boolean, hideModal: ()
         <TranscationDetailItem style={styles.marginV} />
         <TranscationDetailItem style={styles.marginV} />
 
-        <MButton styles={{ width: '100%', marginVertical: 20 }} title={'View On Polygon'}></MButton>
+        <MButton style={{ width: '100%', marginVertical: 20 }} title={'View On Polygon'}></MButton>
 
         <MVStack stretchW style={styles.marginV}>
           <MText>Status</MText>

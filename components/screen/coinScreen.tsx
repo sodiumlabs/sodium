@@ -1,23 +1,23 @@
-import { useNavigation } from "@react-navigation/native";
 import { Divider } from "@ui-kitten/components";
 import { useState } from "react";
-import { Image, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { Screens } from '../../lib/define';
+import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { BaseScreen } from "../base/baseScreen";
+import { showTranscationDetailModal } from '../base/modalInit';
+import { navigation } from "../base/navigationInit";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
+import MImage from "../baseUI/mImage";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import HistoryItem from "../item/historyItem";
-import { showTranscationModal } from '../base/screenInit';
-import { BaseFoldFrame } from "../base/baseFoldFrame";
-import MImage from "../baseUI/mImage";
 
 export function CoinScreen() {
   const [selectedIndex, setSelectedIndex] = useState(null);
 
-  const navigation = useNavigation();
   return (
-    <BaseScreen isHeaderBack>
+    <BaseScreen isNavigationBarBack>
       <MVStack stretchW style={{ alignItems: 'center', marginVertical: 40, paddingHorizontal: 15 }}>
         <MImage size={64} />
         <MText style={{ marginVertical: 6 }}>USDC</MText>
@@ -36,7 +36,7 @@ export function CoinScreen() {
         </MVStack>
 
         <MVStack stretchW style={{ marginVertical: 20 }}>
-          <MButton styles={{ 'width': '100%', height: 50 }} title={"Send USDC"} onPress={() => navigation.navigate('Send')} />
+          <MButton style={{ 'width': '100%', height: 50 }} title={"Send USDC"} onPress={() => navigation.navigate(Screens.Send)} />
         </MVStack>
 
         <BaseFoldFrame header={<MText >Detail</MText>}>
@@ -70,7 +70,7 @@ export function CoinScreen() {
 
         <MVStack stretchW>
           <MText>Last Week</MText>
-          <HistoryItem onPress={() => showTranscationModal(true)} />
+          <HistoryItem onPress={() => showTranscationDetailModal(true)} />
         </MVStack>
 
       </MVStack>

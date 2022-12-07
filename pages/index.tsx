@@ -3,22 +3,15 @@ import * as eva from '@eva-design/eva';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApplicationProvider } from '@ui-kitten/components';
-import {
-  UIManager, Platform
-} from 'react-native';
+import { Platform, UIManager } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { useAuth } from '../lib/data/auth';
 import {
-  CoinScreen,
-  SendScreen,
-  SettingScreen,
-  ProfileScreen,
-  SessionScreen,
-  DepositScreen,
+  CoinScreen, ConnectScreen, DepositScreen,
   HistoryScreen,
-  LoginScreen,
-  WalletScreen
+  LoginScreen, ProfileScreen, SendScreen, SessionScreen, SettingScreen, WalletScreen
 } from '../components/screen';
+import { useAuth } from '../lib/data/auth';
 import { Screens } from '../lib/define';
 
 const queryClient = new QueryClient();
@@ -35,32 +28,36 @@ if (
 export default function App() {
   const authData = useAuth();
   return (
-    <ApplicationProvider {...eva} theme={eva.light}>
-      <NavigationContainer>
-        <QueryClientProvider client={queryClient}>
-          {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
-          <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
-            {
-              authData.isLogin ? (
-                <>
-                  <Stack.Screen name={Screens.Wallet} component={WalletScreen} />
-                  <Stack.Screen name={Screens.Setting} component={SettingScreen} />
-                  <Stack.Screen name={Screens.Profile} component={ProfileScreen} />
-                  <Stack.Screen name={Screens.Session} component={SessionScreen} />
-                  <Stack.Screen name={Screens.History} component={HistoryScreen} />
-                  <Stack.Screen name={Screens.Coin} component={CoinScreen} />
-                  <Stack.Screen name={Screens.Send} component={SendScreen} />
-                  <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
-                </>
-              ) : (
-                <>
-                  <Stack.Screen name={Screens.Login} component={LoginScreen} />
-                </>
-              )
-            }
-          </Stack.Navigator>
-        </QueryClientProvider>
-      </NavigationContainer>
-    </ApplicationProvider>
+    <SafeAreaProvider>
+      <ApplicationProvider {...eva} theme={eva.light}>
+        <NavigationContainer>
+          <QueryClientProvider client={queryClient}>
+
+            {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
+            <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
+              {
+                authData.isLogin ? (
+                  <>
+                    <Stack.Screen name={Screens.Wallet} component={WalletScreen} />
+                    <Stack.Screen name={Screens.Setting} component={SettingScreen} />
+                    <Stack.Screen name={Screens.Profile} component={ProfileScreen} />
+                    <Stack.Screen name={Screens.Session} component={SessionScreen} />
+                    <Stack.Screen name={Screens.History} component={HistoryScreen} />
+                    <Stack.Screen name={Screens.Coin} component={CoinScreen} />
+                    <Stack.Screen name={Screens.Send} component={SendScreen} />
+                    <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
+                    <Stack.Screen name={Screens.Connect} component={ConnectScreen} />
+                  </>
+                ) : (
+                  <>
+                    <Stack.Screen name={Screens.Login} component={LoginScreen} />
+                  </>
+                )
+              }
+            </Stack.Navigator>
+          </QueryClientProvider>
+        </NavigationContainer>
+      </ApplicationProvider>
+    </SafeAreaProvider>
   );
 }

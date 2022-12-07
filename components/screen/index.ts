@@ -7,3 +7,4 @@ export * from './sendScreen';
 export * from './sessionScreen';
 export * from './settingScreen';
 export * from './walletScreen';
+export * from './connectScreen';
