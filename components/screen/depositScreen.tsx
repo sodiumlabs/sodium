@@ -19,7 +19,6 @@ export function DepositScreen() {
     <BaseScreen >
       <MVStack stretchW style={{ alignItems: 'center', marginTop: 40, paddingHorizontal: 15 }}>
         <MText style={{ marginVertical: 6 }}>Deposit</MText>
-
         <DepositItem depositItemData={curDepositItem} isSelected={true} onDeposiItemClick={onDeposiItemClick} />
       </MVStack>
     </BaseScreen>

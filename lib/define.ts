@@ -1,11 +1,19 @@
-import { ConnectOptions, WalletRequestHandler } from '@0xsodium/provider';
+import { ConnectOptions, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 
 export const fixWidth = 720;
 
-export interface AuthData {
-  isLogin: boolean,
+export type AuthData = {
+  isLogin: true,
   blockchainAddress: string,
-  wallet: WalletRequestHandler
+  wallet: WalletRequestHandler,
+  web3signer: Web3Signer
+} | {
+  isLogin: false
+}
+
+export interface IModalParam {
+  visible?: boolean,
+  param?: unknown,
 }
 
 export interface IDepositItemData {

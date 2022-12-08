@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import usePost from "../../lib/api/Test";
 import { Screens } from '../../lib/define';
 import { BaseScreen } from "../base/baseScreen";
-import { showComModal, showDeployModal } from '../base/modalInit';
+import { showComModal } from '../base/modalInit';
 import { navigation } from '../base/navigationInit';
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";

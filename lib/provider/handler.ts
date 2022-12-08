@@ -1,4 +1,4 @@
-import { WalletRequestHandler, WalletUserPrompter } from '@0xsodium/provider';
+import { WalletRequestHandler, WalletUserPrompter, Web3Signer, Web3Provider } from '@0xsodium/provider';
 import { testnetNetworks } from '@0xsodium/network';
 import { Account, AccountOptions } from '@0xsodium/wallet';
 import { Platform } from 'react-native';
@@ -9,10 +9,12 @@ import { WalletPrompter } from './prompter';
 
 export type SodiumWallet = {
     address: string,
-    handler: WalletRequestHandler
+    handler: WalletRequestHandler,
+    web3signer: Web3Signer
 }
 
 const prompter: WalletUserPrompter = new WalletPrompter();
+// const prompter: WalletUserPrompter = null;
 
 export const walletAtom = atom<SodiumWallet | null>(null);
 
@@ -50,13 +52,13 @@ export const initWalletByTest = async (email: string) => {
     await walletHandler.signIn(account);
     const walletAddress = await walletHandler.getAddress();
 
-    // walletHandler.walletSession()
-
-    console.debug("wallet address: ", walletAddress);
+    const provider = new Web3Provider(walletHandler, walletHandler.defaultNetworkId);
+    const web3signer = new Web3Signer(provider, parseInt(`${walletHandler.defaultNetworkId}`))
 
     walletAtom.set({
         address: walletAddress,
-        handler: walletHandler
+        handler: walletHandler,
+        web3signer: web3signer
     });
 }
 
