@@ -19,6 +19,11 @@ export function SendScreen() {
   // 例子
   const sendNativeToken = useCallback(async (to: string, amount: BigNumberish) => {
     if (authData.isLogin) {
+      console.debug(await authData.web3signer.getTokenRates([
+        "0x000"
+      ]));
+      console.debug(await authData.web3signer.getTokens(authData.blockchainAddress));
+
       const tx: Transaction =  {
         to: to,
         value: amount,
