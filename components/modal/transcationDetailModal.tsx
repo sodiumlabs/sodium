@@ -8,10 +8,16 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { TranscationDetailItem } from '../item/transcationDetailItem';
 import { IModalParam } from '../../lib/define';
+import { TransactionHistory } from '@0xsodium/provider';
+import { formatTimeYMDHMS } from '../../lib/common/time';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
-  const param = modalParam.param;
+  if (!modalParam.param) return <></>
+
+  const history = modalParam.param as TransactionHistory;
+  const transfer = history.erc20Transfers[0];
+  const token = transfer.token;
 
   return (
     <BaseModal
@@ -20,28 +26,32 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
     >
       <ScrollView style={{ width: '100%' }}>
         <MText>Transaction Details</MText>
-        <TranscationDetailItem style={styles.marginV} />
-        <TranscationDetailItem style={styles.marginV} />
+        {
+          history.erc20Transfers.map((transfer, index) => {
+            return <TranscationDetailItem key={`${transfer.from}${transfer.to}${index}`} style={styles.marginV} transfer={transfer} />
+          })
+        }
+
 
         <MButton style={{ width: '100%', marginVertical: 20 }} title={'View On Polygon'}></MButton>
 
         <MVStack stretchW style={styles.marginV}>
           <MText>Status</MText>
-          <MText >Complete</MText>
+          <MText >{history.type}</MText>
           <Divider />
 
           <MText>Date & Time</MText>
-          <MText>November 24, 2022 2:50:33 pm</MText>
+          <MText>{formatTimeYMDHMS(history.block.blockTimestamp * 1000)}</MText>
           <Divider />
 
           <MText>Transaction Hash</MText>
 
           <MLineLR
-            left={<MText>0x805b5aa7018dad01a082eff3d23c218d8fe473daca4b6d4d0021de1d652c652c</MText>}
+            left={<MText>{history.transactionHash}</MText>}
             right={<MButton title={'copy'} />} />
           <Divider />
 
-          <MLineLR left={<MText>Network</MText>} right={<MText>Polygon</MText>} />
+          <MLineLR left={<MText>Network</MText>} right={<MText>{token.name}</MText>} />
         </MVStack>
       </ScrollView>
 

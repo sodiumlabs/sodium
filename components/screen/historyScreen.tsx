@@ -1,23 +1,12 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from '../../lib/api/history';
 import { BaseScreen } from "../base/baseScreen";
-import { showTranscationDetailModal } from "../base/modalInit";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import HistoryItem from "../item/historyItem";
-import { getScroller } from '../../lib/common/scroller';
-import { TransactionHistory } from "@0xsodium/provider";
-import { getPageDatas } from "../../lib/common/common";
 
 export function HistoryScreen() {
-  const queryHistory = useQueryHistory();
-  let transcationHistorys: TransactionHistory[] = null;
-  if (queryHistory.isSuccess) {
-    transcationHistorys = getPageDatas(queryHistory.data);
-  }
-
-  const onScroll = getScroller(() => !queryHistory.isLoading && queryHistory.hasNextPage && queryHistory.fetchNextPage());
-
+  const [queryHistory, transcationHistorys, onScroll] = useQueryHistory();
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }} onScroll={onScroll} scrollEventThrottle={50}>
@@ -29,7 +18,7 @@ export function HistoryScreen() {
             <MText>Last Week</MText>
             {
               transcationHistorys && transcationHistorys.map((item, index) => {
-                return <HistoryItem key={index} onPress={() => showTranscationDetailModal(true)} />
+                return <HistoryItem key={index} history={item} />
               })
             }
 

@@ -1,3 +1,4 @@
+import { TransactionHistory } from '@0xsodium/provider';
 import { useStore } from '@nanostores/react';
 import { atom } from "nanostores";
 import { IDeployConfirmModalParam, IModalParam, ISignMessageModalParam, ISignTranscationModalParam } from "../../lib/define";
@@ -24,7 +25,7 @@ export const showDeployConfirmModal = (visible: boolean, param?: IDeployConfirmM
   deployConfirmModalAtom.set({ visible: visible, param: param });
 }
 
-export const showTranscationDetailModal = (visible: boolean, param?: unknown) => {
+export const showTranscationDetailModal = (visible: boolean, param?: TransactionHistory) => {
   transcationDetailModalAtom.set({ visible: visible, param: param });
 }
 export const showSignMessageModal = (visible: boolean, param?: ISignMessageModalParam) => {

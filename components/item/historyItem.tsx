@@ -2,39 +2,52 @@
 
 
 
-import { Image, Pressable, StyleSheet, TextInputProps } from 'react-native';
+import { TransactionHistory } from '@0xsodium/provider';
+import { Pressable, StyleSheet } from 'react-native';
+import { formatWei2Price } from '../../lib/common/common';
+import { formatTime } from '../../lib/common/time';
+import { showTranscationDetailModal } from '../base/modalInit';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
+import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import MLineLR from '../baseUI/mLineLR';
-import MImage from '../baseUI/mImage';
-import { useNavigation } from '../../lib/navigation';
 
-export default function HistoryItem(props: { onPress: () => void }) {
-  const { onPress } = props;
+export default function HistoryItem(props: { history: TransactionHistory }) {
+  const { history } = props;
+  const onClick = () => {
+    showTranscationDetailModal(true, history);
+  }
+
+  if (history.type == "failed") {
+    return <></>
+  }
+
+  const transfer = history.erc20Transfers[0];
+  const token = transfer.token;
   return (
-    <Pressable onPress={() => onPress()}>
+    <Pressable onPress={onClick}>
       <MVStack style={styles.container} stretchW>
 
         <MLineLR
           left={
             <MHStack style={{ flex: 1 }}>
-              <MText>Received</MText>
-              <MImage size={16} />
-              <MText> $1.8</MText>
+              <MText>{history.prefix}</MText>
+              <MImage size={16} url={token.centerData.logoURI} />
+              <MText> {token.name}</MText>
             </MHStack>
           }
-          right={<MText>November 24, 2022</MText>}
+          right={<MText>{formatTime(history.block.blockTimestamp * 1000)}</MText>}
         />
 
         <MLineLR
           left={
             <MHStack style={{ flex: 1 }}>
-              <MImage size={16} />
-              <MText>USDC</MText>
+              <MImage size={16} url={token.centerData.logoURI} />
+              <MText>{token.symbol}</MText>
             </MHStack>
           }
-          right={<MText>+ 22</MText>} />
+          right={<MText>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />
 
       </MVStack>
     </Pressable>

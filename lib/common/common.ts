@@ -39,12 +39,12 @@ export const formatPrice2Wei = (tPrice: string, decimals: number = 18): string =
 }
 
 
-export const formatWei2Price = (tPrice: string, decimals: number = 18, toFiexd: number = 2): string => {
-  if (tPrice === undefined || tPrice === null || tPrice == '') {
-    return tPrice;
+export const formatWei2Price = (tWei: string, decimals: number = 18, toFiexd: number = 2): string => {
+  if (tWei === undefined || tWei === null || tWei == '') {
+    return tWei;
   }
-  tPrice = FixedNumber.from(tPrice).mulUnsafe(FixedNumber.from(10 ** toFiexd)).toString();
-  let format = removeAllDecimalPoint(formatFixed(removeAllDecimalPoint(tPrice), decimals));
+  tWei = FixedNumber.from(tWei).mulUnsafe(FixedNumber.from(10 ** toFiexd)).toString();
+  let format = removeAllDecimalPoint(formatFixed(removeAllDecimalPoint(tWei), decimals));
   return FixedNumber.from(format).divUnsafe(FixedNumber.from(10 ** toFiexd)).toString();
 }
 
