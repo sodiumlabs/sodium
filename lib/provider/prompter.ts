@@ -4,6 +4,7 @@ import { showDeployConfirmModal, showSignMessageModal, showSignTranscationModal 
 import { navigation } from '../../components/base/navigationInit';
 import { getAuth } from '../data/auth';
 import { IConnectScreenParam, IDeployConfirmModalParam, ISignTranscationModalParam, Screens, ISignMessageModalParam } from '../define';
+import { transactionQueue } from '../transaction';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
@@ -39,22 +40,26 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
+        const transactionQueueFindIndex = transactionQueue.add(txn);
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
+                transactionQueue.remove(transactionQueueFindIndex);
                 const txnResponse = await auth.wallet['signer'].sendTransaction(txn, chaindId);
                 tResolve(txnResponse.hash);
             }
             showSignTranscationModal(true, {
                 continueClick: continueClick,
-                cancelClick: () => tReject(),
+                cancelClick: () => {
+                    transactionQueue.remove(transactionQueueFindIndex);
+                    tReject();
+                },
                 options: options
             } as ISignTranscationModalParam);
         });
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
-
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
