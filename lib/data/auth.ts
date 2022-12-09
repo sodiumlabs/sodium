@@ -4,6 +4,7 @@ import { AuthData } from "../define";
 import { initWalletByTest, logout, SodiumWallet, walletAtom } from '../provider';
 
 export const authAtom = computed<AuthData, Atom<SodiumWallet | null>>(walletAtom, (w) => {
+  console.log(w);
   if (w === null) {
     return {
       isLogin: false,

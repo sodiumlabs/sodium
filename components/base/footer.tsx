@@ -7,21 +7,27 @@ import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
 import { navigation } from './navigationInit';
+import { BlurView } from 'expo-blur';
 
 export default function Footer() {
   const insets = useSafeAreaInsets();
   const size = useDimensionSize();
   // debugger
   return (
+
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
-      {/* <MVStack stretchW style={[styles.container, { top: size[1] - insets.bottom - 80 }]}> */}
-      <MHStack stretchW style={styles.list}>
-        <MenuButton title='wallet' onPress={() => navigation.navigate(Screens.Wallet)} />
-        <MenuButton title='history' onPress={() => navigation.navigate(Screens.History)} />
-        {/* <MenuButton title='history' onPress={() => showTranscationQueueModal(true)} /> */}
-        {/* <MenuButton title='history' onPress={() => showSignModal(true)} /> */}
-      </MHStack>
+      <BlurView style={{ width: '100%' }}>
+        {/* <MVStack stretchW style={[styles.container, { top: size[1] - insets.bottom - 80 }]}> */}
+        <MHStack stretchW style={styles.list}>
+          <MenuButton title='wallet' onPress={() => navigation.navigate(Screens.Wallet)} />
+          <MenuButton title='history' onPress={() => navigation.navigate(Screens.History)} />
+          {/* <MenuButton title='history' onPress={() => showTranscationQueueModal(true)} /> */}
+          {/* <MenuButton title='history' onPress={() => showSignModal(true)} /> */}
+        </MHStack>
+
+      </BlurView>
     </MVStack>
+
   );
 }
 
@@ -29,7 +35,7 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 10,
     // bottom: 0,
-    // backgroundColor: '#999',
+    backgroundColor: '#rgba(255,255,255,0.7)',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute'

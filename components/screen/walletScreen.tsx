@@ -1,8 +1,7 @@
-import { StyleSheet } from 'react-native';
-import usePost from "../../lib/api/Test";
+import { ScrollView, StyleSheet } from 'react-native';
+import { useQueryTokens } from '../../lib/api/tokens';
 import { Screens } from '../../lib/define';
 import { BaseScreen } from "../base/baseScreen";
-import { showComModal } from '../base/modalInit';
 import { navigation } from '../base/navigationInit';
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
@@ -17,38 +16,42 @@ import { RequestTranscationItem } from "../item/requestTranscationItem";
 
 export function WalletScreen() {
 
-  const query = usePost(1);
+  const tokensQuery = useQueryTokens();
 
   return (
     <BaseScreen >
-      <MVStack stretchW style={styles.container} >
+      <ScrollView style={{ width: '100%', height: '100%' }}>
+        <MVStack stretchW style={styles.container} >
 
-        <MVStack style={styles.balance}>
-          <MText>Balance</MText>
-          <MText>$3.71</MText>
+          <MVStack style={styles.balance}>
+            <MText>Balance</MText>
+            <MText>$3.71</MText>
+          </MVStack>
+
+          <MHStack style={styles.operate}>
+            <WalletButton title='Send' onPress={() => navigation.navigate(Screens.Send)} />
+            <WalletButton title='Deposit' onPress={() => navigation.navigate(Screens.Deposit)} />
+          </MHStack>
+
+          {/* <RequestTranscationItem /> */}
+
+
+          {/* <PendingItem /> */}
+
+          <MInput style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
+
+          <MVStack stretchW style={styles.coins}>
+            <MText style={{ marginVertical: 15 }}>Coins</MText>
+            {
+              tokensQuery.data && tokensQuery.data.map((token, index) => {
+                return <CoinItem key={token.token.address} tokenInfo={token} />
+              })
+            }
+
+          </MVStack >
+
         </MVStack>
-
-        <MHStack style={styles.operate}>
-          <WalletButton title='Send' onPress={() => navigation.navigate(Screens.Send)} />
-          {/* <WalletButton title='Send' onPress={() => navigation.navigate(Screens.Connect, { continueClick: () => console.log("continue"), cancelClick: () => console.log("cancel") })} /> */}
-          <WalletButton title='Deposit' onPress={() => navigation.navigate(Screens.Deposit)} />
-        </MHStack>
-
-        <RequestTranscationItem />
-
-
-        <PendingItem />
-
-        <MInput style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
-
-        <MVStack stretchW style={styles.coins}>
-          <MText style={{ marginVertical: 15 }}>Coins</MText>
-          <CoinItem />
-          <CoinItem />
-        </MVStack >
-
-      </MVStack>
-
+      </ScrollView>
     </BaseScreen>
   );
 }
@@ -56,7 +59,7 @@ export function WalletScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginVertical: 80,
     alignItems: 'center',
     paddingHorizontal: 15
   },

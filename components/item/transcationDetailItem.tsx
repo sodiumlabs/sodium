@@ -19,7 +19,7 @@ export const TranscationDetailItem = (props: ViewProps) => {
       <Divider />
       <MVStack style={styles.marginV}>
         <MText style={{ marginVertical: 5 }}>To</MText>
-        <MHStack stretchW style={{ padding: 15, backgroundColor: '#fff', borderRadius: 15 }}>
+        <MHStack stretchW style={{ padding: 15, backgroundColor: 'white', borderRadius: 15 }}>
           <MImage size={20} />
           <MText style={{ flex: 1 }}>0x8BB759Bb68995343FF1e9D57Ac85Ff5c5Fb79</MText>
           <MImage size={20} />
