@@ -3,8 +3,8 @@
 
 
 import { Pressable, StyleSheet, TextInputProps } from 'react-native';
-import { formatWei2Price, token2Usd } from '../../lib/common/common';
-import { Screens, IUserTokenInfo } from '../../lib/define';
+import { formatWei2Price } from '../../lib/common/common';
+import { IUserTokenInfo, Screens } from '../../lib/define';
 import { navigation } from '../base/navigationInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -32,7 +32,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
           />
 
           <MLineLR
-            left={<MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${token2Usd(tokenInfo.balance.toString(), tokenInfo.rate + '')}</MText>}
+            left={<MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
             right={<MText></MText>} />
         </MVStack>
       </MHStack>

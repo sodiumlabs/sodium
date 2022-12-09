@@ -1,7 +1,7 @@
 import { Divider } from "@ui-kitten/components";
 import { Linking, ScrollView, StyleSheet } from "react-native";
-import { useMClipboard } from "../../lib/common/clipboard";
-import { formatWei2Price, token2Usd } from "../../lib/common/common";
+import { useMClipboard } from "../../lib/hook/clipboard";
+import { formatWei2Price } from "../../lib/common/common";
 import { getBlockExplorer } from "../../lib/common/network";
 import { IUserTokenInfo, Screens } from '../../lib/define';
 import { BaseFoldFrame } from "../base/baseFoldFrame";
@@ -32,7 +32,7 @@ export function CoinScreen(props) {
           </MHStack>
           <MVStack stretchW style={{ backgroundColor: '#999', borderRadius: 15, alignItems: 'center', paddingVertical: 15 }}>
             <MText >Balance</MText>
-            <MText >${token2Usd(tokenInfo.balance.toString(), tokenInfo.rate + '')}</MText>
+            <MText >${tokenInfo.usdBalance}</MText>
             <MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol}</MText>
           </MVStack>
 
