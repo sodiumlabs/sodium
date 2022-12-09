@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
     position: 'relative',
     padding: 10,
     borderRadius: 5,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     zIndex: 1,
   },
   dropdown: {
@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
   option: {
     padding: 10,
     // borderRadius: 5,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
   },
 });

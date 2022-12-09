@@ -11,6 +11,9 @@ export class WalletPrompter implements WalletUserPrompter {
         return new Promise((tResolve: (value: PromptConnectDetails) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
+                if (!auth.isLogin) {
+                    return tReject();
+                }
                 const result = await auth.wallet.connect(options) as PromptConnectDetails;
                 tResolve(result);
             }
@@ -28,6 +31,9 @@ export class WalletPrompter implements WalletUserPrompter {
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
+                if (!auth.isLogin) {
+                    return tReject();
+                }
                 const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
                 tResolve(result);
             }
@@ -45,6 +51,9 @@ export class WalletPrompter implements WalletUserPrompter {
             const continueClick = async () => {
                 const auth = getAuth();
                 transactionQueue.remove(transactionQueueFindIndex);
+                if (!auth.isLogin) {
+                    return tReject();
+                }
                 const txnResponse = await auth.wallet['signer'].sendTransaction(txn, chaindId);
                 tResolve(txnResponse.hash);
             }
@@ -63,6 +72,9 @@ export class WalletPrompter implements WalletUserPrompter {
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
+                if (!auth.isLogin) {
+                    return tReject();
+                }
                 const sign = await auth.wallet['signer'].signMessage(message.message, message.chainId);
                 tResolve(sign);
             }

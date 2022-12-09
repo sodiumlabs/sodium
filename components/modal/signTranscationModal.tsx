@@ -11,6 +11,7 @@ import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import MButton from '../baseUI/mButton';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -29,6 +30,16 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const onClickTranscationQueue = () => {
     showSignTranscationModal(false);
     showTranscationQueueModal(true);
+  }
+  const onConfirmClick = async () => {
+    setIsLoading(true);
+    await param.continueClick();
+    setIsLoading(false);
+    hideModal();
+  }
+  const onCancelClick = () => {
+    param.cancelClick();
+    hideModal();
   }
   return (
     <BaseModal
@@ -110,7 +121,10 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
           </ScrollView>
         </MVStack>
-
+        <MHStack stretchW>
+          <MButton title={'Cancel'} onPress={onCancelClick} isLoading={isLoading} />
+          <MButton title={'Confirm'} onPress={onConfirmClick} isLoading={isLoading} />
+        </MHStack>
       </MVStack>
     </BaseModal>
   );

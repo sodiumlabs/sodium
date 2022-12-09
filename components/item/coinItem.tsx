@@ -3,7 +3,8 @@
 
 
 import { Pressable, StyleSheet, TextInputProps } from 'react-native';
-import { Screens } from '../../lib/define';
+import { formatWei2Price, token2Usd } from '../../lib/common/common';
+import { Screens, IUserTokenInfo } from '../../lib/define';
 import { navigation } from '../base/navigationInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -11,28 +12,28 @@ import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
-export default function CoinItem(props: TextInputProps) {
-  const { style, ...reset } = props;
+export default function CoinItem(props: TextInputProps & { tokenInfo: IUserTokenInfo }) {
+  const { tokenInfo, style, ...reset } = props;
   return (
-    <Pressable onPress={() => navigation.navigate(Screens.Coin)}>
+    <Pressable onPress={() => navigation.navigate(Screens.Coin, tokenInfo)}>
       <MHStack style={styles.container} stretchW>
-        <MImage size={32} />
+        <MImage size={32} url={tokenInfo.token.centerData.logoURI} />
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR
             left={
               <MHStack >
-                <MText>USDC</MText>
+                <MText>{tokenInfo.token.symbol}</MText>
                 <MImage size={12} />
-                <MText>POLYGON</MText>
+                <MText>{tokenInfo.token.name}</MText>
               </MHStack>
             }
-            right={<MText>$3.12</MText>}
+            right={<MText></MText>}
           />
 
           <MLineLR
-            left={<MText>0.02223 Matic $1.8</MText>}
-            right={<MText>+$3.12%</MText>} />
+            left={<MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${token2Usd(tokenInfo.balance.toString(), tokenInfo.rate + '')}</MText>}
+            right={<MText></MText>} />
         </MVStack>
       </MHStack>
     </Pressable>

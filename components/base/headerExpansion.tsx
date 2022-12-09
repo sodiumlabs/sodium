@@ -28,7 +28,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
     <MAnimView hideFinishCb={() => props.setIsFold(true)} visible={visible} style={{
       borderRadius: 15,
       padding: 10,
-      backgroundColor: 'rgba(200,200,200,1)',
+      backgroundColor: 'rgba(200,200,200,0.6)',
     }}>
       <MHStack style={styles.bar} >
         <MImage style={styles.img} />
@@ -86,14 +86,14 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     marginVertical: 15,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderRadius: 8
   },
   connected: {
     flex: 1,
     padding: 15,
     marginBottom: 15,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     borderRadius: 8,
     alignItems: 'center'
   },

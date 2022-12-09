@@ -1,10 +1,13 @@
 import { ActivityIndicator, Pressable, PressableProps, StyleProp, StyleSheet, ViewProps, ViewStyle } from 'react-native';
 import MText from './mText';
 
-export default function MButton(props: PressableProps & { title: string, isLoading?: boolean }) {
-  const { style, title, isLoading, ...reset } = props;
+export default function MButton(props: PressableProps & { stretchW?: boolean, title: string, isLoading?: boolean }) {
+  const { style, title, stretchW, isLoading, ...reset } = props;
+  const stretchWidth = {
+    width: stretchW ? '100%' : 'auto'
+  }
   return (
-    <Pressable style={[localStyles.button, style as StyleProp<ViewStyle>]} {...reset}>
+    <Pressable style={[localStyles.button, stretchWidth, style as StyleProp<ViewStyle>]} {...reset}>
       {
         isLoading ? (
           <ActivityIndicator size='small' color="#0000ff" />
@@ -19,7 +22,6 @@ export default function MButton(props: PressableProps & { title: string, isLoadi
 
 const localStyles = StyleSheet.create({
   button: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,

@@ -26,14 +26,11 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
 
       <MVStack stretchW style={styles.content}>
 
-        <ScrollView style={{ width: '100%', height: '100%', }}>
-
-          <MVStack stretchW style={{ alignSelf: 'center', maxWidth: fixWidth, marginTop: hasNavigationBar ? 80 : 0, marginBottom: hasNavigationBar ? 60 : 0 }}>
-            {
-              props.children
-            }
-          </MVStack>
-        </ScrollView>
+        <MVStack stretchW stretchH style={{ alignSelf: 'center', maxWidth: fixWidth }}>
+          {
+            props.children
+          }
+        </MVStack>
 
       </MVStack >
 
@@ -46,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#777',
+    backgroundColor: 'white',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -54,7 +51,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignSelf: 'center',
-    backgroundColor: '#777',
+    backgroundColor: 'white',
   }
 
 });

@@ -1,4 +1,4 @@
-import { ConnectOptions, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
+import { ConnectOptions, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 
 export const fixWidth = 720;
 
@@ -84,3 +84,8 @@ export interface ISignTranscationModalParam {
   cancelClick: () => void,
   options: ConnectOptions,
 }
+
+
+//----
+
+export type IUserTokenInfo = UserTokenInfo & { rate: number };
