@@ -1,4 +1,5 @@
 import { useQuery } from "react-query";
+import { token2Usd } from "../common/common";
 import { getAuth } from '../data/auth';
 import { IUserTokenInfo } from "../define";
 import { fetchTokenRates } from "./tokenRate";
@@ -13,7 +14,9 @@ const fetchTokens = async (): Promise<IUserTokenInfo[]> => {
   const rates = await fetchTokenRates(result);
 
   for (let i = 0; i < rates.length; i++) {
-    result[i].rate = rates[i];
+    const tokenInfo = result[i];
+    tokenInfo.rate = rates[i];
+    tokenInfo.usdBalance = token2Usd(tokenInfo.balance.toString(), tokenInfo.rate + '');
   }
 
   console.log("fetchTokens");

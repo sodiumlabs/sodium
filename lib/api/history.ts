@@ -1,20 +1,23 @@
 
 import { ChainIdLike } from "@0xsodium/network";
 import { TransactionHistory } from "@0xsodium/provider";
-import { useInfiniteQuery, useQuery } from "react-query";
+import { useInfiniteQuery, UseInfiniteQueryResult, useQuery } from "react-query";
+import { getPageDatas } from "../common/common";
+import { getScroller } from "../common/scroller";
 import { getAuth } from '../data/auth';
 
-const onePageCount = 1;
+const onePageCount = 20;
 const fetchHistory = async (pageParam: number, chainId?: ChainIdLike, tokenAddress?: string, tokenId?: string): Promise<{ data: TransactionHistory[], nexePage: number }> => {
-  const first = onePageCount;
-  const skip = (pageParam - 1) * onePageCount;
-
   const authData = getAuth();
   if (!authData.isLogin) {
     return;
   }
+
+  const first = onePageCount;
+  const skip = (pageParam - 1) * onePageCount;
+
   const result = await authData.web3signer.getTransactionHistories(skip, first, chainId, tokenAddress, tokenId) as unknown as TransactionHistory[];
-  console.log("fetchHistory");
+  console.log(`fetchHistory page:${pageParam} first:${first} skip:${skip}`);
   console.log(result);
 
   let nextPage = null;
@@ -28,9 +31,9 @@ const fetchHistory = async (pageParam: number, chainId?: ChainIdLike, tokenAddre
   };
 };
 
-export const useQueryHistory = (chainId?: ChainIdLike, tokenAddress?: string, tokenId?: string) => {
+export const useQueryHistory = (chainId?: ChainIdLike, tokenAddress?: string, tokenId?: string): [UseInfiniteQueryResult, TransactionHistory[], (event) => void] => {
   // return useQuery(['fetchHistory'], () => fetchHistory());
-  return useInfiniteQuery(
+  const queryHistory = useInfiniteQuery(
     [
       "fetchHistory",
       chainId,
@@ -40,6 +43,13 @@ export const useQueryHistory = (chainId?: ChainIdLike, tokenAddress?: string, to
     ({ pageParam = 1 }) => fetchHistory(pageParam, chainId, tokenAddress, tokenId),
     { getNextPageParam: (lastPage, pages) => lastPage['nexePage'] }
   );
+  let transcationHistorys: TransactionHistory[] = null;
+  if (queryHistory.isSuccess) {
+    transcationHistorys = getPageDatas(queryHistory.data);
+  }
+  const onScroll = getScroller(() => !queryHistory.isLoading && queryHistory.hasNextPage && queryHistory.fetchNextPage());
+
+  return [queryHistory, transcationHistorys, onScroll];
 };
 
 

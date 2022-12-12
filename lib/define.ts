@@ -88,4 +88,4 @@ export interface ISignTranscationModalParam {
 
 //----
 
-export type IUserTokenInfo = UserTokenInfo & { rate: number };
+export type IUserTokenInfo = UserTokenInfo & { rate: number, usdBalance: string };

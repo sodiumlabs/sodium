@@ -16,7 +16,7 @@ const add = (tx: TransactionRequest) => {
     return newTxs.length - 1;
 }
 
-const useRequestedTransactions = () => {
+export const useRequestedTransactions = () => {
     return useStore(requestedTransactions);
 }
 

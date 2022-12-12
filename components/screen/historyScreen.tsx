@@ -1,24 +1,27 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from '../../lib/api/history';
 import { BaseScreen } from "../base/baseScreen";
-import { showTranscationDetailModal } from "../base/modalInit";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import HistoryItem from "../item/historyItem";
 
 export function HistoryScreen() {
-  const queryHistory = useQueryHistory();
-
+  const [queryHistory, transcationHistorys, onScroll] = useQueryHistory();
   return (
     <BaseScreen >
-      <ScrollView style={{ width: '100%', height: '100%', }}>
+      <ScrollView style={{ width: '100%', height: '100%' }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={styles.container}>
           <MText style={{ marginVertical: 6 }}>History</MText>
           {/* <RequestTranscationItem /> */}
 
           <MVStack stretchW>
             <MText>Last Week</MText>
-            <HistoryItem onPress={() => showTranscationDetailModal(true)} />
+            {
+              transcationHistorys && transcationHistorys.map((item, index) => {
+                return <HistoryItem key={index} history={item} />
+              })
+            }
+
           </MVStack>
         </MVStack>
       </ScrollView>

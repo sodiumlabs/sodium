@@ -1,3 +1,4 @@
+import { TransactionERC20Transfer, TransactionHistory } from "@0xsodium/provider";
 import { Divider } from "@ui-kitten/components"
 import { View, Image, StyleSheet, ViewProps } from 'react-native';
 import { BaseFoldFrame } from "../base/baseFoldFrame"
@@ -5,23 +6,31 @@ import MHStack from "../baseUI/mHStack"
 import MImage from "../baseUI/mImage";
 import MText from "../baseUI/mText"
 import MVStack from "../baseUI/mVStack"
+import { formatWei2Price } from '../../lib/common/common';
+import { useAuth } from '../../lib/data/auth';
 
 
-export const TranscationDetailItem = (props: ViewProps) => {
+export const TranscationDetailItem = (props: ViewProps & { transfer: TransactionERC20Transfer }) => {
+  const { transfer } = props;
+  const auth = useAuth();
+  const isSent = transfer.from == (auth.isLogin && auth.blockchainAddress);
+  // const isReceived = transfer.to == (auth.isLogin && auth.blockchainAddress);
+
+
   return (
-    <BaseFoldFrame {...props} defaultExpansion header={<MText >Received(1/1)</MText>}>
+    <BaseFoldFrame {...props} defaultExpansion header={<MText >{isSent ? 'Sent' : 'Receive'}</MText>}>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
-        <MText style={{ flex: 1 }}>USDC</MText>
-        <MText >1.46666 USDC</MText>
+        <MText style={{ flex: 1 }}>{transfer.token.symbol}</MText>
+        <MText >{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>
       </MHStack>
 
       <Divider />
       <MVStack style={styles.marginV}>
-        <MText style={{ marginVertical: 5 }}>To</MText>
+        <MText style={{ marginVertical: 5 }}>{isSent ? 'To' : 'From'}</MText>
         <MHStack stretchW style={{ padding: 15, backgroundColor: 'white', borderRadius: 15 }}>
           <MImage size={20} />
-          <MText style={{ flex: 1 }}>0x8BB759Bb68995343FF1e9D57Ac85Ff5c5Fb79</MText>
+          <MText style={{ flex: 1 }}>{isSent ? transfer.to : transfer.from}</MText>
           <MImage size={20} />
         </MHStack>
       </MVStack>

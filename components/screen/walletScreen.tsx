@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
-import { Screens } from '../../lib/define';
+import { IUserTokenInfo, Screens } from '../../lib/define';
 import { BaseScreen } from "../base/baseScreen";
 import { navigation } from '../base/navigationInit';
 import MHStack from "../baseUI/mHStack";
@@ -9,14 +9,21 @@ import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
-import PendingItem from "../item/pendingItem";
-import { RequestTranscationItem } from "../item/requestTranscationItem";
+import { RequestTranscationItem } from '../item/requestTranscationItem';
 
 
 
 export function WalletScreen() {
 
   const tokensQuery = useQueryTokens();
+  const tokenInfos = tokensQuery.data as IUserTokenInfo[];
+
+  let usdBalance = 0;
+  if (tokenInfos) {
+    usdBalance = tokenInfos.reduce<number>((pre, cur, index, arr) => {
+      return pre + parseFloat(cur.usdBalance);
+    }, 0);
+  }
 
   return (
     <BaseScreen >
@@ -25,7 +32,7 @@ export function WalletScreen() {
 
           <MVStack style={styles.balance}>
             <MText>Balance</MText>
-            <MText>$3.71</MText>
+            <MText>${usdBalance}</MText>
           </MVStack>
 
           <MHStack style={styles.operate}>
@@ -33,7 +40,7 @@ export function WalletScreen() {
             <WalletButton title='Deposit' onPress={() => navigation.navigate(Screens.Deposit)} />
           </MHStack>
 
-          {/* <RequestTranscationItem /> */}
+          <RequestTranscationItem />
 
 
           {/* <PendingItem /> */}
@@ -43,7 +50,7 @@ export function WalletScreen() {
           <MVStack stretchW style={styles.coins}>
             <MText style={{ marginVertical: 15 }}>Coins</MText>
             {
-              tokensQuery.data && tokensQuery.data.map((token, index) => {
+              tokenInfos && tokenInfos.map((token, index) => {
                 return <CoinItem key={token.token.address} tokenInfo={token} />
               })
             }

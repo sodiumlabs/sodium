@@ -1,12 +1,12 @@
 import { Divider } from "@ui-kitten/components";
 import { Linking, ScrollView, StyleSheet } from "react-native";
-import { useMClipboard } from "../../lib/common/clipboard";
-import { formatWei2Price, token2Usd } from "../../lib/common/common";
+import { useQueryHistory } from "../../lib/api/history";
+import { formatWei2Price } from "../../lib/common/common";
 import { getBlockExplorer } from "../../lib/common/network";
 import { IUserTokenInfo, Screens } from '../../lib/define';
+import { useMClipboard } from "../../lib/hook/clipboard";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { BaseScreen } from "../base/baseScreen";
-import { showTranscationDetailModal } from '../base/modalInit';
 import { navigation } from "../base/navigationInit";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
@@ -18,11 +18,12 @@ import HistoryItem from "../item/historyItem";
 
 export function CoinScreen(props) {
   const tokenInfo = props.route.params as IUserTokenInfo;
-  // const [selectedIndex, setSelectedIndex] = useState(null);
   const [clipboardContent, setClipboardContent] = useMClipboard();
+  const [queryHistory, transcationHistorys, onScroll] = useQueryHistory(null, tokenInfo.token.address);
+
   return (
     <BaseScreen isNavigationBarBack>
-      <ScrollView style={{ width: '100%', height: '100%', }}>
+      <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={styles.container}>
           <MImage size={64} url={tokenInfo.token.centerData.logoURI} />
           <MText style={{ marginVertical: 6 }}>{tokenInfo.token.symbol}</MText>
@@ -32,7 +33,7 @@ export function CoinScreen(props) {
           </MHStack>
           <MVStack stretchW style={{ backgroundColor: '#999', borderRadius: 15, alignItems: 'center', paddingVertical: 15 }}>
             <MText >Balance</MText>
-            <MText >${token2Usd(tokenInfo.balance.toString(), tokenInfo.rate + '')}</MText>
+            <MText >${tokenInfo.usdBalance}</MText>
             <MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol}</MText>
           </MVStack>
 
@@ -88,7 +89,11 @@ export function CoinScreen(props) {
             !tokenInfo.token.isNativeToken && (
               <MVStack stretchW>
                 <MText>Last Week</MText>
-                <HistoryItem onPress={() => showTranscationDetailModal(true)} />
+                {
+                  transcationHistorys && transcationHistorys.map((item, index) => {
+                    return <HistoryItem key={index} history={item} />
+                  })
+                }
               </MVStack>
             )
           }
