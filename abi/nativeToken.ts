@@ -1,4 +1,5 @@
-import { BigNumber, Transaction } from "ethers";
+import { BigNumber } from "ethers";
+import { Transaction } from '@0xsodium/transactions';
 
 export type NativeTransfer = {
     to: string,
@@ -8,10 +9,10 @@ export type NativeTransfer = {
 export const decodeNativeTokenTransfer = (tx: Transaction): NativeTransfer => {
     return {
         to: tx.to,
-        amount: tx.value
+        amount: BigNumber.from(tx.value)
     }
 }
 
 export const checkIsNativeTokenTransfer = (tx: Transaction): boolean => {
-    return tx.data == "0x" && tx.value.gt(0)
+    return tx.data == "0x" && BigNumber.from(tx.value).gt(0)
 }
