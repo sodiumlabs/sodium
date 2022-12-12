@@ -69,42 +69,52 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 right={<MText>December 1, 2022 8:17:14 pm</MText>} />
             </MVStack>
 
-            <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-              header={<MText >Transfer(1/1)</MText>}>
 
-              <MText>Send</MText>
-              <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-                <MImage size={20} />
-                <MText style={{ flex: 1 }}>Polygon(Matic)</MText>
-                <MText >1.46666 MATIC</MText>
-              </MHStack>
+            {
+              param?.decodeTransfer && (
+                param.decodeTransfer.map((decodeTxn, index) => {
+                  return (
+                    <BaseFoldFrame key={JSON.stringify(decodeTxn.origin) + index} defaultExpansion style={{ marginTop: 20 }}
+                      header={<MText >{`Transfer(${index}/${param.decodeTransfer.length})`}</MText>}>
 
-              <Divider />
-              <MText>To Recipient</MText>
-              <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-                <MImage size={20} />
-                <MText style={{ flex: 1 }}>0x95bF59b7C60aFfc6fe29E6D1db852Be408f3d085</MText>
-              </MHStack>
-            </BaseFoldFrame>
+                      <MText>Send</MText>
+                      <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+                        <MImage size={20} />
+                        <MText style={{ flex: 1 }}>Polygon(Matic)</MText>
+                        <MText >{decodeTxn.decodeTransfer.amount.toString()} MATIC</MText>
+                      </MHStack>
 
-            <BaseFoldFrame header={<MText>Transcation Data(1)</MText>} style={{ marginTop: 20 }}>
-              <MVStack stretchW style={{ backgroundColor: '#999', borderRadius: 15 }}>
-                <Text>
+                      <Divider />
+                      <MText>To Recipient</MText>
+                      <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+                        <MImage size={20} />
+                        <MText style={{ flex: 1 }}>{decodeTxn.decodeTransfer.to}</MText>
+                      </MHStack>
+                    </BaseFoldFrame>
+                  )
+                })
+              )
+            }
+
+            {
+              param?.decodeTransfer && (
+                <BaseFoldFrame header={<MText>{`Transcation Data(${param.decodeTransfer.length})`}</MText>} style={{ marginTop: 20 }}>
                   {
-                    `{
-                      "to": "0x95bF59b7C60aFfc6fe29E6D1db852Be408f3d085",
-                      "signature": "",
-                      "byteSignature": "0x",
-                      "methodName": "",
-                      "args": {},
-                      "objs": [],
-                      "value": "100000000000000000",
-                      "data": "0x"
-                  }`
+                    param.decodeTransfer.map((decodetxn, index) => {
+                      return (
+                        <MVStack stretchW key={JSON.stringify(decodetxn.origin) + index} style={{ backgroundColor: '#999', borderRadius: 15, padding: 15 }}>
+                          <Text>
+                            {
+                              JSON.stringify(decodetxn.origin, null, 2)
+                            }
+                          </Text>
+                        </MVStack>
+                      )
+                    })
                   }
-                </Text>
-              </MVStack>
-            </BaseFoldFrame>
+                </BaseFoldFrame>
+              )
+            }
 
             <MVStack>
               <MHStack stretchW style={{ alignItems: 'center' }}>

@@ -1,5 +1,12 @@
+import { Transaction } from '@0xsodium/transactions';
+import { Signer } from "@0xsodium/wallet";
+import { BigNumberish } from 'ethers';
+import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
-import { useCallback } from 'react';
+import { ERC20__factory } from '../../gen';
+import { useQueryTokens } from "../../lib/api/tokens";
+import { useAuth } from '../../lib/data/auth';
+import { IUserTokenInfo } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
@@ -7,15 +14,12 @@ import MImage from "../baseUI/mImage";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import { MDropdown } from "../baseUI/mDropdown";
-import { useAuth, } from '../../lib/data/auth';
-import { Transaction } from '@0xsodium/transactions';
-import { BigNumberish } from 'ethers';
-import { ERC20__factory } from '../../gen';
-import { Signer } from "@0xsodium/wallet";
+import { TokenDropdown } from "../dropdown/TokenDropdown";
 
 export function SendScreen() {
   const authData = useAuth();
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
+  const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
 
   // 例子
   const sendNativeToken = useCallback(async (to: string, amount: BigNumberish) => {
@@ -38,6 +42,16 @@ export function SendScreen() {
     }
   }, [authData])
 
+  const sendClick = () => {
+    if (!selectedOption) return;
+    // () => sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", 1000)
+    if (selectedOption.token.isNativeToken) {
+      sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", 1000);
+    } else {
+      sendERC20Token("0x714df076992f95E452A345cD8289882CEc6ab82F", selectedOption.token.address, 1000);
+    }
+  }
+
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
@@ -59,12 +73,13 @@ export function SendScreen() {
                 </MHStack>
               </MVStack>
             </MHStack>
-            <MDropdown options={["usdc", "meld"]} />
+            <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+
             <MInput />
           </MVStack>
           <MText style={{ marginVertical: 20 }}>To</MText>
           <MInput placeholder="address" />
-          <MButton onPress={() => sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", 1000)} title={"Continue"} styles={{ marginVertical: 20 }} />
+          <MButton onPress={sendClick} title={"Continue"} style={{ marginVertical: 20 }} />
         </MVStack>
       </ScrollView>
     </BaseScreen>

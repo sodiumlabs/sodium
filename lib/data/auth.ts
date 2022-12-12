@@ -16,8 +16,6 @@ export const authAtom = computed<AuthData, Atom<SodiumWallet | null>>(walletAtom
     wallet: w.handler,
     web3signer: w.web3signer
   } as AuthData
-
-  // window.wallet = w.handler;
 });
 
 export const getAuth = (): AuthData => {

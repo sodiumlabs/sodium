@@ -1,10 +1,10 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
-import { TransactionRequest, flattenAuxTransactions } from '@0xsodium/transactions';
-import { checkIsERC20Transfer, decodeERC20Transfer } from '../../abi';
+import { TransactionRequest } from '@0xsodium/transactions';
 import { showDeployConfirmModal, showSignMessageModal, showSignTranscationModal } from '../../components/base/modalInit';
 import { navigation } from '../../components/base/navigationInit';
+import { decodeTransactionRequest } from '../common/decode';
 import { getAuth } from '../data/auth';
-import { IConnectScreenParam, IDeployConfirmModalParam, ISignTranscationModalParam, Screens, ISignMessageModalParam } from '../define';
+import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, Screens } from '../define';
 import { transactionQueue } from '../transaction';
 
 export class WalletPrompter implements WalletUserPrompter {
@@ -29,18 +29,21 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
+        const decodes = decodeTransactionRequest(txn);
+
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
                 if (!auth.isLogin) {
                     return tReject();
                 }
-                const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
-                tResolve(result);
+                const txnResponse = await auth.wallet['signer'].signTransactions(txn, chaindId);
+                tResolve(txnResponse.hash);
             }
             showSignTranscationModal(true, {
                 continueClick: continueClick,
                 cancelClick: () => tReject(),
+                decodeTransfer: decodes,
                 options: options
             } as ISignTranscationModalParam);
         });
@@ -48,11 +51,7 @@ export class WalletPrompter implements WalletUserPrompter {
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         const transactionQueueFindIndex = transactionQueue.add(txn);
-
-        // check
-        const txs = flattenAuxTransactions(txn);
-        checkIsERC20Transfer(txs[0]);
-        decodeERC20Transfer(txs[0]);
+        const decodes = decodeTransactionRequest(txn);
 
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
@@ -70,6 +69,7 @@ export class WalletPrompter implements WalletUserPrompter {
                     transactionQueue.remove(transactionQueueFindIndex);
                     tReject();
                 },
+                decodeTransfer: decodes,
                 options: options
             } as ISignTranscationModalParam);
         });
