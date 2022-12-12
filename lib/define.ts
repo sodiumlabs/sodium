@@ -89,3 +89,8 @@ export interface ISignTranscationModalParam {
 //----
 
 export type IUserTokenInfo = UserTokenInfo & { rate: number, usdBalance: string };
+
+export interface IDropdownOption {
+  name: string,
+  data: unknown
+}

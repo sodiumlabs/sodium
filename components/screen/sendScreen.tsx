@@ -13,9 +13,12 @@ import { Transaction } from '@0xsodium/transactions';
 import { BigNumberish } from 'ethers';
 import { ERC20__factory } from '../../gen';
 import { Signer } from "@0xsodium/wallet";
+import { useQueryTokens } from "../../lib/api/tokens";
+import { TokenDropdown } from "../dropdown/TokenDropdown";
 
 export function SendScreen() {
   const authData = useAuth();
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
 
   // 例子
   const sendNativeToken = useCallback(async (to: string, amount: BigNumberish) => {
@@ -59,7 +62,9 @@ export function SendScreen() {
                 </MHStack>
               </MVStack>
             </MHStack>
-            <MDropdown options={["usdc", "meld"]} />
+            {/* <MDropdown options={["usdc", "meld"]} /> */}
+            <TokenDropdown options={tokenInfos} />
+
             <MInput />
           </MVStack>
           <MText style={{ marginVertical: 20 }}>To</MText>

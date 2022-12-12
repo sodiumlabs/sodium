@@ -13,9 +13,9 @@ import MInput from '../baseUI/mInput';
 import { MSelect } from '../baseUI/mSelect';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { MDropdown } from '../baseUI/mDropdown';
 import MButton from '../baseUI/mButton';
 import { useNavigation } from '../../lib/navigation';
+import { DepositDropdown } from '../dropdown/DepositDropdown';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
@@ -46,10 +46,10 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
         isSelected && (
           <MVStack stretchW >
             <MText>You bug</MText>
-            <MDropdown options={['MATIC', 'USDC']} />
+            <DepositDropdown options={['MATIC', 'USDC']} />
             <MText>You page</MText>
             <MInput />
-            <MDropdown options={['USD', 'EUR', 'GBP']} />
+            <DepositDropdown options={['USD', 'EUR', 'GBP']} />
             <MText>You Receive (Estimated)</MText>
             <MVStack stretchW style={{ backgroundColor: '#999', borderRadius: 15, padding: 15, zIndex: 0 }}>
               <MText>0 USDC</MText>

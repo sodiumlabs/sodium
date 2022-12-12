@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
-import { IUserTokenInfo, Screens } from '../../lib/define';
+import { Screens } from '../../lib/define';
 import { BaseScreen } from "../base/baseScreen";
 import { navigation } from '../base/navigationInit';
 import MHStack from "../baseUI/mHStack";
@@ -14,16 +14,7 @@ import { RequestTranscationItem } from '../item/requestTranscationItem';
 
 
 export function WalletScreen() {
-
-  const tokensQuery = useQueryTokens();
-  const tokenInfos = tokensQuery.data as IUserTokenInfo[];
-
-  let usdBalance = 0;
-  if (tokenInfos) {
-    usdBalance = tokenInfos.reduce<number>((pre, cur, index, arr) => {
-      return pre + parseFloat(cur.usdBalance);
-    }, 0);
-  }
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
 
   return (
     <BaseScreen >
@@ -41,7 +32,6 @@ export function WalletScreen() {
           </MHStack>
 
           <RequestTranscationItem />
-
 
           {/* <PendingItem /> */}
 

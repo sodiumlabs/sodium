@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
-export const MDropdown = (props: { options: string[] }) => {
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+
+import { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { IUserTokenInfo } from '../../lib/define';
+
+export const DepositDropdown = (props: { options: IUserTokenInfo[] }) => {
   const { options } = props;
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -15,10 +18,16 @@ export const MDropdown = (props: { options: string[] }) => {
     setIsDropdownVisible(false);
   };
 
+  useEffect(() => {
+    if (selectedOption == null && options != null) {
+      handleOptionPress(options[0]);
+    }
+  }, [selectedOption, options])
+
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleDropdown}>
-        <Text>{selectedOption || 'Select an option'}</Text>
+        <Text>{selectedOption?.token?.symbol || 'Select an option'}</Text>
       </TouchableOpacity>
 
       {isDropdownVisible && (
@@ -32,7 +41,7 @@ export const MDropdown = (props: { options: string[] }) => {
                 onPress={() => handleOptionPress(item)}
                 style={styles.option}
               >
-                <Text>{item}</Text>
+                <Text>{item.token.symbol}</Text>
               </TouchableOpacity>
             )}
           />
