@@ -1,20 +1,21 @@
-import { Pressable, ScrollView, StyleSheet, Text } from 'react-native';
 import { Divider } from '@ui-kitten/components';
+import { useEffect, useState } from 'react';
+import { ScrollView, StyleSheet, Text } from 'react-native';
+import { useQueryGas } from '../../lib/api/gas';
+import { useQueryTokens } from '../../lib/api/tokens';
+import { formatWei2Price } from '../../lib/common/common';
+import { getNetwork } from '../../lib/common/network';
 import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
 import { showSignTranscationModal, showTranscationQueueModal } from '../base/modalInit';
-import NetworkFeeItem from '../item/networkFeeItem';
-import { useEffect, useState } from 'react';
+import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import MButton from '../baseUI/mButton';
-import { formatWei2Price } from '../../lib/common/common';
-import { getNetwork } from '../../lib/common/network';
-import { useQueryGas } from '../../lib/api/gas';
+import NetworkFeeItem from '../item/networkFeeItem';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -23,7 +24,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
   const [isLoading, setIsLoading] = useState(false);
-  const queryGas = useQueryGas(param?.txn);
+  const [gasQuery, paymasterInfos] = useQueryGas(param?.txn);
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
 
   // reset
   useEffect(() => {
@@ -37,6 +39,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     showTranscationQueueModal(true);
   }
   const onConfirmClick = async () => {
+    if (isLoading) return;
     setIsLoading(true);
     await param.continueClick();
     setIsLoading(false);
@@ -122,23 +125,28 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
               )
             }
 
-            <MVStack>
-              <MHStack stretchW style={{ alignItems: 'center' }}>
-                <MText>Network Fee</MText>
-                <MHStack style={{ borderRadius: 999, width: 20, height: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: '#bbb' }}>
-                  <MImage size={10} />
-                </MHStack>
-              </MHStack>
+            {
+              paymasterInfos && paymasterInfos.length && (
+                <MVStack>
+                  <MHStack stretchW style={{ alignItems: 'center' }}>
+                    <MText>Network Fee</MText>
+                    <MHStack style={{ borderRadius: 999, width: 20, height: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: '#bbb' }}>
+                      <MImage size={10} />
+                    </MHStack>
+                  </MHStack>
 
-              <NetworkFeeItem />
-              <NetworkFeeItem />
-
-            </MVStack>
-
+                  {
+                    paymasterInfos.map((gasInfo, index) => {
+                      const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
+                      return (<NetworkFeeItem key={JSON.stringify(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
+                    })
+                  }
+                </MVStack>)
+            }
           </ScrollView>
         </MVStack>
         <MHStack stretchW>
-          <MButton title={'Cancel'} onPress={onCancelClick} isLoading={isLoading} />
+          <MButton title={'Cancel'} onPress={onCancelClick} />
           <MButton title={'Confirm'} onPress={onConfirmClick} isLoading={isLoading} />
         </MHStack>
       </MVStack>

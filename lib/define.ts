@@ -1,5 +1,6 @@
 import { ConnectOptions, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
+import { BigNumber } from "@ethersproject/bignumber";
 import { ERC20Transfer } from '../abi';
 
 export const fixWidth = 720;
@@ -90,11 +91,6 @@ export interface ISignTranscationModalParam {
   txn: TransactionRequest
 }
 
-
-//----
-
-export type IUserTokenInfo = UserTokenInfo & { rate: number, usdBalance: string };
-
 export interface IDropdownOption {
   name: string,
   data: unknown
@@ -103,4 +99,42 @@ export interface IDropdownOption {
 export interface IDecodeTranscation {
   origin: TransactionRequest,
   decodeTransfer: ERC20Transfer,
+}
+
+//---- from sdk define
+
+export type IUserTokenInfo = UserTokenInfo & { rate: number, usdBalance: string };
+
+export declare type ERC20OrNativeTokenMetadata = {
+  address: string;
+  chainId: number;
+  isNativeToken?: true;
+  name: string;
+  symbol: string;
+  decimals: number;
+  centerData: {
+    logoURI?: string;
+    website?: string;
+    description?: string;
+  };
+};
+
+
+export declare type GasPrice = {
+  maxPriorityFeePerGas: BigNumber;
+  maxFeePerGas: BigNumber;
+};
+
+export declare type GasSuggest = {
+  standard: GasPrice;
+  fast: GasPrice;
+  rapid: GasPrice;
+};
+
+
+export type PaymasterInfo = {
+  token: ERC20OrNativeTokenMetadata
+  // wei
+  amount: BigNumber
+  expiry: number
 }
