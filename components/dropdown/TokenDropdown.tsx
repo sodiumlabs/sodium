@@ -1,13 +1,13 @@
 
 
-import { useEffect, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { IUserTokenInfo } from '../../lib/define';
 
-export const TokenDropdown = (props: { options: IUserTokenInfo[] }) => {
-  const { options } = props;
+export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
+  const { options, selectedOption, setSelectedOption } = props;
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-  const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
+
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);

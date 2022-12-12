@@ -1,4 +1,6 @@
 import { ConnectOptions, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
+import { TransactionRequest } from '@0xsodium/transactions';
+import { ERC20Transfer } from '../abi';
 
 export const fixWidth = 720;
 
@@ -82,6 +84,7 @@ export interface IDeployConfirmModalParam {
 export interface ISignTranscationModalParam {
   continueClick: () => Promise<void>,
   cancelClick: () => void,
+  decodeTransfer: IDecodeTranscation[],
   options: ConnectOptions,
 }
 
@@ -93,4 +96,9 @@ export type IUserTokenInfo = UserTokenInfo & { rate: number, usdBalance: string 
 export interface IDropdownOption {
   name: string,
   data: unknown
+}
+
+export interface IDecodeTranscation {
+  origin: TransactionRequest,
+  decodeTransfer: ERC20Transfer,
 }
