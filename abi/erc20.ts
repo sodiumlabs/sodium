@@ -7,7 +7,7 @@ export type ERC20Transfer = {
     amount: BigNumber
 }
 
-export const decodeTransaction = (tx: Transaction): ERC20Transfer => {
+export const decodeERC20Transfer = (tx: Transaction): ERC20Transfer => {
     const erc20Interface = ERC20__factory.createInterface();
     const result = erc20Interface.decodeFunctionData("transfer", tx.data);
     return {

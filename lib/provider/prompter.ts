@@ -1,5 +1,6 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
-import { TransactionRequest } from '@0xsodium/transactions';
+import { TransactionRequest, toSodiumTransactions } from '@0xsodium/transactions';
+import { checkIsERC20Transfer, decodeERC20Transfer } from '../../abi';
 import { showDeployConfirmModal, showSignMessageModal, showSignTranscationModal } from '../../components/base/modalInit';
 import { navigation } from '../../components/base/navigationInit';
 import { getAuth } from '../data/auth';
@@ -47,6 +48,12 @@ export class WalletPrompter implements WalletUserPrompter {
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         const transactionQueueFindIndex = transactionQueue.add(txn);
+
+        // check
+        const txs = toSodiumTransactions([txn]);
+        checkIsERC20Transfer(txs[0]);
+        decodeERC20Transfer(txs[0]);
+
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
