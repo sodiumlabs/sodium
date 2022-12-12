@@ -37,8 +37,9 @@ export class WalletPrompter implements WalletUserPrompter {
                 if (!auth.isLogin) {
                     return tReject();
                 }
-                const txnResponse = await auth.wallet['signer'].signTransactions(txn, chaindId);
-                tResolve(txnResponse.hash);
+                const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
+                // @ts-ignore
+                tResolve(result);
             }
             showSignTranscationModal(true, {
                 continueClick: continueClick,
