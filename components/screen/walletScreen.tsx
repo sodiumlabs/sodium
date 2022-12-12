@@ -9,6 +9,7 @@ import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
+import { RequestTranscationItem } from '../item/requestTranscationItem';
 
 
 
@@ -39,7 +40,7 @@ export function WalletScreen() {
             <WalletButton title='Deposit' onPress={() => navigation.navigate(Screens.Deposit)} />
           </MHStack>
 
-          {/* <RequestTranscationItem /> */}
+          <RequestTranscationItem />
 
 
           {/* <PendingItem /> */}
