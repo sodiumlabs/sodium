@@ -29,18 +29,21 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
+        const decodes = decodeTransactionRequest(txn);
+
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
                 const auth = getAuth();
                 if (!auth.isLogin) {
                     return tReject();
                 }
-                const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
-                tResolve(result);
+                const txnResponse = await auth.wallet['signer'].signTransactions(txn, chaindId);
+                tResolve(txnResponse.hash);
             }
             showSignTranscationModal(true, {
                 continueClick: continueClick,
                 cancelClick: () => tReject(),
+                decodeTransfer: decodes,
                 options: options
             } as ISignTranscationModalParam);
         });

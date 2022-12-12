@@ -73,7 +73,6 @@ export function SendScreen() {
                 </MHStack>
               </MVStack>
             </MHStack>
-            {/* <MDropdown options={["usdc", "meld"]} /> */}
             <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
 
             <MInput />
