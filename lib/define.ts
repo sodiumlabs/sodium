@@ -87,6 +87,7 @@ export interface ISignTranscationModalParam {
   decodeTransfer: IDecodeTranscation[],
   options: ConnectOptions,
   chaindId: number,
+  txn: TransactionRequest
 }
 
 

@@ -80,7 +80,8 @@ export class WalletPrompter implements WalletUserPrompter {
                 },
                 decodeTransfer: decodes,
                 options: options,
-                chaindId: chaindId
+                chaindId: chaindId,
+                txn: txn
             } as ISignTranscationModalParam);
         });
     }

@@ -14,6 +14,7 @@ import MVStack from '../baseUI/mVStack';
 import MButton from '../baseUI/mButton';
 import { formatWei2Price } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
+import { useQueryGas } from '../../lib/api/gas';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -22,6 +23,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
   const [isLoading, setIsLoading] = useState(false);
+  const queryGas = useQueryGas(param?.txn);
+
   // reset
   useEffect(() => {
     if (!modalParam.visible) {
