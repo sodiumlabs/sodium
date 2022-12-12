@@ -12,6 +12,8 @@ import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import MButton from '../baseUI/mButton';
+import { formatWei2Price } from '../../lib/common/common';
+import { getNetwork } from '../../lib/common/network';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -41,6 +43,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     param.cancelClick();
     hideModal();
   }
+  const curNetwork = getNetwork(param?.chaindId);
   return (
     <BaseModal
       visible={modalParam.visible}
@@ -52,9 +55,9 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MText>Sign Transaction </MText>
             </MHStack>
-            <Pressable onPress={onClickTranscationQueue}>
+            {/* <Pressable onPress={onClickTranscationQueue}>
               <MText>Transcation Queue</MText>
-            </Pressable>
+            </Pressable> */}
 
             <MVStack stretchW>
               <MLineLR
@@ -63,7 +66,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                     <MText >Network</MText>
                     <MImage size={20} />
                   </>}
-                right={<MText >PLOYGON</MText>} />
+                right={<MText >{curNetwork?.name?.toUpperCase()}</MText>} />
               <MLineLR
                 left={<MText >Requested at</MText>}
                 right={<MText>December 1, 2022 8:17:14 pm</MText>} />
@@ -75,13 +78,13 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 param.decodeTransfer.map((decodeTxn, index) => {
                   return (
                     <BaseFoldFrame key={JSON.stringify(decodeTxn.origin) + index} defaultExpansion style={{ marginTop: 20 }}
-                      header={<MText >{`Transfer(${index}/${param.decodeTransfer.length})`}</MText>}>
+                      header={<MText >{`Transfer(${index + 1}/${param.decodeTransfer.length})`}</MText>}>
 
                       <MText>Send</MText>
                       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
                         <MImage size={20} />
-                        <MText style={{ flex: 1 }}>Polygon(Matic)</MText>
-                        <MText >{decodeTxn.decodeTransfer.amount.toString()} MATIC</MText>
+                        <MText style={{ flex: 1 }}>{`${decodeTxn.decodeTransfer.token.name}(${decodeTxn.decodeTransfer.token.symbol})`}</MText>
+                        <MText >{formatWei2Price(decodeTxn.decodeTransfer.amount.toString(), decodeTxn.decodeTransfer.token.decimals)} {decodeTxn.decodeTransfer.token.symbol}</MText>
                       </MHStack>
 
                       <Divider />

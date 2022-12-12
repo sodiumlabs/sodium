@@ -9,12 +9,12 @@ import { transactionQueue } from '../transaction';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
+        const auth = getAuth();
+        if (!auth.isLogin) {
+            return Promise.reject();
+        }
         return new Promise((tResolve: (value: PromptConnectDetails) => void, tReject: () => void) => {
             const continueClick = async () => {
-                const auth = getAuth();
-                if (!auth.isLogin) {
-                    return tReject();
-                }
                 const result = await auth.wallet.connect(options) as PromptConnectDetails;
                 tResolve(result);
             }
@@ -29,38 +29,46 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        const decodes = decodeTransactionRequest(txn);
+        return Promise.reject();
+        // const auth = getAuth();
+        // if (!auth.isLogin) {
+        //     return Promise.reject();
+        // }
+        // const decodes = decodeTransactionRequest(txn);
 
-        return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
-            const continueClick = async () => {
-                const auth = getAuth();
-                if (!auth.isLogin) {
-                    return tReject();
-                }
-                const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
-                // @ts-ignore
-                tResolve(result);
-            }
-            showSignTranscationModal(true, {
-                continueClick: continueClick,
-                cancelClick: () => tReject(),
-                decodeTransfer: decodes,
-                options: options
-            } as ISignTranscationModalParam);
-        });
+        // return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
+
+        //     const continueClick = async () => {
+
+        //         const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
+        //         // @ts-ignore
+        //         tResolve(result);
+        //     }
+        //     showSignTranscationModal(true, {
+        //         continueClick: continueClick,
+        //         cancelClick: () => tReject(),
+        //         decodeTransfer: decodes,
+        //         options: options
+        //     } as ISignTranscationModalParam);
+        // });
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
+        console.log("promptSendTransaction");
+        console.log(txn);
+        const auth = getAuth();
+        if (!auth.isLogin) {
+            return Promise.reject();
+        }
+        const decodes = decodeTransactionRequest(txn, auth.web3signer, chaindId);
         const transactionQueueFindIndex = transactionQueue.add(txn);
-        const decodes = decodeTransactionRequest(txn);
 
-        return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
+        return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
+            if (chaindId == null) {
+                chaindId = await auth.wallet.getChainId();
+            }
             const continueClick = async () => {
-                const auth = getAuth();
                 transactionQueue.remove(transactionQueueFindIndex);
-                if (!auth.isLogin) {
-                    return tReject();
-                }
                 const txnResponse = await auth.wallet['signer'].sendTransaction(txn, chaindId);
                 tResolve(txnResponse.hash);
             }
@@ -71,18 +79,19 @@ export class WalletPrompter implements WalletUserPrompter {
                     tReject();
                 },
                 decodeTransfer: decodes,
-                options: options
+                options: options,
+                chaindId: chaindId
             } as ISignTranscationModalParam);
         });
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
+        const auth = getAuth();
+        if (!auth.isLogin) {
+            return Promise.reject();
+        }
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
-                const auth = getAuth();
-                if (!auth.isLogin) {
-                    return tReject();
-                }
                 const sign = await auth.wallet['signer'].signMessage(message.message, message.chainId);
                 tResolve(sign);
             }

@@ -86,6 +86,7 @@ export interface ISignTranscationModalParam {
   cancelClick: () => void,
   decodeTransfer: IDecodeTranscation[],
   options: ConnectOptions,
+  chaindId: number,
 }
 
 
