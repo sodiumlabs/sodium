@@ -3,6 +3,7 @@ import { TransactionRequest } from '@0xsodium/transactions';
 import { showDeployConfirmModal, showSignMessageModal, showSignTranscationModal } from '../../components/base/modalInit';
 import { navigation } from '../../components/base/navigationInit';
 import { decodeTransactionRequest } from '../common/decode';
+import { getNetwork } from '../common/network';
 import { getAuth } from '../data/auth';
 import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, Screens } from '../define';
 import { transactionQueue } from '../transaction';
@@ -60,13 +61,14 @@ export class WalletPrompter implements WalletUserPrompter {
         if (!auth.isLogin) {
             return Promise.reject();
         }
-        const decodes = decodeTransactionRequest(txn, auth.web3signer, chaindId);
+
         const transactionQueueFindIndex = transactionQueue.add(txn);
 
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
             if (chaindId == null) {
                 chaindId = await auth.wallet.getChainId();
             }
+            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
             const continueClick = async () => {
                 transactionQueue.remove(transactionQueueFindIndex);
                 const txnResponse = await auth.wallet['signer'].sendTransaction(txn, chaindId);
@@ -99,17 +101,20 @@ export class WalletPrompter implements WalletUserPrompter {
             showSignMessageModal(true, {
                 continueClick: continueClick,
                 cancelClick: () => tReject(),
-                options: options
+                options: options,
+                message: message
             } as ISignMessageModalParam);
         });
     }
 
     promptConfirmWalletDeploy(chainId: number, options?: ConnectOptions | undefined): Promise<boolean> {
         return new Promise((tResolve: (value: boolean) => void, tReject: () => void) => {
+            const network = getNetwork(chainId);
             showDeployConfirmModal(true, {
                 continueClick: () => tResolve(true),
                 cancelClick: () => tReject(),
                 options: options,
+                network: network,
             } as IDeployConfirmModalParam);
         });
     }

@@ -5,19 +5,19 @@ import { checkIsNativeTokenTransfer, decodeNativeTokenTransfer } from "../../abi
 import { IDecodeTranscation } from "../define";
 
 
-export function decodeTransactionRequest(txn: TransactionRequest, web3signer: Web3Signer, chainId?: number) {
+export async function decodeTransactionRequest(txn: TransactionRequest, web3signer: Web3Signer, chainId?: number) {
   const decodes: IDecodeTranscation[] = [];
   const txs = flattenAuxTransactions(txn) as Transaction[];
 
   for (let tx of txs) {
     let decodeTransfer = null;
     if (checkIsERC20Transfer(tx)) {
-      decodeTransfer = decodeERC20Transfer(tx, web3signer, chainId);
+      decodeTransfer = await decodeERC20Transfer(tx, web3signer, chainId);
     }
     else if (checkIsNativeTokenTransfer(tx)) {
       decodeTransfer = decodeNativeTokenTransfer(tx, chainId);
     } else {
-      decodeTransfer = tx.data.slice(0, 10);
+      decodeTransfer = tx.data.toString().slice(0, 10);
     }
     decodes.push(
       {
@@ -25,5 +25,7 @@ export function decodeTransactionRequest(txn: TransactionRequest, web3signer: We
         'decodeTransfer': decodeTransfer
       });
   }
+  console.log("decodeTransactionRequest decodes:");
+  console.log(decodes);
   return decodes;
 }

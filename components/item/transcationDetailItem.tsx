@@ -13,9 +13,8 @@ import { useAuth } from '../../lib/data/auth';
 export const TranscationDetailItem = (props: ViewProps & { transfer: TransactionERC20Transfer }) => {
   const { transfer } = props;
   const auth = useAuth();
-  const isSent = transfer.from == (auth.isLogin && auth.blockchainAddress);
+  const isSent = transfer.from == auth.blockchainAddress;
   // const isReceived = transfer.to == (auth.isLogin && auth.blockchainAddress);
-
 
   return (
     <BaseFoldFrame {...props} defaultExpansion header={<MText >{isSent ? 'Sent' : 'Receive'}</MText>}>

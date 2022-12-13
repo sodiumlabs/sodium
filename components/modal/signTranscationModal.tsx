@@ -1,11 +1,11 @@
 import { Divider } from '@ui-kitten/components';
-import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { formatWei2Price } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
+import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
 import { showSignTranscationModal, showTranscationQueueModal } from '../base/modalInit';
@@ -23,16 +23,9 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useModalLoading(modalParam);
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn);
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
-
-  // reset
-  useEffect(() => {
-    if (!modalParam.visible) {
-      setIsLoading(false);
-    }
-  }, [modalParam.visible])
 
   const onClickTranscationQueue = () => {
     showSignTranscationModal(false);
@@ -146,8 +139,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
           </ScrollView>
         </MVStack>
         <MHStack stretchW>
-          <MButton title={'Cancel'} onPress={onCancelClick} />
-          <MButton title={'Confirm'} onPress={onConfirmClick} isLoading={isLoading} />
+          <MButton style={{ flex: 1 }} title={'Cancel'} onPress={onCancelClick} />
+          <MButton style={{ flex: 1 }} title={'Confirm'} onPress={onConfirmClick} isLoading={isLoading} />
         </MHStack>
       </MVStack>
     </BaseModal>

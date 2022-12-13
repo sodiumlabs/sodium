@@ -1,17 +1,16 @@
-import { ConnectOptions, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
+import { NetworkConfig } from '@0xsodium/network';
+import { ConnectOptions, MessageToSign, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
 import { BigNumber } from "@ethersproject/bignumber";
 import { ERC20Transfer } from '../abi';
 
 export const fixWidth = 720;
 
-export type AuthData = {
-  isLogin: true,
+export interface AuthData {
+  isLogin: boolean,
   blockchainAddress: string,
   wallet: WalletRequestHandler,
   web3signer: Web3Signer
-} | {
-  isLogin: false
 }
 
 export interface IModalParam {
@@ -74,12 +73,14 @@ export interface ISignMessageModalParam {
   continueClick: () => Promise<void>,
   cancelClick: () => void,
   options: ConnectOptions,
+  message: MessageToSign
 }
 
 export interface IDeployConfirmModalParam {
   continueClick: () => void,
   cancelClick: () => void,
   options: ConnectOptions,
+  network: NetworkConfig
 }
 
 export interface ISignTranscationModalParam {
