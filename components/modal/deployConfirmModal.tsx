@@ -29,7 +29,7 @@ export const DeployConfirmModal = (props: { hideModal: () => void, modalParam: I
       contentHeight={400}
     >
       <MVStack stretchH stretchW style={{ 'alignItems': 'center', flex: 1 }}>
-        <MText>Your Sodium wallet needs to be deployed on {param.network?.name.toUpperCase()} to sign messages.</MText>
+        <MText>Your Sodium wallet needs to be deployed on {param?.network?.name.toUpperCase()} to sign messages.</MText>
         <MButton style={{ flex: 1 }} title={'Cancel'} onPress={onCancelClick} />
         <MButton style={{ flex: 1 }} title={'Deploy'} onPress={onConfirmClick} isLoading={isLoading} />
       </MVStack>
