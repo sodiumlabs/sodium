@@ -1,4 +1,5 @@
 import { TransactionHistory } from '@0xsodium/provider';
+import { TransactionRequest } from '@0xsodium/transactions';
 import { useStore } from '@nanostores/react';
 import { atom } from "nanostores";
 import { IDeployConfirmModalParam, IModalParam, ISignMessageModalParam, ISignTranscationModalParam } from "../../lib/define";

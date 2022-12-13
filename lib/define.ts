@@ -139,3 +139,10 @@ export type PaymasterInfo = {
   amount: BigNumber
   expiry: number
 }
+
+export interface ITranscation {
+  txReq: TransactionRequest,
+  timeStamp: number,
+  // chaindId?: number,
+  // options?: ConnectOptions
+}

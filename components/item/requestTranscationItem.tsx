@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { useRequestedTransactions } from "../../lib/transaction";
 import { showTranscationQueueModal } from "../base/modalInit";
@@ -8,9 +9,17 @@ import MText from "../baseUI/mText";
 export function RequestTranscationItem() {
   const requestTranscations = useRequestedTransactions();
 
+  // useEffect(() => {
+  //   if (requestTranscations) {
+  //     console.log('useRequestedTransactions');
+  //     console.log(requestTranscations);
+  //   }
+  // }, [requestTranscations]);
+
   if (!requestTranscations || requestTranscations.length <= 0) {
     return <></>
   }
+
   return (
     <Pressable style={{ width: '100%' }} onPress={() => showTranscationQueueModal(true)}>
       <MHStack stretchW style={styles.transcationQueue}>

@@ -10,22 +10,27 @@ export async function decodeTransactionRequest(txn: TransactionRequest, web3sign
   const txs = flattenAuxTransactions(txn) as Transaction[];
 
   for (let tx of txs) {
-    let decodeTransfer = null;
-    if (checkIsERC20Transfer(tx)) {
-      decodeTransfer = await decodeERC20Transfer(tx, web3signer, chainId);
-    }
-    else if (checkIsNativeTokenTransfer(tx)) {
-      decodeTransfer = decodeNativeTokenTransfer(tx, chainId);
-    } else {
-      decodeTransfer = tx.data.toString().slice(0, 10);
-    }
+    const decodeData = await decodeTransaction(tx, web3signer, chainId)
     decodes.push(
       {
         'origin': tx,
-        'decodeTransfer': decodeTransfer
+        'decodeTransfer': decodeData
       });
   }
   console.log("decodeTransactionRequest decodes:");
   console.log(decodes);
   return decodes;
+}
+
+export async function decodeTransaction(tran: Transaction, web3signer: Web3Signer, chainId?: number) {
+  let decodeData = null;
+  if (checkIsERC20Transfer(tran)) {
+    decodeData = await decodeERC20Transfer(tran, web3signer, chainId);
+  }
+  else if (checkIsNativeTokenTransfer(tran)) {
+    decodeData = decodeNativeTokenTransfer(tran, chainId);
+  } else {
+    decodeData = tran.data.toString().slice(0, 10);
+  }
+  return decodeData;
 }

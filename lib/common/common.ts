@@ -8,13 +8,17 @@ export const waitTime = (tTime: number): Promise<number> => {
   });
 }
 
-export const token2Usd = (tokenWei: string, usdRate: string) => {
+export const token2Usd = (tokenWei: string, usdRate: string, orgin?: boolean) => {
   if (!tokenWei) return null;
   if (!usdRate) return null;
   const usddecimals = 30;
   const t1 = FixedNumber.fromString(tokenWei).mulUnsafe(FixedNumber.from(usdRate));
   const t2 = t1.divUnsafe(FixedNumber.fromString(BigNumber.from("10").pow(usddecimals).toString())).toString();
-  // console.debug('token2Usd', tokenWei, usdRate, t2);
+  // console.debug('token2Usd', tokenWei, usdRate, t2.toString());
+  // return `${parseInt(`${parseFloat(t2) * 100}`) / 100}`;
+  if (orgin) {
+    return parseFloat(t2);
+  }
   return `${parseInt(`${parseFloat(t2) * 100}`) / 100}`;
 }
 
@@ -74,3 +78,21 @@ export const getPageDataByPage = (pageData, page) => {
   }
   return result;
 }
+
+export function hashcode(str: string) {
+  let hash = 0;
+  if (!str || str.length === 0) return hash;
+  let len = str.length;
+  for (let i = 0; i < len; i++) {
+    let chr = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
+
+export function hashcodeObj(obj: unknown) {
+  const str = JSON.stringify(obj);
+  return hashcode(str);
+}
+

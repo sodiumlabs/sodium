@@ -2,8 +2,10 @@ import { Divider } from '@ui-kitten/components';
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
-import { formatWei2Price } from '../../lib/common/common';
+import { formatWei2Price, hashcodeObj } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
+import { formatTimeYMDHMS } from '../../lib/common/time';
+import { useOperateTimeStamp } from '../../lib/data/global';
 import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
@@ -24,8 +26,9 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
   const [isLoading, setIsLoading] = useModalLoading(modalParam);
-  const [gasQuery, paymasterInfos] = useQueryGas(param?.txn);
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
+  const [gasQuery, paymasterInfos] = useQueryGas(param?.txn);
+  const operateTimeStamp = useOperateTimeStamp();
 
   const onClickTranscationQueue = () => {
     showSignTranscationModal(false);
@@ -43,6 +46,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     hideModal();
   }
   const curNetwork = getNetwork(param?.chaindId);
+
   return (
     <BaseModal
       visible={modalParam.visible}
@@ -68,7 +72,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 right={<MText >{curNetwork?.name?.toUpperCase()}</MText>} />
               <MLineLR
                 left={<MText >Requested at</MText>}
-                right={<MText>December 1, 2022 8:17:14 pm</MText>} />
+                right={<MText>{formatTimeYMDHMS(operateTimeStamp)}</MText>} />
             </MVStack>
 
 
@@ -76,14 +80,14 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
               param?.decodeTransfer && (
                 param.decodeTransfer.map((decodeTxn, index) => {
                   return (
-                    <BaseFoldFrame key={JSON.stringify(decodeTxn.origin) + index} defaultExpansion style={{ marginTop: 20 }}
+                    <BaseFoldFrame key={hashcodeObj(decodeTxn) + index} defaultExpansion style={{ marginTop: 20 }}
                       header={<MText >{`Transfer(${index + 1}/${param.decodeTransfer.length})`}</MText>}>
 
                       <MText>Send</MText>
                       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
                         <MImage size={20} />
                         <MText style={{ flex: 1 }}>{`${decodeTxn.decodeTransfer.token.name}(${decodeTxn.decodeTransfer.token.symbol})`}</MText>
-                        <MText >{formatWei2Price(decodeTxn.decodeTransfer.amount.toString(), decodeTxn.decodeTransfer.token.decimals)} {decodeTxn.decodeTransfer.token.symbol}</MText>
+                        <MText >{formatWei2Price(decodeTxn.decodeTransfer.amount.toString(), decodeTxn.decodeTransfer.token.decimals, 10)} {decodeTxn.decodeTransfer.token.symbol}</MText>
                       </MHStack>
 
                       <Divider />
@@ -104,7 +108,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   {
                     param.decodeTransfer.map((decodetxn, index) => {
                       return (
-                        <MVStack stretchW key={JSON.stringify(decodetxn.origin) + index} style={{ backgroundColor: '#999', borderRadius: 15, padding: 15 }}>
+                        <MVStack stretchW key={hashcodeObj(decodetxn) + index} style={{ backgroundColor: '#999', borderRadius: 15, padding: 15 }}>
                           <Text>
                             {
                               JSON.stringify(decodetxn.origin, null, 2)
@@ -119,7 +123,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
 
             {
-              paymasterInfos && paymasterInfos.length && (
+              tokenInfos && paymasterInfos && paymasterInfos.length && (
                 <MVStack>
                   <MHStack stretchW style={{ alignItems: 'center' }}>
                     <MText>Network Fee</MText>
@@ -131,7 +135,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   {
                     paymasterInfos.map((gasInfo, index) => {
                       const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
-                      return (<NetworkFeeItem key={JSON.stringify(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
+                      return (<NetworkFeeItem key={hashcodeObj(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
                     })
                   }
                 </MVStack>)

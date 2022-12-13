@@ -1,6 +1,7 @@
 import { Transaction } from '@0xsodium/transactions';
 import { Signer } from "@0xsodium/wallet";
 import { BigNumberish } from 'ethers';
+import { BigNumber } from "@ethersproject/bignumber";
 import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
@@ -15,6 +16,7 @@ import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { TokenDropdown } from "../dropdown/TokenDropdown";
+import { formatPrice2Wei } from '../../lib/common/common';
 
 export function SendScreen() {
   const authData = useAuth();
@@ -46,9 +48,9 @@ export function SendScreen() {
     if (!selectedOption) return;
     // () => sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", 1000)
     if (selectedOption.token.isNativeToken) {
-      sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", 1000);
+      sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", BigNumber.from(formatPrice2Wei('1000', selectedOption.token.decimals)));
     } else {
-      sendERC20Token("0x714df076992f95E452A345cD8289882CEc6ab82F", selectedOption.token.address, 1000);
+      sendERC20Token("0x714df076992f95E452A345cD8289882CEc6ab82F", selectedOption.token.address, BigNumber.from(formatPrice2Wei("1000", selectedOption.token.decimals)));
     }
   }
 

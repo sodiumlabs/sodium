@@ -14,7 +14,17 @@ import {
 import { useAuth } from '../lib/data/auth';
 import { Screens } from '../lib/define';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient(
+  // {
+  //   'defaultOptions': {
+  //     'queries': {
+  //       'cacheTime': 0,
+  //       'refetchInterval': 0,
+  //       'refetchOnWindowFocus': false
+  //     }
+  //   }
+  // }
+);
 const Stack = createNativeStackNavigator();
 
 if (

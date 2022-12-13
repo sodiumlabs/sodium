@@ -5,6 +5,7 @@ import { navigation } from '../../components/base/navigationInit';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
 import { getAuth } from '../data/auth';
+import { updateOperateTimeStamp } from '../data/global';
 import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, Screens } from '../define';
 import { transactionQueue } from '../transaction';
 
@@ -56,15 +57,18 @@ export class WalletPrompter implements WalletUserPrompter {
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         console.log("promptSendTransaction");
-        console.log(txn);
-        const auth = getAuth();
-        if (!auth.isLogin) {
-            return Promise.reject();
-        }
-
-        const transactionQueueFindIndex = transactionQueue.add(txn);
-
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
+            const auth = getAuth();
+            if (!auth.isLogin) {
+                return Promise.reject();
+            }
+            const timestamp = Date.now();
+            updateOperateTimeStamp(timestamp);
+            const transactionQueueFindIndex = transactionQueue.add({
+                'txReq': txn,
+                'timeStamp': timestamp
+            });
+
             if (chaindId == null) {
                 chaindId = await auth.wallet.getChainId();
             }

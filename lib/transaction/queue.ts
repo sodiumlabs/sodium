@@ -1,10 +1,11 @@
-import { TransactionRequest } from '@0xsodium/transactions';
 import { useStore } from "@nanostores/react";
 import { atom, computed } from 'nanostores';
+import { hashcodeObj } from '../common/common';
+import { ITranscation } from '../define';
 
-export const requestedTransactions = atom<TransactionRequest[]>([]);
+export const requestedTransactions = atom<ITranscation[]>([]);
 
-const add = (tx: TransactionRequest) => {
+const add = (tx: ITranscation) => {
     const newTxs = [...requestedTransactions.get(), tx];
     requestedTransactions.set(newTxs);
 
@@ -27,6 +28,13 @@ const remove = (findIndex: number) => {
     requestedTransactions.set(newRequestedTransactions.get());
 }
 
+const removeByTxn = (txn: ITranscation) => {
+    const newRequestedTransactions = computed(requestedTransactions, txs => {
+        return txs.filter((item, index) => hashcodeObj(item) != hashcodeObj(txn));
+    });
+    requestedTransactions.set(newRequestedTransactions.get());
+}
+
 const unbindListener = requestedTransactions.subscribe(value => {
     // TODO to async-storage
 });
@@ -34,5 +42,7 @@ const unbindListener = requestedTransactions.subscribe(value => {
 export const transactionQueue = {
     add,
     remove,
+    removeByTxn,
     useRequestedTransactions
 }
+

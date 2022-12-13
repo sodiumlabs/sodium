@@ -13,7 +13,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
   const { style, gasInfo, ownToken, ...reset } = props;
 
   const balance = !ownToken ? '0' : `${formatWei2Price(ownToken.balance.toString(), ownToken.token.decimals)} ${ownToken.token.symbol}`
-  const gasUsd = !ownToken ? '0' : token2Usd(gasInfo.amount.toString(), ownToken.rate + '');
+  const gasUsd = !ownToken ? '0' : token2Usd(gasInfo.amount.toString(), ownToken.rate + '', true);
   return (
     <Pressable onPress={undefined}>
       <MHStack style={styles.container} stretchW>
@@ -22,7 +22,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
         <MVStack style={{ flex: 1 }}>
           <MLineLR
             left={<MText>{`${gasInfo.token.name}(${gasInfo.token.symbol})`}</MText>}
-            right={<MText>{formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals)} {gasInfo.token.symbol}</MText>} />
+            right={<MText>{formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals, 10)} {gasInfo.token.symbol}</MText>} />
           <MLineLR
             left={<MText>Balance : {balance}</MText>}
             right={<MText>${gasUsd}</MText>} />

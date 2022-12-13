@@ -8,9 +8,13 @@ import { showTranscationDetailModal, showTranscationQueueModal } from '../base/m
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import { IModalParam } from '../../lib/define';
+import { TransactionRequest } from '@0xsodium/transactions';
+import { useRequestedTransactions } from '../../lib/transaction';
+import { hashcodeObj } from '../../lib/common/common';
 
 export const TranscationQueueModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
+  const requestTranscations = useRequestedTransactions();
   const param = modalParam.param;
   const onQueueItemClick = () => {
     showTranscationQueueModal(false);
@@ -30,9 +34,9 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
             </MHStack>
             <MText style={styles.marginV}>Requested Transactions (4)</MText>
             {
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map((item, index) => {
+              requestTranscations.map((txn, index) => {
                 return (
-                  <TranscationQueueItem key={index} onPress={onQueueItemClick} />
+                  <TranscationQueueItem transcation={txn} key={hashcodeObj(txn) + index} onPress={onQueueItemClick} />
                 )
               })
             }
