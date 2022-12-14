@@ -17,8 +17,8 @@ export async function decodeTransactionRequest(txn: TransactionRequest, web3sign
         'decodeTransfer': decodeData
       });
   }
-  console.log("decodeTransactionRequest decodes:");
-  console.log(decodes);
+  // console.log("decodeTransactionRequest decodes:");
+  // console.log(decodes);
   return decodes;
 }
 

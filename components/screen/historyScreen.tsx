@@ -4,6 +4,7 @@ import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import HistoryItem from "../item/historyItem";
+import { RequestTranscation } from "../transcation/requestTranscation";
 
 export function HistoryScreen() {
   const [queryHistory, transcationHistorys, onScroll] = useQueryHistory();
@@ -11,8 +12,8 @@ export function HistoryScreen() {
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={styles.container}>
-          <MText style={{ marginVertical: 6 }}>History</MText>
-          {/* <RequestTranscationItem /> */}
+          <MText style={{ marginVertical: 6 }}>Transaction History </MText>
+          <RequestTranscation />
 
           <MVStack stretchW>
             <MText>Last Week</MText>

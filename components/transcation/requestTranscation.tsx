@@ -1,22 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet } from "react-native";
+import { ITranscation } from '../../lib/define';
 import { useRequestedTransactions } from "../../lib/transaction";
 import { showTranscationQueueModal } from "../base/modalInit";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
+import { formatTimeYMDHMS } from '../../lib/common/time';
 
 
-export function RequestTranscationItem() {
+export function RequestTranscation() {
   const requestTranscations = useRequestedTransactions();
+  const [lastRequestTxn, setLastRequestTxn] = useState<ITranscation>();
+  useEffect(() => {
+    if (requestTranscations) {
+      setLastRequestTxn(requestTranscations[requestTranscations.length - 1]);
+    }
+  }, [requestTranscations]);
 
-  // useEffect(() => {
-  //   if (requestTranscations) {
-  //     console.log('useRequestedTransactions');
-  //     console.log(requestTranscations);
-  //   }
-  // }, [requestTranscations]);
-
-  if (!requestTranscations || requestTranscations.length <= 0) {
+  if (!requestTranscations || requestTranscations.length <= 0 || !lastRequestTxn) {
     return <></>
   }
 
@@ -24,10 +25,10 @@ export function RequestTranscationItem() {
     <Pressable style={{ width: '100%' }} onPress={() => showTranscationQueueModal(true)}>
       <MHStack stretchW style={styles.transcationQueue}>
         <MHStack style={{ borderRadius: 999, width: 20, height: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: '#bbb' }}>
-          <MText>5</MText>
+          <MText>{requestTranscations.length}</MText>
         </MHStack>
         <MText style={{ flex: 1 }}>Requested Transcations</MText>
-        <MText>14 hours ago</MText>
+        <MText>{formatTimeYMDHMS(lastRequestTxn.timeStamp)}</MText>
       </MHStack>
     </Pressable>
   )

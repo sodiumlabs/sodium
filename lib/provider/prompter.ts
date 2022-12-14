@@ -31,31 +31,6 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        return Promise.reject();
-        // const auth = getAuth();
-        // if (!auth.isLogin) {
-        //     return Promise.reject();
-        // }
-        // const decodes = decodeTransactionRequest(txn);
-
-        // return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
-
-        //     const continueClick = async () => {
-
-        //         const result = await auth.wallet['signer'].signTransactions(txn, chaindId);
-        //         // @ts-ignore
-        //         tResolve(result);
-        //     }
-        //     showSignTranscationModal(true, {
-        //         continueClick: continueClick,
-        //         cancelClick: () => tReject(),
-        //         decodeTransfer: decodes,
-        //         options: options
-        //     } as ISignTranscationModalParam);
-        // });
-    }
-
-    promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         console.log("promptSendTransaction");
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
             const auth = getAuth();
@@ -67,6 +42,42 @@ export class WalletPrompter implements WalletUserPrompter {
                 'timeStamp': OperateTimeStamp.getAndReset()
             }
             const transactionQueueFindIndex = transactionQueue.add(txnQueueItem);
+
+            if (chaindId == null) {
+                chaindId = await auth.wallet.getChainId();
+            }
+            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
+            const continueClick = async () => {
+                transactionQueue.remove(transactionQueueFindIndex);
+                const txnResponse = await auth.wallet['signer'].signTransaction(txn, chaindId);
+                tResolve(txnResponse.hash);
+            }
+            showSignTranscationModal(true, {
+                continueClick: continueClick,
+                cancelClick: () => {
+                    transactionQueue.remove(transactionQueueFindIndex);
+                    tReject();
+                },
+                decodeTransfer: decodes,
+                options: options,
+                chaindId: chaindId,
+                txn: txnQueueItem
+            } as ISignTranscationModalParam);
+        });
+    }
+
+    promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
+        console.log("promptSendTransaction");
+        return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
+            const auth = getAuth();
+            if (!auth.isLogin) {
+                return Promise.reject();
+            }
+            const txnWithTime = {
+                'txReq': txn,
+                'timeStamp': OperateTimeStamp.getAndReset()
+            }
+            const transactionQueueFindIndex = transactionQueue.add(txnWithTime);
 
             if (chaindId == null) {
                 chaindId = await auth.wallet.getChainId();
@@ -86,7 +97,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 decodeTransfer: decodes,
                 options: options,
                 chaindId: chaindId,
-                txn: txnQueueItem
+                txn: txnWithTime
             } as ISignTranscationModalParam);
         });
     }

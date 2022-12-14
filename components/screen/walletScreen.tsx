@@ -9,13 +9,18 @@ import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
-import { RequestTranscationItem } from '../item/requestTranscationItem';
+import PendingItem from '../item/pendingItem';
+import { RequestTranscation } from '../transcation/requestTranscation';
+import { useState } from 'react';
 
 
 
 export function WalletScreen() {
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
-
+  const [searchText, setSearchText] = useState<string>('');
+  const onChangeText = (text: string) => {
+    setSearchText(text);
+  }
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }}>
@@ -31,17 +36,19 @@ export function WalletScreen() {
             <WalletButton title='Deposit' onPress={() => navigation.navigate(Screens.Deposit)} />
           </MHStack>
 
-          <RequestTranscationItem />
+          <RequestTranscation />
 
           {/* <PendingItem /> */}
 
-          <MInput style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
+          <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
 
           <MVStack stretchW style={styles.coins}>
             <MText style={{ marginVertical: 15 }}>Coins</MText>
             {
-              tokenInfos && tokenInfos.map((token, index) => {
-                return <CoinItem key={token.token.address} tokenInfo={token} />
+              tokenInfos && tokenInfos.map((tokenInfo, index) => {
+                if ((tokenInfo.token.name + tokenInfo.token.symbol).toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) != -1) {
+                  return <CoinItem key={tokenInfo.token.address} tokenInfo={tokenInfo} />
+                }
               })
             }
 
