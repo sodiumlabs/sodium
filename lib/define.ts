@@ -146,5 +146,5 @@ export interface ITranscation {
 }
 
 export enum eStotageKey {
-  requestedTxs,
+  requestedTxs = 'requestedTxs',
 }
