@@ -2,7 +2,7 @@ import { Divider } from "@ui-kitten/components";
 import { Linking, ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from "../../lib/api/history";
 import { formatWei2Price } from "../../lib/common/common";
-import { getBlockExplorer } from "../../lib/common/network";
+import { getAddressExplorer } from "../../lib/common/network";
 import { IUserTokenInfo, Screens } from '../../lib/define';
 import { useMClipboard } from "../../lib/hook/clipboard";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
@@ -20,7 +20,12 @@ export function CoinScreen(props) {
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [clipboardContent, setClipboardContent] = useMClipboard();
   const [queryHistory, transcationHistorys, onScroll] = useQueryHistory(null, tokenInfo.token.address);
-
+  const copyTxHash = () => {
+    setClipboardContent(tokenInfo.token.address)
+  }
+  const linkTxHash = () => {
+    Linking.openURL(getAddressExplorer(tokenInfo.token.chainId, tokenInfo.token.address))
+  }
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
@@ -58,8 +63,8 @@ export function CoinScreen(props) {
                   left={<MText >{tokenInfo.token.address}</MText>}
                   right={
                     <MHStack>
-                      <MButton title={"copy"} onPress={() => setClipboardContent(tokenInfo.token.address)} />
-                      <MButton title={"link"} onPress={() => Linking.openURL(getBlockExplorer(tokenInfo.token.chainId, tokenInfo.token.address))} />
+                      <MButton title={"copy"} onPress={copyTxHash} />
+                      <MButton title={"link"} onPress={linkTxHash} />
                     </MHStack>
                   } />
               </>

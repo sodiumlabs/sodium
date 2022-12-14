@@ -28,11 +28,12 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
 
-  const onClickTranscationQueue = () => {
-    showSignTranscationModal(false);
-    showTranscationQueueModal(true);
-  }
+  // const onClickTranscationQueue = () => {
+  //   showSignTranscationModal(false);
+  //   showTranscationQueueModal(true);
+  // }
   const onConfirmClick = async () => {
+    if (!param) return;
     if (isLoading) return;
     setIsLoading(true);
     await param.continueClick();
@@ -40,6 +41,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     hideModal();
   }
   const onCancelClick = () => {
+    if (!param) return;
     param.cancelClick();
     hideModal();
   }

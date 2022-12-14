@@ -6,10 +6,20 @@ export function getNetwork(chainId: string | number): NetworkConfig {
   return nets[chainId];
 }
 
-export function getBlockExplorer(chainId: string | number, address: string) {
+export function getAddressExplorer(chainId: string | number, address: string) {
   const network = getNetwork(chainId);
   if (network) {
     const link = network.blockExplorer.rootUrl + 'address/' + address;
+    console.log(link);
+    return link;
+  }
+}
+
+
+export function getTranscationExplorer(chainId: string | number, txn: string) {
+  const network = getNetwork(chainId);
+  if (network) {
+    const link = network.blockExplorer.rootUrl + 'tx/' + txn;
     console.log(link);
     return link;
   }
