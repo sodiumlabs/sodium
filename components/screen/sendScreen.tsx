@@ -57,12 +57,13 @@ export function SendScreen() {
 
   const sendClick = () => {
     if (!selectedOption) return;
-    if (!/^0x[0-9a-zA-Z]+$/.test(inputAddress)) {
-      console.error('The address format is incorrect');
+
+    if (!/^\d+(\.\d+)?$/.test(inputTokenCount) || +inputTokenCount <= 0) {
+      console.error('The quantity format is incorrect');
       return;
     }
-    if (!/^\d+(\.\d+)?$/.test(inputTokenCount)) {
-      console.error('The quantity format is incorrect');
+    if (!/^0x[0-9a-zA-Z]+$/.test(inputAddress)) {
+      console.error('The address format is incorrect');
       return;
     }
     const lowerCaseAddress = inputAddress.toLocaleLowerCase();

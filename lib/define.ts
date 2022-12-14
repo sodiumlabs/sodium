@@ -143,6 +143,8 @@ export type PaymasterInfo = {
 export interface ITranscation {
   txReq: TransactionRequest,
   timeStamp: number,
-  // chaindId?: number,
-  // options?: ConnectOptions
+}
+
+export enum eStotageKey {
+  requestedTxs,
 }

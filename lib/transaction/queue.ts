@@ -1,9 +1,27 @@
 import { useStore } from "@nanostores/react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { atom, computed } from 'nanostores';
 import { hashcodeObj } from '../common/common';
-import { ITranscation } from '../define';
+import { getAuth } from "../data/auth";
+import { eStotageKey, ITranscation } from '../define';
 
 export const requestedTransactions = atom<ITranscation[]>([]);
+
+const loadReqTxsAsyncStorage = async () => {
+    const auth = getAuth();
+    if (auth.isLogin) {
+        console.log('load AsyncStorage：' + eStotageKey.requestedTxs);
+        const reqs = await AsyncStorage.getItem(eStotageKey.requestedTxs + auth.blockchainAddress);
+        if (reqs != null) {
+            try {
+                const txs = JSON.parse(reqs);
+                requestedTransactions.set(txs);
+            } catch (error) {
+                requestedTransactions.set([]);
+            }
+        }
+    }
+}
 
 const add = (tx: ITranscation) => {
     const newTxs = [...requestedTransactions.get(), tx];
@@ -36,13 +54,23 @@ const removeByTxn = (txn: ITranscation) => {
 }
 
 const unbindListener = requestedTransactions.subscribe(value => {
-    // TODO to async-storage
+    try {
+        const auth = getAuth();
+        if (auth.isLogin) {
+            console.log('save AsyncStorage：' + eStotageKey.requestedTxs);
+            AsyncStorage.setItem(eStotageKey.requestedTxs + auth.blockchainAddress, JSON.stringify(value));
+        }
+    } catch (error) {
+        //
+    }
+
 });
 
 export const transactionQueue = {
     add,
     remove,
     removeByTxn,
-    useRequestedTransactions
+    useRequestedTransactions,
+    loadAsyncStorage: loadReqTxsAsyncStorage
 }
 
