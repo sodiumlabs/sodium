@@ -1,4 +1,4 @@
-import { ImageProps, Image, Text, TextProps } from 'react-native';
+import { Image, ImageProps } from 'react-native';
 
 
 export default function MImage(props: ImageProps & { size?: number, w?: number, h?: number, url?: string }) {
@@ -8,10 +8,11 @@ export default function MImage(props: ImageProps & { size?: number, w?: number, 
     height: h || size || 12
   }
   if (url != null) {
-    source = { uri: 'https://example.com/image.jpg' }
+    source = { uri: url }
   } else {
     if (source == null) {
       source = props.source || (require('./../../assets/favicon.png'))
+      // source = require('./../../assets/favicon.png')
     }
   }
 

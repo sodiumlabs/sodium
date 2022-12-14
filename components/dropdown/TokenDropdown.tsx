@@ -2,7 +2,12 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo } from '../../lib/define';
+import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
+import MText from '../baseUI/mText';
+import MVStack from '../baseUI/mVStack';
 
 export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
   const { options, selectedOption, setSelectedOption } = props;
@@ -27,7 +32,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleDropdown}>
-        <Text>{selectedOption?.token?.symbol || 'Select an option'}</Text>
+        <TokenItem option={selectedOption} />
       </TouchableOpacity>
 
       {isDropdownVisible && (
@@ -41,7 +46,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
                 onPress={() => handleOptionPress(item)}
                 style={styles.option}
               >
-                <Text>{item.token.symbol}</Text>
+                <TokenItem option={item} />
               </TouchableOpacity>
             )}
           />
@@ -50,6 +55,30 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
     </View>
   );
 };
+
+const TokenItem = (props: { option: IUserTokenInfo }) => {
+  const { option } = props;
+  if (option == null) {
+    return <></>
+  }
+  return (
+    <MHStack style={styles.sendCoin} stretchW>
+      <MImage size={32} />
+      <MVStack style={{ flex: 1 }}>
+        <MHStack style={{ flex: 1 }}>
+          <MText>{option.token.symbol}</MText>
+          <MImage size={12} />
+          <MText>{option.token.name}</MText>
+        </MHStack>
+        <MHStack style={{ flex: 1 }}>
+          <MText>{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText>
+          <MText> {option.token.symbol}</MText>
+          <MText> ${option.usdBalance}</MText>
+        </MHStack>
+      </MVStack>
+    </MHStack>
+  )
+}
 
 
 const styles = StyleSheet.create({
@@ -62,7 +91,7 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: 'absolute',
-    top: 40,
+    top: 60,
     left: 0,
     right: 0,
     zIndex: 2,
@@ -70,6 +99,10 @@ const styles = StyleSheet.create({
   option: {
     padding: 10,
     // borderRadius: 5,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
+    backgroundColor: '#999',
+    paddingHorizontal: 15,
   },
+  sendCoin: {
+  }
 });

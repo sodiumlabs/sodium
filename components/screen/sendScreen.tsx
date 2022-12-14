@@ -1,27 +1,37 @@
 import { Transaction } from '@0xsodium/transactions';
 import { Signer } from "@0xsodium/wallet";
-import { BigNumberish } from 'ethers';
 import { BigNumber } from "@ethersproject/bignumber";
+import { BigNumberish } from 'ethers';
 import { useCallback, useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
+import { formatPrice2Wei } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { IUserTokenInfo } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
 import MButton from "../baseUI/mButton";
-import MHStack from "../baseUI/mHStack";
-import MImage from "../baseUI/mImage";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { TokenDropdown } from "../dropdown/TokenDropdown";
-import { formatPrice2Wei } from '../../lib/common/common';
 
 export function SendScreen() {
   const authData = useAuth();
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
+  const [inputAddress, setInputAddress] = useState('');
+  const [inputTokenCount, setInputTokenCount] = useState('');
+
+  const onChangeAddressText = (text: string) => {
+    setInputAddress(text.trim());
+  }
+  const onChangeTokenCountText = (text: string) => {
+    if (!/^[0-9 .]*$/.test(text)) {
+      return;
+    }
+    setInputTokenCount(text.trim());
+  }
 
   // 例子
   const sendNativeToken = useCallback(async (to: string, amount: BigNumberish) => {
@@ -46,11 +56,21 @@ export function SendScreen() {
 
   const sendClick = () => {
     if (!selectedOption) return;
-    // () => sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", 1000)
+    if (!/^0x[0-9a-zA-Z]+$/.test(inputAddress)) {
+      console.error('The address format is incorrect');
+      return;
+    }
+    if (!/^\d+(\.\d+)?$/.test(inputTokenCount)) {
+      console.error('The quantity format is incorrect');
+      return;
+    }
+    const lowerCaseAddress = inputAddress.toLocaleLowerCase();
+
+    const sendWei = BigNumber.from(formatPrice2Wei(inputTokenCount, selectedOption.token.decimals));
     if (selectedOption.token.isNativeToken) {
-      sendNativeToken("0x714df076992f95E452A345cD8289882CEc6ab82F", BigNumber.from(formatPrice2Wei('1000', selectedOption.token.decimals)));
+      sendNativeToken(lowerCaseAddress, sendWei);
     } else {
-      sendERC20Token("0x714df076992f95E452A345cD8289882CEc6ab82F", selectedOption.token.address, BigNumber.from(formatPrice2Wei("1000", selectedOption.token.decimals)));
+      sendERC20Token(lowerCaseAddress, selectedOption.token.address, sendWei);
     }
   }
 
@@ -60,27 +80,12 @@ export function SendScreen() {
         <MVStack stretchW style={styles.container}>
           <MText style={{ marginVertical: 6 }}>Send</MText>
           <MVStack style={styles.send} stretchW>
-            <MHStack style={styles.sendCoin} stretchW>
-              <MImage size={32} />
-              <MVStack style={{ flex: 1 }}>
-                <MHStack style={{ flex: 1 }}>
-                  <MText>USDC</MText>
-                  <MImage size={12} />
-                  <MText>POLYGON</MText>
-                </MHStack>
-                <MHStack style={{ flex: 1 }}>
-                  <MText>0.02223</MText>
-                  <MText> MATIC</MText>
-                  <MText> $1.8</MText>
-                </MHStack>
-              </MVStack>
-            </MHStack>
             <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
 
-            <MInput />
+            <MInput keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
           </MVStack>
           <MText style={{ marginVertical: 20 }}>To</MText>
-          <MInput placeholder="address" />
+          <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
           <MButton onPress={sendClick} title={"Continue"} style={{ marginVertical: 20 }} />
         </MVStack>
       </ScrollView>
@@ -99,9 +104,5 @@ const styles = StyleSheet.create({
     padding: 15,
     backgroundColor: '#666',
     borderRadius: 15
-  },
-  sendCoin: {
-    paddingHorizontal: 15,
-    marginBottom: 12
   }
 });
