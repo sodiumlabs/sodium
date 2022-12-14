@@ -27,7 +27,7 @@ authAtom.subscribe((value) => {
 });
 
 export const getAuth = (): AuthData => {
-  return authAtom?.get();
+  return authAtom.get();
 }
 
 export const useAuth = (): AuthData => {

@@ -13,6 +13,9 @@ export function formatTime(timestamp) {
 
 // Output: "August 26, 2020 24:22:11" 
 export function formatTimeYMDHMS(timestamp) {
+  if (!timestamp) {
+    return '';
+  }
   const date = new Date(timestamp);
   const month = date.getMonth() + 1; // getMonth() returns a 0-based month, so we need to add 1 to get the correct month number
   const day = date.getDate();

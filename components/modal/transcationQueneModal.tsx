@@ -1,21 +1,23 @@
 
 import { ScrollView, StyleSheet } from 'react-native';
+import { hashcodeObj } from '../../lib/common/common';
+import { IModalParam } from '../../lib/define';
+import { transactionQueue, useRequestedTransactions } from '../../lib/transaction';
 import { BaseModal } from '../base/baseModal';
+import MButton from '../baseUI/mButton';
+import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import TranscationQueueItem from '../item/transcationQueueItem';
-import { showTranscationDetailModal, showTranscationQueueModal, showSignTranscationModal } from '../base/modalInit';
-import MButton from '../baseUI/mButton';
-import MHStack from '../baseUI/mHStack';
-import { IModalParam } from '../../lib/define';
-import { TransactionRequest } from '@0xsodium/transactions';
-import { useRequestedTransactions } from '../../lib/transaction';
-import { hashcodeObj } from '../../lib/common/common';
 
 export const TranscationQueueModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
   const requestTranscations = useRequestedTransactions();
   const param = modalParam.param;
+  const rejectAllClick = () => {
+    console.log("rejectAllClick");
+    transactionQueue.removeAll();
+  }
 
   return (
     <BaseModal
@@ -39,10 +41,7 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
           </ScrollView>
         </MVStack>
 
-        <MVStack stretchW >
-          <MButton title={'confirm'} />
-        </MVStack>
-
+        <MButton stretchW title={'reject all'} onPress={rejectAllClick} />
       </MVStack>
     </BaseModal>
   );

@@ -5,7 +5,7 @@ import { navigation } from '../../components/base/navigationInit';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
 import { getAuth } from '../data/auth';
-import { updateOperateTimeStamp } from '../data/global';
+import { OperateTimeStamp } from '../data/operateTime';
 import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, Screens } from '../define';
 import { transactionQueue } from '../transaction';
 
@@ -62,12 +62,11 @@ export class WalletPrompter implements WalletUserPrompter {
             if (!auth.isLogin) {
                 return Promise.reject();
             }
-            const timestamp = Date.now();
-            updateOperateTimeStamp(timestamp);
-            const transactionQueueFindIndex = transactionQueue.add({
+            const txnQueueItem = {
                 'txReq': txn,
-                'timeStamp': timestamp
-            });
+                'timeStamp': OperateTimeStamp.getAndReset()
+            }
+            const transactionQueueFindIndex = transactionQueue.add(txnQueueItem);
 
             if (chaindId == null) {
                 chaindId = await auth.wallet.getChainId();
@@ -87,7 +86,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 decodeTransfer: decodes,
                 options: options,
                 chaindId: chaindId,
-                txn: txn
+                txn: txnQueueItem
             } as ISignTranscationModalParam);
         });
     }

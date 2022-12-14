@@ -13,9 +13,9 @@ import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import { useAuth } from '../../lib/data/auth';
 import { transactionQueue } from '../../lib/transaction';
-import { updateOperateTimeStamp } from '../../lib/data/global';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { showTranscationQueueModal, showSignTranscationModal } from '../base/modalInit';
+import { OperateTimeStamp } from '../../lib/data/operateTime';
 
 export default function TranscationQueueItem(props: { transcation: ITranscation }) {
   const { transcation } = props;
@@ -39,7 +39,7 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
       showTranscationQueueModal(false);
       showSignTranscationModal(true, null);
 
-      updateOperateTimeStamp(transcation.timeStamp);
+      OperateTimeStamp.set(transcation.timeStamp);
       transactionQueue.removeByTxn(transcation);
       const txr = await auth.web3signer.sendTransaction(transcation.txReq);
       await txr.wait();

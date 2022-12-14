@@ -9,6 +9,9 @@ export const requestedTransactions = atom<ITranscation[]>([]);
 
 const add = (tx: ITranscation) => {
     const newTxs = [...requestedTransactions.get(), tx];
+    newTxs.sort((a, b) => {
+        return a.timeStamp - b.timeStamp;
+    });
     requestedTransactions.set(newTxs);
 
     // TODO
@@ -37,6 +40,10 @@ const removeByTxn = (txn: ITranscation) => {
     requestedTransactions.set(newRequestedTransactions.get());
 }
 
+const removeAll = () => {
+    requestedTransactions.set([]);
+}
+
 const unbindListener = requestedTransactions.subscribe(value => {
     saveTxnQueue(value);
 });
@@ -50,6 +57,7 @@ export const transactionQueue = {
     add,
     remove,
     removeByTxn,
+    removeAll,
     useRequestedTransactions,
     loadAsyncStorage: loadReqTxsAsyncStorage
 }

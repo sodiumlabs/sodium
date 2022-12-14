@@ -5,7 +5,6 @@ import { useQueryTokens } from '../../lib/api/tokens';
 import { formatWei2Price, hashcodeObj } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { useOperateTimeStamp } from '../../lib/data/global';
 import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
@@ -27,8 +26,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const param = modalParam.param as ISignTranscationModalParam;
   const [isLoading, setIsLoading] = useModalLoading(modalParam);
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
-  const [gasQuery, paymasterInfos] = useQueryGas(param?.txn);
-  const operateTimeStamp = useOperateTimeStamp();
+  const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
 
   const onClickTranscationQueue = () => {
     showSignTranscationModal(false);
@@ -72,7 +70,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 right={<MText >{curNetwork?.name?.toUpperCase()}</MText>} />
               <MLineLR
                 left={<MText >Requested at</MText>}
-                right={<MText>{formatTimeYMDHMS(operateTimeStamp)}</MText>} />
+                right={<MText>{formatTimeYMDHMS(param?.txn?.timeStamp)}</MText>} />
             </MVStack>
 
 
