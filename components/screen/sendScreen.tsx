@@ -10,6 +10,7 @@ import { formatPrice2Wei } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { IUserTokenInfo } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
+import { showSignTranscationModal } from '../base/modalInit';
 import MButton from "../baseUI/mButton";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
@@ -72,6 +73,7 @@ export function SendScreen() {
     } else {
       sendERC20Token(lowerCaseAddress, selectedOption.token.address, sendWei);
     }
+    showSignTranscationModal(true, null);
   }
 
   return (
@@ -86,7 +88,7 @@ export function SendScreen() {
           </MVStack>
           <MText style={{ marginVertical: 20 }}>To</MText>
           <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
-          <MButton onPress={sendClick} title={"Continue"} style={{ marginVertical: 20 }} />
+          <MButton stretchW onPress={sendClick} title={"Continue"} style={{ marginVertical: 20 }} />
         </MVStack>
       </ScrollView>
     </BaseScreen>

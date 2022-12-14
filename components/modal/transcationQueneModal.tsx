@@ -4,7 +4,7 @@ import { BaseModal } from '../base/baseModal';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import TranscationQueueItem from '../item/transcationQueueItem';
-import { showTranscationDetailModal, showTranscationQueueModal } from '../base/modalInit';
+import { showTranscationDetailModal, showTranscationQueueModal, showSignTranscationModal } from '../base/modalInit';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import { IModalParam } from '../../lib/define';
@@ -16,10 +16,6 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
   const { modalParam, hideModal } = props;
   const requestTranscations = useRequestedTransactions();
   const param = modalParam.param;
-  const onQueueItemClick = () => {
-    showTranscationQueueModal(false);
-    showTranscationDetailModal(true);
-  }
 
   return (
     <BaseModal
@@ -36,7 +32,7 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
             {
               requestTranscations.map((txn, index) => {
                 return (
-                  <TranscationQueueItem transcation={txn} key={hashcodeObj(txn) + index} onPress={onQueueItemClick} />
+                  <TranscationQueueItem transcation={txn} key={hashcodeObj(txn) + index} />
                 )
               })
             }

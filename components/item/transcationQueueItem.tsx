@@ -15,9 +15,10 @@ import { useAuth } from '../../lib/data/auth';
 import { transactionQueue } from '../../lib/transaction';
 import { updateOperateTimeStamp } from '../../lib/data/global';
 import { formatTimeYMDHMS } from '../../lib/common/time';
+import { showTranscationQueueModal, showSignTranscationModal } from '../base/modalInit';
 
-export default function TranscationQueueItem(props: { onPress: () => void, transcation: ITranscation }) {
-  const { onPress, transcation } = props;
+export default function TranscationQueueItem(props: { transcation: ITranscation }) {
+  const { transcation } = props;
   // const [decodeDatas, setDecodeDatas] = useState<IDecodeTranscation[]>();
   const [decodeData, setDecodeData] = useState<IDecodeTranscation>();
   const auth = useAuth();
@@ -35,6 +36,9 @@ export default function TranscationQueueItem(props: { onPress: () => void, trans
   }
   const itemClick = useCallback(async () => {
     if (auth.isLogin) {
+      showTranscationQueueModal(false);
+      showSignTranscationModal(true, null);
+
       updateOperateTimeStamp(transcation.timeStamp);
       transactionQueue.removeByTxn(transcation);
       const txr = await auth.web3signer.sendTransaction(transcation.txReq);
