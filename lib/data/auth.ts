@@ -35,11 +35,12 @@ export const useAuth = (): AuthData => {
   return useStore(authAtom);
 }
 
-export const loginOut = () => {
+export const loginOut = async () => {
+  await waitTime(1500);// test code
   logout();
 }
 
 export const loginIn = async (email: string) => {
+  await waitTime(1500);// test code
   await initWalletByTest(email);
-  await waitTime(1500);
 }

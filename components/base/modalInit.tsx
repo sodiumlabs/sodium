@@ -5,11 +5,12 @@ import { atom } from "nanostores";
 import { IDeployConfirmModalParam, IModalParam, ISignMessageModalParam, ISignTranscationModalParam } from "../../lib/define";
 import { ComModal } from "../modal/comModal";
 import { DeployConfirmModal } from "../modal/deployConfirmModal";
-import { LoadingModal } from "../modal/loadingModal";
+import { FullScreenModal } from "../modal/fullScreenModal";
 import { SignMessageModal } from '../modal/signMessageModal';
 import { SignTranscationModal } from '../modal/signTranscationModal';
 import { TranscationDetailModal } from "../modal/transcationDetailModal";
 import { TranscationQueueModal } from "../modal/transcationQueneModal";
+import { ReactNode } from 'react';
 
 const transcationDetailModalAtom = atom<IModalParam>({ visible: false });
 const transcationQueueModalAtom = atom<IModalParam>({ visible: false });
@@ -17,7 +18,7 @@ const comModalAtom = atom<IModalParam>({ visible: false });
 const deployConfirmModalAtom = atom<IModalParam>({ visible: false });
 const signTranscationModalAtom = atom<IModalParam>({ visible: false });
 const signMessageModalAtom = atom<IModalParam>({ visible: false });
-const loadingModalAtom = atom<IModalParam>({ visible: false });
+const fullScreenModalAtom = atom<IModalParam>({ visible: false });
 
 export const showUpdateComModal = (visible: boolean, param?: unknown) => {
   comModalAtom.set({ visible: visible, param: param });
@@ -38,8 +39,8 @@ export const showUpdateSignTranscationModal = (visible: boolean, param?: ISignTr
 export const showUpdateTranscationQueueModal = (visible: boolean, param?: unknown) => {
   transcationQueueModalAtom.set({ visible: visible, param: param });
 }
-export const showUpdateLoadingModal = (visible: boolean, param?: unknown) => {
-  loadingModalAtom.set({ visible: visible, param: param });
+export const showUpdateFullScreenModal = (visible: boolean, param?: ReactNode) => {
+  fullScreenModalAtom.set({ visible: visible, param: param });
 }
 
 export default function ModalInit() {
@@ -49,7 +50,7 @@ export default function ModalInit() {
   const signTranscationModal = useStore(signTranscationModalAtom);
   const signMessageModal = useStore(signMessageModalAtom);
   const comModal = useStore(comModalAtom);
-  const loadingModal = useStore(loadingModalAtom);
+  const fullScreenModal = useStore(fullScreenModalAtom);
   const deployConfirmModal = useStore(deployConfirmModalAtom);
   return (
     <>
@@ -58,7 +59,7 @@ export default function ModalInit() {
       <SignTranscationModal modalParam={signTranscationModal} hideModal={() => showUpdateSignTranscationModal(false)} />
       <SignMessageModal modalParam={signMessageModal} hideModal={() => showUpdateSignMessageModal(false)} />
       <ComModal modalParam={comModal} hideModal={() => showUpdateComModal(false)} />
-      <LoadingModal modalParam={loadingModal} hideModal={() => showUpdateLoadingModal(false)} />
+      <FullScreenModal modalParam={fullScreenModal} hideModal={() => showUpdateFullScreenModal(false)} />
       <DeployConfirmModal modalParam={deployConfirmModal} hideModal={() => showUpdateDeployConfirmModal(false)} />
     </>
   );

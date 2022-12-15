@@ -10,15 +10,25 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { showUpdateFullScreenModal } from './modalInit';
 import { navigation } from './navigationInit';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
   const authData = useAuth();
   const [visible, setVisible] = useState(true);
   const [queryNetwork, network] = useQueryNetwork();
-
   const close = () => {
     setVisible(false);
+  }
+
+  const onSettingsClick = () => {
+    close();
+    navigation.navigate(Screens.Setting);
+  }
+  const onLogoutClick = async () => {
+    showUpdateFullScreenModal(true, <MText>log out</MText>);
+    await loginOut();
+    showUpdateFullScreenModal(false);
   }
 
   return (
@@ -60,8 +70,8 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
       </Pressable>
 
       <MHStack style={styles.button}>
-        <MButton title='Settings' onPress={() => { close(); navigation.navigate(Screens.Setting); }} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-        <MButton title='Sign Out' onPress={() => loginOut()} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Settings' onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        <MButton title='Sign Out' onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
       </MHStack>
 
     </MAnimView>

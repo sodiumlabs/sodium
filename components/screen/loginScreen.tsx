@@ -1,17 +1,18 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { loginIn } from "../../lib/data/auth";
 import { BaseScreen } from "../base/baseScreen";
-import { showUpdateLoadingModal } from "../base/modalInit";
+import { showUpdateFullScreenModal } from "../base/modalInit";
 import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
+import { LoginLoading } from "../full/loginLoading";
 
 export function LoginScreen() {
 
   const loginClick = async () => {
-    showUpdateLoadingModal(true);
+    showUpdateFullScreenModal(true, <LoginLoading />);
     await loginIn("r.albert.huang@gmail.com");
-    showUpdateLoadingModal(false);
+    showUpdateFullScreenModal(false);
   }
   return (
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
