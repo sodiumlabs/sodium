@@ -1,7 +1,9 @@
 import { Dispatch, SetStateAction, useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
+import { useQueryNetwork } from '../../lib/api/network';
 import { loginOut, useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
+import CopyButton from '../baseUI/copyButton';
 import MAnimView from '../baseUI/mAnimView';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
@@ -12,13 +14,8 @@ import { navigation } from './navigationInit';
 
 export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
   const authData = useAuth();
-
-  if (!authData.isLogin) {
-    // TODO 这里应该跳转到登录页
-    return
-  }
-
   const [visible, setVisible] = useState(true);
+  const [queryNetwork, network] = useQueryNetwork();
 
   const close = () => {
     setVisible(false);
@@ -35,8 +32,8 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
         <MVStack style={{ flex: 1 }}>
           <MText >{authData.blockchainAddress}</MText>
           <MHStack >
-            <MButton title='Copy' onPress={undefined} style={{ 'margin': 5 }}></MButton>
-            <MButton title='Receive' onPress={undefined} style={{ 'margin': 5 }}></MButton>
+            <CopyButton style={{ 'margin': 5 }} copyText={authData.blockchainAddress} />
+            {/* <MButton title='Receive' onPress={undefined} style={{ 'margin': 5 }}></MButton> */}
           </MHStack>
         </MVStack>
         <Pressable onPress={close}>
@@ -56,7 +53,7 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
           <MImage size={10} style={{ marginRight: 10 }} />
           <MVStack style={{ flex: 1 }}>
             <MText>Connected</MText>
-            <MText>Ethereum</MText>
+            <MText>{network?.name}</MText>
           </MVStack>
           <MImage size={10} />
         </MHStack>

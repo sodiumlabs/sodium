@@ -14,7 +14,7 @@ import MText from '../baseUI/mText';
 import { useAuth } from '../../lib/data/auth';
 import { transactionQueue } from '../../lib/transaction';
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { showTranscationQueueModal, showSignTranscationModal } from '../base/modalInit';
+import { showUpdateTranscationQueueModal, showUpdateSignTranscationModal } from '../base/modalInit';
 import { OperateTimeStamp } from '../../lib/data/operateTime';
 
 export default function TranscationQueueItem(props: { transcation: ITranscation }) {
@@ -36,8 +36,8 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
   }
   const itemClick = useCallback(async () => {
     if (auth.isLogin) {
-      showTranscationQueueModal(false);
-      showSignTranscationModal(true, null);
+      showUpdateTranscationQueueModal(false);
+      showUpdateSignTranscationModal(true, null);
 
       OperateTimeStamp.set(transcation.timeStamp);
       transactionQueue.removeByTxn(transcation);

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet } from "react-native";
 import { ITranscation } from '../../lib/define';
 import { useRequestedTransactions } from "../../lib/transaction";
-import { showTranscationQueueModal } from "../base/modalInit";
+import { showUpdateTranscationQueueModal } from "../base/modalInit";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 import { formatTimeYMDHMS } from '../../lib/common/time';
@@ -22,7 +22,7 @@ export function RequestTranscation() {
   }
 
   return (
-    <Pressable style={{ width: '100%' }} onPress={() => showTranscationQueueModal(true)}>
+    <Pressable style={{ width: '100%' }} onPress={() => showUpdateTranscationQueueModal(true)}>
       <MHStack stretchW style={styles.transcationQueue}>
         <MHStack style={{ borderRadius: 999, width: 20, height: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: '#bbb' }}>
           <MText>{requestTranscations.length}</MText>

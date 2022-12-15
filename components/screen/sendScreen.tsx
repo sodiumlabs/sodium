@@ -10,7 +10,7 @@ import { formatPrice2Wei } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { IUserTokenInfo } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
-import { showSignTranscationModal } from '../base/modalInit';
+import { showUpdateSignTranscationModal } from '../base/modalInit';
 import MButton from "../baseUI/mButton";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
@@ -74,7 +74,7 @@ export function SendScreen() {
     } else {
       sendERC20Token(lowerCaseAddress, selectedOption.token.address, sendWei);
     }
-    showSignTranscationModal(true, null);
+    showUpdateSignTranscationModal(true, null);
   }
 
   return (

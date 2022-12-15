@@ -19,26 +19,26 @@ const signTranscationModalAtom = atom<IModalParam>({ visible: false });
 const signMessageModalAtom = atom<IModalParam>({ visible: false });
 const loadingModalAtom = atom<IModalParam>({ visible: false });
 
-export const showComModal = (visible: boolean, param?: unknown) => {
+export const showUpdateComModal = (visible: boolean, param?: unknown) => {
   comModalAtom.set({ visible: visible, param: param });
 }
-export const showDeployConfirmModal = (visible: boolean, param?: IDeployConfirmModalParam) => {
+export const showUpdateDeployConfirmModal = (visible: boolean, param?: IDeployConfirmModalParam) => {
   deployConfirmModalAtom.set({ visible: visible, param: param });
 }
 
-export const showTranscationDetailModal = (visible: boolean, param?: TransactionHistory) => {
+export const showUpdateTranscationDetailModal = (visible: boolean, param?: TransactionHistory) => {
   transcationDetailModalAtom.set({ visible: visible, param: param });
 }
-export const showSignMessageModal = (visible: boolean, param?: ISignMessageModalParam) => {
+export const showUpdateSignMessageModal = (visible: boolean, param?: ISignMessageModalParam) => {
   signMessageModalAtom.set({ visible: visible, param: param });
 }
-export const showSignTranscationModal = (visible: boolean, param?: ISignTranscationModalParam) => {
+export const showUpdateSignTranscationModal = (visible: boolean, param?: ISignTranscationModalParam) => {
   signTranscationModalAtom.set({ visible: visible, param: param });
 }
-export const showTranscationQueueModal = (visible: boolean, param?: unknown) => {
+export const showUpdateTranscationQueueModal = (visible: boolean, param?: unknown) => {
   transcationQueueModalAtom.set({ visible: visible, param: param });
 }
-export const showLoadingModal = (visible: boolean, param?: unknown) => {
+export const showUpdateLoadingModal = (visible: boolean, param?: unknown) => {
   loadingModalAtom.set({ visible: visible, param: param });
 }
 
@@ -53,13 +53,13 @@ export default function ModalInit() {
   const deployConfirmModal = useStore(deployConfirmModalAtom);
   return (
     <>
-      <TranscationDetailModal modalParam={transcationDetailModal} hideModal={() => showTranscationDetailModal(false)} />
-      <TranscationQueueModal modalParam={transcationQueueModal} hideModal={() => showTranscationQueueModal(false)} />
-      <SignTranscationModal modalParam={signTranscationModal} hideModal={() => showSignTranscationModal(false)} />
-      <SignMessageModal modalParam={signMessageModal} hideModal={() => showSignMessageModal(false)} />
-      <ComModal modalParam={comModal} hideModal={() => showComModal(false)} />
-      <LoadingModal modalParam={loadingModal} hideModal={() => showLoadingModal(false)} />
-      <DeployConfirmModal modalParam={deployConfirmModal} hideModal={() => showDeployConfirmModal(false)} />
+      <TranscationDetailModal modalParam={transcationDetailModal} hideModal={() => showUpdateTranscationDetailModal(false)} />
+      <TranscationQueueModal modalParam={transcationQueueModal} hideModal={() => showUpdateTranscationQueueModal(false)} />
+      <SignTranscationModal modalParam={signTranscationModal} hideModal={() => showUpdateSignTranscationModal(false)} />
+      <SignMessageModal modalParam={signMessageModal} hideModal={() => showUpdateSignMessageModal(false)} />
+      <ComModal modalParam={comModal} hideModal={() => showUpdateComModal(false)} />
+      <LoadingModal modalParam={loadingModal} hideModal={() => showUpdateLoadingModal(false)} />
+      <DeployConfirmModal modalParam={deployConfirmModal} hideModal={() => showUpdateDeployConfirmModal(false)} />
     </>
   );
 }

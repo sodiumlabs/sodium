@@ -6,7 +6,7 @@ import { TransactionHistory } from '@0xsodium/provider';
 import { Pressable, StyleSheet } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { formatTime } from '../../lib/common/time';
-import { showTranscationDetailModal } from '../base/modalInit';
+import { showUpdateTranscationDetailModal } from '../base/modalInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -16,7 +16,7 @@ import MVStack from '../baseUI/mVStack';
 export default function HistoryItem(props: { history: TransactionHistory }) {
   const { history } = props;
   const onClick = () => {
-    showTranscationDetailModal(true, history);
+    showUpdateTranscationDetailModal(true, history);
   }
 
   if (history.type == "failed") {

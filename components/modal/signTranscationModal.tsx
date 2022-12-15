@@ -9,7 +9,7 @@ import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
-import { showSignTranscationModal, showTranscationQueueModal } from '../base/modalInit';
+import { showUpdateSignTranscationModal, showUpdateTranscationQueueModal } from '../base/modalInit';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';

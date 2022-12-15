@@ -1,6 +1,6 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
-import { showDeployConfirmModal, showSignMessageModal, showSignTranscationModal } from '../../components/base/modalInit';
+import { showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../../components/base/modalInit';
 import { navigation } from '../../components/base/navigationInit';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
@@ -52,7 +52,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 const txnResponse = await auth.wallet['signer'].signTransaction(txn, chaindId);
                 tResolve(txnResponse.hash);
             }
-            showSignTranscationModal(true, {
+            showUpdateSignTranscationModal(true, {
                 continueClick: continueClick,
                 cancelClick: () => {
                     transactionQueue.remove(transactionQueueFindIndex);
@@ -88,7 +88,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 const txnResponse = await auth.wallet['signer'].sendTransaction(txn, chaindId);
                 tResolve(txnResponse.hash);
             }
-            showSignTranscationModal(true, {
+            showUpdateSignTranscationModal(true, {
                 continueClick: continueClick,
                 cancelClick: () => {
                     transactionQueue.remove(transactionQueueFindIndex);
@@ -112,7 +112,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 const sign = await auth.wallet['signer'].signMessage(message.message, message.chainId);
                 tResolve(sign);
             }
-            showSignMessageModal(true, {
+            showUpdateSignMessageModal(true, {
                 continueClick: continueClick,
                 cancelClick: () => tReject(),
                 options: options,
@@ -124,7 +124,7 @@ export class WalletPrompter implements WalletUserPrompter {
     promptConfirmWalletDeploy(chainId: number, options?: ConnectOptions | undefined): Promise<boolean> {
         return new Promise((tResolve: (value: boolean) => void, tReject: () => void) => {
             const network = getNetwork(chainId);
-            showDeployConfirmModal(true, {
+            showUpdateDeployConfirmModal(true, {
                 continueClick: () => tResolve(true),
                 cancelClick: () => tReject(),
                 options: options,
