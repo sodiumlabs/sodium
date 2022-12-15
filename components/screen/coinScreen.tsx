@@ -93,12 +93,12 @@ export function CoinScreen(props) {
           {
             !tokenInfo.token.isNativeToken && (
               <MVStack stretchW>
-                <ClassifyHistoryItem title="Today" historyMap={transHistoryMap} />
-                <ClassifyHistoryItem title="This Week" historyMap={transHistoryMap} />
-                <ClassifyHistoryItem title="Last Week" historyMap={transHistoryMap} />
-                <ClassifyHistoryItem title="This Month" historyMap={transHistoryMap} />
-                <ClassifyHistoryItem title="This Year" historyMap={transHistoryMap} />
-                <ClassifyHistoryItem title="Other" historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title={HistoryTime.ToDay} historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title={HistoryTime["This Week"]} historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title={HistoryTime["Last Week"]} historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title={HistoryTime["This Month"]} historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
               </MVStack>
             )
           }

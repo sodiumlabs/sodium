@@ -51,20 +51,28 @@ export function formatTime2Today(tTimeStamp: number): string {
   }
 }
 
+export enum HistoryTime {
+  "ToDay" = "Today",
+  "This Week" = "This Week",
+  "Last Week" = "Last Week",
+  "This Month" = "This Month",
+  "This Year" = "This Year",
+  "Other" = "Other",
+}
 
 export function formatHistoryTime2Today(tTimeStamp: number): string {
   if (tTimeStamp > getToDayBegin()) {
-    return "Today";
+    return HistoryTime.ToDay;
   } else if (tTimeStamp >= getThisWeekBegin()) {
-    return "This Week";
+    return HistoryTime["This Week"];
   } else if (tTimeStamp >= getLastWeekBegin()) {
-    return "Last Week";
+    return HistoryTime["Last Week"];
   } else if (tTimeStamp >= getThisMonthBegin()) {
-    return "This Month";
+    return HistoryTime["This Month"];
   } else if (tTimeStamp >= getThisYearBegin()) {
-    return "This Year";
+    return HistoryTime["This Year"];
   } else {
-    return "Other";
+    return HistoryTime.Other;
   }
 }
 // window.formatHistoryTime2Today = formatHistoryTime2Today;

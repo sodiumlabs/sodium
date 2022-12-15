@@ -1,6 +1,7 @@
 import { TransactionHistory } from "@0xsodium/provider";
 import { ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from '../../lib/api/history';
+import { HistoryTime } from "../../lib/common/time";
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
@@ -18,12 +19,12 @@ export function HistoryScreen() {
           <MText style={{ marginVertical: 6 }}>Transaction History </MText>
           <RequestTranscation />
 
-          <ClassifyHistoryItem title="Today" historyMap={transHistoryMap} />
-          <ClassifyHistoryItem title="This Week" historyMap={transHistoryMap} />
-          <ClassifyHistoryItem title="Last Week" historyMap={transHistoryMap} />
-          <ClassifyHistoryItem title="This Month" historyMap={transHistoryMap} />
-          <ClassifyHistoryItem title="This Year" historyMap={transHistoryMap} />
-          <ClassifyHistoryItem title="Other" historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title={HistoryTime.ToDay} historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title={HistoryTime["This Week"]} historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title={HistoryTime["Last Week"]} historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title={HistoryTime["This Month"]} historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
 
         </MVStack>
       </ScrollView>
