@@ -17,7 +17,7 @@ export const token2Usd = (tokenWei: string, usdRate: string, orgin?: boolean) =>
   // console.debug('token2Usd', tokenWei, usdRate, t2.toString());
   // return `${parseInt(`${parseFloat(t2) * 100}`) / 100}`;
   if (orgin) {
-    return parseFloat(t2);
+    return parseFloat(t2) + '';
   }
   return `${parseInt(`${parseFloat(t2) * 100}`) / 100}`;
 }

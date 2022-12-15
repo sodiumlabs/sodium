@@ -3,8 +3,10 @@ import { ScrollView, StyleSheet } from "react-native";
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { useAuth } from '../../lib/data/auth';
 
 export function ProfileScreen() {
+  const auth = useAuth();
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
@@ -18,7 +20,7 @@ export function ProfileScreen() {
 
           <MVStack stretchW style={styles.item}>
             <MText>Public Address</MText>
-            <MText>0xa085ac63AfFe1cB76e5Fb23Aad567cAB8E51e9Cc</MText>
+            <MText>{auth.blockchainAddress}</MText>
           </MVStack>
 
 

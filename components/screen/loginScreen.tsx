@@ -1,19 +1,37 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { loginIn } from "../../lib/data/auth";
 import { BaseScreen } from "../base/baseScreen";
+import { showUpdateLoadingModal } from "../base/modalInit";
 import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 
 export function LoginScreen() {
+
+  const loginClick = async () => {
+    showUpdateLoadingModal(true);
+    await loginIn("r.albert.huang@gmail.com");
+    showUpdateLoadingModal(false);
+  }
   return (
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
       <ScrollView style={{ width: '100%', height: '100%', }}>
-        <MText>Login Screen</MText>
+        <MText>Sign into web3</MText>
         <MVStack>
           <MButton
-            title="Login test"
-            onPress={() => loginIn("r.albert.huang@gmail.com")}
+            style={{ marginBottom: 10 }}
+            title="Login"
+            onPress={loginClick}
+          />
+          <MButton
+            style={{ marginBottom: 10 }}
+            title="Login google"
+            onPress={loginClick}
+          />
+          <MButton
+            style={{ marginBottom: 10 }}
+            title="Login facebook"
+            onPress={loginClick}
           />
         </MVStack>
       </ScrollView>

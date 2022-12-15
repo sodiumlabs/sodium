@@ -13,10 +13,11 @@ import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { TranscationDetailItem } from '../item/transcationDetailItem';
+import CopyButton from '../baseUI/copyButton';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
-  const [clipboardContent, setClipboardContent] = useMClipboard();
+
   const auth = useAuth();
 
   // if (!modalParam.param) return <></>
@@ -25,10 +26,6 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
   let transfer;
   if (history?.erc20Transfers) {
     transfer = history.erc20Transfers[0];
-  }
-
-  const copyTxHash = () => {
-    setClipboardContent(history.transactionHash)
   }
 
   const linkTxHash = async () => {
@@ -68,7 +65,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
 
                 <MLineLR
                   left={<MText>{history.transactionHash}</MText>}
-                  right={<MButton title={'copy'} onPress={copyTxHash} />} />
+                  right={<CopyButton copyText={history.transactionHash} />} />
                 <Divider />
 
                 <MLineLR left={<MText>Network</MText>} right={<MText>{transfer.token.name}</MText>} />

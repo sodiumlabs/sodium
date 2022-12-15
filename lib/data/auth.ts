@@ -1,5 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { Atom, computed } from "nanostores";
+import { waitTime } from "../common/common";
 import { AuthData } from "../define";
 import { initWalletByTest, logout, SodiumWallet, walletAtom } from '../provider';
 import { transactionQueue } from "../transaction";
@@ -40,4 +41,5 @@ export const loginOut = () => {
 
 export const loginIn = async (email: string) => {
   await initWalletByTest(email);
+  await waitTime(1500);
 }
