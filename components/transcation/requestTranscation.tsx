@@ -28,7 +28,7 @@ export function RequestTranscation() {
           <MText>{requestTranscations.length}</MText>
         </MHStack>
         <MText style={{ flex: 1 }}>Requested Transcations</MText>
-        <MText>{formatTimeYMDHMS(lastRequestTxn.timeStamp)}</MText>
+        <MText>{formatTime2Today(lastRequestTxn.timeStamp)}</MText>
       </MHStack>
     </Pressable>
   )

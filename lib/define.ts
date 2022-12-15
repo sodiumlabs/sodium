@@ -1,5 +1,5 @@
 import { NetworkConfig } from '@0xsodium/network';
-import { ConnectOptions, MessageToSign, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
+import { ConnectOptions, MessageToSign, TransactionHistory, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
 import { BigNumber } from "@ethersproject/bignumber";
 import { ERC20Transfer } from '../abi';
@@ -147,4 +147,9 @@ export interface ITranscation {
 
 export enum eStotageKey {
   requestedTxs = 'requestedTxs',
+}
+
+export interface ITransactionHistoryGroup {
+  historys: TransactionHistory[],
+  gourpName: string,
 }

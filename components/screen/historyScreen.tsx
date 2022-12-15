@@ -1,13 +1,16 @@
+import { TransactionHistory } from "@0xsodium/provider";
 import { ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from '../../lib/api/history';
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
 import HistoryItem from "../item/historyItem";
 import { RequestTranscation } from "../transcation/requestTranscation";
 
 export function HistoryScreen() {
-  const [queryHistory, transcationHistorys, onScroll] = useQueryHistory();
+  const [queryHistory, transHistoryMap, onScroll] = useQueryHistory();
+
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }} onScroll={onScroll} scrollEventThrottle={50}>
@@ -15,15 +18,13 @@ export function HistoryScreen() {
           <MText style={{ marginVertical: 6 }}>Transaction History </MText>
           <RequestTranscation />
 
-          <MVStack stretchW>
-            <MText>Last Week</MText>
-            {
-              transcationHistorys && transcationHistorys.map((item, index) => {
-                return <HistoryItem key={index} history={item} />
-              })
-            }
+          <ClassifyHistoryItem title="Today" historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title="This Week" historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title="Last Week" historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title="This Month" historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title="This Year" historyMap={transHistoryMap} />
+          <ClassifyHistoryItem title="Other" historyMap={transHistoryMap} />
 
-          </MVStack>
         </MVStack>
       </ScrollView>
     </BaseScreen>

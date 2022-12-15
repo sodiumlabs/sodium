@@ -14,12 +14,12 @@ import MImage from "../baseUI/mImage";
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import HistoryItem from "../item/historyItem";
+import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
 
 export function CoinScreen(props) {
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [clipboardContent, setClipboardContent] = useMClipboard();
-  const [queryHistory, transcationHistorys, onScroll] = useQueryHistory(null, tokenInfo.token.address);
+  const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(null, tokenInfo.token.address);
   const copyTxHash = () => {
     setClipboardContent(tokenInfo.token.address)
   }
@@ -93,12 +93,12 @@ export function CoinScreen(props) {
           {
             !tokenInfo.token.isNativeToken && (
               <MVStack stretchW>
-                <MText>Last Week</MText>
-                {
-                  transcationHistorys && transcationHistorys.map((item, index) => {
-                    return <HistoryItem key={index} history={item} />
-                  })
-                }
+                <ClassifyHistoryItem title="Today" historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title="This Week" historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title="Last Week" historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title="This Month" historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title="This Year" historyMap={transHistoryMap} />
+                <ClassifyHistoryItem title="Other" historyMap={transHistoryMap} />
               </MVStack>
             )
           }

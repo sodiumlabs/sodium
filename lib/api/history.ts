@@ -1,8 +1,9 @@
 
 import { ChainIdLike } from "@0xsodium/network";
 import { TransactionHistory } from "@0xsodium/provider";
-import { useInfiniteQuery, UseInfiniteQueryResult, useQuery } from "react-query";
+import { useInfiniteQuery, UseInfiniteQueryResult } from "react-query";
 import { getPageDatas } from "../common/common";
+import { classifyHistory } from "../common/history";
 import { getScroller } from "../common/scroller";
 import { getAuth } from '../data/auth';
 
@@ -31,7 +32,7 @@ const fetchHistory = async (pageParam: number, chainId?: ChainIdLike, tokenAddre
   };
 };
 
-export const useQueryHistory = (chainId?: ChainIdLike, tokenAddress?: string, tokenId?: string): [UseInfiniteQueryResult, TransactionHistory[], (event) => void] => {
+export const useQueryHistory = (chainId?: ChainIdLike, tokenAddress?: string, tokenId?: string): [UseInfiniteQueryResult, Map<string, TransactionHistory[]>, (event) => void] => {
   // return useQuery(['fetchHistory'], () => fetchHistory());
   const queryHistory = useInfiniteQuery(
     [
@@ -43,13 +44,15 @@ export const useQueryHistory = (chainId?: ChainIdLike, tokenAddress?: string, to
     ({ pageParam = 1 }) => fetchHistory(pageParam, chainId, tokenAddress, tokenId),
     { getNextPageParam: (lastPage, pages) => lastPage['nexePage'] }
   );
-  let transcationHistorys: TransactionHistory[] = null;
+
+  let transHistoryMap: Map<string, TransactionHistory[]> = null;
   if (queryHistory.isSuccess) {
-    transcationHistorys = getPageDatas(queryHistory.data);
+    transHistoryMap = classifyHistory(getPageDatas(queryHistory.data));
   }
   const onScroll = getScroller(() => !queryHistory.isLoading && queryHistory.hasNextPage && queryHistory.fetchNextPage());
 
-  return [queryHistory, transcationHistorys, onScroll];
+  // group
+  return [queryHistory, transHistoryMap, onScroll];
 };
 
 
