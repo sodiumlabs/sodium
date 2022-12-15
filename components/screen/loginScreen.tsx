@@ -6,13 +6,15 @@ import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import { LoginLoading } from "../full/loginLoading";
+import { TwoFactorAuth } from "../full/twoFactorAuth";
 
 export function LoginScreen() {
 
   const loginClick = async () => {
-    showUpdateFullScreenModal(true, <LoginLoading />);
-    await loginIn("r.albert.huang@gmail.com");
-    showUpdateFullScreenModal(false);
+    showUpdateFullScreenModal(true, <TwoFactorAuth />);
+    // showUpdateFullScreenModal(true, <LoginLoading />);
+    // await loginIn("r.albert.huang@gmail.com");
+    // showUpdateFullScreenModal(false);
   }
   return (
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>

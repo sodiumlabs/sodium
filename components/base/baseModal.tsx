@@ -34,7 +34,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
       return {
         maxWidth: isFullScreen ? 'auto' : fixWidth,
         marginVertical: isFullScreen ? 0 : marginTop / 2,
-        borderRadius: 15
+        borderRadius: isFullScreen ? 0 : 15
       }
     }
 
@@ -42,8 +42,8 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
       maxWidth: isFullScreen ? 'auto' : fixWidth,
       marginTop: isFullScreen ? 0 : marginTop,
       paddingBottom: insets.bottom,
-      borderTopLeftRadius: 15,
-      borderTopRightRadius: 15,
+      borderTopLeftRadius: isFullScreen ? 0 : 15,
+      borderTopRightRadius: isFullScreen ? 0 : 15,
     }
   }, [isAdapterWeb]);
 
