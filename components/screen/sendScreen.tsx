@@ -84,7 +84,6 @@ export function SendScreen() {
           <MText style={{ marginVertical: 6 }}>Send</MText>
           <MVStack style={styles.send} stretchW>
             <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-
             <MInput keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
           </MVStack>
           <MText style={{ marginVertical: 20 }}>To</MText>
@@ -104,6 +103,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15
   },
   send: {
+    zIndex: 10,
     padding: 15,
     backgroundColor: 'rgba(200,200,200,1)',
     borderRadius: 15

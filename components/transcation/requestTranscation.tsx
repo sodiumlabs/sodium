@@ -5,7 +5,7 @@ import { useRequestedTransactions } from "../../lib/transaction";
 import { showUpdateTranscationQueueModal } from "../base/modalInit";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
-import { formatTimeYMDHMS } from '../../lib/common/time';
+import { formatTime2Today, formatTimeYMDHMS } from '../../lib/common/time';
 
 
 export function RequestTranscation() {

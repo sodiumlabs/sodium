@@ -1,18 +1,19 @@
 
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo } from '../../lib/define';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { useDimensionSize } from '../../lib/hook/dimension';
 
 export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
   const { options, selectedOption, setSelectedOption } = props;
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
-
+  const dimension = useDimensionSize();
 
   const toggleDropdown = () => {
     setIsDropdownVisible(!isDropdownVisible);
@@ -31,14 +32,15 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
 
   return (
     <View style={styles.container}>
+
       <TouchableOpacity onPress={toggleDropdown}>
         <TokenItem option={selectedOption} />
       </TouchableOpacity>
 
       {isDropdownVisible && (
-
         <View style={styles.dropdown}>
           <FlatList
+            style={{ maxHeight: dimension[1] - 300 }}
             data={options}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item }) => (
