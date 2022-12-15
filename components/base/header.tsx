@@ -13,7 +13,7 @@ export default function Header(props) {
   const insets = useSafeAreaInsets();
 
   return (
-    <MHStack stretchW style={[styles.container, { top: insets.top }]}>
+    <MHStack style={[styles.container, { top: insets.top }]}>
       <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
 
         <MImage size={40} style={{ position: 'absolute', left: 0 }} />
