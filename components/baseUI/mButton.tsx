@@ -26,7 +26,7 @@ const localStyles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#bbb',
+    backgroundColor: 'rgba(200,200,200,1)',
     paddingVertical: 6,
     paddingHorizontal: 6
   }

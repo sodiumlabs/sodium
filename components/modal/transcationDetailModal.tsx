@@ -14,11 +14,13 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { TranscationDetailItem } from '../item/transcationDetailItem';
 import CopyButton from '../baseUI/copyButton';
+import { useQueryNetwork } from '../../lib/api/network';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
 
   const auth = useAuth();
+  const [queryNetwork, network] = useQueryNetwork();
 
   // if (!modalParam.param) return <></>
 
@@ -68,7 +70,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                   right={<CopyButton copyText={history.transactionHash} />} />
                 <Divider />
 
-                <MLineLR left={<MText>Network</MText>} right={<MText>{transfer.token.name}</MText>} />
+                <MLineLR left={<MText>Network</MText>} right={<MText>{network?.name}</MText>} />
               </MVStack>
             </>
           )

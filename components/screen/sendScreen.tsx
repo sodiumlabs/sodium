@@ -15,7 +15,7 @@ import MButton from "../baseUI/mButton";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import { TokenDropdown } from "../dropdown/TokenDropdown";
+import { TokenDropdown } from "../dropdown/tokenDropdown";
 
 export function SendScreen() {
   const authData = useAuth();
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   send: {
     padding: 15,
-    backgroundColor: '#666',
+    backgroundColor: 'rgba(200,200,200,1)',
     borderRadius: 15
   }
 });

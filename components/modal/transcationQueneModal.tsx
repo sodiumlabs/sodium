@@ -30,7 +30,7 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
             <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MText>Transaction </MText>
             </MHStack>
-            <MText style={styles.marginV}>Requested Transactions (4)</MText>
+            <MText style={styles.marginV}>Requested Transactions ({requestTranscations.length})</MText>
             {
               requestTranscations.map((txn, index) => {
                 return (

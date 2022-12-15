@@ -15,7 +15,7 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import MButton from '../baseUI/mButton';
 import { useNavigation } from '../../lib/navigation';
-import { DepositDropdown } from '../dropdown/DepositDropdown';
+import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
@@ -46,12 +46,12 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
         isSelected && (
           <MVStack stretchW >
             <MText>You bug</MText>
-            <DepositDropdown options={['MATIC', 'USDC']} />
+            {/* <DepositDropdown options={['MATIC', 'USDC']} /> */}
             <MText>You page</MText>
             <MInput />
-            <DepositDropdown options={['USD', 'EUR', 'GBP']} />
+            {/* <DepositDropdown options={['USD', 'EUR', 'GBP']} /> */}
             <MText>You Receive (Estimated)</MText>
-            <MVStack stretchW style={{ backgroundColor: '#999', borderRadius: 15, padding: 15, zIndex: 0 }}>
+            <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 15, padding: 15, zIndex: 0 }}>
               <MText>0 USDC</MText>
               <MText>Rate : _</MText>
             </MVStack>
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
   title: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#999',
+    backgroundColor: 'rgba(200,200,200,1)',
     borderRadius: 15
   }
 });

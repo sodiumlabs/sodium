@@ -36,7 +36,7 @@ export function CoinScreen(props) {
             <MImage size={16} />
             <MText>{tokenInfo.token.name}</MText>
           </MHStack>
-          <MVStack stretchW style={{ backgroundColor: '#999', borderRadius: 15, alignItems: 'center', paddingVertical: 15 }}>
+          <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 15, alignItems: 'center', paddingVertical: 15 }}>
             <MText >Balance</MText>
             <MText >${tokenInfo.usdBalance}</MText>
             <MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol}</MText>
@@ -51,13 +51,13 @@ export function CoinScreen(props) {
             <MText style={{ marginBottom: 10 }}>Description</MText>
             <MText numberOfLines={undefined} >{tokenInfo.token.centerData.description}</MText>
 
-            <Divider style={{ marginVertical: 10, backgroundColor: '#888' }} />
+            <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
             <MText >Website</MText>
             <MText onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website}</MText>
 
             {!tokenInfo.token.isNativeToken && (
               <>
-                <Divider style={{ marginVertical: 10, backgroundColor: '#888' }} />
+                <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
                 <MText >Contract Address</MText>
                 <MLineLR
                   left={<MText >{tokenInfo.token.address}</MText>}
@@ -70,13 +70,13 @@ export function CoinScreen(props) {
               </>
             )}
 
-            <Divider style={{ marginVertical: 10, backgroundColor: '#888' }} />
+            <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
             <MHStack >
               <MText style={{ flex: 1 }}>Token Standard</MText>
               <MText>{!tokenInfo.token.isNativeToken ? "ERC20" : `${tokenInfo.token.name} Native Token`}</MText>
             </MHStack>
 
-            <Divider style={{ marginVertical: 10, backgroundColor: '#888' }} />
+            <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
             <MHStack>
               <MText style={{ flex: 1 }}>Network</MText>
               <MImage size={16} />

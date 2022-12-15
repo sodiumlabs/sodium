@@ -9,7 +9,7 @@ import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
-export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
+export const DepositTokenDropdown = (props: { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
   const { options, selectedOption, setSelectedOption } = props;
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
 
@@ -32,7 +32,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={toggleDropdown}>
-        <TokenItem option={selectedOption} />
+        <DepositTokenItem option={selectedOption} />
       </TouchableOpacity>
 
       {isDropdownVisible && (
@@ -46,7 +46,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
                 onPress={() => handleOptionPress(item)}
                 style={styles.option}
               >
-                <TokenItem option={item} />
+                <DepositTokenItem option={item} />
               </TouchableOpacity>
             )}
           />
@@ -56,7 +56,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
   );
 };
 
-const TokenItem = (props: { option: IUserTokenInfo }) => {
+const DepositTokenItem = (props: { option: IUserTokenInfo }) => {
   const { option } = props;
   if (option == null) {
     return <></>
