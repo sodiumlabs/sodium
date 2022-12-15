@@ -3,6 +3,7 @@ import { Linking, ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from "../../lib/api/history";
 import { formatWei2Price } from "../../lib/common/common";
 import { getAddressExplorer } from "../../lib/common/network";
+import { HistoryTime } from "../../lib/common/time";
 import { IUserTokenInfo, Screens } from '../../lib/define';
 import { useMClipboard } from "../../lib/hook/clipboard";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
