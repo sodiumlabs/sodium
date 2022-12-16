@@ -15,6 +15,8 @@ import {
 } from '../components/screen';
 import { useAuth } from '../lib/data/auth';
 import { Screens } from '../lib/define';
+import { SetupAuthScreen } from '../components/screen/setupAuthScreen';
+import { SecurityScreen } from '../components/screen/securityScreen';
 
 const queryClient = new QueryClient(
   // {
@@ -59,6 +61,8 @@ export default function App() {
               <Stack.Screen name={Screens.Send} component={SendScreen} />
               <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
               <Stack.Screen name={Screens.Connect} component={ConnectScreen} />
+              <Stack.Screen name={Screens.Security} component={SecurityScreen} />
+              <Stack.Screen name={Screens.SetupAuth} component={SetupAuthScreen} />
             </Stack.Navigator>
 
           </NavigationContainer>

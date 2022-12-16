@@ -37,6 +37,8 @@ export enum Screens {
   Deposit = 'Deposit',
   Login = 'Login',
   Connect = 'Connect',
+  Security = 'Security',
+  SetupAuth = 'SetupAuth',
 }
 
 export type ScreenParamList = {

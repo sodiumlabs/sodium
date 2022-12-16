@@ -19,6 +19,10 @@ export function SettingScreen() {
             <MText>Active Sessions</MText>
             <MText> 0 Active Sessions</MText>
           </SettingItem>
+
+          <SettingItem onPress={() => navigation.navigate(Screens.Security)} >
+            <MText>Security</MText>
+          </SettingItem>
         </MVStack>
       </ScrollView>
     </BaseScreen>
