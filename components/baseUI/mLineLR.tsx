@@ -7,7 +7,7 @@ import { ReactNode } from 'react';
 import { ViewProps } from 'react-native';
 import MHStack from './mHStack';
 
-export default function MLineLR(props: ViewProps & { left: ReactNode, right: ReactNode }) {
+export default function MLineLR(props: ViewProps & { left?: ReactNode, right?: ReactNode }) {
 
   return (
     <MHStack stretchW style={{ 'alignItems': 'center' }}>
