@@ -6,6 +6,8 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import { Platform, UIManager } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import ModalInit from '../components/base/modalInit';
+import NavigationInit from '../components/base/navigationInit';
 import {
   CoinScreen, ConnectScreen, DepositScreen,
   HistoryScreen,
@@ -40,33 +42,27 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <ApplicationProvider {...eva} theme={eva.light}>
-        <NavigationContainer>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
+          <NavigationContainer>
 
+            <ModalInit />
+            <NavigationInit />
             {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
             <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
-              {
-                authData.isLogin ? (
-                  <>
-                    <Stack.Screen name={Screens.Wallet} component={WalletScreen} />
-                    <Stack.Screen name={Screens.Setting} component={SettingScreen} />
-                    <Stack.Screen name={Screens.Profile} component={ProfileScreen} />
-                    <Stack.Screen name={Screens.Session} component={SessionScreen} />
-                    <Stack.Screen name={Screens.History} component={HistoryScreen} />
-                    <Stack.Screen name={Screens.Coin} component={CoinScreen} />
-                    <Stack.Screen name={Screens.Send} component={SendScreen} />
-                    <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
-                    <Stack.Screen name={Screens.Connect} component={ConnectScreen} />
-                  </>
-                ) : (
-                  <>
-                    <Stack.Screen name={Screens.Login} component={LoginScreen} />
-                  </>
-                )
-              }
+              <Stack.Screen name={Screens.Login} component={LoginScreen} />
+              <Stack.Screen name={Screens.Wallet} component={WalletScreen} />
+              <Stack.Screen name={Screens.Setting} component={SettingScreen} />
+              <Stack.Screen name={Screens.Profile} component={ProfileScreen} />
+              <Stack.Screen name={Screens.Session} component={SessionScreen} />
+              <Stack.Screen name={Screens.History} component={HistoryScreen} />
+              <Stack.Screen name={Screens.Coin} component={CoinScreen} />
+              <Stack.Screen name={Screens.Send} component={SendScreen} />
+              <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
+              <Stack.Screen name={Screens.Connect} component={ConnectScreen} />
             </Stack.Navigator>
-          </QueryClientProvider>
-        </NavigationContainer>
+
+          </NavigationContainer>
+        </QueryClientProvider>
       </ApplicationProvider>
     </SafeAreaProvider>
   );

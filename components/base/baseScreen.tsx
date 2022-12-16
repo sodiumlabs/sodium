@@ -1,6 +1,6 @@
 
 import { ReactNode } from 'react';
-import { ScrollView, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
@@ -8,7 +8,6 @@ import MVStack from '../baseUI/mVStack';
 import Floater from './floater';
 import Footer from "./footer";
 import Header from "./header";
-import { SingletonInit } from './singletonInit';
 
 
 export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boolean, hasFloatingBar?: boolean, isNavigationBarBack?: boolean }) {
@@ -20,8 +19,6 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
     <SafeAreaView style={styles.container}>
       {hasFloatingBar && <Floater isNavigationBarBack={props.isNavigationBarBack} />}
       {hasNavigationBar && (!isAdapterWeb ? <Footer /> : <Header />)}
-      <SingletonInit />
-      {/* <SingletonInit hasFloatingBar={hasFloatingBar} hasNavigationBar={hasFloatingBar} isNavigationBarBack={props.isNavigationBarBack} /> */}
 
 
       <MVStack stretchW style={styles.content}>
