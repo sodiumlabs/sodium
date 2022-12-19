@@ -1,8 +1,8 @@
 import { TransactionHistory } from '@0xsodium/provider';
-import { TransactionRequest } from '@0xsodium/transactions';
 import { useStore } from '@nanostores/react';
 import { atom } from "nanostores";
-import { IDeployConfirmModalParam, IModalParam, ISignMessageModalParam, ISignTranscationModalParam } from "../../lib/define";
+import { ReactNode } from 'react';
+import { IComModalParam, IDeployConfirmModalParam, IModalParam, ISignMessageModalParam, ISignTranscationModalParam } from "../../lib/define";
 import { ComModal } from "../modal/comModal";
 import { DeployConfirmModal } from "../modal/deployConfirmModal";
 import { FullScreenModal } from "../modal/fullScreenModal";
@@ -10,7 +10,6 @@ import { SignMessageModal } from '../modal/signMessageModal';
 import { SignTranscationModal } from '../modal/signTranscationModal';
 import { TranscationDetailModal } from "../modal/transcationDetailModal";
 import { TranscationQueueModal } from "../modal/transcationQueneModal";
-import { ReactNode } from 'react';
 
 const transcationDetailModalAtom = atom<IModalParam>({ visible: false });
 const transcationQueueModalAtom = atom<IModalParam>({ visible: false });
@@ -20,7 +19,7 @@ const signTranscationModalAtom = atom<IModalParam>({ visible: false });
 const signMessageModalAtom = atom<IModalParam>({ visible: false });
 const fullScreenModalAtom = atom<IModalParam>({ visible: false });
 
-export const showUpdateComModal = (visible: boolean, param?: unknown) => {
+export const showUpdateComModal = (visible: boolean, param?: IComModalParam) => {
   comModalAtom.set({ visible: visible, param: param });
 }
 export const showUpdateDeployConfirmModal = (visible: boolean, param?: IDeployConfirmModalParam) => {

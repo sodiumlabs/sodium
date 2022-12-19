@@ -39,6 +39,7 @@ export enum Screens {
   Connect = 'Connect',
   Security = 'Security',
   SetupAuth = 'SetupAuth',
+  RecoveryCode = 'RecoveryCode',
 }
 
 export type ScreenParamList = {
@@ -52,6 +53,9 @@ export type ScreenParamList = {
   Deposit: undefined,
   Login: undefined,
   Connect: undefined,
+  Security: undefined,
+  SetupAuth: undefined,
+  RecoveryCode: undefined,
 }
 
 export interface IConnectScreenParam {
@@ -93,6 +97,12 @@ export interface ISignTranscationModalParam {
   chaindId: number,
   txn: ITranscation
 }
+
+
+export interface IComModalParam {
+  height: number
+}
+
 
 export interface IDropdownOption {
   name: string,

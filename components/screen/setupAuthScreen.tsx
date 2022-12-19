@@ -53,11 +53,12 @@ export function SetupAuthScreen() {
                   <MText>Keep your recovery codes in a safe spot </MText>
                   <MText>If you lose your device and can't find your recovery codes, you will lose access to your account. </MText>
                 </MVStack>
-                <MVStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
-                  <MText>432jk1-42dsjl</MText>
-                  <MText>432jk1-42dsjl</MText>
-                  <MText>432jk1-42dsjl</MText>
-                  <MText>432jk1-42dsjl</MText>
+                <MVStack style={{ paddingHorizontal: 40 }} >
+                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
                 </MVStack>
 
                 <MLineLR right={
@@ -76,7 +77,7 @@ export function SetupAuthScreen() {
           }
           {
             step == 3 && (
-              <MVStack stretchW style={{ backgroundColor: 'white' }}>
+              <MVStack stretchW style={{ backgroundColor: 'white', alignItems: 'center' }}>
                 <MText>Finish </MText>
               </MVStack>
             )

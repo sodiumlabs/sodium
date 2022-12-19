@@ -16,7 +16,7 @@ export function formatTime(timestamp) {
 }
 
 // Output: "August 26, 2020 24:22:11" 
-export function formatTimeYMDHMS(timestamp) {
+export function formatTimeYMDHMS(timestamp: number) {
   if (!timestamp) {
     return '';
   }

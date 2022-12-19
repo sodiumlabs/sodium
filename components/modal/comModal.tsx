@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { IModalParam } from '../../lib/define';
+import { IComModalParam, IModalParam } from '../../lib/define';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { BaseModal } from '../base/baseModal';
 import MImage from '../baseUI/mImage';
@@ -8,7 +8,7 @@ import MVStack from '../baseUI/mVStack';
 
 export const ComModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
-  const param = modalParam.param;
+  const param = modalParam.param as IComModalParam;
   return (
     <BaseModal
       visible={modalParam.visible}

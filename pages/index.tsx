@@ -17,6 +17,7 @@ import { useAuth } from '../lib/data/auth';
 import { Screens } from '../lib/define';
 import { SetupAuthScreen } from '../components/screen/setupAuthScreen';
 import { SecurityScreen } from '../components/screen/securityScreen';
+import { RecoveryCodeScreen } from '../components/screen/ recoveryCodeScreen';
 
 const queryClient = new QueryClient(
   // {
@@ -63,6 +64,7 @@ export default function App() {
               <Stack.Screen name={Screens.Connect} component={ConnectScreen} />
               <Stack.Screen name={Screens.Security} component={SecurityScreen} />
               <Stack.Screen name={Screens.SetupAuth} component={SetupAuthScreen} />
+              <Stack.Screen name={Screens.RecoveryCode} component={RecoveryCodeScreen} />
             </Stack.Navigator>
 
           </NavigationContainer>
