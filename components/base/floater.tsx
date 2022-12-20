@@ -42,33 +42,24 @@ export default function Floater(props: { isNavigationBarBack?: boolean }) {
     }
   }, [isAdapterWeb, dimensionsize[0]])
 
+  const adapterStyle = {
+    width: isAdapterWeb ? webAdapterWidth : '100%',
+    position: isAdapterWeb ? 'absolute' : 'relative',
+    right: 0
+  }
 
   return (
     // { top: insets.top }
     <MHStack stretchW style={[styles.container, { top: insets.top }]}>
       <BlurView style={{ 'width': '100%' }}>
-        {
-          isAdapterWeb && (
-            <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
-              <MHStack style={{ width: webAdapterWidth, position: 'absolute', right: 0 }}>
-                {
-                  isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isNavigationBarBack} /> : <HeaderExpansion setIsFold={setIsFold} />
-                }
-              </MHStack>
+        <MHStack stretchH stretchW >
+          <MHStack style={[adapterStyle as unknown]}>
+            {
+              isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isNavigationBarBack} /> : <HeaderExpansion setIsFold={setIsFold} />
+            }
+          </MHStack>
 
-            </MHStack>
-
-          )
-        }
-        {
-          !isAdapterWeb && (
-            <MHStack stretchW>
-              {
-                isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isNavigationBarBack} /> : <HeaderExpansion setIsFold={setIsFold} />
-              }
-            </MHStack>
-          )
-        }
+        </MHStack>
       </BlurView>
     </MHStack>
   );

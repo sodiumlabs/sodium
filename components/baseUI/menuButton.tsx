@@ -1,11 +1,11 @@
-import { GestureResponderEvent, Image, Pressable, StyleSheet } from 'react-native';
+import { GestureResponderEvent, Image, Pressable, PressableProps, StyleSheet } from 'react-native';
 import MImage from './mImage';
 import MText from './mText';
 
-export default function MenuButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string; }) {
-  const { onPress, title } = props;
+export default function MenuButton(props: PressableProps & { title?: string; }) {
+  const { title, style, ...reset } = props;
   return (
-    <Pressable style={styles.button} onPress={onPress}>
+    <Pressable style={[styles.button, style as unknown]} {...reset}>
       <MImage size={20} />
       <MText> {title} </MText>
     </Pressable>

@@ -6,6 +6,7 @@ import { ApplicationProvider } from '@ui-kitten/components';
 import { Platform, UIManager } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { BarUI } from '../components/base/barUI';
 import ModalInit from '../components/base/modalInit';
 import NavigationInit from '../components/base/navigationInit';
 import {
@@ -48,9 +49,10 @@ export default function App() {
       <ApplicationProvider {...eva} theme={eva.light}>
         <QueryClientProvider client={queryClient}>
           <NavigationContainer>
-
             <ModalInit />
             <NavigationInit />
+            <BarUI />
+
             {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
             <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
               <Stack.Screen name={Screens.Login} component={LoginScreen} />

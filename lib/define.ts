@@ -166,3 +166,9 @@ export interface ITransactionHistoryGroup {
   historys: TransactionHistory[],
   gourpName: string,
 }
+
+export interface IBarParam {
+  hasNavigationBar: boolean,
+  hasFloatingBar: boolean,
+  isNavigationBarBack: boolean,
+}

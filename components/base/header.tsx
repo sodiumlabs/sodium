@@ -13,24 +13,26 @@ export default function Header(props) {
   const insets = useSafeAreaInsets();
 
   return (
-    <MHStack style={[styles.container, { top: insets.top }]}>
+    <MHStack stretchW style={[styles.container, { top: insets.top }]}>
       <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
 
         <MImage size={40} style={{ position: 'absolute', left: 0 }} />
 
-        <Pressable onPress={() => navigation.navigate(Screens.Wallet)}>
-          <MLineLR
-            left={<MImage size={20} />}
-            right={<MText>wallet</MText>}
-          />
-        </Pressable>
+        <MHStack pointerEvents='auto'>
+          <Pressable onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.Wallet }], })}>
+            <MLineLR
+              left={<MImage size={20} />}
+              right={<MText>wallet</MText>}
+            />
+          </Pressable>
 
-        <Pressable onPress={() => navigation.navigate(Screens.History)}>
-          <MLineLR
-            left={<MImage size={20} />}
-            right={<MText>history</MText>}
-          />
-        </Pressable>
+          <Pressable onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.History }], })}>
+            <MLineLR
+              left={<MImage size={20} />}
+              right={<MText>history</MText>}
+            />
+          </Pressable>
+        </MHStack>
 
       </MHStack>
 

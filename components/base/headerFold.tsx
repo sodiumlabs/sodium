@@ -14,7 +14,7 @@ export default function HeaderFold(props: { setIsFold: Dispatch<SetStateAction<b
 
   return (
     <MAnimView hideFinishCb={() => props.setIsFold(false)} visible={visible} >
-      <MHStack stretchW style={styles.container}>
+      <MHStack stretchW style={styles.container} pointerEvents='auto' >
         {
           props.isBack && (
             <Pressable style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>

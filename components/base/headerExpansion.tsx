@@ -37,42 +37,45 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
       padding: 10,
       backgroundColor: 'rgba(200,200,200,0.6)',
     }}>
-      <MHStack style={styles.bar} >
-        <MImage style={styles.img} />
-        <MVStack style={{ flex: 1 }}>
-          <MText >{authData.blockchainAddress}</MText>
-          <MHStack >
-            <CopyButton style={{ 'margin': 5 }} copyText={authData.blockchainAddress} />
-            {/* <MButton title='Receive' onPress={undefined} style={{ 'margin': 5 }}></MButton> */}
-          </MHStack>
-        </MVStack>
-        <Pressable onPress={close}>
-          <MImage size={12} style={{ marginLeft: 20 }} />
-        </Pressable>
-      </MHStack>
-
-      <Pressable>
-        <MVStack style={styles.email}>
-          <MText>Google</MText>
-          <MText>Wuyiming27094@gmail.com</MText>
-        </MVStack>
-      </Pressable>
-
-      <Pressable>
-        <MHStack style={styles.connected}>
-          <MImage size={10} style={{ marginRight: 10 }} />
+      <MVStack stretchW stretchH pointerEvents='auto'>
+        <MHStack style={styles.bar} >
+          <MImage style={styles.img} />
           <MVStack style={{ flex: 1 }}>
-            <MText>Connected</MText>
-            <MText>{network?.name}</MText>
+            <MText >{authData.blockchainAddress}</MText>
+            <MHStack >
+              <CopyButton style={{ 'margin': 5 }} copyText={authData.blockchainAddress} />
+              {/* <MButton title='Receive' onPress={undefined} style={{ 'margin': 5 }}></MButton> */}
+            </MHStack>
           </MVStack>
-          <MImage size={10} />
+          <Pressable onPress={close}>
+            <MImage size={12} style={{ marginLeft: 20 }} />
+          </Pressable>
         </MHStack>
-      </Pressable>
 
-      <MHStack style={styles.button}>
-        <MButton title='Settings' onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-        <MButton title='Sign Out' onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
-      </MHStack>
+        <Pressable>
+          <MVStack style={styles.email}>
+            <MText>Google</MText>
+            <MText>Wuyiming27094@gmail.com</MText>
+          </MVStack>
+        </Pressable>
+
+        <Pressable>
+          <MHStack style={styles.connected}>
+            <MImage size={10} style={{ marginRight: 10 }} />
+            <MVStack style={{ flex: 1 }}>
+              <MText>Connected</MText>
+              <MText>{network?.name}</MText>
+            </MVStack>
+            <MImage size={10} />
+          </MHStack>
+        </Pressable>
+
+        <MHStack style={styles.button}>
+          <MButton title='Settings' onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+          <MButton title='Sign Out' onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}></MButton>
+        </MHStack>
+      </MVStack>
+
 
     </MAnimView>
   );

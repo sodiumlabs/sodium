@@ -1,24 +1,28 @@
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { fixWidth } from '../../lib/define';
-import { useAdapterWeb } from '../../lib/hook/adapter';
 import MVStack from '../baseUI/mVStack';
-import Floater from './floater';
-import Footer from "./footer";
-import Header from "./header";
+import { updateBarParam } from './barUI';
 
 
 export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boolean, hasFloatingBar?: boolean, isNavigationBarBack?: boolean }) {
   const hasNavigationBar = props.hasNavigationBar === undefined ? true : props.hasNavigationBar;
   const hasFloatingBar = props.hasFloatingBar === undefined ? true : props.hasFloatingBar;
 
-  const isAdapterWeb = useAdapterWeb();
+  useEffect(() => {
+    updateBarParam({
+      'hasFloatingBar': hasFloatingBar,
+      'hasNavigationBar': hasNavigationBar,
+      'isNavigationBarBack': props.isNavigationBarBack
+    });
+  }, [hasFloatingBar, hasNavigationBar, props.isNavigationBarBack])
+
+  // const isAdapterWeb = useAdapterWeb();
   return (
     <SafeAreaView style={styles.container}>
-      {hasFloatingBar && <Floater isNavigationBarBack={props.isNavigationBarBack} />}
-      {hasNavigationBar && (!isAdapterWeb ? <Footer /> : <Header />)}
+      {/* {hasFloatingBar && <Floater isNavigationBarBack={props.isNavigationBarBack} />} */}
+      {/* {hasNavigationBar && (!isAdapterWeb ? <Footer /> : <Header />)} */}
 
 
       <MVStack stretchW style={styles.content}>

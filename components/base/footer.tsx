@@ -18,10 +18,8 @@ export default function Footer() {
       <BlurView style={{ width: '100%' }}>
         {/* <MVStack stretchW style={[styles.container, { top: size[1] - insets.bottom - 80 }]}> */}
         <MHStack stretchW style={styles.list}>
-          <MenuButton title='wallet' onPress={() => navigation.navigate(Screens.Wallet)} />
-          <MenuButton title='history' onPress={() => navigation.navigate(Screens.History)} />
-          {/* <MenuButton title='history' onPress={() => showTranscationQueueModal(true)} /> */}
-          {/* <MenuButton title='history' onPress={() => showSignModal(true)} /> */}
+          <MenuButton pointerEvents='auto' title='wallet' onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.Wallet }], })} />
+          <MenuButton pointerEvents='auto' title='history' onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.History }], })} />
         </MHStack>
 
       </BlurView>
