@@ -9,12 +9,10 @@ import { useAdapterWeb } from '../../lib/hook/adapter';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import MHStack from '../baseUI/mHStack';
 import HeaderExpansion from './headerExpansion';
-import HeaderFold from './headerFold';
 
 
 
 export default function Floater(props: { isNavigationBarBack?: boolean }) {
-  const [isFold, setIsFold] = useState(true);
   const insets = useSafeAreaInsets();
   const dimensionsize = useDimensionSize();
   const [webAdapterWidth, setWebAdapterWidth] = useState(200);
@@ -55,7 +53,7 @@ export default function Floater(props: { isNavigationBarBack?: boolean }) {
         <MHStack stretchH stretchW >
           <MHStack style={[adapterStyle as unknown]}>
             {
-              isFold ? <HeaderFold setIsFold={setIsFold} isBack={props.isNavigationBarBack} /> : <HeaderExpansion setIsFold={setIsFold} />
+              <HeaderExpansion isBack={props.isNavigationBarBack} />
             }
           </MHStack>
 

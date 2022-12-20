@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
 import { loginOut, useAuth } from '../../lib/data/auth';
@@ -13,8 +13,9 @@ import MVStack from '../baseUI/mVStack';
 import { showUpdateFullScreenModal } from './modalInit';
 import { navigation } from './navigationInit';
 
-export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAction<boolean>> }) {
+export default function HeaderExpansion(props: { isBack: boolean }) {
   const authData = useAuth();
+  const [isFold, setIsFold] = useState(true);
   const [visible, setVisible] = useState(true);
   const [queryNetwork, network] = useQueryNetwork();
   const close = () => {
@@ -32,16 +33,31 @@ export default function HeaderExpansion(props: { setIsFold: Dispatch<SetStateAct
   }
 
   return (
-    <MAnimView hideFinishCb={() => props.setIsFold(true)} visible={visible} style={{
+    <MAnimView hideFinishCb={() => setIsFold(true)} style={{
       borderRadius: 15,
-      padding: 10,
+      // padding: 10,
       backgroundColor: 'rgba(200,200,200,0.6)',
-    }}>
-      <MVStack stretchW stretchH pointerEvents='auto'>
+    }}
+      header={
+        <MHStack stretchW  >
+          {
+            props.isBack && (
+              <Pressable style={{ paddingRight: 20 }} onPress={() => navigation.goBack()}>
+                <MImage size={10} />
+              </Pressable>
+            )
+          }
+          <MImage />
+          <MText style={{ flex: 1 }} >{authData.blockchainAddress}</MText>
+          <MImage style={styles.expand} />
+        </MHStack>
+      }
+    >
+      <MVStack stretchW stretchH >
         <MHStack style={styles.bar} >
           <MImage style={styles.img} />
           <MVStack style={{ flex: 1 }}>
-            <MText >{authData.blockchainAddress}</MText>
+            {/* <MText >{authData.blockchainAddress}</MText> */}
             <MHStack >
               <CopyButton style={{ 'margin': 5 }} copyText={authData.blockchainAddress} />
               {/* <MButton title='Receive' onPress={undefined} style={{ 'margin': 5 }}></MButton> */}
@@ -114,4 +130,10 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48
   },
+
+  expand: {
+    width: 24,
+    height: 24,
+    marginLeft: 20,
+  }
 });
