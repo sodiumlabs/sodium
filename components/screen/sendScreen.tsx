@@ -8,7 +8,7 @@ import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
 import { formatPrice2Wei } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
-import { IUserTokenInfo } from "../../lib/define";
+import { fixWidth, IUserTokenInfo } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
 import { showUpdateSignTranscationModal } from '../base/modalInit';
 import MButton from "../baseUI/mButton";
@@ -80,15 +80,17 @@ export function SendScreen() {
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
-        <MVStack stretchW style={styles.container}>
-          <MText style={{ marginVertical: 6 }}>Send</MText>
-          <MVStack style={styles.send} stretchW>
-            <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-            <MInput keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
+        <MVStack stretchW style={{ alignItems: 'center' }}>
+          <MVStack stretchW style={styles.container}>
+            <MText style={{ marginVertical: 6 }}>Send</MText>
+            <MVStack style={styles.send} stretchW>
+              <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+              <MInput keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
+            </MVStack>
+            <MText style={{ marginVertical: 20 }}>To</MText>
+            <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
+            <MButton stretchW onPress={sendClick} title={"Continue"} style={{ marginVertical: 20 }} />
           </MVStack>
-          <MText style={{ marginVertical: 20 }}>To</MText>
-          <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
-          <MButton stretchW onPress={sendClick} title={"Continue"} style={{ marginVertical: 20 }} />
         </MVStack>
       </ScrollView>
     </BaseScreen>
@@ -100,7 +102,8 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 80,
     alignItems: 'center',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    maxWidth: fixWidth
   },
   send: {
     zIndex: 10,

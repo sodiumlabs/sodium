@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { IDepositItemData } from "../../lib/define";
+import { fixWidth, IDepositItemData } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
@@ -18,9 +18,11 @@ export function DepositScreen() {
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%', }}>
-        <MVStack stretchW style={styles.container}>
-          <MText style={{ marginVertical: 6 }}>Deposit</MText>
-          <DepositItem depositItemData={curDepositItem} isSelected={true} onDeposiItemClick={onDeposiItemClick} />
+        <MVStack stretchW style={{ alignItems: 'center' }}>
+          <MVStack stretchW style={styles.container}>
+            <MText style={{ marginVertical: 6 }}>Deposit</MText>
+            <DepositItem depositItemData={curDepositItem} isSelected={true} onDeposiItemClick={onDeposiItemClick} />
+          </MVStack>
         </MVStack>
       </ScrollView>
     </BaseScreen>
@@ -32,6 +34,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 80,
     alignItems: 'center',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    maxWidth: fixWidth
   },
 });

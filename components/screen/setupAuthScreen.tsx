@@ -2,6 +2,7 @@ import { Divider } from "@ui-kitten/components";
 import { useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { useAuth } from '../../lib/data/auth';
+import { fixWidth } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
@@ -16,74 +17,76 @@ export function SetupAuthScreen() {
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
-        <MVStack stretchW style={styles.container}>
-          <MText style={{ marginVertical: 6 }}>Reconfigure two-factor authentication (2FA)</MText>
+        <MVStack stretchW style={{ alignItems: 'center' }}>
+          <MVStack stretchW style={styles.container}>
+            <MText style={{ marginVertical: 6 }}>Reconfigure two-factor authentication (2FA)</MText>
 
-          <MHStack stretchW style={{ justifyContent: 'space-evenly' }}>
-            <StepItem step={1} isSelected={1 <= step} />
-            <StepItem step={2} isSelected={2 <= step} />
-            <StepItem step={3} isSelected={3 <= step} />
-          </MHStack>
+            <MHStack stretchW style={{ justifyContent: 'space-evenly' }}>
+              <StepItem step={1} isSelected={1 <= step} />
+              <StepItem step={2} isSelected={2 <= step} />
+              <StepItem step={3} isSelected={3 <= step} />
+            </MHStack>
 
-          {
-            step == 1 && (
-              <MVStack stretchW style={{ backgroundColor: 'white' }}>
-                <MText>Setup authenticator app</MText>
-                <MText>Use a phone app like 1Password, Authy, LastPass Authenticator, or Microsoft Authenticator, etc. to get 2FA codes when prompted during sign-in.</MText>
-                <MText>Scan the QR code</MText>
-                <MText>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
-                <MText>Verify the code from the app</MText>
-                <MInput />
-                <Divider />
-                <MLineLR right={
-                  <MHStack>
-                    <MButton title={"continue"} onPress={() => setStep(2)} />
-                  </MHStack>
-                } />
-              </MVStack>
-            )
-          }
-
-          {
-            step == 2 && (
-              <MVStack stretchW style={{ backgroundColor: 'white' }}>
-                <MText>Download your recovery codes </MText>
-                <MText numberOfLines={null}>You can use recovery codes as a second factor to authenticate in case you lose access to your device. We recommend saving them with a secure password manager such as Lastpass, 1Password, or Keeper.                </MText>
-                <MVStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
-                  <MText>Keep your recovery codes in a safe spot </MText>
-                  <MText>If you lose your device and can't find your recovery codes, you will lose access to your account. </MText>
+            {
+              step == 1 && (
+                <MVStack stretchW style={{ backgroundColor: 'white' }}>
+                  <MText>Setup authenticator app</MText>
+                  <MText>Use a phone app like 1Password, Authy, LastPass Authenticator, or Microsoft Authenticator, etc. to get 2FA codes when prompted during sign-in.</MText>
+                  <MText>Scan the QR code</MText>
+                  <MText>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
+                  <MText>Verify the code from the app</MText>
+                  <MInput />
+                  <Divider />
+                  <MLineLR right={
+                    <MHStack>
+                      <MButton title={"continue"} onPress={() => setStep(2)} />
+                    </MHStack>
+                  } />
                 </MVStack>
-                <MVStack style={{ paddingHorizontal: 40 }} >
-                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                  <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+              )
+            }
+
+            {
+              step == 2 && (
+                <MVStack stretchW style={{ backgroundColor: 'white' }}>
+                  <MText>Download your recovery codes </MText>
+                  <MText numberOfLines={null}>You can use recovery codes as a second factor to authenticate in case you lose access to your device. We recommend saving them with a secure password manager such as Lastpass, 1Password, or Keeper.                </MText>
+                  <MVStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
+                    <MText>Keep your recovery codes in a safe spot </MText>
+                    <MText>If you lose your device and can't find your recovery codes, you will lose access to your account. </MText>
+                  </MVStack>
+                  <MVStack style={{ paddingHorizontal: 40 }} >
+                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                  </MVStack>
+
+                  <MLineLR right={
+                    <MHStack>
+                      <MButton title={"download"} />
+                    </MHStack>
+                  } />
+                  <Divider />
+                  <MLineLR right={
+                    <MHStack>
+                      <MButton title={"I have saved my recovery codes"} onPress={() => setStep(3)} />
+                    </MHStack>
+                  } />
                 </MVStack>
-
-                <MLineLR right={
-                  <MHStack>
-                    <MButton title={"download"} />
-                  </MHStack>
-                } />
-                <Divider />
-                <MLineLR right={
-                  <MHStack>
-                    <MButton title={"I have saved my recovery codes"} onPress={() => setStep(3)} />
-                  </MHStack>
-                } />
-              </MVStack>
-            )
-          }
-          {
-            step == 3 && (
-              <MVStack stretchW style={{ backgroundColor: 'white', alignItems: 'center' }}>
-                <MText>Finish </MText>
-              </MVStack>
-            )
-          }
+              )
+            }
+            {
+              step == 3 && (
+                <MVStack stretchW style={{ backgroundColor: 'white', alignItems: 'center' }}>
+                  <MText>Finish </MText>
+                </MVStack>
+              )
+            }
 
 
+          </MVStack>
         </MVStack>
       </ScrollView>
     </BaseScreen>
@@ -111,6 +114,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 80,
     alignItems: 'center',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    maxWidth: fixWidth
   },
 });

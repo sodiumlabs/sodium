@@ -1,7 +1,7 @@
 import { Divider } from "@ui-kitten/components";
 import { ScrollView, StyleSheet } from "react-native";
 import { useAuth } from '../../lib/data/auth';
-import { Screens } from "../../lib/define";
+import { fixWidth, Screens } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
 import { navigation } from "../base/navigationInit";
 import MButton from "../baseUI/mButton";
@@ -15,33 +15,35 @@ export function SecurityScreen() {
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
-        <MVStack stretchW style={styles.container}>
-          <MText style={{ marginVertical: 6 }}>Security</MText>
-          <MVStack>
-            <MText>Two-factor authentication</MText>
-            <Divider />
-            <MHStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
-              <MText numberOfLines={null}>Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. Learn more about two-factor authentication.</MText>
-            </MHStack>
-            <MText>Two-factor methods</MText>
-            <MLineLR
-              left={<MText>Primary two-factor method</MText>}
-              right={
-                <MHStack>
+        <MVStack stretchW style={{ alignItems: 'center' }}>
+          <MVStack stretchW style={styles.container}>
+            <MText style={{ marginVertical: 6 }}>Security</MText>
+            <MVStack>
+              <MText>Two-factor authentication</MText>
+              <Divider />
+              <MHStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
+                <MText numberOfLines={null}>Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. Learn more about two-factor authentication.</MText>
+              </MHStack>
+              <MText>Two-factor methods</MText>
+              <MLineLR
+                left={<MText>Primary two-factor method</MText>}
+                right={
+                  <MHStack>
 
-                  <MButton title={"Set"} onPress={() => navigation.navigate(Screens.SetupAuth)} />
-                </MHStack>
-              }
-            />
-            <MText>Recovery options</MText>
-            <MLineLR
-              left={<MText>Recovery codes</MText>}
-              right={
-                <MHStack>
-                  <MButton title={"Show"} onPress={() => navigation.navigate(Screens.RecoveryCode)} />
-                </MHStack>
-              }
-            />
+                    <MButton title={"Set"} onPress={() => navigation.navigate(Screens.SetupAuth)} />
+                  </MHStack>
+                }
+              />
+              <MText>Recovery options</MText>
+              <MLineLR
+                left={<MText>Recovery codes</MText>}
+                right={
+                  <MHStack>
+                    <MButton title={"Show"} onPress={() => navigation.navigate(Screens.RecoveryCode)} />
+                  </MHStack>
+                }
+              />
+            </MVStack>
           </MVStack>
         </MVStack>
       </ScrollView>
@@ -61,6 +63,7 @@ const styles = StyleSheet.create({
   container: {
     marginVertical: 80,
     alignItems: 'center',
-    paddingHorizontal: 15
+    paddingHorizontal: 15,
+    maxWidth: fixWidth
   },
 });

@@ -16,10 +16,19 @@ export default function NavigationInit() {
     }
     if (auth.isLogin) {
       console.log('navigate(Screens.Wallet)');
-      navigation.navigate(Screens.Wallet);
+      // navigation.navigate(Screens.Wallet);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: Screens.Wallet }],
+      });
+
     } else {
       console.log('navigate(Screens.Login)');
-      navigation.navigate(Screens.Login);
+      // navigation.navigate(Screens.Login);
+      navigation.reset({
+        index: 0,
+        routes: [{ name: Screens.Login }],
+      });
     }
   }, [auth.isLogin, navigation.isReady()])
   return (

@@ -36,11 +36,11 @@ export const useAuth = (): AuthData => {
 }
 
 export const loginOut = async () => {
-  await waitTime(1500);// test code
+  await waitTime(500);// test code
   logout();
 }
 
 export const loginIn = async (email: string) => {
-  await waitTime(1500);// test code
+  await waitTime(500);// test code
   await initWalletByTest(email);
 }

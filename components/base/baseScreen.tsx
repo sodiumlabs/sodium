@@ -23,7 +23,7 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
 
       <MVStack stretchW style={styles.content}>
 
-        <MVStack stretchW stretchH style={{ alignSelf: 'center', maxWidth: fixWidth }}>
+        <MVStack stretchW stretchH style={{ alignSelf: 'center' }}>
           {
             props.children
           }
