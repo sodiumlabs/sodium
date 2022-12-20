@@ -5,6 +5,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { ERC20Transfer } from '../abi';
 
 export const fixWidth = 720;
+export const designWidth = 1280;
 
 export interface AuthData {
   isLogin: boolean,

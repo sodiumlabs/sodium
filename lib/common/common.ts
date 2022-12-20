@@ -96,3 +96,8 @@ export function hashcodeObj(obj: unknown) {
   return hashcode(str);
 }
 
+
+
+export function mapRange(x: number, a: number, b: number, c: number, d: number): number {
+  return (x - a) * (d - c) / (b - a) + c;
+}

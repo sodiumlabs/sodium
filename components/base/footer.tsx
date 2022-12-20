@@ -1,17 +1,16 @@
 
+import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Screens } from '../../lib/define';
-import { useDimensionSize } from '../../lib/hook/dimension';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
 import { navigation } from './navigationInit';
-import { BlurView } from 'expo-blur';
 
 export default function Footer() {
   const insets = useSafeAreaInsets();
-  const size = useDimensionSize();
+  // const size = useDimensionSize();
   // debugger
   return (
 

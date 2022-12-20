@@ -13,11 +13,11 @@ import {
   HistoryScreen,
   LoginScreen, ProfileScreen, SendScreen, SessionScreen, SettingScreen, WalletScreen
 } from '../components/screen';
-import { useAuth } from '../lib/data/auth';
-import { Screens } from '../lib/define';
-import { SetupAuthScreen } from '../components/screen/setupAuthScreen';
-import { SecurityScreen } from '../components/screen/securityScreen';
 import { RecoveryCodeScreen } from '../components/screen/ recoveryCodeScreen';
+import { SecurityScreen } from '../components/screen/securityScreen';
+import { SetupAuthScreen } from '../components/screen/setupAuthScreen';
+import { Screens } from '../lib/define';
+import { useListenerDimensionSize } from '../lib/hook/dimension';
 
 const queryClient = new QueryClient(
   // {
@@ -41,7 +41,8 @@ if (
 
 
 export default function App() {
-  const authData = useAuth();
+  // const authData = useAuth();
+  useListenerDimensionSize();
   return (
     <SafeAreaProvider>
       <ApplicationProvider {...eva} theme={eva.light}>
