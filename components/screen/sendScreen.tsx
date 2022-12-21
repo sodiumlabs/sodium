@@ -89,7 +89,9 @@ export function SendScreen() {
             </MVStack>
             <MText style={{ marginVertical: 20 }}>To</MText>
             <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
-            <MButton stretchW onPress={sendClick} title={"Continue"} style={{ marginVertical: 20 }} />
+            <MButton stretchW onPress={sendClick} style={{ marginVertical: 20 }} >
+              <MText>Continue</MText>
+            </MButton>
           </MVStack>
         </MVStack>
       </ScrollView>

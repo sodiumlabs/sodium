@@ -9,7 +9,6 @@ import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
-import { showUpdateSignTranscationModal, showUpdateTranscationQueueModal } from '../base/modalInit';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -143,8 +142,12 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
           </ScrollView>
         </MVStack>
         <MHStack stretchW>
-          <MButton style={{ flex: 1 }} title={'Cancel'} onPress={onCancelClick} />
-          <MButton style={{ flex: 1 }} title={'Confirm'} onPress={onConfirmClick} isLoading={isLoading} />
+          <MButton style={{ flex: 1 }} onPress={onCancelClick} >
+            <MText>Cancel</MText>
+          </MButton>
+          <MButton style={{ flex: 1 }} onPress={onConfirmClick} isLoading={isLoading} >
+            <MText>Confirm</MText>
+          </MButton>
         </MHStack>
       </MVStack>
     </BaseModal>

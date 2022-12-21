@@ -1,8 +1,8 @@
-import { ActivityIndicator, Pressable, PressableProps, StyleProp, StyleSheet, ViewProps, ViewStyle } from 'react-native';
-import MText from './mText';
+import { ActivityIndicator, Pressable, PressableProps, StyleProp, StyleSheet, ViewStyle } from 'react-native';
+import MHStack from './mHStack';
 
-export default function MButton(props: PressableProps & { stretchW?: boolean, title: string, isLoading?: boolean }) {
-  const { style, title, stretchW, isLoading, ...reset } = props;
+export default function MButton(props: PressableProps & { stretchW?: boolean, isLoading?: boolean }) {
+  const { style, stretchW, isLoading, ...reset } = props;
   const stretchWidth = {
     width: stretchW ? '100%' : 'auto'
   }
@@ -12,7 +12,11 @@ export default function MButton(props: PressableProps & { stretchW?: boolean, ti
         isLoading ? (
           <ActivityIndicator size='small' color="#0000ff" />
         ) : (
-          <MText> {title} </MText>
+          <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
+            {
+              props.children as React.ReactNode
+            }
+          </MHStack>
         )
       }
 
@@ -28,6 +32,6 @@ const localStyles = StyleSheet.create({
     elevation: 3,
     backgroundColor: 'rgba(200,200,200,1)',
     paddingVertical: 6,
-    paddingHorizontal: 6
+    paddingHorizontal: 10
   }
 })

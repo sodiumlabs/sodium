@@ -30,8 +30,12 @@ export const DeployConfirmModal = (props: { hideModal: () => void, modalParam: I
     >
       <MVStack stretchH stretchW style={{ 'alignItems': 'center', flex: 1 }}>
         <MText>Your Sodium wallet needs to be deployed on {param?.network?.name.toUpperCase()} to sign messages.</MText>
-        <MButton style={{ flex: 1 }} title={'Cancel'} onPress={onCancelClick} />
-        <MButton style={{ flex: 1 }} title={'Deploy'} onPress={onConfirmClick} isLoading={isLoading} />
+        <MButton style={{ flex: 1 }} onPress={onCancelClick} >
+          <MText>Cancel</MText>
+        </MButton>
+        <MButton style={{ flex: 1 }} onPress={onConfirmClick} isLoading={isLoading} >
+          <MText>Deploy</MText>
+        </MButton>
       </MVStack>
     </BaseModal>
   );

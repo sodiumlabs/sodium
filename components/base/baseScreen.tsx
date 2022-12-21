@@ -1,5 +1,7 @@
 
-import { ReactNode, useEffect } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import React from 'react';
+import { ReactNode, useEffect, useCallback } from 'react';
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MVStack from '../baseUI/mVStack';
@@ -10,23 +12,23 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
   const hasNavigationBar = props.hasNavigationBar === undefined ? true : props.hasNavigationBar;
   const hasFloatingBar = props.hasFloatingBar === undefined ? true : props.hasFloatingBar;
 
-  useEffect(() => {
+  const updateFloater = useCallback(() => {
+    console.log("useFocusEffect");
     updateBarParam({
       'hasFloatingBar': hasFloatingBar,
       'hasNavigationBar': hasNavigationBar,
-      'isNavigationBarBack': props.isNavigationBarBack
+      'hasNavigationBarBack': props.isNavigationBarBack
     });
-  }, [hasFloatingBar, hasNavigationBar, props.isNavigationBarBack])
+  }, [hasFloatingBar, hasNavigationBar, props.isNavigationBarBack]);
+
+  useFocusEffect(() => {
+    updateFloater();
+  });
 
   // const isAdapterWeb = useAdapterWeb();
   return (
     <SafeAreaView style={styles.container}>
-      {/* {hasFloatingBar && <Floater isNavigationBarBack={props.isNavigationBarBack} />} */}
-      {/* {hasNavigationBar && (!isAdapterWeb ? <Footer /> : <Header />)} */}
-
-
       <MVStack stretchW style={styles.content}>
-
         <MVStack stretchW stretchH style={{ alignSelf: 'center' }}>
           {
             props.children

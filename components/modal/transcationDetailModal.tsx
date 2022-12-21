@@ -2,19 +2,18 @@ import { Linking, ScrollView, StyleSheet } from 'react-native';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { TransactionHistory } from '@0xsodium/provider';
 import { Divider } from '@ui-kitten/components';
+import { useQueryNetwork } from '../../lib/api/network';
 import { getTranscationExplorer } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/auth';
 import { IModalParam } from '../../lib/define';
-import { useMClipboard } from '../../lib/hook/clipboard';
 import { BaseModal } from '../base/baseModal';
+import CopyButton from '../baseUI/copyButton';
 import MButton from '../baseUI/mButton';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { TranscationDetailItem } from '../item/transcationDetailItem';
-import CopyButton from '../baseUI/copyButton';
-import { useQueryNetwork } from '../../lib/api/network';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -52,7 +51,9 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                 })
               }
 
-              <MButton onPress={linkTxHash} style={{ width: '100%', marginVertical: 20 }} title={'View On Polygon'} />
+              <MButton onPress={linkTxHash} style={{ width: '100%', marginVertical: 20 }} >
+                <MText>View On Polygon</MText>
+              </MButton>
 
               <MVStack stretchW style={styles.marginV}>
                 <MText>Status</MText>

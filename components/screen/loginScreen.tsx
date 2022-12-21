@@ -7,7 +7,6 @@ import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import { LoginLoading } from "../full/loginLoading";
-import { TwoFactorAuth } from "../full/twoFactorAuth";
 
 export function LoginScreen() {
 
@@ -24,21 +23,13 @@ export function LoginScreen() {
           <MVStack stretchW style={styles.container} >
             <MText>Sign into web3</MText>
             <MVStack stretchW>
-              <MButton
-                style={{ marginBottom: 10 }}
-                title="Login"
-                onPress={loginClick}
-              />
-              <MButton
-                style={{ marginBottom: 10 }}
-                title="Login google"
-                onPress={loginClick}
-              />
-              <MButton
-                style={{ marginBottom: 10 }}
-                title="Login facebook"
-                onPress={loginClick}
-              />
+              <MButton style={{ marginBottom: 10 }} onPress={loginClick} >
+                <MText>Steam login</MText>
+              </MButton>
+
+              <MButton style={{ marginBottom: 10 }} onPress={loginClick} >
+                <MText>Twitter Login</MText>
+              </MButton>
             </MVStack>
           </MVStack>
         </MVStack>

@@ -8,11 +8,11 @@ import { designWidth, fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import MHStack from '../baseUI/mHStack';
-import HeaderExpansion from './headerExpansion';
+import FloaterDrawer from './floaterDrawer';
 
 
 
-export default function Floater(props: { isNavigationBarBack?: boolean }) {
+export default function Floater(props: { hasNavigationBarBack?: boolean }) {
   const insets = useSafeAreaInsets();
   const dimensionsize = useDimensionSize();
   const [webAdapterWidth, setWebAdapterWidth] = useState(200);
@@ -52,11 +52,8 @@ export default function Floater(props: { isNavigationBarBack?: boolean }) {
       <BlurView style={{ 'width': '100%' }}>
         <MHStack stretchH stretchW >
           <MHStack style={[adapterStyle as unknown]}>
-            {
-              <HeaderExpansion isBack={props.isNavigationBarBack} />
-            }
+            <FloaterDrawer hasNavigationBarBack={props.hasNavigationBarBack} />
           </MHStack>
-
         </MHStack>
       </BlurView>
     </MHStack>

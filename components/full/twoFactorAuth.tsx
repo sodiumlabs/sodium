@@ -40,14 +40,18 @@ export const TwoFactorAuth = (props) => {
             <MVStack style={{ alignItems: 'center', backgroundColor: '#fff', marginVertical: 20 }}>
               <MText>Authentication code </MText>
               <MInput />
-              <MButton title={'Verify'} onPress={onAuthVerifyClick} />
+              <MButton onPress={onAuthVerifyClick} >
+                <MText>Verify</MText>
+              </MButton>
               <MText numberOfLines={null}>Open the two-factor authenticator (TOTP) app on your mobile device to view your authentication code.</MText>
             </MVStack>
             <MVStack stretchW style={{ backgroundColor: '#fff' }}>
               <MText>Having problems? </MText>
               <MText onPress={() => setIsRecovery(true)}>Use a recovery code or request a reset</MText>
             </MVStack>
-            <MButton title='back' onPress={onBackClick} />
+            <MButton onPress={onBackClick} >
+              <MText>back</MText>
+            </MButton>
           </>
         )
       }
@@ -58,10 +62,14 @@ export const TwoFactorAuth = (props) => {
             <MVStack style={{ alignItems: 'center', backgroundColor: '#fff', marginVertical: 20 }}>
               <MText>Recovery code </MText>
               <MInput />
-              <MButton title={'Verify'} onPress={onRecoveryVerifyClick} />
+              <MButton onPress={onRecoveryVerifyClick} >
+                <MText>Verify</MText>
+              </MButton>
               <MText numberOfLines={null}>If you are unable to access your mobile device, enter one of your recovery codes to verify your identity.</MText>
             </MVStack>
-            <MButton title='back' onPress={() => setIsRecovery(false)} />
+            <MButton onPress={() => setIsRecovery(false)} >
+              <MText>back</MText>
+            </MButton>
           </>
         )
       }

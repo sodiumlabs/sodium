@@ -39,7 +39,9 @@ export function SetupAuthScreen() {
                   <Divider />
                   <MLineLR right={
                     <MHStack>
-                      <MButton title={"continue"} onPress={() => setStep(2)} />
+                      <MButton onPress={() => setStep(2)} >
+                        <MText>continue</MText>
+                      </MButton>
                     </MHStack>
                   } />
                 </MVStack>
@@ -65,13 +67,17 @@ export function SetupAuthScreen() {
 
                   <MLineLR right={
                     <MHStack>
-                      <MButton title={"download"} />
+                      <MButton  >
+                        <MText>download</MText>
+                      </MButton>
                     </MHStack>
                   } />
                   <Divider />
                   <MLineLR right={
                     <MHStack>
-                      <MButton title={"I have saved my recovery codes"} onPress={() => setStep(3)} />
+                      <MButton onPress={() => setStep(3)} >
+                        <MText>I have saved my recovery codes</MText>
+                      </MButton>
                     </MHStack>
                   } />
                 </MVStack>

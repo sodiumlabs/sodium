@@ -1,15 +1,15 @@
 
 import { Divider } from "@ui-kitten/components";
+import { useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { useAuth } from '../../lib/data/auth';
+import { fixWidth } from "../../lib/define";
 import { BaseScreen } from "../base/baseScreen";
-import MText from "../baseUI/mText";
-import MVStack from "../baseUI/mVStack";
+import MButton from "../baseUI/mButton";
 import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
-import MButton from "../baseUI/mButton";
-import { useState } from 'react';
-import { fixWidth } from "../../lib/define";
+import MText from "../baseUI/mText";
+import MVStack from "../baseUI/mVStack";
 
 export function RecoveryCodeScreen() {
   const auth = useAuth();
@@ -56,12 +56,16 @@ export function RecoveryCodeScreen() {
                   </MVStack>
 
                   <MHStack style={{ paddingHorizontal: 40 }}>
-                    <MLineLR left={<MButton title={"Download"} />} right={<MButton title={"Copy"} />} />
+                    <MLineLR
+                      left={<MButton><MText>Download</MText></MButton>}
+                      right={<MButton  ><MText>Copy</MText></MButton>} />
                   </MHStack>
 
                   <MText>Generate new recovery codes</MText>
                   <MText numberOfLines={null}>When you generate new recovery codes, you must download or print the new codes. Your old codes won't work anymore.</MText>
-                  <MButton title={"Generate new recovery codes"} onPress={generateClick} />
+                  <MButton onPress={generateClick} >
+                    <MText>Generate new recovery codes</MText>
+                  </MButton>
 
                 </MVStack>
               </MVStack>

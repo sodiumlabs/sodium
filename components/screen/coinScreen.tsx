@@ -45,7 +45,9 @@ export function CoinScreen(props) {
             </MVStack>
 
             <MVStack stretchW style={{ marginVertical: 20 }}>
-              <MButton style={{ 'width': '100%', height: 50 }} title={"Send USDC"} onPress={() => navigation.navigate(Screens.Send)} />
+              <MButton style={{ 'width': '100%', height: 50 }} onPress={() => navigation.navigate(Screens.Send)} >
+                <MText>Send USDC</MText>
+              </MButton>
             </MVStack>
 
             <BaseFoldFrame header={<MText >Detail</MText>}>
@@ -65,8 +67,12 @@ export function CoinScreen(props) {
                     left={<MText >{tokenInfo.token.address}</MText>}
                     right={
                       <MHStack>
-                        <MButton title={"copy"} onPress={copyTxHash} />
-                        <MButton title={"link"} onPress={linkTxHash} />
+                        <MButton onPress={copyTxHash} >
+                          <MText>copy</MText>
+                        </MButton>
+                        <MButton onPress={linkTxHash} >
+                          <MText>link</MText>
+                        </MButton>
                       </MHStack>
                     } />
                 </>

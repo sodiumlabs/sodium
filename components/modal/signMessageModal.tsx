@@ -1,15 +1,13 @@
-import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
+import { useAuth } from '../../lib/data/auth';
 import { IModalParam, ISignMessageModalParam } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
-import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { useAuth } from '../../lib/data/auth';
 
 
 export const SignMessageModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
@@ -64,8 +62,12 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
           </ScrollView>
 
           <MHStack stretchW>
-            <MButton style={{ flex: 1 }} title={'Cancel'} onPress={onCancelClick} />
-            <MButton style={{ flex: 1 }} title={'Confirm'} onPress={onConfirmClick} isLoading={isLoading} />
+            <MButton style={{ flex: 1 }} onPress={onCancelClick} >
+              <MText>Cancel</MText>
+            </MButton>
+            <MButton style={{ flex: 1 }} onPress={onConfirmClick} isLoading={isLoading} >
+              <MText>Confirm</MText>
+            </MButton>
           </MHStack>
         </MVStack>
       </MVStack>

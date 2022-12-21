@@ -27,9 +27,13 @@ export function ConnectScreen(props) {
               Do you want to allow Keeper #2344 - KPR | OpenSea from https://opensea.io to connect to your wallet?
             </MText>
 
-            <MButton title={"Continue"} onPress={onContinueClick} />
+            <MButton onPress={onContinueClick} >
+              <MText>Continue</MText>
+            </MButton>
             {/* <MText>99</MText> */}
-            <MButton title={"Cancel"} onPress={onCancelClick} />
+            <MButton onPress={onCancelClick} >
+              <MText>Cancel</MText>
+            </MButton>
 
           </MVStack>
         </MVStack>

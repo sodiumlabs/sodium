@@ -41,7 +41,9 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
           </ScrollView>
         </MVStack>
 
-        <MButton stretchW title={'reject all'} onPress={rejectAllClick} />
+        <MButton stretchW onPress={rejectAllClick} >
+          <MText>Reject All</MText>
+        </MButton>
       </MVStack>
     </BaseModal>
   );

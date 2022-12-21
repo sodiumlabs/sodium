@@ -23,8 +23,8 @@ export default function CopyButton(props: PressableProps & { copyText: string })
 
   return (
     <Pressable style={[styles.button, style as unknown]} onPress={copyClick} {...rest}>
-      <MHStack >
-        <MImage size={20} />
+      <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
+        <MImage size={8} style={{ marginRight: 5 }} />
         <MText > {isCopied ? "Copied" : "  Copy"} </MText>
       </MHStack>
     </Pressable>
@@ -35,8 +35,8 @@ const styles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 4,
+    borderRadius: 15,
     backgroundColor: '#bbb',
-    paddingHorizontal: 15
+    paddingHorizontal: 10
   }
 })

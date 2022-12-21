@@ -170,5 +170,5 @@ export interface ITransactionHistoryGroup {
 export interface IBarParam {
   hasNavigationBar: boolean,
   hasFloatingBar: boolean,
-  isNavigationBarBack: boolean,
+  hasNavigationBarBack: boolean,
 }

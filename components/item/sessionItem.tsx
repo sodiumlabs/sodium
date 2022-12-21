@@ -25,7 +25,9 @@ export function SessionItem() {
       <MText>Networks</MText>
       <MText>Polygon</MText>
 
-      <MButton title={"Sign out"} onPress={() => showUpdateComModal(true)} />
+      <MButton onPress={() => showUpdateComModal(true)} >
+        <MText>Sign out</MText>
+      </MButton>
     </MVStack>
   )
 }

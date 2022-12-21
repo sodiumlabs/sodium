@@ -2,20 +2,16 @@
 
 
 
-import { IndexPath, Layout, Select, SelectItem } from '@ui-kitten/components';
-import { useRef, useState, useEffect, useMemo } from 'react';
-import { Pressable, StyleSheet, Image, Linking, TouchableOpacity } from 'react-native';
+import { IndexPath } from '@ui-kitten/components';
+import { useMemo, useState } from 'react';
+import { Linking, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
 import { IDepositItemData } from '../../lib/define';
-import { useDimensionSize } from '../../lib/hook/dimension';
+import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MInput from '../baseUI/mInput';
-import { MSelect } from '../baseUI/mSelect';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import MButton from '../baseUI/mButton';
-import { useNavigation } from '../../lib/navigation';
-import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
@@ -56,7 +52,9 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
               <MText>Rate : _</MText>
             </MVStack>
             <MVStack stretchW style={{ alignItems: 'center' }}>
-              <MButton style={{ 'width': '100%' }} title={'Deposit'} />
+              <MButton style={{ 'width': '100%' }}  >
+                <MText>Deposit</MText>
+              </MButton>
               <MText>You will be redirected to the third party page</MText>
               <MText>The process would take approximately 10 - 15 min</MText>
               <TouchableOpacity onPress={() => Linking.openURL('https://chaingas.shop/')}>
