@@ -1,12 +1,12 @@
-import MVStack from "../baseUI/mVStack";
+import { Divider } from "@ui-kitten/components";
 import { StyleSheet } from "react-native";
-import MLineLR from "../baseUI/mLineLR";
+import { formatTimeYMDHMS } from '../../lib/common/time';
+import { showUpdateComModal } from "../base/modalInit";
+import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
-import { Divider } from "@ui-kitten/components";
-import { formatTimeYMDHMS } from '../../lib/common/time';
-import MButton from "../baseUI/mButton";
-import { showUpdateComModal } from "../base/modalInit";
+import MVStack from "../baseUI/mVStack";
+import { FailModalItem } from "../modal/modalItem/failModalItem";
 
 export function SessionItem() {
   return (
@@ -25,7 +25,7 @@ export function SessionItem() {
       <MText>Networks</MText>
       <MText>Polygon</MText>
 
-      <MButton onPress={() => showUpdateComModal(true)} >
+      <MButton onPress={() => showUpdateComModal(true, { 'height': 300, 'reactNode': <FailModalItem /> })} >
         <MText>Sign out</MText>
       </MButton>
     </MVStack>

@@ -2,6 +2,7 @@ import { NetworkConfig } from '@0xsodium/network';
 import { ConnectOptions, MessageToSign, TransactionHistory, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
 import { BigNumber } from "@ethersproject/bignumber";
+import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
 
 export const fixWidth = 720;
@@ -101,7 +102,8 @@ export interface ISignTranscationModalParam {
 
 
 export interface IComModalParam {
-  height: number
+  height: number,
+  reactNode: ReactNode
 }
 
 

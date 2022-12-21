@@ -45,7 +45,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
       borderTopLeftRadius: isFullScreen ? 0 : 15,
       borderTopRightRadius: isFullScreen ? 0 : 15,
     }
-  }, [isAdapterWeb]);
+  }, [isAdapterWeb, marginTop]);
 
   return (
     <Modal
