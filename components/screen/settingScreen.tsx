@@ -28,6 +28,10 @@ export function SettingScreen() {
             <SettingItem onPress={() => navigation.navigate(Screens.Security)} >
               <MText>Security</MText>
             </SettingItem>
+
+            <SettingItem onPress={() => navigation.navigate(Screens.Allowance)} >
+              <MText>Allowance</MText>
+            </SettingItem>
             <Spacer />
             <Information />
           </MVStack>

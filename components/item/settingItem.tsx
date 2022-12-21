@@ -15,7 +15,7 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
       <MLineLR
         left={
           <MHStack style={{ alignItems: 'center' }}>
-            <MImage size={20} />
+            <MImage size={20} style={{ marginRight: 5 }} />
             <MVStack>
               {
                 props.children

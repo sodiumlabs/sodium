@@ -10,13 +10,21 @@ import { BarUI } from '../components/base/barUI';
 import ModalInit from '../components/base/modalInit';
 import NavigationInit from '../components/base/navigationInit';
 import {
-  CoinScreen, ConnectScreen, DepositScreen,
+  CoinScreen,
+  ConnectScreen,
+  DepositScreen,
   HistoryScreen,
-  LoginScreen, ProfileScreen, SendScreen, SessionScreen, SettingScreen, WalletScreen
+  LoginScreen,
+  ProfileScreen,
+  SendScreen,
+  SessionScreen,
+  SettingScreen,
+  WalletScreen,
+  AllowanceScreen,
+  RecoveryCodeScreen,
+  SecurityScreen,
+  SetupAuthScreen
 } from '../components/screen';
-import { RecoveryCodeScreen } from '../components/screen/recoveryCodeScreen';
-import { SecurityScreen } from '../components/screen/securityScreen';
-import { SetupAuthScreen } from '../components/screen/setupAuthScreen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
 
@@ -68,6 +76,7 @@ export default function App() {
               <Stack.Screen name={Screens.Security} component={SecurityScreen} />
               <Stack.Screen name={Screens.SetupAuth} component={SetupAuthScreen} />
               <Stack.Screen name={Screens.RecoveryCode} component={RecoveryCodeScreen} />
+              <Stack.Screen name={Screens.Allowance} component={AllowanceScreen} />
             </Stack.Navigator>
 
           </NavigationContainer>
