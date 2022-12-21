@@ -9,6 +9,7 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { LogoutLoading } from '../full/logoutLoading';
 import { showUpdateFullScreenModal } from './modalInit';
 import { navigation } from './navigationInit';
 
@@ -28,7 +29,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     }
     Animated.timing(headerOffsetAnim, {
       easing: Easing.linear,
-      toValue: -40,
+      toValue: -50,
       duration: 100,
       useNativeDriver: false
     }).start();
@@ -98,7 +99,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     navigation.navigate(Screens.Setting);
   }
   const onLogoutClick = async () => {
-    showUpdateFullScreenModal(true, <MText>log out</MText>);
+    showUpdateFullScreenModal(true, <LogoutLoading />);
     await loginOut();
     showUpdateFullScreenModal(false);
   }

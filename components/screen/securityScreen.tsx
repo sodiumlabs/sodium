@@ -2,8 +2,11 @@ import { Divider } from "@ui-kitten/components";
 import { ScrollView, StyleSheet } from "react-native";
 import { useAuth } from '../../lib/data/auth';
 import { fixWidth, Screens } from "../../lib/define";
+import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
+import Information from "../base/information";
 import { navigation } from "../base/navigationInit";
+import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
@@ -11,12 +14,13 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 
 export function SecurityScreen() {
-  const auth = useAuth();
+  // const auth = useAuth();
+  const dimension = useDimensionSize();
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={styles.container}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <MText style={{ marginVertical: 6 }}>Security</MText>
             <MVStack>
               <MText>Two-factor authentication</MText>
@@ -48,6 +52,8 @@ export function SecurityScreen() {
                 }
               />
             </MVStack>
+            <Spacer />
+            <Information />
           </MVStack>
         </MVStack>
       </ScrollView>
@@ -65,7 +71,8 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   container: {
-    marginVertical: 80,
+    // marginVertical: 80,
+    paddingTop: 80,
     alignItems: 'center',
     paddingHorizontal: 15,
     maxWidth: fixWidth

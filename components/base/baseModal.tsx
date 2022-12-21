@@ -11,19 +11,19 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
   let { visible, hideModal, isFullScreen, isAnim = true, contentHeight = screenHeight } = props;
   let marginTop = Math.max(screenHeight - contentHeight, 100);
 
-  const fadeAnim = useRef(new Animated.Value(0)).current;
+  const backgroundFadeAnim = useRef(new Animated.Value(0)).current;
   const isAdapterWeb = useAdapterWeb();
   const insets = useSafeAreaInsets();
   useEffect(() => {
     // console.log(size[1]);
     if (!visible) {
-      fadeAnim.setValue(0);
+      backgroundFadeAnim.setValue(0);
     } else {
-      Animated.timing(fadeAnim, {
+      Animated.timing(backgroundFadeAnim, {
         easing: Easing.quad,
         toValue: 0.15,
         duration: 300,
-        delay: 100,
+        delay: 150,
         useNativeDriver: false
       }).start();
     }
@@ -58,7 +58,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
       <MVStack stretchW stretchH style={{ justifyContent: 'center', alignItems: 'center' }} >
 
         <TouchableWithoutFeedback onPress={() => hideModal()}>
-          <Animated.View style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, backgroundColor: 'rgb(0,0,0)', opacity: fadeAnim }}>
+          <Animated.View style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, backgroundColor: 'rgb(0,0,0)', opacity: backgroundFadeAnim }}>
           </Animated.View>
         </TouchableWithoutFeedback>
 

@@ -6,6 +6,7 @@ import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MVStack from '../baseUI/mVStack';
 import { updateBarParam } from './barUI';
+import Information from './information';
 
 
 export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boolean, hasFloatingBar?: boolean, isNavigationBarBack?: boolean }) {
@@ -36,7 +37,6 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
         </MVStack>
 
       </MVStack >
-
     </SafeAreaView >
   );
 }

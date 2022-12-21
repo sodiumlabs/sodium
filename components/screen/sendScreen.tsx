@@ -9,8 +9,11 @@ import { useQueryTokens } from "../../lib/api/tokens";
 import { formatPrice2Wei } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { fixWidth, IUserTokenInfo } from "../../lib/define";
+import { useDimensionSize } from '../../lib/hook/dimension';
 import { BaseScreen } from "../base/baseScreen";
+import Information from '../base/information';
 import { showUpdateSignTranscationModal } from '../base/modalInit';
+import { Spacer } from '../base/spacer';
 import MButton from "../baseUI/mButton";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
@@ -19,6 +22,7 @@ import { TokenDropdown } from "../dropdown/tokenDropdown";
 
 export function SendScreen() {
   const authData = useAuth();
+  const dimension = useDimensionSize();
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
   const [inputAddress, setInputAddress] = useState('');
@@ -81,7 +85,7 @@ export function SendScreen() {
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={styles.container}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <MText style={{ marginVertical: 6 }}>Send</MText>
             <MVStack style={styles.send} stretchW>
               <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
@@ -92,6 +96,8 @@ export function SendScreen() {
             <MButton stretchW onPress={sendClick} style={{ marginVertical: 20 }} >
               <MText>Continue</MText>
             </MButton>
+            <Spacer />
+            <Information />
           </MVStack>
         </MVStack>
       </ScrollView>
@@ -102,7 +108,7 @@ export function SendScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 80,
+    paddingTop: 80,
     alignItems: 'center',
     paddingHorizontal: 15,
     maxWidth: fixWidth

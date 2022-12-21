@@ -6,9 +6,12 @@ import { getAddressExplorer } from "../../lib/common/network";
 import { HistoryTime } from "../../lib/common/time";
 import { fixWidth, IUserTokenInfo, Screens } from '../../lib/define';
 import { useMClipboard } from "../../lib/hook/clipboard";
+import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { BaseScreen } from "../base/baseScreen";
+import Information from "../base/information";
 import { navigation } from "../base/navigationInit";
+import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
 import MImage from "../baseUI/mImage";
@@ -18,6 +21,7 @@ import MVStack from "../baseUI/mVStack";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
 
 export function CoinScreen(props) {
+  const dimension = useDimensionSize();
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [clipboardContent, setClipboardContent] = useMClipboard();
   const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(null, tokenInfo.token.address);
@@ -31,7 +35,7 @@ export function CoinScreen(props) {
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={styles.container}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <MImage size={64} url={tokenInfo.token.centerData.logoURI} />
             <MText style={{ marginVertical: 6 }}>{tokenInfo.token.symbol}</MText>
             <MHStack stretchW style={{ justifyContent: 'center' }}>
@@ -111,6 +115,9 @@ export function CoinScreen(props) {
               )
             }
 
+            <Spacer />
+            <Information />
+
           </MVStack>
         </MVStack>
       </ScrollView>
@@ -121,7 +128,7 @@ export function CoinScreen(props) {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 80,
+    paddingTop: 80,
     alignItems: 'center',
     paddingHorizontal: 15,
     maxWidth: fixWidth

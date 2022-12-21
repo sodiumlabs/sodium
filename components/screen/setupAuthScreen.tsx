@@ -3,7 +3,10 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { useAuth } from '../../lib/data/auth';
 import { fixWidth } from "../../lib/define";
+import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
+import Information from "../base/information";
+import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
@@ -12,13 +15,14 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 
 export function SetupAuthScreen() {
-  const auth = useAuth();
+  // const auth = useAuth();
+  const dimension = useDimensionSize();
   const [step, setStep] = useState<number>(1);
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={styles.container}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <MText style={{ marginVertical: 6 }}>Reconfigure two-factor authentication (2FA)</MText>
 
             <MHStack stretchW style={{ justifyContent: 'space-evenly' }}>
@@ -90,7 +94,8 @@ export function SetupAuthScreen() {
                 </MVStack>
               )
             }
-
+            <Spacer />
+            <Information />
 
           </MVStack>
         </MVStack>
@@ -118,7 +123,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   container: {
-    marginVertical: 80,
+    paddingTop: 80,
     alignItems: 'center',
     paddingHorizontal: 15,
     maxWidth: fixWidth

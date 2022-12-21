@@ -1,23 +1,26 @@
+import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { fixWidth, Screens } from '../../lib/define';
+import { useDimensionSize } from '../../lib/hook/dimension';
 import { BaseScreen } from "../base/baseScreen";
+import Information from '../base/information';
 import { navigation } from '../base/navigationInit';
+import { Spacer } from '../base/spacer';
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
-import PendingItem from '../item/pendingItem';
 import { RequestTranscation } from '../transcation/requestTranscation';
-import { useState } from 'react';
 
 
 
 export function WalletScreen() {
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [searchText, setSearchText] = useState<string>('');
+  const dimension = useDimensionSize();
   const onChangeText = (text: string) => {
     setSearchText(text);
   }
@@ -25,7 +28,7 @@ export function WalletScreen() {
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={styles.container} >
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]} >
 
             <MVStack style={styles.balance}>
               <MText>Balance</MText>
@@ -54,7 +57,8 @@ export function WalletScreen() {
               }
 
             </MVStack >
-
+            <Spacer />
+            <Information />
           </MVStack>
         </MVStack>
 
@@ -66,7 +70,8 @@ export function WalletScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    marginVertical: 80,
+    paddingTop: 80,
+    // marginVertical: 80,
     alignItems: 'center',
     paddingHorizontal: 15,
     maxWidth: fixWidth
