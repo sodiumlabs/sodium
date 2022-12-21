@@ -14,7 +14,7 @@ import {
   HistoryScreen,
   LoginScreen, ProfileScreen, SendScreen, SessionScreen, SettingScreen, WalletScreen
 } from '../components/screen';
-import { RecoveryCodeScreen } from '../components/screen/ recoveryCodeScreen';
+import { RecoveryCodeScreen } from '../components/screen/recoveryCodeScreen';
 import { SecurityScreen } from '../components/screen/securityScreen';
 import { SetupAuthScreen } from '../components/screen/setupAuthScreen';
 import { Screens } from '../lib/define';
