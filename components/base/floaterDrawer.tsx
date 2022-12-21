@@ -16,7 +16,9 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
   // ------ ------ ------ ------ anim  ------ ------ ------ ------ ------
   const minHeaderHeight = 44;
-  const headerHeightAnim = useRef(new Animated.Value(minHeaderHeight)).current;
+  const backgroundHeightAnim = useRef(new Animated.Value(minHeaderHeight)).current;
+  const headerOffsetAnim = useRef(new Animated.Value(0)).current;
+  const contentOpacityAnim = useRef(new Animated.Value(0)).current;
   const [viewHeight, setViewHeight] = useState(-1);
   const [isFold, setIsFold] = useState(true);
 
@@ -24,21 +26,53 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     if (viewHeight <= 0) {
       return;
     }
-    Animated.timing(headerHeightAnim, {
-      easing: Easing.sin,
-      toValue: viewHeight,
-      duration: 300,
+    Animated.timing(headerOffsetAnim, {
+      easing: Easing.linear,
+      toValue: -40,
+      duration: 100,
       useNativeDriver: false
+    }).start();
+
+    Animated.timing(backgroundHeightAnim, {
+      easing: Easing.cubic,
+      toValue: viewHeight,
+      duration: 250,
+      useNativeDriver: false,
+      delay: 100
     }).start(() => setIsFold(false));
+
+    Animated.timing(contentOpacityAnim, {
+      easing: Easing.cubic,
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: false,
+      delay: 200
+    }).start();
+
+
   }
   const foldAnim = () => {
-
-    Animated.timing(headerHeightAnim, {
-      easing: Easing.sin,
-      toValue: minHeaderHeight,
-      duration: 300,
+    Animated.timing(contentOpacityAnim, {
+      easing: Easing.cubic,
+      toValue: 0,
+      duration: 200,
       useNativeDriver: false
-    }).start(() => setIsFold(true));
+    }).start();
+    Animated.timing(backgroundHeightAnim, {
+      easing: Easing.cubic,
+      toValue: minHeaderHeight,
+      duration: 250,
+      useNativeDriver: false,
+      delay: 200
+    }).start();
+
+    Animated.timing(headerOffsetAnim, {
+      easing: Easing.linear,
+      toValue: 0,
+      duration: 100,
+      useNativeDriver: false,
+      delay: 400
+    }).start(() => setIsFold(true))
   }
 
   const onFoldBtnClick = () => {
@@ -71,11 +105,11 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
 
   return (
-    <Animated.View style={[styles.animContainer, { height: headerHeightAnim }]}>
+    <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
       <MVStack stretchW onLayout={onLayout} pointerEvents='auto' >
         {
-          isFold && (
-            <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight }}>
+          <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >
+            <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >
               <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
                 {
                   props.hasNavigationBarBack && (
@@ -89,57 +123,59 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
                 <MImage size={24} style={{ margin: 10 }} />
               </MHStack>
             </Pressable>
-          )
+          </Animated.View>
         }
-
-        <MVStack style={{ padding: 10 }}>
-          <MHStack style={{ flex: 1 }} >
-            <MImage size={48} />
-            <MVStack style={{ flex: 1 }}>
-              <MText >{authData.blockchainAddress}</MText>
-              <MHStack >
-                <CopyButton style={{ 'margin': 5 }} copyText={authData.blockchainAddress} />
-                <MButton onPress={undefined} style={{ 'margin': 5, borderRadius: 15 }}>
-                  <MText>Receive</MText>
-                </MButton>
-              </MHStack>
-            </MVStack>
-            <MVStack >
-              <Pressable onPress={() => foldAnim()}>
-                <MImage size={24} />
-              </Pressable>
-            </MVStack>
-          </MHStack>
-
-          <Pressable>
-            <MVStack style={styles.email}>
-              <MText>Google</MText>
-              <MText>Wuyiming27094@gmail.com</MText>
-            </MVStack>
-          </Pressable>
-
-          <Pressable>
-            <MHStack style={styles.connected}>
-              <MImage size={10} style={{ marginRight: 10 }} />
+        <Animated.View style={{ opacity: contentOpacityAnim }}>
+          <MVStack style={{ padding: 10, transform: [{ translateY: -minHeaderHeight }] }} >
+            <MHStack style={{ flex: 1 }} >
+              <MImage size={48} />
               <MVStack style={{ flex: 1 }}>
-                <MText>Connected</MText>
-                <MText>{network?.name}</MText>
+                <MText >{authData.blockchainAddress}</MText>
+                <MHStack >
+                  <CopyButton style={{ 'margin': 5 }} copyText={authData.blockchainAddress} />
+                  <MButton onPress={undefined} style={{ 'margin': 5, borderRadius: 15 }}>
+                    <MText>Receive</MText>
+                  </MButton>
+                </MHStack>
               </MVStack>
-              <MImage size={10} />
+              <MVStack >
+                <Pressable onPress={() => foldAnim()}>
+                  <MImage size={24} />
+                </Pressable>
+              </MVStack>
             </MHStack>
-          </Pressable>
 
-          <MHStack >
-            <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-              <MImage size={14} style={{ marginRight: 6 }} />
-              <MText>Settings</MText>
-            </MButton>
-            <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-              <MImage size={14} style={{ marginRight: 6 }} />
-              <MText>Sign Out</MText>
-            </MButton>
-          </MHStack>
-        </MVStack>
+            <Pressable>
+              <MVStack style={styles.email}>
+                <MText>Google</MText>
+                <MText>Wuyiming27094@gmail.com</MText>
+              </MVStack>
+            </Pressable>
+
+            <Pressable>
+              <MHStack style={styles.connected}>
+                <MImage size={10} style={{ marginRight: 10 }} />
+                <MVStack style={{ flex: 1 }}>
+                  <MText>Connected</MText>
+                  <MText>{network?.name}</MText>
+                </MVStack>
+                <MImage size={10} />
+              </MHStack>
+            </Pressable>
+
+            <MHStack >
+              <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
+                <MImage size={14} style={{ marginRight: 6 }} />
+                <MText>Settings</MText>
+              </MButton>
+              <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
+                <MImage size={14} style={{ marginRight: 6 }} />
+                <MText>Sign Out</MText>
+              </MButton>
+            </MHStack>
+          </MVStack>
+        </Animated.View>
+
       </MVStack>
     </Animated.View>
   );
@@ -148,6 +184,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
 const styles = StyleSheet.create({
   animContainer: {
+    position: 'relative',
     borderRadius: 15,
     backgroundColor: '#aaa',
     overflow: 'hidden',
