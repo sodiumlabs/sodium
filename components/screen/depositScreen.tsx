@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
+import { useQueryDeposit } from "../../lib/api/deposit";
 import { fixWidth, IDepositItemData } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
@@ -11,7 +12,14 @@ import DepositItem from "../item/depositItem";
 
 export function DepositScreen() {
   const dimension = useDimensionSize();
+  const [depositQuery, depositItems] = useQueryDeposit();
   const [curDepositItem, setCurDepositItem] = useState<IDepositItemData>(null);
+  useEffect(() => {
+    if (depositItems && depositItems.length > 0) {
+      setCurDepositItem(depositItems[0]);
+    }
+  }, [depositItems])
+
   const onDeposiItemClick = (selectItem: IDepositItemData) => {
     if (curDepositItem && selectItem.name == curDepositItem.name) {
       setCurDepositItem(null);
@@ -25,7 +33,14 @@ export function DepositScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <MText style={{ marginVertical: 6 }}>Deposit</MText>
-            <DepositItem depositItemData={curDepositItem} isSelected={true} onDeposiItemClick={onDeposiItemClick} />
+            {
+              depositItems && depositItems.length > 0 && depositItems.map((data, index) => {
+                return (
+                  <DepositItem isSelected={curDepositItem && data.name == curDepositItem.name} depositItemData={data} key={data.name} onDeposiItemClick={onDeposiItemClick} />
+                )
+              })
+            }
+
             <Spacer />
             <Information />
           </MVStack>

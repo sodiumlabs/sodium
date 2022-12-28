@@ -57,9 +57,6 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MText>Sign Transaction </MText>
             </MHStack>
-            {/* <Pressable onPress={onClickTranscationQueue}>
-              <MText>Transcation Queue</MText>
-            </Pressable> */}
 
             <MVStack stretchW>
               <MLineLR
@@ -75,6 +72,24 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             </MVStack>
 
 
+            {/* ---------------------approve------------------------- */}
+            <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
+              header={<MText >{`Approve`}</MText>}>
+
+              <MText>Spender</MText>
+              <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+                <MImage size={20} />
+                <MText style={{ flex: 1 }}>0x1ba02392023abdasdc</MText>
+              </MHStack>
+
+              <Divider />
+              <MText>Value</MText>
+              <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+                <MImage size={20} />
+                <MText style={{ flex: 1 }}>1832 Y Token</MText>
+              </MHStack>
+            </BaseFoldFrame>
+            {/* ---------------------send------------------------- */}
             {
               param?.decodeTransfer && (
                 param.decodeTransfer.map((decodeTxn, index) => {
@@ -100,7 +115,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 })
               )
             }
-
+            {/* ---------------------Transcation Data------------------------- */}
             {
               param?.decodeTransfer && (
                 <BaseFoldFrame header={<MText>{`Transcation Data(${param.decodeTransfer.length})`}</MText>} style={{ marginTop: 20 }}>
@@ -121,6 +136,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
               )
             }
 
+            {/* ---------------------Fee------------------------- */}
             {
               tokenInfos && paymasterInfos && paymasterInfos.length && (
                 <MVStack>

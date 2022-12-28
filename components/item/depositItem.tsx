@@ -2,21 +2,24 @@
 
 
 
-import { IndexPath } from '@ui-kitten/components';
 import { useMemo, useState } from 'react';
 import { Linking, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
-import { IDepositItemData } from '../../lib/define';
+import { useQueryTokens } from '../../lib/api/tokens';
+import { IDepositItemData, IUserTokenInfo } from '../../lib/define';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MInput from '../baseUI/mInput';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
-  const [selectedYouBuyIndex, setSelectedYouBuyIndex] = useState(new IndexPath(0));
-  const [selectedYouPayIndex, setSelectedYouPayIndex] = useState(new IndexPath(0));
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
+  const [selectedBuyOption, setSelectedBuyOption] = useState<IUserTokenInfo>(null);
+  const [selectedPayOption, setSelectedPayOption] = useState<IUserTokenInfo>(null);
+  const [youPayTokenCount, setYouPayTokenCount] = useState<string>('');
 
   const selectItem = useMemo(() => {
     return (
@@ -28,7 +31,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
   return (
     <MVStack stretchW>
-      <Pressable>
+      <Pressable onPress={() => onDeposiItemClick(depositItemData)}>
         <MVStack style={styles.title}>
           <MText>Deposit from Wyre</MText>
           <MText>Pay with Apple Pay/ Debit/ Credit Card</MText>
@@ -42,10 +45,10 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
         isSelected && (
           <MVStack stretchW >
             <MText>You bug</MText>
-            {/* <DepositDropdown options={['MATIC', 'USDC']} /> */}
-            <MText>You page</MText>
+            <DepositTokenDropdown style={{ zIndex: 2 }} selectedOption={selectedBuyOption} setSelectedOption={setSelectedBuyOption} options={tokenInfos} />
+            <MText>You pay</MText>
             <MInput />
-            {/* <DepositDropdown options={['USD', 'EUR', 'GBP']} /> */}
+            <DepositTokenDropdown style={{ zIndex: 1 }} selectedOption={selectedPayOption} setSelectedOption={setSelectedPayOption} options={tokenInfos} />
             <MText>You Receive (Estimated)</MText>
             <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 15, padding: 15, zIndex: 0 }}>
               <MText>0 USDC</MText>
