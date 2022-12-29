@@ -11,7 +11,7 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { LogoutLoading } from '../full/logoutLoading';
 import { showUpdateFullScreenModal } from './modalInit';
-import { navigation } from './navigationInit';
+import { navigate, navigationRef } from './navigationInit';
 
 export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) {
 
@@ -96,7 +96,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
   const onSettingsClick = () => {
     foldAnim();
-    navigation.navigate(Screens.Setting);
+    navigate(Screens.Setting);
   }
   const onLogoutClick = async () => {
     showUpdateFullScreenModal(true, <LogoutLoading />);
@@ -114,7 +114,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
               <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
                 {
                   props.hasNavigationBarBack && (
-                    <Pressable style={{ paddingLeft: 15, paddingRight: 15, backgroundColor: '#999', height: '100%', justifyContent: 'center' }} onPress={() => navigation.goBack()}>
+                    <Pressable style={{ paddingLeft: 15, paddingRight: 15, backgroundColor: '#999', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
                       <MImage size={12} />
                     </Pressable>
                   )

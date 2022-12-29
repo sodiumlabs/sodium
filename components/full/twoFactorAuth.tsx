@@ -7,7 +7,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { LoginLoading } from './loginLoading';
 import { useState } from 'react';
-import { navigation } from '../base/navigationInit';
+import { navigationRef } from '../base/navigationInit';
 import { Screens } from '../../lib/define';
 
 export const TwoFactorAuth = (props) => {
@@ -22,7 +22,7 @@ export const TwoFactorAuth = (props) => {
   const onRecoveryVerifyClick = async () => {
     showUpdateFullScreenModal(true, <LoginLoading />);
     await loginIn("r.albert.huang@gmail.com");
-    navigation.navigate(Screens.Security);
+    navigationRef.navigate(Screens.Security);
     showUpdateFullScreenModal(false);
   }
 

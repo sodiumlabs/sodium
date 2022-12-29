@@ -5,7 +5,7 @@ import { fixWidth, Screens } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { navigation } from "../base/navigationInit";
+import { navigationRef } from "../base/navigationInit";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import MHStack from '../baseUI/mHStack';
@@ -34,7 +34,7 @@ export function SecurityScreen() {
                 right={
                   <MHStack>
 
-                    <MButton onPress={() => navigation.navigate(Screens.SetupAuth)} >
+                    <MButton onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
                       <MText>Set</MText>
                     </MButton>
                   </MHStack>
@@ -45,7 +45,7 @@ export function SecurityScreen() {
                 left={<MText>Recovery codes</MText>}
                 right={
                   <MHStack>
-                    <MButton onPress={() => navigation.navigate(Screens.RecoveryCode)} >
+                    <MButton onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
                       <MText>Show</MText>
                     </MButton>
                   </MHStack>

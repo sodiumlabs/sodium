@@ -1,7 +1,7 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
 import { showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../../components/base/modalInit';
-import { navigation } from '../../components/base/navigationInit';
+import { navigate } from '../../components/base/navigationInit';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
 import { getAuth } from '../data/auth';
@@ -20,7 +20,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 const result = await auth.wallet.connect(options) as PromptConnectDetails;
                 tResolve(result);
             }
-            navigation.navigate(Screens.Connect,
+            navigate(Screens.Connect,
                 {
                     continueClick: continueClick,
                     cancelClick: tReject,
@@ -50,7 +50,7 @@ export class WalletPrompter implements WalletUserPrompter {
             const continueClick = async () => {
                 transactionQueue.remove(transactionQueueFindIndex);
                 const txnResponse = await auth.signer.signTransactions(txn, chaindId);
-                
+
                 // @ts-ignore
                 tResolve(txnResponse);
             }

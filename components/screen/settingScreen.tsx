@@ -3,7 +3,7 @@ import { fixWidth, Screens } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { navigation } from "../base/navigationInit";
+import { navigationRef } from "../base/navigationInit";
 import { Spacer } from "../base/spacer";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
@@ -17,19 +17,19 @@ export function SettingScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <MText style={{ marginVertical: 6 }}>Setting</MText>
-            <SettingItem onPress={() => navigation.navigate(Screens.Profile)} >
+            <SettingItem onPress={() => navigationRef.navigate(Screens.Profile)} >
               <MText>Profile</MText>
             </SettingItem>
-            <SettingItem onPress={() => navigation.navigate(Screens.Session)} >
+            <SettingItem onPress={() => navigationRef.navigate(Screens.Session)} >
               <MText>Active Sessions</MText>
               <MText> 0 Active Sessions</MText>
             </SettingItem>
 
-            <SettingItem onPress={() => navigation.navigate(Screens.Security)} >
+            <SettingItem onPress={() => navigationRef.navigate(Screens.Security)} >
               <MText>Security</MText>
             </SettingItem>
 
-            <SettingItem onPress={() => navigation.navigate(Screens.Allowance)} >
+            <SettingItem onPress={() => navigationRef.navigate(Screens.Allowance)} >
               <MText>Allowance</MText>
             </SettingItem>
             <Spacer />

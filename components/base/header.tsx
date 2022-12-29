@@ -6,7 +6,7 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
-import { navigation } from './navigationInit';
+import { navigationRef } from './navigationInit';
 
 
 export default function Header(props) {
@@ -19,14 +19,14 @@ export default function Header(props) {
         <MImage size={40} style={{ position: 'absolute', left: 0 }} />
 
         <MHStack pointerEvents='auto'>
-          <Pressable onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.Wallet }], })}>
+          <Pressable onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })}>
             <MLineLR
               left={<MImage size={20} />}
               right={<MText>wallet</MText>}
             />
           </Pressable>
 
-          <Pressable onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.History }], })}>
+          <Pressable onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })}>
             <MLineLR
               left={<MImage size={20} />}
               right={<MText>history</MText>}

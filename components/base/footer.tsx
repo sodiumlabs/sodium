@@ -6,7 +6,7 @@ import { Screens } from '../../lib/define';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
-import { navigation } from './navigationInit';
+import { navigationRef } from './navigationInit';
 
 export default function Footer() {
   const insets = useSafeAreaInsets();
@@ -18,8 +18,8 @@ export default function Footer() {
       <BlurView style={{ width: '100%' }}>
         {/* <MVStack stretchW style={[styles.container, { top: size[1] - insets.bottom - 80 }]}> */}
         <MHStack stretchW style={styles.list}>
-          <MenuButton pointerEvents='auto' title='wallet' onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.Wallet }], })} />
-          <MenuButton pointerEvents='auto' title='history' onPress={() => navigation.reset({ index: 0, routes: [{ name: Screens.History }], })} />
+          <MenuButton pointerEvents='auto' title='wallet' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })} />
+          <MenuButton pointerEvents='auto' title='history' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })} />
         </MHStack>
 
       </BlurView>
