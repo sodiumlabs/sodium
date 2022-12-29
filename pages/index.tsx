@@ -27,6 +27,9 @@ import {
 } from '../components/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
+import { WindowMessageHandler } from '@0xsodium/provider';
+import { asyncSession, initHandler } from '../lib/provider';
+import { useEffect } from 'react';
 
 const queryClient = new QueryClient(
   // {
@@ -50,8 +53,16 @@ if (
 
 
 export default function App() {
-  // const authData = useAuth();
   useListenerDimensionSize();
+
+  useEffect(() => {
+    const handler = initHandler();
+    const wmh = new WindowMessageHandler(handler);
+    wmh.register(location.href).then(() => {
+      asyncSession()
+    });
+  }, [1])
+
   return (
     <SafeAreaProvider>
       <ApplicationProvider {...eva} theme={eva.light}>

@@ -1,7 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { getAuth } from "../data/auth";
 import { eStotageKey, ITranscation } from "../define";
-
+import { Wallet } from 'ethers';
+import { Platform as SodiumPlatform } from '@0xsodium/config';
 
 export const saveTxnQueue = (queue: readonly ITranscation[]) => {
   try {
@@ -27,4 +28,16 @@ export const loadTxnQueue = async () => {
       return [];
     }
   }
+}
+
+export const saveSession = async (s: { sodiumUserId: string, platform: string, w: Wallet }) => {
+  // TODO
+}
+
+export const loadSession = async (): Promise<{ sodiumUserId: string, platform: SodiumPlatform, w: Wallet }|null> => {
+  return Promise.resolve({
+    sodiumUserId: "r.albert.huang@gmail.com",
+    platform: "web",
+    w: Wallet.createRandom()
+  })
 }

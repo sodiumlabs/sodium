@@ -17,6 +17,7 @@ export const authAtom = computed<AuthData, Atom<SodiumWallet | null>>(walletAtom
     isLogin: true,
     blockchainAddress: w.address,
     wallet: w.handler,
+    signer: w.signer,
     web3signer: w.web3signer
   } as AuthData
 });
@@ -41,6 +42,6 @@ export const loginOut = async () => {
 }
 
 export const loginIn = async (email: string) => {
-  await waitTime(500);// test code
+  await waitTime(500); // test code
   await initWalletByTest(email);
 }

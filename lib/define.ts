@@ -2,6 +2,7 @@ import { NetworkConfig } from '@0xsodium/network';
 import { ConnectOptions, MessageToSign, TransactionHistory, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
 import { BigNumber } from "@ethersproject/bignumber";
+import { Account } from '@0xsodium/wallet';
 import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
 
@@ -12,6 +13,7 @@ export interface AuthData {
   isLogin: boolean,
   blockchainAddress: string,
   wallet: WalletRequestHandler,
+  signer: Account,
   web3signer: Web3Signer
 }
 
@@ -163,7 +165,9 @@ export interface ITranscation {
 }
 
 export enum eStotageKey {
-  requestedTxs = 'requestedTxs',
+  requestedTxs = '@sodium.requestedTxs',
+
+  session = '@sodium.session.security'
 }
 
 export interface ITransactionHistoryGroup {

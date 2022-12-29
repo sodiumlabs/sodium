@@ -44,13 +44,15 @@ export class WalletPrompter implements WalletUserPrompter {
             const transactionQueueFindIndex = transactionQueue.add(txnQueueItem);
 
             if (chaindId == null) {
-                chaindId = await auth.wallet.getChainId();
+                chaindId = await auth.signer.getChainId();
             }
             const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
             const continueClick = async () => {
                 transactionQueue.remove(transactionQueueFindIndex);
-                const txnResponse = await auth.wallet['signer'].signTransaction(txn, chaindId);
-                tResolve(txnResponse.hash);
+                const txnResponse = await auth.signer.signTransactions(txn, chaindId);
+                
+                // @ts-ignore
+                tResolve(txnResponse);
             }
             showUpdateSignTranscationModal(true, {
                 continueClick: continueClick,
@@ -80,12 +82,12 @@ export class WalletPrompter implements WalletUserPrompter {
             const transactionQueueFindIndex = transactionQueue.add(txnWithTime);
 
             if (chaindId == null) {
-                chaindId = await auth.wallet.getChainId();
+                chaindId = await auth.web3signer.getChainId();
             }
             const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
             const continueClick = async () => {
                 transactionQueue.remove(transactionQueueFindIndex);
-                const txnResponse = await auth.wallet['signer'].sendTransaction(txn, chaindId);
+                const txnResponse = await auth.signer.sendTransaction(txn, chaindId);
                 tResolve(txnResponse.hash);
             }
             showUpdateSignTranscationModal(true, {
@@ -109,7 +111,7 @@ export class WalletPrompter implements WalletUserPrompter {
         }
         return new Promise((tResolve: (value: string) => void, tReject: () => void) => {
             const continueClick = async () => {
-                const sign = await auth.wallet['signer'].signMessage(message.message, message.chainId);
+                const sign = await auth.signer.signMessage(message.message, message.chainId);
                 tResolve(sign);
             }
             showUpdateSignMessageModal(true, {

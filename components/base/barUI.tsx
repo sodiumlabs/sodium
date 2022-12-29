@@ -15,7 +15,6 @@ export function updateBarParam(param: IBarParam) {
   barAtom.set({ ...param });
 }
 
-
 export function BarUI() {
   const barParam = useStore(barAtom);
   const isAdapterWeb = useAdapterWeb();

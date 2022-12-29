@@ -1,7 +1,3 @@
-
-
-
-
 import { StyleSheet, View, ViewProps } from 'react-native';
 
 export default function MVStack(props: ViewProps & { stretchW?: boolean, stretchH?: boolean }) {
