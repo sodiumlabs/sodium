@@ -18,7 +18,7 @@ import MButton from "../baseUI/mButton";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import { TokenDropdown } from "../dropdown/tokenDropdown";
+import { TokenDropdown } from "../dropdown/tokenDropdownV2";
 
 export function SendScreen() {
   const authData = useAuth();
