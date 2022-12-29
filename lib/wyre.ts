@@ -37,7 +37,7 @@ export interface RequestWyreDepositRequest {
 }
 
 export interface PreReserveResponse {
-  fees: {[key: string]: number}
+  fees: { [key: string]: number }
   exchangeRate: number
   destAmount: number
 }
@@ -52,32 +52,32 @@ export interface WyreService {
 export interface PingArgs {
 }
 
-export interface PingReturn {  
+export interface PingReturn {
 }
 export interface GetWyreDepositCurrenciesArgs {
 }
 
 export interface GetWyreDepositCurrenciesReturn {
   receiveCurrencies: Array<AbstractTokenInfo>
-  canBuyTokens: Array<AbstractTokenInfo>  
+  canBuyTokens: Array<AbstractTokenInfo>
 }
 export interface RequestWyrePreDepositArgs {
   request: RequestWyreDepositRequest
 }
 
 export interface RequestWyrePreDepositReturn {
-  response: PreReserveResponse  
+  response: PreReserveResponse
 }
 export interface RequestWyreDepositArgs {
   request: RequestWyreDepositRequest
 }
 
 export interface RequestWyreDepositReturn {
-  deposit: string  
+  deposit: string
 }
 
 
-  
+
 //
 // Client
 //
@@ -85,6 +85,13 @@ export class WyreService implements WyreService {
   protected hostname: string
   protected fetch: Fetch
   protected path = '/rpc/WyreService/'
+  private static _instance: WyreService;
+  public static get instance() {
+    if (WyreService._instance == null) {
+      WyreService._instance = new WyreService("https://wyre-server.melandworld.com", global.fetch);
+    }
+    return WyreService._instance;
+  }
 
   constructor(hostname: string, fetch: Fetch) {
     this.hostname = hostname
@@ -94,64 +101,64 @@ export class WyreService implements WyreService {
   private url(name: string): string {
     return this.hostname + this.path + name
   }
-  
+
   ping = (headers?: object): Promise<PingReturn> => {
     return this.fetch(
       this.url('Ping'),
       createHTTPRequest({}, headers)
-      ).then((res) => {
+    ).then((res) => {
       return buildResponse(res).then(_data => {
         return {
         }
       })
     })
   }
-  
+
   getWyreDepositCurrencies = (headers?: object): Promise<GetWyreDepositCurrenciesReturn> => {
     return this.fetch(
       this.url('GetWyreDepositCurrencies'),
       createHTTPRequest({}, headers)
-      ).then((res) => {
+    ).then((res) => {
       return buildResponse(res).then(_data => {
         return {
-          receiveCurrencies: <Array<AbstractTokenInfo>>(_data.receiveCurrencies), 
+          receiveCurrencies: <Array<AbstractTokenInfo>>(_data.receiveCurrencies),
           canBuyTokens: <Array<AbstractTokenInfo>>(_data.canBuyTokens)
         }
       })
     })
   }
-  
+
   requestWyrePreDeposit = (args: RequestWyrePreDepositArgs, headers?: object): Promise<RequestWyrePreDepositReturn> => {
     return this.fetch(
       this.url('RequestWyrePreDeposit'),
       createHTTPRequest(args, headers)).then((res) => {
-      return buildResponse(res).then(_data => {
-        return {
-          response: <PreReserveResponse>(_data.response)
-        }
+        return buildResponse(res).then(_data => {
+          return {
+            response: <PreReserveResponse>(_data.response)
+          }
+        })
       })
-    })
   }
-  
+
   requestWyreDeposit = (args: RequestWyreDepositArgs, headers?: object): Promise<RequestWyreDepositReturn> => {
     return this.fetch(
       this.url('RequestWyreDeposit'),
       createHTTPRequest(args, headers)).then((res) => {
-      return buildResponse(res).then(_data => {
-        return {
-          deposit: <string>(_data.deposit)
-        }
+        return buildResponse(res).then(_data => {
+          return {
+            deposit: <string>(_data.deposit)
+          }
+        })
       })
-    })
   }
-  
+
 }
 
-  
+
 export interface WebRPCError extends Error {
   code: string
   msg: string
-	status: number
+  status: number
 }
 
 const createHTTPRequest = (body: object = {}, headers: object = {}): object => {
@@ -167,7 +174,7 @@ const buildResponse = (res: Response): Promise<any> => {
     let data
     try {
       data = JSON.parse(text)
-    } catch(err) {
+    } catch (err) {
       throw { code: 'unknown', msg: `expecting JSON, got: ${text}`, status: res.status } as WebRPCError
     }
     if (!res.ok) {

@@ -180,3 +180,15 @@ export interface IBarParam {
   hasFloatingBar: boolean,
   hasNavigationBarBack: boolean,
 }
+
+export interface ISelectItemData {
+  isSelected: boolean,
+  data: unknown
+}
+
+export interface IDepositToken {
+  icon: string,
+  tokenCount: number,
+  tokenID: string,
+  usdCount: number,
+}

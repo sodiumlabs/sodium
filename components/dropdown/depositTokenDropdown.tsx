@@ -2,15 +2,13 @@
 
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View, ViewProps } from 'react-native';
-import { formatWei2Price } from '../../lib/common/common';
-import { IUserTokenInfo } from '../../lib/define';
+import { IDepositToken, ISelectItemData } from '../../lib/define';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
-import MVStack from '../baseUI/mVStack';
 
-export const DepositTokenDropdown = (props: ViewProps & { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
+export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemData[], selectedOption: ISelectItemData, setSelectedOption: Dispatch<SetStateAction<ISelectItemData>> }) => {
   const { options, selectedOption, setSelectedOption, style, ...rest } = props;
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dimension = useDimensionSize();
@@ -58,26 +56,20 @@ export const DepositTokenDropdown = (props: ViewProps & { options: IUserTokenInf
   );
 };
 
-const TokenItem = (props: { option: IUserTokenInfo }) => {
+const TokenItem = (props: { option: ISelectItemData }) => {
   const { option } = props;
+
   if (option == null) {
     return <></>
   }
+  const curToken = option.data as IDepositToken;
+
   return (
     <MHStack style={styles.sendCoin} stretchW>
-      <MImage size={32} />
-      <MVStack style={{ flex: 1 }}>
-        <MHStack style={{ flex: 1 }}>
-          <MText>{option.token.symbol}</MText>
-          <MImage size={12} />
-          <MText>{option.token.name}</MText>
-        </MHStack>
-        <MHStack style={{ flex: 1 }}>
-          <MText>{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText>
-          <MText> {option.token.symbol}</MText>
-          <MText> ${option.usdBalance}</MText>
-        </MHStack>
-      </MVStack>
+      <MHStack style={{ flex: 1, alignItems: 'center', }}>
+        <MImage size={32} url={curToken.icon} />
+        <MText>{curToken.tokenID}</MText>
+      </MHStack>
     </MHStack>
   )
 }

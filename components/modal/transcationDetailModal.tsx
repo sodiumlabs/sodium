@@ -30,7 +30,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
   }
 
   const linkTxHash = async () => {
-    const chainId = await auth.wallet.getChainId();
+    const chainId = await auth.signer.getChainId();
     const url = getTranscationExplorer(chainId, history.transactionHash);
     Linking.openURL(url);
   }

@@ -28,7 +28,7 @@ export const fetchNetwork = async (): Promise<NetworkConfig> => {
     return;
   }
 
-  const chainId = await authData.wallet.getChainId();
+  const chainId = await authData.signer.getChainId();
 
   const network = getNetwork(chainId);
   console.log("fetchNetwork");
