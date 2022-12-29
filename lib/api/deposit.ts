@@ -5,6 +5,7 @@ import { IDepositItemData, IDepositToken, ISelectItemData } from "../define";
 import { GetWyreDepositCurrenciesReturn, RequestWyreDepositArgs, RequestWyreDepositReturn, RequestWyrePreDepositArgs, RequestWyrePreDepositReturn, WyreService } from "../wyre";
 import { useQueryNetwork } from "./network";
 
+export const DepositAtLeastAmount = 10;
 // ***************************************Deposit***********************************************
 
 const fetchDeposit = async (chainId: number): Promise<IDepositItemData[]> => {
@@ -127,7 +128,6 @@ const fetchWyrePreDeposit = async (param: RequestWyrePreDepositArgs): Promise<Re
 
 
 export const useQueryPreDeposit = (youPayTokenCount: number, curYouPayTokenData: IDepositToken, curYouBuyTokenData: IDepositToken): [UseQueryResult, RequestWyrePreDepositReturn] => {
-  const AtLeastAmount = 10;
   const [queryNetwork, network] = useQueryNetwork();
   const auth = useAuth();
   const param = {
@@ -143,7 +143,7 @@ export const useQueryPreDeposit = (youPayTokenCount: number, curYouPayTokenData:
 
   useEffect(() => {
     if (!youPayTokenCount) return;
-    if (+youPayTokenCount < AtLeastAmount) return;
+    if (+youPayTokenCount < DepositAtLeastAmount) return;
     if (!network?.chainId) return;
     if (!curYouPayTokenData?.tokenID) return;
     if (!curYouBuyTokenData?.tokenID) return;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ScrollView, StyleSheet } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { useQueryDeposit } from "../../lib/api/deposit";
 import { fixWidth, IDepositItemData } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
@@ -39,6 +39,11 @@ export function DepositScreen() {
                   <DepositItem isSelected={curDepositItem && data.name == curDepositItem.name} depositItemData={data} key={data.name} onDeposiItemClick={onDeposiItemClick} />
                 )
               })
+            }
+            {
+              depositQuery.isFetching && (
+                <ActivityIndicator size='small' color="#0000ff" />
+              )
             }
 
             <Spacer />

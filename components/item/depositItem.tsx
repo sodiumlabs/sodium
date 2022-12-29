@@ -4,7 +4,7 @@
 
 import { useEffect, useState } from 'react';
 import { Linking, Pressable, StyleSheet, TouchableOpacity } from 'react-native';
-import { useQueryDepositCurrencies, useQueryDepositUrl, useQueryPreDeposit } from '../../lib/api/deposit';
+import { DepositAtLeastAmount, useQueryDepositCurrencies, useQueryDepositUrl, useQueryPreDeposit } from '../../lib/api/deposit';
 import { useQueryNetwork } from '../../lib/api/network';
 import { IDepositItemData, IDepositToken, ISelectItemData } from '../../lib/define';
 import MButton from '../baseUI/mButton';
@@ -15,11 +15,9 @@ import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
-  // const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [queryNetwork, network] = useQueryNetwork();
-  // const [selectedBuyOption, setSelectedBuyOption] = useState<ISelectItemData>(null);
-  // const [selectedPayOption, setSelectedPayOption] = useState<ISelectItemData>(null);
   const [youPayTokenCount, setYouPayTokenCount] = useState<string>('');
+  const [isCanDeposit, setIsCanDeposit] = useState(false);
 
   const [depositCurrenciesQuery, youBuyTokens, youPayTokens, setYouBuyTokens, setYouPayTokens] = useQueryDepositCurrencies();
   const curYouBuyToken = youBuyTokens && youBuyTokens.find(item => item.isSelected == true);
@@ -53,6 +51,12 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
       depositUrlQuery.remove();
     }
   }, [depositUrlQueryData])
+
+
+  useEffect(() => {
+    setIsCanDeposit(curYouBuyToken && curYouPayToken && youPayTokenCount.length > 0 && +youPayTokenCount >= DepositAtLeastAmount);
+  }, [curYouBuyToken, curYouPayToken, youPayTokenCount])
+
 
   const onYouBuyTokenClick = (selectItemData: ISelectItemData) => {
     if (!youBuyTokens) return;
@@ -107,7 +111,10 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
             </MVStack>
             <MVStack stretchW style={{ alignItems: 'center' }}>
-              <MButton style={{ 'width': '100%', marginVertical: 10 }} onPress={onDepositClick}  >
+              <MButton style={{ 'width': '100%', marginVertical: 10 }}
+                disabled={!isCanDeposit}
+                onPress={onDepositClick}
+                isLoading={depositUrlQuery.isFetching}>
                 <MText>Deposit</MText>
               </MButton>
               <MText numberOfLines={null}>You will be redirected to the third party page</MText>
