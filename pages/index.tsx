@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { BarUI } from '../components/base/barUI';
 import ModalInit from '../components/base/modalInit';
-import NavigationInit from '../components/base/navigationInit';
+import NavigationInit, { navigationRef } from '../components/base/navigationInit';
 import {
   CoinScreen,
   ConnectScreen,
@@ -67,7 +67,7 @@ export default function App() {
     <SafeAreaProvider>
       <ApplicationProvider {...eva} theme={eva.light}>
         <QueryClientProvider client={queryClient}>
-          <NavigationContainer>
+          <NavigationContainer ref={navigationRef}>
             <ModalInit />
             <NavigationInit />
             <BarUI />

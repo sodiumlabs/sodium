@@ -3,28 +3,36 @@
 import { useEffect } from 'react';
 import { useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
-import { useNavigation } from '../../lib/navigation';
-export let navigation = null;
+import { createNavigationContainerRef } from '@react-navigation/native';
 
+type ParamList = ReactNavigation.RootParamList;
+export const navigationRef = createNavigationContainerRef();
+let last = null;
+export const navigate = <RouteName extends keyof ParamList>(...args: RouteName extends unknown ? undefined extends ParamList[RouteName] ? [screen: RouteName] | [screen: RouteName, params: ParamList[RouteName]] : [screen: RouteName, params: ParamList[RouteName]] : never) => {
+  if (navigationRef.isReady()) {
+    return navigationRef.navigate(...args);
+  }
+  last = args;
+}
 
 export default function NavigationInit() {
-  navigation = useNavigation();
   const auth = useAuth();
   useEffect(() => {
-    if (!navigation.isReady()) {
+    if (!navigationRef.isReady()) {
       return;
     }
-    if (auth.isLogin) {
-      console.log('navigate(Screens.Wallet)');
-      // navigation.navigate(Screens.Wallet);
-      navigation.reset({ index: 0, routes: [{ name: Screens.Wallet }], });
 
-    } else {
-      console.log('navigate(Screens.Login)');
-      // navigation.navigate(Screens.Login);
-      navigation.reset({ index: 0, routes: [{ name: Screens.Login }], });
+    if (last) {
+      navigationRef.navigate(...last);
+      last = null;
     }
-  }, [auth.isLogin, navigation.isReady()])
+
+    if (auth.isLogin) {
+      navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], });
+    } else {
+      navigationRef.reset({ index: 0, routes: [{ name: Screens.Login }], });
+    }
+  }, [auth.isLogin, navigationRef.isReady()])
   return (
     <></>
   );

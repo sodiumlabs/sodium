@@ -10,7 +10,7 @@ import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { navigation } from "../base/navigationInit";
+import { navigationRef } from "../base/navigationInit";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import MHStack from "../baseUI/mHStack";
@@ -49,7 +49,7 @@ export function CoinScreen(props) {
             </MVStack>
 
             <MVStack stretchW style={{ marginVertical: 20 }}>
-              <MButton style={{ 'width': '100%', height: 50 }} onPress={() => navigation.navigate(Screens.Send)} >
+              <MButton style={{ 'width': '100%', height: 50 }} onPress={() => navigationRef.navigate(Screens.Send)} >
                 <MText>Send USDC</MText>
               </MButton>
             </MVStack>

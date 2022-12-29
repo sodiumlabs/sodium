@@ -127,9 +127,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/provider@portal:/Users/alberthuang/code/sodium.js/packages/provider::locator=sodium%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@0xsodium/provider@portal:/Users/alberthuang/code/sodium.js/packages/provider::locator=sodium%40workspace%3A."
+"@0xsodium/provider@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "@0xsodium/provider@npm:0.5.0"
   dependencies:
     "@0xsodium/abi": ^0.5.0
     "@0xsodium/auth": ^0.5.0
@@ -147,8 +147,9 @@ __metadata:
     ethers: ^5.7.0
     eventemitter2: ^6.4.5
     webextension-polyfill-ts: ^0.26.0
+  checksum: e98566fe3618be0160ea6b516c0946871baef14e6e6de306d6680ca4365587fef11564dceaeb94875c9ea567d64f4c41dff54ba4c7d564e099ef3edab104cbb0
   languageName: node
-  linkType: soft
+  linkType: hard
 
 "@0xsodium/sdk4337@npm:^0.5.0":
   version: 0.5.0

@@ -3,7 +3,7 @@ import { fixWidth, IConnectScreenParam } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { navigation } from "../base/navigationInit";
+import { navigationRef } from "../base/navigationInit";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
@@ -14,12 +14,12 @@ export function ConnectScreen(props) {
   const dimension = useDimensionSize();
   const onContinueClick = () => {
     param.continueClick && param.continueClick();
-    navigation.goBack();
+    navigationRef.goBack();
   }
 
   const onCancelClick = () => {
     param.cancelClick && param.cancelClick();
-    navigation.goBack();
+    navigationRef.goBack();
   }
   return (
     <BaseScreen hasNavigationBar={false} >

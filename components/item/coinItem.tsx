@@ -5,7 +5,7 @@
 import { Pressable, StyleSheet, TextInputProps } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo, Screens } from '../../lib/define';
-import { navigation } from '../base/navigationInit';
+import { navigationRef } from '../base/navigationInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -15,7 +15,7 @@ import MVStack from '../baseUI/mVStack';
 export default function CoinItem(props: TextInputProps & { tokenInfo: IUserTokenInfo }) {
   const { tokenInfo, style, ...reset } = props;
   return (
-    <Pressable onPress={() => navigation.navigate(Screens.Coin, tokenInfo)}>
+    <Pressable onPress={() => navigationRef.navigate(Screens.Coin, tokenInfo)}>
       <MHStack style={styles.container} stretchW>
         <MImage size={32} url={tokenInfo.token.centerData.logoURI} />
 

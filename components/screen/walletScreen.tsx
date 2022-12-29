@@ -5,7 +5,7 @@ import { fixWidth, Screens } from '../../lib/define';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
-import { navigation } from '../base/navigationInit';
+import { navigationRef } from '../base/navigationInit';
 import { Spacer } from '../base/spacer';
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
@@ -36,8 +36,8 @@ export function WalletScreen() {
             </MVStack>
 
             <MHStack style={styles.operate}>
-              <WalletButton title='Send' onPress={() => navigation.navigate(Screens.Send)} />
-              <WalletButton title='Deposit' onPress={() => navigation.navigate(Screens.Deposit)} />
+              <WalletButton title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
+              <WalletButton title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
             </MHStack>
 
             <RequestTranscation />
