@@ -24,6 +24,7 @@
     "@react-navigation/native": "^6.0.14",
     "@react-navigation/native-stack": "^6.9.2",
     "@ui-kitten/components": "^5.1.2",
+    "boring-avatars": "^1.7.0",
     "buffer": "^6.0.3",
     "eslint-config-next": "latest",
     "ethers": "^5.7.0",

@@ -4,6 +4,7 @@ import { useQueryNetwork } from '../../lib/api/network';
 import { loginOut, useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
 import CopyButton from '../baseUI/copyButton';
+import MAvatar from '../baseUI/mAvatar';
 import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -119,7 +120,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
                     </Pressable>
                   )
                 }
-                <MImage size={24} style={{ marginHorizontal: 10 }} />
+                <MAvatar style={{ marginHorizontal: 10 }} />
                 <MText style={{ flex: 1 }} >{authData.blockchainAddress}</MText>
                 <MImage size={24} style={{ margin: 10 }} />
               </MHStack>
@@ -129,7 +130,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         <Animated.View style={{ opacity: contentOpacityAnim }}>
           <MVStack style={{ padding: 10, transform: [{ translateY: -minHeaderHeight }] }} >
             <MHStack style={{ flex: 1 }} >
-              <MImage size={48} />
+              <MAvatar style={{ marginHorizontal: 10 }} size={48} />
               <MVStack style={{ flex: 1 }}>
                 <MText >{authData.blockchainAddress}</MText>
                 <MHStack >

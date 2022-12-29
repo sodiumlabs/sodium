@@ -6578,6 +6578,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"boring-avatars@npm:^1.7.0":
+  version: 1.7.0
+  resolution: "boring-avatars@npm:1.7.0"
+  checksum: 5f39a7b3a011ba8651c6bec22c453b42c58c0fc347b3dce5cfea7d4de4208b1296f1fb4efc66ebb598f805124a07c5b8e3b06766f5211e1deb545bbf889230b0
+  languageName: node
+  linkType: hard
+
 "bplist-creator@npm:0.1.0":
   version: 0.1.0
   resolution: "bplist-creator@npm:0.1.0"
@@ -16909,6 +16916,7 @@ __metadata:
     "@types/react": ~18.0.14
     "@types/react-native": ~0.70.6
     "@ui-kitten/components": ^5.1.2
+    boring-avatars: ^1.7.0
     buffer: ^6.0.3
     eslint-config-next: latest
     ethers: ^5.7.0
