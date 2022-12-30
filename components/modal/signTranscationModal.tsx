@@ -5,6 +5,7 @@ import { useQueryTokens } from '../../lib/api/tokens';
 import { formatWei2Price, hashcodeObj } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
+import { useAuth } from '../../lib/data/auth';
 import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
@@ -26,6 +27,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const [isLoading, setIsLoading] = useModalLoading(modalParam);
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
+  const auth = useAuth();
 
   // const onClickTranscationQueue = () => {
   //   showSignTranscationModal(false);
@@ -73,42 +75,53 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
 
             {/* ---------------------approve------------------------- */}
-            <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-              header={<MText >{`Approve`}</MText>}>
+            {
+              param?.decodeDatas && (
+                param.decodeDatas.map((decodeTxn, index) => {
+                  if (!decodeTxn.decodeApproveData) return;
+                  return (
+                    <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
+                      header={<MText >{`Approve(${index + 1}/${param.decodeDatas.length})`}</MText>}>
 
-              <MText>Spender</MText>
-              <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-                <MImage size={20} />
-                <MText style={{ flex: 1 }}>0x1ba02392023abdasdc</MText>
-              </MHStack>
+                      <MText>Spender</MText>
+                      <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+                        <MImage size={20} />
+                        <MText style={{ flex: 1 }}>{auth?.blockchainAddress}</MText>
+                      </MHStack>
 
-              <Divider />
-              <MText>Value</MText>
-              <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-                <MImage size={20} />
-                <MText style={{ flex: 1 }}>1832 Y Token</MText>
-              </MHStack>
-            </BaseFoldFrame>
+                      <Divider />
+                      <MText>Value</MText>
+                      <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+                        <MImage size={20} />
+                        <MText style={{ flex: 1 }}>{formatWei2Price(decodeTxn.decodeTransferData.amount.toString(), decodeTxn.decodeTransferData.token.decimals, 10)} {decodeTxn.decodeTransferData.token.symbol}</MText>
+                      </MHStack>
+                    </BaseFoldFrame>
+                  )
+                })
+              )
+            }
+
             {/* ---------------------send------------------------- */}
             {
-              param?.decodeTransfer && (
-                param.decodeTransfer.map((decodeTxn, index) => {
+              param?.decodeDatas && (
+                param.decodeDatas.map((decodeTxn, index) => {
+                  if (!decodeTxn.decodeTransferData) return;
                   return (
                     <BaseFoldFrame key={hashcodeObj(decodeTxn) + index} defaultExpansion style={{ marginTop: 20 }}
-                      header={<MText >{`Transfer(${index + 1}/${param.decodeTransfer.length})`}</MText>}>
+                      header={<MText >{`Transfer(${index + 1}/${param.decodeDatas.length})`}</MText>}>
 
                       <MText>Send</MText>
                       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
                         <MImage size={20} />
-                        <MText style={{ flex: 1 }}>{`${decodeTxn.decodeTransfer.token.name}(${decodeTxn.decodeTransfer.token.symbol})`}</MText>
-                        <MText >{formatWei2Price(decodeTxn.decodeTransfer.amount.toString(), decodeTxn.decodeTransfer.token.decimals, 10)} {decodeTxn.decodeTransfer.token.symbol}</MText>
+                        <MText style={{ flex: 1 }}>{`${decodeTxn.decodeTransferData.token.name}(${decodeTxn.decodeTransferData.token.symbol})`}</MText>
+                        <MText >{formatWei2Price(decodeTxn.decodeTransferData.amount.toString(), decodeTxn.decodeTransferData.token.decimals, 10)} {decodeTxn.decodeTransferData.token.symbol}</MText>
                       </MHStack>
 
                       <Divider />
                       <MText>To Recipient</MText>
                       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
                         <MImage size={20} />
-                        <MText style={{ flex: 1 }}>{decodeTxn.decodeTransfer.to}</MText>
+                        <MText style={{ flex: 1 }}>{decodeTxn.decodeTransferData.to}</MText>
                       </MHStack>
                     </BaseFoldFrame>
                   )
@@ -117,15 +130,15 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
             {/* ---------------------Transcation Data------------------------- */}
             {
-              param?.decodeTransfer && (
-                <BaseFoldFrame header={<MText>{`Transcation Data(${param.decodeTransfer.length})`}</MText>} style={{ marginTop: 20 }}>
+              param?.decodeDatas && (
+                <BaseFoldFrame header={<MText>{`Transcation Data(${param.decodeDatas.length})`}</MText>} style={{ marginTop: 20 }}>
                   {
-                    param.decodeTransfer.map((decodetxn, index) => {
+                    param.decodeDatas.map((decodetxn, index) => {
                       return (
                         <MVStack stretchW key={hashcodeObj(decodetxn) + index} style={{ backgroundColor: '#999', borderRadius: 15, padding: 15 }}>
                           <Text>
                             {
-                              JSON.stringify(decodetxn.origin, null, 2)
+                              JSON.stringify(decodetxn.originTxReq, null, 2)
                             }
                           </Text>
                         </MVStack>

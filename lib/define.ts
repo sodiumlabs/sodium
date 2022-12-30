@@ -5,6 +5,7 @@ import { BigNumber } from "@ethersproject/bignumber";
 import { Account } from '@0xsodium/wallet';
 import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
+import { ERC20Approve } from '../abi/erc20';
 
 export const fixWidth = 720;
 export const designWidth = 1280;
@@ -98,7 +99,7 @@ export interface IDeployConfirmModalParam {
 export interface ISignTranscationModalParam {
   continueClick: () => Promise<void>,
   cancelClick: () => void,
-  decodeTransfer: IDecodeTranscation[],
+  decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,
   chaindId: number,
   txn: ITranscation
@@ -117,8 +118,10 @@ export interface IDropdownOption {
 }
 
 export interface IDecodeTranscation {
-  origin: TransactionRequest,
-  decodeTransfer: ERC20Transfer,
+  originTxReq: TransactionRequest,
+  decodeTransferData: ERC20Transfer,
+  decodeApproveData: ERC20Approve,
+  // decodeStr: string
 }
 
 //---- from sdk define
