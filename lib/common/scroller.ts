@@ -14,7 +14,7 @@ export function getScroller(scollEndCb: () => void) {
     // const isContentFillPage = contentHeight >= scrollViewHeight; // Whether the content height is greater than the list height
 
     const isDown = scrollOffset - lastScrollOffset >= 0;
-    console.log(`scrollOffset ${scrollOffset} lastScrollOffset ${lastScrollOffset} isDowning ${isDown}`);
+    // console.log(`scrollOffset ${scrollOffset} lastScrollOffset ${lastScrollOffset} isDowning ${isDown}`);
 
     // isDirectionChange = isDirectionChange || lastDown != isDown;
     // if (isContentFillPage && isEndReached && isDowning) {
