@@ -111,7 +111,7 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
-        console.log("WalletPrompter promptSignMessage");
+        console.log("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options));
 
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
             await waitNavigateInit();

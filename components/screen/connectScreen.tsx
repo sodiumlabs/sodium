@@ -26,8 +26,8 @@ export function ConnectScreen(props) {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}>
-            <MText style={{ marginVertical: 6 }}>
-              Do you want to allow Keeper #2344 - KPR | OpenSea from https://opensea.io to connect to your wallet?
+            <MText numberOfLines={null} style={{ marginVertical: 6, textAlign: 'center' }}>
+              Do you want to allow {param?.options?.origin} to connect to your wallet?
             </MText>
 
             <MButton onPress={onContinueClick} >
