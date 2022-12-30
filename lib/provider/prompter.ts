@@ -86,7 +86,6 @@ export class WalletPrompter implements WalletUserPrompter {
                 'timeStamp': OperateTimeStamp.getAndReset()
             }
             const transactionQueueFindIndex = transactionQueue.add(txnWithTime);
-
             if (chaindId == null) {
                 chaindId = await auth.web3signer.getChainId();
             }

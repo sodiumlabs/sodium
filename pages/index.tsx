@@ -27,7 +27,7 @@ import {
 } from '../components/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
-import { WindowMessageHandler } from '@0xsodium/provider';
+import { WindowMessageHandler, IframeMessageHandler } from '@0xsodium/provider';
 import { asyncSession, initHandler } from '../lib/provider';
 import { useEffect } from 'react';
 
@@ -58,9 +58,16 @@ export default function App() {
   useEffect(() => {
     const handler = initHandler();
     const wmh = new WindowMessageHandler(handler);
-    wmh.register(location.href).then(() => {
+    const imh = new IframeMessageHandler(handler);
+
+    const regp1 = imh.register(location.href);
+    const regp2 = wmh.register(location.href);
+    Promise.all([
+      regp1,
+      regp2
+    ]).then(() => {
       asyncSession()
-    });
+    })
   }, [1])
 
   return (

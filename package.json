@@ -61,5 +61,14 @@
     "typechain": "^8.1.1",
     "typescript": "^4.6.3"
   },
-  "private": true
+  "private": true,
+  "resolutions": {
+    "@0xsodium/estimator": "portal:/Users/alberthuang/code/sodium.js/packages/estimator",
+    "@0xsodium/config": "portal:/Users/alberthuang/code/sodium.js/packages/config",
+    "@0xsodium/wallet": "portal:/Users/alberthuang/code/sodium.js/packages/wallet",
+    "@0xsodium/network": "portal:/Users/alberthuang/code/sodium.js/packages/network",
+    "@0xsodium/provider": "portal:/Users/alberthuang/code/sodium.js/packages/provider",
+    "@0xsodium/transactions": "portal:/Users/alberthuang/code/sodium.js/packages/transactions",
+    "@0xsodium/utils": "portal:/Users/alberthuang/code/sodium.js/packages/utils"
+  }
 }

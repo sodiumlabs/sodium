@@ -1,11 +1,11 @@
-yarn unlink @0xsodium/config
+yarn unlink /Users/alberthuang/code/sodium.js/packages/config
 
-yarn unlink @0xsodium/wallet
+yarn unlink /Users/alberthuang/code/sodium.js/packages/wallet
 
-yarn unlink @0xsodium/network
+yarn unlink /Users/alberthuang/code/sodium.js/packages/network
 
-yarn unlink @0xsodium/provider
+yarn unlink /Users/alberthuang/code/sodium.js/packages/provider
 
-yarn unlink @0xsodium/transactions
+yarn unlink /Users/alberthuang/code/sodium.js/packages/transactions
 
-yarn unlink @0xsodium/utils
+yarn unlink /Users/alberthuang/code/sodium.js/packages/utils
