@@ -60,6 +60,6 @@ export const checkIsERC20Transfer = (tx: Transaction): boolean => {
 
 export const checkIsERC20Approve = (tx: Transaction): boolean => {
     // 0x+keccak256("approve(address,uint256)"").slice(0, 8)
-    const transferMethodPrefix = "0x485a064f";
+    const transferMethodPrefix = "0x095ea7b3";
     return tx.data.toString().startsWith(transferMethodPrefix);
 }

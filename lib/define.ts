@@ -9,6 +9,7 @@ import { ERC20Approve } from '../abi/erc20';
 
 export const fixWidth = 720;
 export const designWidth = 1280;
+export const MaxBigNumber = BigNumber.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
 
 export interface AuthData {
   isLogin: boolean,
