@@ -1,7 +1,7 @@
 import { NetworkConfig } from '@0xsodium/network';
 import { ConnectOptions, MessageToSign, TransactionHistory, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
-import { TransactionRequest } from '@0xsodium/transactions';
-import { BigNumber } from "@ethersproject/bignumber";
+import { Transaction, TransactionRequest } from '@0xsodium/transactions';
+import { BigNumber, FixedNumber } from "@ethersproject/bignumber";
 import { Account } from '@0xsodium/wallet';
 import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
@@ -10,6 +10,7 @@ import { ERC20Approve } from '../abi/erc20';
 export const fixWidth = 720;
 export const designWidth = 1280;
 export const MaxBigNumber = BigNumber.from("0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+export const MaxFixedNumber = FixedNumber.from(MaxBigNumber);
 
 export interface AuthData {
   isLogin: boolean,
@@ -98,7 +99,7 @@ export interface IDeployConfirmModalParam {
 }
 
 export interface ISignTranscationModalParam {
-  continueClick: () => Promise<void>,
+  continueClick: (continueTxn: Transaction[]) => Promise<void>,
   cancelClick: () => void,
   decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,
@@ -119,7 +120,7 @@ export interface IDropdownOption {
 }
 
 export interface IDecodeTranscation {
-  originTxReq: TransactionRequest,
+  originTxReq: Transaction,
   decodeTransferData: ERC20Transfer,
   decodeApproveData: ERC20Approve,
   // decodeStr: string
@@ -195,4 +196,10 @@ export interface IDepositToken {
   tokenCount: number,
   tokenID: string,
   usdCount: number,
+}
+
+export enum eApproveType {
+  SetAllowance,
+  RevokeAfter,
+  KeepUnlimted
 }

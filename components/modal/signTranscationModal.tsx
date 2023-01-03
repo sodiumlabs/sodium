@@ -1,10 +1,10 @@
 import { ScrollView, StyleSheet, Text } from 'react-native';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
-import { hashcodeObj } from '../../lib/common/common';
+import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { IModalParam, ISignTranscationModalParam } from '../../lib/define';
+import { eApproveType, IModalParam, ISignTranscationModalParam, MaxBigNumber, MaxFixedNumber } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
@@ -17,6 +17,9 @@ import MVStack from '../baseUI/mVStack';
 import NetworkFeeItem from '../item/networkFeeItem';
 import { ApproveItem } from './modalItem/approveItem';
 import { TransferItem } from './modalItem/transferItem';
+import { useState, useRef, useCallback } from 'react';
+import { encodeERC20Approve } from '../../abi/erc20';
+import { BigNumber, FixedNumber } from 'ethers';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -28,24 +31,60 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
 
-  // const onClickTranscationQueue = () => {
-  //   showSignTranscationModal(false);
-  //   showTranscationQueueModal(true);
-  // }
-  const onConfirmClick = async () => {
+  const [approveSelectedIndex, setApproveSelectedIndex] = useState(eApproveType.KeepUnlimted);
+  const [approveSliderValue, setApproveSliderValue] = useState(1);
+
+  const curNetwork = getNetwork(param?.chaindId);
+  const decodeApproveData = param?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeApproveData);
+
+  const onConfirmClick = useCallback(async () => {
     if (!param) return;
     if (isLoading) return;
+    // const tx = param.txn.txReq;
+    if (!param?.decodeDatas) return;
+
+    const txs = param.decodeDatas.map(decodeTxn => decodeTxn.originTxReq);
+
     setIsLoading(true);
-    await param.continueClick();
+    if (decodeApproveData) {
+      const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
+      if (approveSelectedIndex == eApproveType.SetAllowance) {
+        console.log("eApproveType.SetAllowance");
+        // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
+        const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
+        const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
+
+        const transaction = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, approveNum, decodeApproveData.decodeApproveData.token.address);
+        txs.splice(approveIndex, 1, transaction);
+      }
+      else if (approveSelectedIndex == eApproveType.RevokeAfter) {
+        console.log("eApproveType.RevokeAfter");
+        const revokeTx = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, BigNumber.from(0), decodeApproveData.decodeApproveData.token.address);
+        txs.push(revokeTx);
+      }
+      else {
+        console.log("eApproveType.KeepUnlimted");
+      }
+      console.log("txs:");
+      console.log(txs)
+      await param.continueClick(txs);
+
+    }
+    else {
+      console.log("txs:");
+      console.log(txs)
+      await param.continueClick(txs);
+    }
+
     setIsLoading(false);
     hideModal();
-  }
+  }, [decodeApproveData, param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex]);
+
   const onCancelClick = () => {
     if (!param) return;
     param.cancelClick();
     hideModal();
   }
-  const curNetwork = getNetwork(param?.chaindId);
 
   return (
     <BaseModal
@@ -75,14 +114,14 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
             {/* ---------------------approve------------------------- */}
             {
-              param?.decodeDatas && (
-                param.decodeDatas.map((decodeTxn, index) => {
-                  if (!decodeTxn.decodeApproveData) return;
-                  return <ApproveItem
-                    key={hashcodeObj(decodeTxn) + index}
-                    index={index + 1} maxIndex={param.decodeDatas.length}
-                    approveData={decodeTxn.decodeApproveData} />
-                })
+              decodeApproveData && (
+                <ApproveItem
+                  index={1} maxIndex={param.decodeDatas.length}
+                  approveData={decodeApproveData.decodeApproveData}
+                  approveSelectedIndex={approveSelectedIndex}
+                  setApproveSelectedIndex={setApproveSelectedIndex}
+                  approveSliderValue={approveSliderValue}
+                  setApproveSliderValue={setApproveSliderValue} />
               )
             }
 

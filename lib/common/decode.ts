@@ -7,10 +7,8 @@ import { IDecodeTranscation } from "../define";
 import { checkIsERC20Approve, decodeERC20Approve, ERC20Approve } from '../../abi/erc20';
 
 
-export async function decodeTransactionRequest(txn: TransactionRequest, web3signer: Web3Signer, chainId?: number) {
+export async function decodeTransactionRequest(txs: Transaction[], web3signer: Web3Signer, chainId?: number) {
   const decodes: IDecodeTranscation[] = [];
-  const txs = flattenAuxTransactions(txn) as Transaction[];
-
   for (let tx of txs) {
     const decodeTsfData = await decodeTransfer(tx, web3signer, chainId);
     const decodeApproveData = await decodeApprove(tx, web3signer, chainId);
@@ -19,7 +17,7 @@ export async function decodeTransactionRequest(txn: TransactionRequest, web3sign
       'decodeTransferData': decodeTsfData,
       'decodeApproveData': decodeApproveData,
       // 'decodeStr': !decodeTsfData && !decodeApproveData && tx.data.toString().slice(0, 10)
-    }
+    } as IDecodeTranscation;
     if (decodeApproveData) {
       decodes.unshift(decodeData);
     }
