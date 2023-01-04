@@ -38,7 +38,7 @@ export class WalletPrompter implements WalletUserPrompter {
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         console.log("WalletPrompter promptSignTransaction");
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
-            const txs = flattenAuxTransactions(txn) as Transaction[];
+
             await waitNavigateInit();
             const auth = getAuth();
             if (!auth.isLogin) {
@@ -54,7 +54,7 @@ export class WalletPrompter implements WalletUserPrompter {
             if (chaindId == null) {
                 chaindId = await auth.signer.getChainId();
             }
-            const decodes = await decodeTransactionRequest(txs, auth.web3signer, chaindId);
+            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
             const continueClick = async (continueTxn: TransactionRequest) => {
                 transactionQueue.remove(transactionQueueFindIndex);
                 const txnResponse = await auth.signer.signTransactions(continueTxn, chaindId);
@@ -77,7 +77,6 @@ export class WalletPrompter implements WalletUserPrompter {
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         console.log("WalletPrompter promptSendTransaction");
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
-            const txs = flattenAuxTransactions(txn) as Transaction[];
             await waitNavigateInit();
             const auth = getAuth();
             if (!auth.isLogin) {
@@ -91,7 +90,7 @@ export class WalletPrompter implements WalletUserPrompter {
             if (chaindId == null) {
                 chaindId = await auth.signer.getChainId();
             }
-            const decodes = await decodeTransactionRequest(txs, auth.web3signer, chaindId);
+            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
             const continueClick = async (continueTxn: TransactionRequest) => {
                 transactionQueue.remove(transactionQueueFindIndex);
                 const txnResponse = await auth.signer.sendTransaction(continueTxn, chaindId);
