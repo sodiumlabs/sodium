@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApplicationProvider } from '@ui-kitten/components';
 import { Platform, UIManager } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { BarUI } from '../components/base/barUI';
 import ModalInit from '../components/base/modalInit';
 import NavigationInit, { navigationRef } from '../components/base/navigationInit';
@@ -30,8 +30,19 @@ import { useListenerDimensionSize } from '../lib/hook/dimension';
 import { WindowMessageHandler, IframeMessageHandler } from '@0xsodium/provider';
 import { asyncSession, initHandler } from '../lib/provider';
 import { useEffect } from 'react';
+import { showUpdateComModal } from '../components/base/modalInit';
+import { FailModalItem } from '../components/modal/modalItem/failModalItem';
 
 const queryClient = new QueryClient(
+  {
+    queryCache: new QueryCache({
+      onError: (error: Error) => {
+        // toastError(error.message);
+        console.log(error.message);
+        showUpdateComModal(true, { 'height': 300, 'reactNode': <FailModalItem error={error.message} /> });
+      }
+    }),
+  }
   // {
   //   'defaultOptions': {
   //     'queries': {

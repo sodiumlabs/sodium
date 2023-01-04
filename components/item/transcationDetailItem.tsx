@@ -25,7 +25,6 @@ export const TranscationDetailItem = (props: ViewProps & { transfer: Transaction
         <MText  >{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>
       </MHStack>
 
-      {/* <Divider /> */}
       <MDivider />
       <MVStack style={{ marginTop: 20 }}>
         <MText style={{ marginVertical: 5 }}>{isSent ? 'To' : 'From'}</MText>

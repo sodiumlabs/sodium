@@ -2,7 +2,7 @@ import { Transaction } from '@0xsodium/transactions';
 import { Signer } from "@0xsodium/wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { BigNumberish } from 'ethers';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
@@ -20,7 +20,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
-import { globalStyle } from '../../lib/globalStyles';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 
 export function SendScreen() {
   const authData = useAuth();
@@ -29,6 +29,7 @@ export function SendScreen() {
   const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
   const [inputAddress, setInputAddress] = useState('');
   const [inputTokenCount, setInputTokenCount] = useState('');
+  const [isCanSend, setIsCanSend] = useState(false);
 
   const onChangeAddressText = (text: string) => {
     setInputAddress(text.trim());
@@ -60,16 +61,29 @@ export function SendScreen() {
       await txr.wait();
     }
   }, [authData])
-
-  const sendClick = () => {
-    if (!selectedOption) return;
+  const checkIsFit = useCallback(() => {
+    if (!selectedOption) return false;
+    if (!inputTokenCount) return;
+    if (!inputAddress) return;
 
     if (!/^\d+(\.\d+)?$/.test(inputTokenCount) || +inputTokenCount <= 0) {
-      console.error('The quantity format is incorrect');
-      return;
+      console.log('The quantity format is incorrect');
+      return false;
     }
     if (!/^0x[0-9a-zA-Z]+$/.test(inputAddress)) {
-      console.error('The address format is incorrect');
+      console.log('The address format is incorrect');
+      return false;
+    }
+    return true;
+  }, [selectedOption, inputTokenCount, inputAddress]);
+
+  useEffect(() => {
+    const isFit = checkIsFit();
+    setIsCanSend(isFit);
+  }, [checkIsFit]);
+
+  const sendClick = () => {
+    if (!isCanSend) {
       return;
     }
     const lowerCaseAddress = inputAddress.toLocaleLowerCase();
@@ -81,6 +95,10 @@ export function SendScreen() {
       sendERC20Token(lowerCaseAddress, selectedOption.token.address, sendWei);
     }
     showUpdateSignTranscationModal(true, null);
+  }
+
+  const sendStyle = {
+    backgroundColor: isCanSend ? eColor.Blue : eColor.Black
   }
 
   return (
@@ -95,7 +113,7 @@ export function SendScreen() {
             </MVStack>
             <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
             <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
-            <MButton stretchW onPress={sendClick} style={{ marginVertical: 20, height: 45 }} >
+            <MButton stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]} >
               <MText style={{ color: '#ffffff', fontWeight: '700' }} >Continue</MText>
             </MButton>
             <Spacer />

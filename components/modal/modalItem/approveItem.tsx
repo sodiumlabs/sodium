@@ -9,6 +9,7 @@ import { useAuth } from "../../../lib/data/auth";
 import { eApproveType, MaxFixedNumber } from "../../../lib/define";
 import { eColor } from '../../../lib/globalStyles';
 import { BaseFoldFrame } from "../../base/baseFoldFrame";
+import { MDivider } from '../../baseUI/mDivider';
 import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
@@ -57,14 +58,14 @@ export const ApproveItem = (props: {
       <MText style={{ color: eColor.GrayText }}>Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
-        <MText style={{ flex: 1, color: "#6B6B6B" }}>{auth?.blockchainAddress}</MText>
+        <MText style={{ flex: 1, color: eColor.GrayContentText }}>{auth?.blockchainAddress}</MText>
       </MHStack>
 
-      <Divider />
+      <MDivider style={{ marginVertical: 10 }} />
       <MText style={{ color: eColor.GrayText }}>Value</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} url={approveData.token.centerData.logoURI} />
-        <MText style={{ flex: 1, color: "#6B6B6B" }}>{approveValue}</MText>
+        <MText style={{ flex: 1, color: eColor.GrayContentText }}>{approveValue}</MText>
       </MHStack>
       <MVStack>
         <RadioGroup

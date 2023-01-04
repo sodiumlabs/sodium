@@ -48,15 +48,15 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
               <MHStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)', flex: 1 }}>
                 {/* <MImage size={20} url={auth.} /> */}
                 <MVStack style={{ flex: 1 }}>
-                  <MText style={{ color: "#6B6B6B" }}>Me</MText>
-                  <MText style={{ color: "#6B6B6B" }}>{auth.blockchainAddress}</MText>
+                  <MText style={{ color: eColor.GrayContentText }}>Me</MText>
+                  <MText style={{ color: eColor.GrayContentText }}>{auth.blockchainAddress}</MText>
                 </MVStack>
               </MHStack>
 
               <MText style={{ color: eColor.GrayText, marginTop: 15, }}>Message</MText>
               <MVStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)' }}>
-                <MText style={{ color: "#6B6B6B" }}>Signed Message:</MText>
-                <MText style={{ color: "#6B6B6B" }} numberOfLines={null}>{param?.message?.message}</MText>
+                <MText style={{ color: eColor.GrayContentText }}>Signed Message:</MText>
+                <MText style={{ color: eColor.GrayContentText }} numberOfLines={null}>{param?.message?.message}</MText>
               </MVStack>
             </BaseFoldFrame>
           </ScrollView>

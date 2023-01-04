@@ -5,6 +5,7 @@ import { IModalParam } from '../../lib/define';
 import { transactionQueue, useRequestedTransactions } from '../../lib/transaction';
 import { BaseModal } from '../base/baseModal';
 import MButton from '../baseUI/mButton';
+import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import TranscationQueueItem from '../item/transcationQueueItem';
@@ -29,13 +30,25 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
           <ScrollView style={{ paddingHorizontal: 15 }}>
             <ModalTitle title='Transaction' />
 
-            <MText style={{ marginBottom: 16 }}>Requested Transactions ({requestTranscations.length})</MText>
+
+
             {
-              requestTranscations.map((txn, index) => {
-                return (
-                  <TranscationQueueItem transcation={txn} key={hashcodeObj(txn) + index} />
-                )
-              })
+              (!requestTranscations || requestTranscations.length <= 0) ? (
+                <MHStack stretchW style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  <MText>Nothing</MText>
+                </MHStack>
+              ) : (
+                <>
+                  <MText style={{ marginBottom: 16 }}>Requested Transactions ({requestTranscations.length})</MText>
+                  {
+                    requestTranscations.map((txn, index) => {
+                      return (
+                        <TranscationQueueItem transcation={txn} key={hashcodeObj(txn) + index} />
+                      )
+                    })
+                  }
+                </>
+              )
             }
           </ScrollView>
         </MVStack>

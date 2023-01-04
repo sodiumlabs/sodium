@@ -7,6 +7,7 @@ import { useMClipboard } from '../../lib/hook/clipboard';
 import MHStack from './mHStack';
 import MImage from './mImage';
 import MText from './mText';
+import { eColor } from '../../lib/globalStyles';
 
 export default function CopyButton(props: PressableProps & { copyText: string }) {
   const { copyText, style, ...rest } = props;
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,
-    backgroundColor: '#bbb',
+    backgroundColor: eColor.Black,
     paddingHorizontal: 10
   }
 })

@@ -1,4 +1,5 @@
 import { Divider } from "@ui-kitten/components";
+import { MDivider } from "../../baseUI/mDivider";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
 
@@ -9,7 +10,7 @@ export function TermsOfUseModalItem() {
       <MText>Sodium Terms of Use</MText>
       <MText>Version 1.1</MText>
       <MText>Effective as of Jun 30, 2022</MText>
-      <Divider />
+      <MDivider style={{ marginVertical: 10 }} />
       <MText numberOfLines={null}>
         Please review these Terms of Use (“Sequence User Terms”) carefully, as they set forth the legally binding terms and conditions that govern your use of our website located at https://sequence.xyz (“Website”) and the Sequence wallet (the “Wallet”), including related trademarks, software code, and other intellectual property (together, the “Sequence Services”).
 

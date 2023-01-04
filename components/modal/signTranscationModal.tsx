@@ -8,6 +8,7 @@ import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { eApproveType, IModalParam, ISignTranscationModalParam, MaxFixedNumber } from '../../lib/define';
+import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
@@ -151,7 +152,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                       return (
                         <MVStack stretchW key={hashcodeObj(decodetxn) + index}
                           style={{ borderRadius: 10, padding: 15, marginBottom: 10, backgroundColor: 'rgba(1,1,1,0.05)' }}>
-                          <MText numberOfLines={null} style={{ color: "#6B6B6B" }}>
+                          <MText numberOfLines={null} style={{ color: eColor.GrayContentText }}>
                             {
                               JSON.stringify(decodetxn.originTxReq, null, 2)
                             }

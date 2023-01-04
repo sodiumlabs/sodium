@@ -62,7 +62,7 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
         <Pressable onPress={rejectClick}>
           <MHStack style={styles.reject}>
             {/* <MImage size={16} /> */}
-            <MText style={{ color: "#6B6B6B" }} >x</MText>
+            <MText style={{ color: eColor.GrayContentText }} >x</MText>
           </MHStack>
         </Pressable>
       </MHStack>

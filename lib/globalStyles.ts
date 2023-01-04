@@ -6,7 +6,8 @@ export enum eColor {
   Blue = '#2178DD',
   Black = '#8B8E9E',
   Border = '#EEF0F2',
-  GrayText = '#9F9F9F'
+  GrayText = '#9F9F9F',
+  GrayContentText = '#6B6B6B',
 }
 
 export const globalStyle = StyleSheet.create({

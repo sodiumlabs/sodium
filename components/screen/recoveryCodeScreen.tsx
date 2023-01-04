@@ -8,6 +8,7 @@ import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
+import { MDivider } from "../baseUI/mDivider";
 import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
@@ -31,7 +32,7 @@ export function RecoveryCodeScreen() {
               <MVStack>
                 <MText>Two-factor recovery codes</MText>
                 <MText numberOfLines={null}>Recovery codes can be used to access your account in the event you lose access to your device and cannot receive two-factor authentication codes.</MText>
-                <Divider />
+                <MDivider style={{ marginVertical: 10 }} />
 
                 <MVStack style={{ borderWidth: 1, borderRadius: 5 }}>
                   <MText>Recovery code</MText>

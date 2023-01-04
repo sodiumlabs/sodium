@@ -8,6 +8,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
 import { globalStyle } from '../../lib/globalStyles';
+import { MDivider } from "../baseUI/mDivider";
 
 export function SessionItem() {
   return (
@@ -15,13 +16,13 @@ export function SessionItem() {
       <MHStack><MText>Carbon scrub</MText></MHStack>
       <MText>Session key</MText>
       <MText>0x899880842ejlrjljr</MText>
-      <Divider />
+      <MDivider style={{ marginVertical: 10 }} />
       <MText>Device</MText>
       <MText>MacIntel</MText>
-      <Divider />
+      <MDivider style={{ marginVertical: 10 }} />
       <MText>Last Seen</MText>
       <MText>{formatTimeYMDHMS(new Date().getTime())}</MText>
-      <Divider />
+      <MDivider style={{ marginVertical: 10 }} />
 
       <MText>Networks</MText>
       <MText>Polygon</MText>

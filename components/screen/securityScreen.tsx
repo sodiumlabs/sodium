@@ -7,6 +7,7 @@ import Information from "../base/information";
 import { navigationRef } from "../base/navigationInit";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
+import { MDivider } from "../baseUI/mDivider";
 import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
@@ -24,7 +25,7 @@ export function SecurityScreen() {
             <ScreenTitle title="Security" />
             <MVStack>
               <MText>Two-factor authentication</MText>
-              <Divider />
+              <MDivider style={{ marginVertical: 10 }} />
               <MHStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
                 <MText numberOfLines={null}>Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. Learn more about two-factor authentication.</MText>
               </MHStack>

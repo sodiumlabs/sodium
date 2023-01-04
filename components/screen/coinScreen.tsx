@@ -19,6 +19,8 @@ import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
+import { globalStyle, eColor } from '../../lib/globalStyles';
+import { MDivider } from "../baseUI/mDivider";
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
@@ -34,17 +36,17 @@ export function CoinScreen(props) {
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
-        <MVStack stretchW style={{ alignItems: 'center' }}>
+        <MVStack stretchW style={{ alignItems: 'center', marginTop: 20 }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <MImage size={64} url={tokenInfo.token.centerData.logoURI} />
-            <MText style={{ marginVertical: 6 }}>{tokenInfo.token.symbol}</MText>
-            <MHStack stretchW style={{ justifyContent: 'center' }}>
+            <MText style={{ marginVertical: 6, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
+            {/* <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MImage size={16} />
-              <MText>{tokenInfo.token.name}</MText>
-            </MHStack>
-            <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 10, alignItems: 'center', paddingVertical: 15 }}>
-              <MText >Balance</MText>
-              <MText >${tokenInfo.usdBalance}</MText>
+              <MText  >{tokenInfo.token.name}</MText>
+            </MHStack> */}
+            <MVStack stretchW style={[{ alignItems: 'center', paddingVertical: 15 }, globalStyle.whiteBorderWidth]}>
+              <MText style={{ fontWeight: '700' }} >Balance</MText>
+              <MText style={{ marginVertical: 10 }} >${tokenInfo.usdBalance}</MText>
               <MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol}</MText>
             </MVStack>
 
@@ -56,16 +58,16 @@ export function CoinScreen(props) {
 
             <BaseFoldFrame header={"Detail"}>
 
-              <MText style={{ marginBottom: 10 }}>Description</MText>
-              <MText numberOfLines={undefined} >{tokenInfo.token.centerData.description}</MText>
+              <MText style={{ marginBottom: 10, color: eColor.GrayText }}>Description</MText>
+              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description}</MText>
 
-              <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
-              <MText >Website</MText>
-              <MText onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website}</MText>
+              <MDivider style={{ marginVertical: 10 }} />
+              <MText style={{ color: eColor.GrayText, marginBottom: 10 }} >Website</MText>
+              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website}</MText>
 
               {!tokenInfo.token.isNativeToken && (
                 <>
-                  <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
+                  <MDivider style={{ marginVertical: 10 }} />
                   <MText >Contract Address</MText>
                   <MLineLR
                     left={<MText >{tokenInfo.token.address}</MText>}
@@ -82,23 +84,23 @@ export function CoinScreen(props) {
                 </>
               )}
 
-              <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
+              <MDivider style={{ marginVertical: 10 }} />
               <MHStack >
-                <MText style={{ flex: 1 }}>Token Standard</MText>
-                <MText>{!tokenInfo.token.isNativeToken ? "ERC20" : `${tokenInfo.token.name} Native Token`}</MText>
+                <MText style={{ flex: 1, color: eColor.GrayText }}>Token Standard</MText>
+                <MText style={{ color: eColor.GrayContentText }}>{!tokenInfo.token.isNativeToken ? "ERC20" : `${tokenInfo.token.name} Native Token`}</MText>
               </MHStack>
 
-              <Divider style={{ marginVertical: 10, backgroundColor: 'rgba(200,200,200,1)' }} />
+              <MDivider style={{ marginVertical: 10 }} />
               <MHStack>
-                <MText style={{ flex: 1 }}>Network</MText>
+                <MText style={{ flex: 1, color: eColor.GrayText }}>Network</MText>
                 <MImage size={16} />
-                <MText>{tokenInfo.token.name}</MText>
+                <MText style={{ color: eColor.GrayContentText }}>{tokenInfo.token.name}</MText>
               </MHStack>
             </BaseFoldFrame>
             {
               tokenInfo.token.isNativeToken && (
-                <MHStack stretchW style={{ justifyContent: 'center' }}>
-                  <MText style={{ textAlign: 'center' }} numberOfLines={null}>Transaction History for Native tokens is not available at this time.</MText>
+                <MHStack stretchW style={{ justifyContent: 'center', marginTop: 30, marginBottom: 30 }}>
+                  <MText style={{ textAlign: 'center', color: eColor.GrayText }} numberOfLines={null}>Transaction History for Native tokens is not available at this time.</MText>
                 </MHStack>)
             }
 

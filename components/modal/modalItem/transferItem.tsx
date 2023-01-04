@@ -3,6 +3,7 @@ import { ERC20Transfer } from "../../../abi/index";
 import { formatWei2Price } from "../../../lib/common/common";
 import { eColor } from '../../../lib/globalStyles';
 import { BaseFoldFrame } from "../../base/baseFoldFrame";
+import { MDivider } from '../../baseUI/mDivider';
 import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
@@ -17,15 +18,15 @@ export const TransferItem = (props: { index: number, maxIndex: number, transferD
       <MText style={{ color: eColor.GrayText }} >Send</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
-        <MText style={{ flex: 1, color: "#6B6B6B" }}>{`${transferData.token.name}(${transferData.token.symbol})`}</MText>
-        <MText style={{ color: "#6B6B6B" }}  >{formatWei2Price(transferData.amount.toString(), transferData.token.decimals, 10)} {transferData.token.symbol}</MText>
+        <MText style={{ flex: 1, color: eColor.GrayContentText }}>{`${transferData.token.name}(${transferData.token.symbol})`}</MText>
+        <MText style={{ color: eColor.GrayContentText }}  >{formatWei2Price(transferData.amount.toString(), transferData.token.decimals, 10)} {transferData.token.symbol}</MText>
       </MHStack>
 
-      <Divider />
+      <MDivider style={{ marginBottom: 10 }} />
       <MText style={{ color: eColor.GrayText }}>To Recipient</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
-        <MText style={{ flex: 1, color: "#6B6B6B" }}>{transferData.to}</MText>
+        <MText style={{ flex: 1, color: eColor.GrayContentText }}>{transferData.to}</MText>
       </MHStack>
     </BaseFoldFrame>
   )

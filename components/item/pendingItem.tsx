@@ -9,6 +9,7 @@ import MVStack from '../baseUI/mVStack';
 import MLineLR from '../baseUI/mLineLR';
 import MImage from '../baseUI/mImage';
 import { Divider } from '@ui-kitten/components';
+import { MDivider } from '../baseUI/mDivider';
 
 export default function PendingItem(props: TextInputProps) {
   const { style, ...reset } = props;
@@ -41,7 +42,7 @@ export default function PendingItem(props: TextInputProps) {
           }
           right={<MText>-0.001 Matic</MText>} />
 
-        <Divider />
+        <MDivider />
 
 
         <MText>Network Fee</MText>
@@ -54,7 +55,7 @@ export default function PendingItem(props: TextInputProps) {
           }
           right={<MText>-0.001 Matic</MText>} />
 
-        <Divider />
+        <MDivider />
 
         <MText>To Recipient</MText>
         <MHStack>

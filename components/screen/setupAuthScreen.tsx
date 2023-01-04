@@ -8,6 +8,7 @@ import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
+import { MDivider } from "../baseUI/mDivider";
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
 import MLineLR from "../baseUI/mLineLR";
@@ -40,7 +41,7 @@ export function SetupAuthScreen() {
                   <MText>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
                   <MText>Verify the code from the app</MText>
                   <MInput />
-                  <Divider />
+                  <MDivider style={{ marginVertical: 10 }} />
                   <MLineLR right={
                     <MHStack>
                       <MButton onPress={() => setStep(2)} >
@@ -76,7 +77,7 @@ export function SetupAuthScreen() {
                       </MButton>
                     </MHStack>
                   } />
-                  <Divider />
+                  <MDivider style={{ marginVertical: 10 }} />
                   <MLineLR right={
                     <MHStack>
                       <MButton onPress={() => setStep(3)} >
