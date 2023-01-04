@@ -14,6 +14,9 @@ import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { TranscationDetailItem } from '../item/transcationDetailItem';
+import MHStack from '../baseUI/mHStack';
+import { MDivider } from '../baseUI/mDivider';
+import { ModalTitle } from './modalItem/modalTitle';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -40,44 +43,54 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
       visible={modalParam.visible}
       hideModal={hideModal}
     >
-      <ScrollView style={{ width: '100%' }}>
-        <MText>Transaction Details</MText>
-        {
-          history && (
-            <>
-              {
-                history.erc20Transfers.map((transfer, index) => {
-                  return <TranscationDetailItem key={`${transfer.from}${transfer.to}${index}`} style={styles.marginV} transfer={transfer} />
-                })
-              }
+      <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
+        <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>
+          <ScrollView style={{ paddingHorizontal: 15 }}>
+            {/* <MText>Transaction Details</MText> */}
+            <ModalTitle title='Transaction Details' />
+            {
+              history && (
+                <>
+                  {
+                    history.erc20Transfers.map((transfer, index) => {
+                      return <TranscationDetailItem key={`${transfer.from}${transfer.to}${index}`} transfer={transfer} />
+                    })
+                  }
 
-              <MButton onPress={linkTxHash} style={{ width: '100%', marginVertical: 20 }} >
-                <MText>View On Polygon</MText>
-              </MButton>
+                  <MHStack stretchW style={{ height: 45, marginTop: 15 }}>
+                    <MButton style={{ flex: 1 }} onPress={linkTxHash} >
+                      <MText style={[{ color: '#ffffff' }, styles.contentWeight]}>View On Polygon</MText>
+                    </MButton>
+                  </MHStack>
 
-              <MVStack stretchW style={styles.marginV}>
-                <MText>Status</MText>
-                <MText >{history.type}</MText>
-                <Divider />
+                  <MVStack stretchW style={styles.marginV}>
+                    <MText style={styles.titleColor}>Status</MText>
+                    <MText style={[{ marginTop: 10 }, styles.contentWeight]} fontSize={14}>{history.type}</MText>
+                    <MDivider style={{ marginVertical: 10 }} />
 
-                <MText>Date & Time</MText>
-                <MText>{formatTimeYMDHMS(history.block.blockTimestamp * 1000)}</MText>
-                <Divider />
+                    <MText style={styles.titleColor}>Date & Time</MText>
+                    <MText style={[{ marginTop: 10 }, styles.contentWeight]}>{formatTimeYMDHMS(history.block.blockTimestamp * 1000)}</MText>
+                    <MDivider style={{ marginVertical: 10 }} />
 
-                <MText>Transaction Hash</MText>
+                    <MText style={styles.titleColor}>Transaction Hash</MText>
 
-                <MLineLR
-                  left={<MText>{history.transactionHash}</MText>}
-                  right={<CopyButton copyText={history.transactionHash} />} />
-                <Divider />
+                    <MLineLR style={{ marginTop: 10 }}
+                      left={<MText style={styles.contentWeight}>{history.transactionHash}</MText>}
+                      right={<CopyButton style={{ height: 24 }} copyText={history.transactionHash} />} />
+                    <MDivider style={{ marginVertical: 10 }} />
 
-                <MLineLR left={<MText>Network</MText>} right={<MText>{network?.name}</MText>} />
-              </MVStack>
-            </>
-          )
-        }
+                    <MLineLR
+                      left={<MText style={styles.titleColor}>Network</MText>}
+                      right={<MText style={styles.contentWeight}>{network?.name}</MText>} />
+                  </MVStack>
+                </>
+              )
+            }
 
-      </ScrollView>
+          </ScrollView>
+        </MVStack>
+      </MVStack>
+
 
     </BaseModal>
   );
@@ -86,5 +99,11 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
 const styles = StyleSheet.create({
   marginV: {
     marginTop: 20
+  },
+  titleColor: {
+    color: "#9F9F9F"
+  },
+  contentWeight: {
+    fontWeight: '700'
   }
 });
