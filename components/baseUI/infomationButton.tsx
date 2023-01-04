@@ -1,4 +1,5 @@
 import { GestureResponderEvent, Image, Pressable, PressableProps, StyleSheet } from 'react-native';
+import { eColor } from '../../lib/globalStyles';
 import MImage from './mImage';
 import MText from './mText';
 
@@ -7,7 +8,7 @@ export default function InfomationButton(props: PressableProps & { title?: strin
   return (
     <Pressable style={[styles.button, style as unknown]} {...reset}>
       <MImage size={20} />
-      <MText style={{ fontWeight: '700', color: "#9F9F9F" }}> {title} </MText>
+      <MText style={{ fontWeight: '700', color: eColor.GrayText }}> {title} </MText>
     </Pressable>
   )
 }

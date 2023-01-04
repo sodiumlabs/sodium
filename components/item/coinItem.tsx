@@ -5,6 +5,7 @@
 import { Pressable, StyleSheet, TextInputProps } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo, Screens } from '../../lib/define';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import { navigationRef } from '../base/navigationInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -16,7 +17,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
   const { tokenInfo, style, ...reset } = props;
   return (
     <Pressable onPress={() => navigationRef.navigate(Screens.Coin, tokenInfo)}>
-      <MHStack style={styles.container} stretchW>
+      <MHStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
         <MImage size={32} url={tokenInfo.token.centerData.logoURI} />
 
         <MVStack style={{ flex: 1 }}>
@@ -33,7 +34,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
 
           <MLineLR
             style={{ marginTop: 2 }}
-            left={<MText style={{ color: "#9F9F9F" }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
+            left={<MText style={{ color: eColor.GrayText }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
             right={<MText></MText>} />
         </MVStack>
       </MHStack>
@@ -45,9 +46,5 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: '#EEF0F2'
   }
 });

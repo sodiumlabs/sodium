@@ -1,5 +1,6 @@
 import { ActivityIndicator, Pressable, PressableProps, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import MHStack from './mHStack';
+import { eColor } from '../../lib/globalStyles';
 
 export default function MButton(props: PressableProps & { stretchW?: boolean, isLoading?: boolean }) {
   const { style, stretchW, isLoading, ...reset } = props;
@@ -30,7 +31,7 @@ const localStyles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: '#8B8E9E',
+    backgroundColor: eColor.Black,
     paddingVertical: 6,
     paddingHorizontal: 10
   }

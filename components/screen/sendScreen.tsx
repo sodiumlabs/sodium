@@ -20,6 +20,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
+import { globalStyle } from '../../lib/globalStyles';
 
 export function SendScreen() {
   const authData = useAuth();
@@ -88,7 +89,7 @@ export function SendScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Send" />
-            <MVStack style={styles.send} stretchW>
+            <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
               <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
               <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
             </MVStack>
@@ -117,9 +118,5 @@ const styles = StyleSheet.create({
   send: {
     zIndex: 10,
     padding: 15,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#EEF0F2',
-    borderRadius: 10
   }
 });

@@ -2,7 +2,6 @@
 import { Divider } from "@ui-kitten/components";
 import { useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
-import { useAuth } from '../../lib/data/auth';
 import { fixWidth } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
@@ -13,6 +12,7 @@ import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { ScreenTitle } from "../baseUI/screenTitle";
 
 export function RecoveryCodeScreen() {
   // const auth = useAuth();
@@ -27,7 +27,7 @@ export function RecoveryCodeScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={{ alignItems: 'center' }}>
             <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-              <MText style={{ marginVertical: 6 }}>Recovery Code</MText>
+              <ScreenTitle title="Recovery Code" />
               <MVStack>
                 <MText>Two-factor recovery codes</MText>
                 <MText numberOfLines={null}>Recovery codes can be used to access your account in the event you lose access to your device and cannot receive two-factor authentication codes.</MText>

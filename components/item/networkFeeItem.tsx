@@ -3,6 +3,7 @@
 import { Pressable, StyleSheet, TextInputProps } from 'react-native';
 import { formatWei2Price, token2Usd } from '../../lib/common/common';
 import { IUserTokenInfo, PaymasterInfo } from '../../lib/define';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -16,16 +17,16 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
   const gasUsd = !ownToken ? '0' : token2Usd(gasInfo.amount.toString(), ownToken.rate + '', true);
   return (
     <Pressable onPress={undefined}>
-      <MHStack style={styles.container} stretchW>
+      <MHStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
         <MImage size={32} url={gasInfo.token.centerData.logoURI} />
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR
             left={<MText style={{ fontWeight: '700' }} fontSize={14}>{`${gasInfo.token.symbol}`}</MText>}
-            right={<MText style={{ color: "#9F9F9F", textDecorationLine: 'line-through' }} >{formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals, 10)} {gasInfo.token.symbol}</MText>} />
+            right={<MText style={{ color: eColor.GrayText, textDecorationLine: 'line-through' }} >{formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals, 10)} {gasInfo.token.symbol}</MText>} />
           <MLineLR
-            left={<MText fontSize={10} style={{ color: "#9F9F9F" }}>Balance : {balance}</MText>}
-            right={<MText style={{ color: "#9F9F9F" }}>${gasUsd}</MText>} />
+            left={<MText fontSize={10} style={{ color: eColor.GrayText }}>Balance : {balance}</MText>}
+            right={<MText style={{ color: eColor.GrayText }}>${gasUsd}</MText>} />
           <MHStack stretchW style={{ justifyContent: 'center' }} >
             <MText fontSize={10}>Paid by Project A</MText>
           </MHStack>
@@ -39,9 +40,5 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: "#EEF0F2"
   }
 });

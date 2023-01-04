@@ -7,10 +7,11 @@ import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
+import { globalStyle } from '../../lib/globalStyles';
 
 export function SessionItem() {
   return (
-    <MVStack stretchW style={styles.container}>
+    <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
       <MHStack><MText>Carbon scrub</MText></MHStack>
       <MText>Session key</MText>
       <MText>0x899880842ejlrjljr</MText>
@@ -35,11 +36,7 @@ export function SessionItem() {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'blue',
     padding: 15,
-    backgroundColor: 'rgba(200,200,200,0.6)',
     marginVertical: 20
   },
 });

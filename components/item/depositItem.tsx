@@ -13,6 +13,7 @@ import MInput from '../baseUI/mInput';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
@@ -79,19 +80,22 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
     setYouPayTokens([...youPayTokens]);
   }
 
+  const selectStyle = {
+    borderColor: isSelected ? eColor.Blue : eColor.Border
+  }
   return (
     <MVStack stretchW>
       <Pressable onPress={() => onDeposiItemClick(depositItemData)}>
-        <MVStack style={styles.title}>
+        <MVStack style={[styles.title, globalStyle.whiteBorderWidth, selectStyle]}>
           <MHStack>
-            <MText>Deposit from</MText>
-            <MText style={{ fontWeight: '700', marginLeft: 3 }}>{`${depositItemData.name}`}</MText>
+            <MText fontSize={14}>Deposit from</MText>
+            <MText fontSize={14} style={{ fontWeight: '700', marginLeft: 3 }}>{`${depositItemData.name}`}</MText>
           </MHStack>
-          <MText>Pay with {depositItemData.paywiths.join('/ ')}</MText>
-          <MText>Fee: {depositItemData.fee} </MText>
-          <MText>Limit: {depositItemData.limit}</MText>
-          <MText>Currencies: {depositItemData.currencies.join(',')}</MText>
-          <MText>Doesn't Include 4.9% + 30¢ or 5 USD</MText>
+          <MText style={styles.itemInfo} >Pay with {depositItemData.paywiths.join('/ ')}</MText>
+          <MText style={styles.itemInfo}>Fee: {depositItemData.fee} </MText>
+          <MText style={styles.itemInfo}>Limit: {depositItemData.limit}</MText>
+          <MText style={styles.itemInfo}>Currencies: {depositItemData.currencies.join(',')}</MText>
+          <MText style={styles.itemInfo}>Doesn't Include 4.9% + 30¢ or 5 USD</MText>
         </MVStack>
       </Pressable>
       {
@@ -103,7 +107,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
             <MInput style={{ marginBottom: 10 }} placeholder='Enter the amount' onChangeText={onInputYouPayTokenCount} value={youPayTokenCount} />
             <DepositTokenDropdown style={{ zIndex: 1 }} selectedOption={curYouPayToken} setSelectedOption={onYouPayTokenClick} options={youPayTokens} />
             <MText style={{ marginVertical: 10 }}>You Receive (Estimated)</MText>
-            <MVStack stretchW style={{ backgroundColor: '#ffffff', borderRadius: 10, padding: 15, zIndex: 0, borderWidth: 1, borderColor: '#EEF0F2' }}>
+            <MVStack stretchW style={[{ padding: 15, zIndex: 0 }, globalStyle.whiteBorderWidth]}>
               <MText>{preDepositQueryData?.response?.destAmount || 0} {curYouBuyTokenData?.tokenID}</MText>
               {
                 preDepositQueryData?.response?.exchangeRate ? (
@@ -121,10 +125,10 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
                 isLoading={depositUrlQuery.isFetching}>
                 <MText style={{ color: '#ffffff', fontWeight: '700' }} >Deposit</MText>
               </MButton>
-              <MText style={{ color: "#9F9F9F" }} numberOfLines={null}>You will be redirected to the third party page</MText>
-              <MText style={{ color: "#9F9F9F" }} numberOfLines={null}>The process would take approximately 10 - 15 min</MText>
+              <MText style={{ color: eColor.GrayText }} numberOfLines={null}>You will be redirected to the third party page</MText>
+              <MText style={{ color: eColor.GrayText }} numberOfLines={null}>The process would take approximately 10 - 15 min</MText>
               <Pressable onPress={() => Linking.openURL('https://chaingas.shop/')}>
-                <MText numberOfLines={null} style={{ textDecorationLine: 'underline', color: "#9F9F9F" }} >from mainland china?</MText>
+                <MText numberOfLines={null} style={{ textDecorationLine: 'underline', color: eColor.GrayText }} >from mainland china?</MText>
               </Pressable>
             </MVStack>
 
@@ -139,9 +143,9 @@ const styles = StyleSheet.create({
   title: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#EEF0F2',
-    borderRadius: 10
+  },
+  itemInfo: {
+    color: eColor.GrayText,
+    marginVertical: 3,
   }
 });

@@ -8,6 +8,7 @@ import { Spacer } from "../base/spacer";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
+import { globalStyle } from '../../lib/globalStyles';
 
 export function ProfileScreen() {
   const auth = useAuth();
@@ -20,18 +21,18 @@ export function ProfileScreen() {
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Profile" />
 
-            <MVStack stretchW style={styles.item}>
+            <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title} >Google</MText>
               <MText>xxxxxxxxxx@gmail.com</MText>
             </MVStack>
 
-            <MVStack stretchW style={styles.item}>
+            <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title}>Public Address</MText>
               <MText>{auth.blockchainAddress}</MText>
             </MVStack>
 
 
-            <MVStack stretchW style={styles.item}>
+            <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title}>ENS</MText>
               <MText style={{ marginBottom: 6 }}>No reverse record found.</MText>
               <MText style={styles.title}>Last check on</MText>
@@ -51,11 +52,7 @@ const styles = StyleSheet.create({
   item: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
     width: '100%',
-    borderWidth: 1,
-    borderColor: '#EEF0F2'
   },
   container: {
     // marginVertical: 80,

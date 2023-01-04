@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { StyleSheet, TextInput, TextInputProps, TranslateYTransform } from 'react-native';
 import MHStack from './mHStack';
 import MImage from './mImage';
+import { globalStyle } from '../../lib/globalStyles';
 
 export default function MInput(props: TextInputProps) {
   const { style, ...reset } = props;
@@ -19,7 +20,7 @@ export default function MInput(props: TextInputProps) {
         onPressOut={() => setIsHovered(false)}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        style={[styles.input, style]} {...reset}
+        style={[styles.input, globalStyle.whiteBorderWidth, style]} {...reset}
       />
       <MImage style={{ position: 'absolute', top: '50%', right: 15, transform: [{ translateY: '-50%' } as unknown as TranslateYTransform] }} />
     </MHStack>
@@ -30,10 +31,6 @@ const styles = StyleSheet.create({
   container: {
   },
   input: {
-    borderStyle: 'solid',
-    borderColor: '#999',
-    borderWidth: 1,
-    borderRadius: 10,
     height: 65,
     width: '100%',
     paddingHorizontal: 20,

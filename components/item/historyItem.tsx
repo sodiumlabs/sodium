@@ -6,6 +6,7 @@ import { TransactionHistory } from '@0xsodium/provider';
 import { Pressable, StyleSheet } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { formatTime } from '../../lib/common/time';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import { showUpdateTranscationDetailModal } from '../base/modalInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -27,7 +28,7 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
   const token = transfer.token;
   return (
     <Pressable onPress={onClick}>
-      <MVStack style={styles.container} stretchW>
+      <MVStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
 
         <MLineLR
           left={
@@ -37,7 +38,7 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
               {/* <MText> {token.name}</MText> */}
             </MHStack>
           }
-          right={<MText style={{ color: "#9F9F9F" }} >{formatTime(history.block.blockTimestamp * 1000)}</MText>}
+          right={<MText style={{ color: eColor.GrayText }} >{formatTime(history.block.blockTimestamp * 1000)}</MText>}
         />
 
         <MLineLR style={{ marginTop: 3 }}
@@ -47,7 +48,7 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
               <MText style={{ marginLeft: 5 }}>{token.symbol}</MText>
             </MHStack>
           }
-          right={<MText style={{ color: "#9F9F9F" }}>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />
+          right={<MText style={{ color: eColor.GrayText }}>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />
 
       </MVStack>
     </Pressable>
@@ -58,9 +59,5 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#EEF0F2',
-    borderRadius: 10
   }
 });

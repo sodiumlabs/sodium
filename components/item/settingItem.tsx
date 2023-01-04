@@ -7,11 +7,12 @@ import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { globalStyle } from '../../lib/globalStyles';
 
 export default function SettingItem(props: ViewProps & { onPress: (event: GestureResponderEvent) => void }) {
   const { style, onPress, ...reset } = props;
   return (
-    <Pressable {...reset} style={[styles.container, style]} onPress={onPress}>
+    <Pressable {...reset} style={[styles.container, globalStyle.whiteBorderWidth, style]} onPress={onPress}>
       <MLineLR
         left={
           <MHStack style={{ alignItems: 'center' }}>
@@ -35,10 +36,6 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: 'center',
     marginBottom: 12,
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
     width: '100%',
-    borderWidth: 1,
-    borderColor: '#EEF0F2'
   }
 });

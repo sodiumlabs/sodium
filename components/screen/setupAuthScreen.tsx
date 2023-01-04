@@ -13,6 +13,7 @@ import MInput from "../baseUI/mInput";
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { ScreenTitle } from "../baseUI/screenTitle";
 
 export function SetupAuthScreen() {
   // const auth = useAuth();
@@ -23,8 +24,7 @@ export function SetupAuthScreen() {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MText style={{ marginVertical: 6 }}>Reconfigure two-factor authentication (2FA)</MText>
-
+            <ScreenTitle title="Reconfigure two-factor authentication (2FA)" />
             <MHStack stretchW style={{ justifyContent: 'space-evenly' }}>
               <StepItem step={1} isSelected={1 <= step} />
               <StepItem step={2} isSelected={2 <= step} />

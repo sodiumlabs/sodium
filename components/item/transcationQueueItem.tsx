@@ -16,6 +16,7 @@ import { transactionQueue } from '../../lib/transaction';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { showUpdateTranscationQueueModal, showUpdateSignTranscationModal } from '../base/modalInit';
 import { OperateTimeStamp } from '../../lib/data/operateTime';
+import { eColor } from '../../lib/globalStyles';
 
 export default function TranscationQueueItem(props: { transcation: ITranscation }) {
   const { transcation } = props;
@@ -79,7 +80,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderRightWidth: 0,
-    borderColor: '#EEF0F2',
+    borderColor: eColor.Border,
     borderTopLeftRadius: 10,
     borderBottomLeftRadius: 10,
   },
@@ -91,7 +92,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     backgroundColor: 'rgba(1,1,1,0.1)',
     borderWidth: 1,
-    borderColor: '#EEF0F2',
+    borderColor: eColor.Border,
     borderLeftWidth: 0,
     borderTopRightRadius: 10,
     borderBottomRightRadius: 10

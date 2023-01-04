@@ -3,6 +3,7 @@ import { Animated, Dimensions, Easing, Modal, Pressable, StyleSheet, TouchableWi
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
+import MImage from '../baseUI/mImage';
 import MVStack from '../baseUI/mVStack';
 
 export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void, contentHeight?: number }) => {
@@ -69,6 +70,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
           <Pressable
             onPress={() => hideModal()}
             style={styles.close}>
+            <MImage size={30} source={require('./../../assets/close.png')} />
           </Pressable>
         </MVStack>
       </MVStack>
@@ -83,6 +85,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F7F7F7', paddingVertical: 15, alignItems: 'center', flex: 1, position: 'relative'
   },
   close: {
-    backgroundColor: '#8E8E8E', width: 30, height: 30, position: 'absolute', top: -40, right: 0, borderRadius: 99
+    width: 30, height: 30, position: 'absolute', top: -40, right: 0, borderRadius: 99
   }
 });

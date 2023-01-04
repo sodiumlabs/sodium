@@ -2,12 +2,13 @@ import { GestureResponderEvent, Pressable, StyleSheet } from 'react-native';
 import MImage from './mImage';
 import MText from './mText';
 import MVStack from './mVStack';
+import { globalStyle } from '../../lib/globalStyles';
 
 export default function WalletButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string; }) {
   const { onPress, title } = props;
   return (
     <Pressable style={styles.container} onPress={onPress}>
-      <MVStack style={styles.button}>
+      <MVStack style={[globalStyle.whiteBorderWidth, styles.button]}>
         <MImage size={12} />
       </MVStack>
       <MText style={{ marginTop: 5, fontWeight: '700' }} > {title} </MText>
@@ -26,9 +27,6 @@ const styles = StyleSheet.create({
   button: {
     height: 60,
     width: 60,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#EEF0F2',
     borderRadius: 9999,
     justifyContent: 'center',
     alignItems: 'center'

@@ -7,10 +7,11 @@ import MImage from '../baseUI/mImage';
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
+import { globalStyle } from '../../lib/globalStyles';
 
 export function AllowanceItem() {
   return (
-    <MVStack stretchW style={styles.container}>
+    <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
       <MHStack>
         <MImage />
         <MText>BNB</MText>
@@ -42,11 +43,7 @@ const TextItem = (props: { title: string, value: string }) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
-    borderWidth: 1,
-    borderColor: 'blue',
     padding: 15,
-    backgroundColor: 'rgba(200,200,200,0.6)',
     marginVertical: 20
   },
 });

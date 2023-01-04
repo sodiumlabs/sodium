@@ -2,6 +2,7 @@ import { TransactionERC20Transfer } from "@0xsodium/provider";
 import { StyleSheet, ViewProps } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
+import { eColor } from "../../lib/globalStyles";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { MDivider } from "../baseUI/mDivider";
 import MHStack from "../baseUI/mHStack";
@@ -32,7 +33,7 @@ export const TranscationDetailItem = (props: ViewProps & { transfer: Transaction
           <MImage size={20} />
           <MText style={{ flex: 1 }}>{isSent ? transfer.to : transfer.from}</MText>
           {/* <MImage size={20} /> */}
-          <MText style={{ color: "#9F9F9F" }}>{"->"}</MText>
+          <MText style={{ color: eColor.GrayText }}>{"->"}</MText>
         </MHStack>
       </MVStack>
     </BaseFoldFrame>

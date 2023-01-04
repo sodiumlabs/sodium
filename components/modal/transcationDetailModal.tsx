@@ -17,6 +17,7 @@ import { TranscationDetailItem } from '../item/transcationDetailItem';
 import MHStack from '../baseUI/mHStack';
 import { MDivider } from '../baseUI/mDivider';
 import { ModalTitle } from './modalItem/modalTitle';
+import { eColor } from '../../lib/globalStyles';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   titleColor: {
-    color: "#9F9F9F"
+    color: eColor.GrayText
   },
   contentWeight: {
     fontWeight: '700'

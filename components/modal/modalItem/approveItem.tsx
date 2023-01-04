@@ -7,6 +7,7 @@ import { ERC20Approve } from "../../../abi/erc20";
 import { formatWei2Price, removeAllDecimalPoint } from '../../../lib/common/common';
 import { useAuth } from "../../../lib/data/auth";
 import { eApproveType, MaxFixedNumber } from "../../../lib/define";
+import { eColor } from '../../../lib/globalStyles';
 import { BaseFoldFrame } from "../../base/baseFoldFrame";
 import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
@@ -53,14 +54,14 @@ export const ApproveItem = (props: {
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
       header={`Approve(${index}/${maxIndex})`}>
 
-      <MText style={{ color: "#9F9F9F" }}>Spender</MText>
+      <MText style={{ color: eColor.GrayText }}>Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
         <MText style={{ flex: 1, color: "#6B6B6B" }}>{auth?.blockchainAddress}</MText>
       </MHStack>
 
       <Divider />
-      <MText style={{ color: "#9F9F9F" }}>Value</MText>
+      <MText style={{ color: eColor.GrayText }}>Value</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} url={approveData.token.centerData.logoURI} />
         <MText style={{ flex: 1, color: "#6B6B6B" }}>{approveValue}</MText>

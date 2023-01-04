@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo } from '../../lib/define';
+import { globalStyle, eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
@@ -35,7 +36,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
     <View style={styles.container}>
 
       <Pressable onPress={toggleDropdown}>
-        <MHStack stretchW style={{ borderWidth: 1, borderColor: '#EEF0F2', padding: 10, borderRadius: 10 }}>
+        <MHStack stretchW style={[{ padding: 10 }, globalStyle.whiteBorderWidth]}>
           <TokenItem option={selectedOption} />
         </MHStack>
       </Pressable>
@@ -43,7 +44,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
       {isDropdownVisible && (
         <View style={styles.dropdown}>
           <FlatList
-            style={{ maxHeight: dimension[1] - 300, borderRadius: 10, borderWidth: 1, borderColor: '#EEF0F2' }}
+            style={[{ maxHeight: dimension[1] - 300 }, globalStyle.whiteBorderWidth]}
             data={options}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
@@ -107,8 +108,7 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     // backgroundColor: 'white',
     backgroundColor: '#ffffff',
-    // borderWidth: 1,
-    borderColor: '#EEF0F2',
+    borderColor: eColor.Border,
     paddingHorizontal: 15,
   },
   sendCoin: {

@@ -4,6 +4,7 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { globalStyle } from '../../lib/globalStyles';
 
 export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: string }) => {
   const minHeight = 50;
@@ -48,7 +49,7 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
   }
 
   return (
-    <Animated.View style={[styles.container, props.style, { height: heightAnim }]}>
+    <Animated.View style={[styles.container, globalStyle.whiteBorderWidth, props.style, { height: heightAnim }]}>
       <MVStack stretchW onLayout={onLayout}>
         <Pressable onPress={onBtnClick} style={{ padding: 15 }}>
           <MHStack style={{ alignItems: 'center' }}>
@@ -70,11 +71,7 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 10,
-    backgroundColor: '#FFFFFF',
     overflow: 'hidden',
     width: '100%',
-    borderWidth: 1,
-    borderColor: '#EEF0F2'
   }
 });

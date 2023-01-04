@@ -3,6 +3,7 @@ import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet } from 'reac
 import { useQueryNetwork } from '../../lib/api/network';
 import { loginOut, useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
+import { globalStyle, eColor } from '../../lib/globalStyles';
 import CopyButton from '../baseUI/copyButton';
 import MAvatar from '../baseUI/mAvatar';
 import MButton from '../baseUI/mButton';
@@ -107,7 +108,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
 
   return (
-    <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
+    <Animated.View style={[styles.animContainer, globalStyle.whiteBorderWidth, { height: backgroundHeightAnim }]}>
       <MVStack stretchW onLayout={onLayout} pointerEvents='auto' >
         {
           <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >
@@ -148,17 +149,17 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
             </MHStack>
 
             {/* <Pressable> */}
-            <MVStack style={styles.email}>
-              <MText style={{ color: '#9F9F9F' }} >Google</MText>
+            <MVStack style={[styles.email, globalStyle.whiteBorderWidth]}>
+              <MText style={{ color: eColor.GrayText }} >Google</MText>
               <MText style={{ fontWeight: '700', marginTop: 5 }} >xxxxxxxxxx@gmail.com</MText>
             </MVStack>
             {/* </Pressable> */}
 
             {/* <Pressable> */}
-            <MHStack style={styles.connected}>
+            <MHStack style={[styles.connected, globalStyle.whiteBorderWidth]}>
               {/* <MImage size={10} style={{ marginRight: 10 }} /> */}
               <MVStack style={{ flex: 1 }}>
-                <MText style={{ color: '#9F9F9F' }}>Connected</MText>
+                <MText style={{ color: eColor.GrayText }}>Connected</MText>
                 <MText style={{ fontWeight: '700', marginTop: 5 }}>{network?.name}</MText>
               </MVStack>
               {/* <MImage size={10} /> */}
@@ -187,10 +188,6 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 const styles = StyleSheet.create({
   animContainer: {
     position: 'relative',
-    borderRadius: 10,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: "#EEF0F2",
     overflow: 'hidden',
     width: '100%',
   },
@@ -205,19 +202,11 @@ const styles = StyleSheet.create({
     padding: 15,
     marginTop: 25,
     marginBottom: 15,
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: "#EEF0F2",
-    borderRadius: 8
   },
   connected: {
     // flex: 1,
     padding: 15,
     marginBottom: 15,
-    backgroundColor: 'white',
-    borderRadius: 8,
-    borderWidth: 1,
-    borderColor: "#EEF0F2",
     alignItems: 'center'
   },
 });

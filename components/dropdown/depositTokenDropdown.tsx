@@ -8,6 +8,7 @@ import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
+import { globalStyle } from '../../lib/globalStyles';
 
 export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemData[], selectedOption: ISelectItemData, setSelectedOption: Dispatch<SetStateAction<ISelectItemData>> }) => {
   const { options, selectedOption, setSelectedOption, style, ...rest } = props;
@@ -33,7 +34,7 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
     <View style={[styles.container, style]} {...rest}>
 
       <Pressable onPress={toggleDropdown}>
-        <MHStack stretchW style={{ borderWidth: 1, borderColor: '#EEF0F2', padding: 10, borderRadius: 10 }}>
+        <MHStack stretchW style={[{ padding: 10 }, globalStyle.whiteBorderWidth]}>
           <TokenItem option={selectedOption} />
         </MHStack>
       </Pressable>
@@ -41,7 +42,7 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
       {isDropdownVisible && (
         <View style={styles.dropdown}>
           <FlatList
-            style={{ maxHeight: dimension[1] - 300, borderRadius: 10, borderWidth: 1, borderColor: '#EEF0F2' }}
+            style={[{ maxHeight: dimension[1] - 300 }, globalStyle.whiteBorderWidth]}
             data={options}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
@@ -96,11 +97,7 @@ const styles = StyleSheet.create({
   },
   option: {
     padding: 10,
-    // borderRadius: 5,
-    // backgroundColor: 'white',
     backgroundColor: '#ffffff',
-    // borderWidth: 1,
-    borderColor: '#EEF0F2',
     paddingHorizontal: 15,
   },
   sendCoin: {

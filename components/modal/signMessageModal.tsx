@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet } from 'react-native';
 import { useAuth } from '../../lib/data/auth';
 import { IModalParam, ISignMessageModalParam } from '../../lib/define';
+import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
@@ -43,7 +44,7 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
             <BaseFoldFrame defaultExpansion
               header={'Detail'}>
 
-              <MText style={{ color: "#9F9F9F" }} >Signee</MText>
+              <MText style={{ color: eColor.GrayText }} >Signee</MText>
               <MHStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)', flex: 1 }}>
                 {/* <MImage size={20} url={auth.} /> */}
                 <MVStack style={{ flex: 1 }}>
@@ -52,7 +53,7 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
                 </MVStack>
               </MHStack>
 
-              <MText style={{ color: "#9F9F9F", marginTop: 15, }}>Message</MText>
+              <MText style={{ color: eColor.GrayText, marginTop: 15, }}>Message</MText>
               <MVStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)' }}>
                 <MText style={{ color: "#6B6B6B" }}>Signed Message:</MText>
                 <MText style={{ color: "#6B6B6B" }} numberOfLines={null}>{param?.message?.message}</MText>
