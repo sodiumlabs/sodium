@@ -135,7 +135,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
                 <MText >{authData.blockchainAddress}</MText>
                 <MHStack >
                   <CopyButton style={{ 'margin': 5 }} copyText={authData.blockchainAddress} />
-                  <MButton onPress={undefined} style={{ 'margin': 5, borderRadius: 15 }}>
+                  <MButton onPress={undefined} style={{ 'margin': 5, borderRadius: 10 }}>
                     <MText>Receive</MText>
                   </MButton>
                 </MHStack>
@@ -187,14 +187,14 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 const styles = StyleSheet.create({
   animContainer: {
     position: 'relative',
-    borderRadius: 15,
+    borderRadius: 10,
     backgroundColor: '#aaa',
     overflow: 'hidden',
     width: '100%',
   },
   container: {
     flexDirection: 'column',
-    borderRadius: 15,
+    borderRadius: 10,
     padding: 10,
     backgroundColor: 'rgba(200,200,200,1)',
   },

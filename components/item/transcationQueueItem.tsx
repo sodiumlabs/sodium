@@ -60,7 +60,8 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
 
         <Pressable onPress={rejectClick}>
           <MHStack style={styles.reject}>
-            <MImage size={16} />
+            {/* <MImage size={16} /> */}
+            <MText style={{ color: "#6B6B6B" }} >x</MText>
           </MHStack>
         </Pressable>
       </MHStack>
@@ -75,15 +76,24 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#666',
-    borderTopLeftRadius: 15,
-    borderBottomLeftRadius: 15,
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderRightWidth: 0,
+    borderColor: '#EEF0F2',
+    borderTopLeftRadius: 10,
+    borderBottomLeftRadius: 10,
   },
   reject: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 45,
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#999',
-    borderTopRightRadius: 15,
-    borderBottomRightRadius: 15
+    backgroundColor: 'rgba(1,1,1,0.1)',
+    borderWidth: 1,
+    borderColor: '#EEF0F2',
+    borderLeftWidth: 0,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10
   }
 });

@@ -107,7 +107,7 @@ export function SetupAuthScreen() {
 function StepItem(props: { step: number, isSelected: boolean }) {
   const { step, isSelected } = props;
   return (
-    <MHStack style={{ backgroundColor: isSelected ? 'blue' : 'white', borderWidth: 1, borderColor: 'blue', borderRadius: 15, width: 20, height: 20, justifyContent: 'center', alignItems: 'center' }}>
+    <MHStack style={{ backgroundColor: isSelected ? 'blue' : 'white', borderWidth: 1, borderColor: 'blue', borderRadius: 10, width: 20, height: 20, justifyContent: 'center', alignItems: 'center' }}>
       <MText>{step}</MText>
     </MHStack>
   )
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 12,
     backgroundColor: '#999',
-    borderRadius: 15,
+    borderRadius: 10,
     width: '100%'
   },
   container: {

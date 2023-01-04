@@ -4,10 +4,11 @@ import { IModalParam, ISignMessageModalParam } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
-import MButton from '../baseUI/mButton';
 import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { ModalTitle } from './modalItem/modalTitle';
+import { OperateBtnItem } from './modalItem/operateBtnItem';
 
 
 export const SignMessageModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
@@ -35,40 +36,31 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>
-          <ScrollView style={{ flex: 1 }}>
-            <MHStack stretchW style={{ justifyContent: 'center' }}>
-              <MText>Sign Message </MText>
-            </MHStack>
+          <ScrollView style={{ paddingHorizontal: 15 }}>
 
-            <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-              header={<MText >Detail</MText>}>
+            <ModalTitle title='Sign Message' />
 
-              <MText>Signee</MText>
-              <MHStack stretchW style={{ padding: 15, borderRadius: 15, backgroundColor: '#999', flex: 1 }}>
+            <BaseFoldFrame defaultExpansion
+              header={'Detail'}>
+
+              <MText style={{ color: "#9F9F9F" }} >Signee</MText>
+              <MHStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)', flex: 1 }}>
                 {/* <MImage size={20} url={auth.} /> */}
                 <MVStack style={{ flex: 1 }}>
-                  <MText >Me</MText>
-                  <MText >{auth.blockchainAddress}</MText>
+                  <MText style={{ color: "#6B6B6B" }}>Me</MText>
+                  <MText style={{ color: "#6B6B6B" }}>{auth.blockchainAddress}</MText>
                 </MVStack>
               </MHStack>
 
-
-              <MText>Message</MText>
-              <MVStack stretchW style={{ padding: 15, borderRadius: 15, backgroundColor: '#999' }}>
-                <MText>Signed Message:</MText>
-                <MText numberOfLines={null}>{param?.message?.message}</MText>
+              <MText style={{ color: "#9F9F9F", marginTop: 15, }}>Message</MText>
+              <MVStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)' }}>
+                <MText style={{ color: "#6B6B6B" }}>Signed Message:</MText>
+                <MText style={{ color: "#6B6B6B" }} numberOfLines={null}>{param?.message?.message}</MText>
               </MVStack>
             </BaseFoldFrame>
           </ScrollView>
 
-          <MHStack stretchW>
-            <MButton style={{ flex: 1 }} onPress={onCancelClick} >
-              <MText>Cancel</MText>
-            </MButton>
-            <MButton style={{ flex: 1 }} onPress={onConfirmClick} isLoading={isLoading} >
-              <MText>Confirm</MText>
-            </MButton>
-          </MHStack>
+          <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick} isLoading={isLoading} />
         </MVStack>
       </MVStack>
     </BaseModal>
@@ -77,6 +69,6 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
 
 const styles = StyleSheet.create({
   marginV: {
-    marginVertical: 20
+    marginTop: 20
   }
 });

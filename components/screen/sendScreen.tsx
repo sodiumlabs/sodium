@@ -117,6 +117,6 @@ const styles = StyleSheet.create({
     zIndex: 10,
     padding: 15,
     backgroundColor: 'rgba(200,200,200,1)',
-    borderRadius: 15
+    borderRadius: 10
   }
 });

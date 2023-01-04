@@ -1,10 +1,11 @@
-import { ReactNode, useRef, useState, useEffect } from 'react';
-import { Animated, Easing, Image, LayoutChangeEvent, Pressable, StyleSheet, ViewProps } from 'react-native';
+import { useRef, useState } from 'react';
+import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, ViewProps } from 'react-native';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
+import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
-export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: ReactNode }) => {
+export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: string }) => {
   const minHeight = 50;
   const { header } = props;
   const heightAnim = useRef(new Animated.Value(minHeight)).current;
@@ -52,7 +53,7 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
         <Pressable onPress={onBtnClick} style={{ padding: 15 }}>
           <MHStack style={{ alignItems: 'center' }}>
             <MHStack style={{ flex: 1 }}>
-              {header}
+              <MText style={{ fontWeight: '700' }}>{header}</MText>
             </MHStack>
             <MImage size={10} />
           </MHStack>
@@ -69,7 +70,7 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 15,
+    borderRadius: 10,
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
     width: '100%',

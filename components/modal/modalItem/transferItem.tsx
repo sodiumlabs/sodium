@@ -11,7 +11,7 @@ export const TransferItem = (props: { index: number, maxIndex: number, transferD
   const { index, maxIndex, transferData } = props;
   return (
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-      header={<MText style={{ fontWeight: '700' }} >{`Transfer(${index}/${maxIndex})`}</MText>}>
+      header={`Transfer(${index}/${maxIndex})`}>
 
       <MText style={{ color: "#9F9F9F" }} >Send</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>

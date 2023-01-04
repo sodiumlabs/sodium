@@ -42,7 +42,7 @@ export function CoinScreen(props) {
               <MImage size={16} />
               <MText>{tokenInfo.token.name}</MText>
             </MHStack>
-            <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 15, alignItems: 'center', paddingVertical: 15 }}>
+            <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 10, alignItems: 'center', paddingVertical: 15 }}>
               <MText >Balance</MText>
               <MText >${tokenInfo.usdBalance}</MText>
               <MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol}</MText>
@@ -54,7 +54,7 @@ export function CoinScreen(props) {
               </MButton>
             </MVStack>
 
-            <BaseFoldFrame header={<MText >Detail</MText>}>
+            <BaseFoldFrame header={"Detail"}>
 
               <MText style={{ marginBottom: 10 }}>Description</MText>
               <MText numberOfLines={undefined} >{tokenInfo.token.centerData.description}</MText>

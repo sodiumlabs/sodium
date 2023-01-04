@@ -11,8 +11,6 @@ import { eApproveType, IModalParam, ISignTranscationModalParam, MaxFixedNumber }
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
-import MButton from '../baseUI/mButton';
-import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -20,6 +18,8 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import NetworkFeeItem from '../item/networkFeeItem';
 import { ApproveItem } from './modalItem/approveItem';
+import { ModalTitle } from './modalItem/modalTitle';
+import { OperateBtnItem } from './modalItem/operateBtnItem';
 import { TransferItem } from './modalItem/transferItem';
 
 // sign transcation - send transcation - deploy transcation
@@ -94,13 +94,10 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>
-          <ScrollView >
-            <MHStack stretchW style={{ justifyContent: 'center', height: 45 }}>
-              <MText style={{ color: '#000000', fontWeight: '600' }} >Sign Transaction </MText>
-            </MHStack>
-            <MDivider />
+          <ScrollView style={{ paddingHorizontal: 15 }}>
+            <ModalTitle title='Sign Transaction' />
 
-            <MVStack stretchW style={{ marginTop: 26 }} >
+            <MVStack stretchW  >
               <MLineLR
                 left={<MText >Network</MText>}
                 right={<MHStack>
@@ -142,13 +139,13 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             {
               param?.decodeDatas && (
                 <BaseFoldFrame
-                  header={<MText style={{ fontWeight: '700' }} >{`Transcation Data(${param.decodeDatas.length})`}</MText>}
+                  header={`Transcation Data(${param.decodeDatas.length})`}
                   style={{ marginTop: 20 }}>
                   {
                     param.decodeDatas.map((decodetxn, index) => {
                       return (
                         <MVStack stretchW key={hashcodeObj(decodetxn) + index}
-                          style={{ borderRadius: 15, padding: 15, marginBottom: 10, backgroundColor: 'rgba(1,1,1,0.05)' }}>
+                          style={{ borderRadius: 10, padding: 15, marginBottom: 10, backgroundColor: 'rgba(1,1,1,0.05)' }}>
                           <MText numberOfLines={null} style={{ color: "#6B6B6B" }}>
                             {
                               JSON.stringify(decodetxn.originTxReq, null, 2)
@@ -180,16 +177,9 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
           </ScrollView>
         </MVStack>
-        <MHStack stretchW style={{ height: 45, marginBottom: 15 }}>
-          <MButton style={{ flex: 1, marginRight: 10 }} onPress={onCancelClick} >
-            <MText style={{ color: '#ffffff' }}>Reject</MText>
-          </MButton>
-          <MButton style={{ flex: 1, backgroundColor: "#2178DD", marginLeft: 10 }} onPress={onConfirmClick} isLoading={isLoading} >
-            <MText style={{ color: '#ffffff' }}>Confirm</MText>
-          </MButton>
-        </MHStack>
+        <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick} isLoading={isLoading} />
       </MVStack>
-    </BaseModal>
+    </BaseModal >
   );
 };
 

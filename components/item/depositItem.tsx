@@ -99,7 +99,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
             <MInput placeholder='Enter the amount' onChangeText={onInputYouPayTokenCount} value={youPayTokenCount} />
             <DepositTokenDropdown style={{ zIndex: 1 }} selectedOption={curYouPayToken} setSelectedOption={onYouPayTokenClick} options={youPayTokens} />
             <MText>You Receive (Estimated)</MText>
-            <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 15, padding: 15, zIndex: 0 }}>
+            <MVStack stretchW style={{ backgroundColor: 'rgba(200,200,200,1)', borderRadius: 10, padding: 15, zIndex: 0 }}>
               <MText>{preDepositQueryData?.response?.destAmount || 0} {curYouBuyTokenData?.tokenID}</MText>
               {
                 preDepositQueryData?.response?.exchangeRate ? (
@@ -136,6 +136,6 @@ const styles = StyleSheet.create({
     padding: 15,
     marginBottom: 12,
     backgroundColor: 'rgba(200,200,200,1)',
-    borderRadius: 15
+    borderRadius: 10
   }
 });

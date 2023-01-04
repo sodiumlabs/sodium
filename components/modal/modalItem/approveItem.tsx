@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { ERC20Approve } from "../../../abi/erc20";
 import { formatWei2Price, removeAllDecimalPoint } from '../../../lib/common/common';
 import { useAuth } from "../../../lib/data/auth";
-import { eApproveType, MaxBigNumber, MaxFixedNumber } from "../../../lib/define";
+import { eApproveType, MaxFixedNumber } from "../../../lib/define";
 import { BaseFoldFrame } from "../../base/baseFoldFrame";
 import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
@@ -51,7 +51,7 @@ export const ApproveItem = (props: {
 
   return (
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-      header={<MText style={{ fontWeight: '700' }} >{`Approve(${index}/${maxIndex})`}</MText>}>
+      header={`Approve(${index}/${maxIndex})`}>
 
       <MText style={{ color: "#9F9F9F" }}>Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>

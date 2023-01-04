@@ -80,7 +80,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
 
 const styles = StyleSheet.create({
   content: {
-    backgroundColor: '#F7F7F7', padding: 15, alignItems: 'center', flex: 1, position: 'relative'
+    backgroundColor: '#F7F7F7', paddingVertical: 15, alignItems: 'center', flex: 1, position: 'relative'
   },
   close: {
     backgroundColor: '#8E8E8E', width: 30, height: 30, position: 'absolute', top: -40, right: 0, borderRadius: 99

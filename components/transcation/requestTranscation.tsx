@@ -40,6 +40,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(200,200,200,1)',
     paddingHorizontal: 15,
     paddingVertical: 20,
-    borderRadius: 15,
+    borderRadius: 10,
   }
 });

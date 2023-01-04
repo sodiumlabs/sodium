@@ -17,7 +17,7 @@ export const TranscationDetailItem = (props: ViewProps & { transfer: Transaction
   // const isReceived = transfer.to == (auth.isLogin && auth.blockchainAddress);
 
   return (
-    <BaseFoldFrame {...props} defaultExpansion header={<MText >{isSent ? 'Sent' : 'Receive'}</MText>}>
+    <BaseFoldFrame {...props} defaultExpansion header={isSent ? 'Sent' : 'Receive'}>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
         <MText style={{ flex: 1 }}>{transfer.token.symbol}</MText>
@@ -27,7 +27,7 @@ export const TranscationDetailItem = (props: ViewProps & { transfer: Transaction
       <Divider />
       <MVStack style={styles.marginV}>
         <MText style={{ marginVertical: 5 }}>{isSent ? 'To' : 'From'}</MText>
-        <MHStack stretchW style={{ padding: 15, backgroundColor: 'white', borderRadius: 15 }}>
+        <MHStack stretchW style={{ padding: 15, backgroundColor: 'white', borderRadius: 10 }}>
           <MImage size={20} />
           <MText style={{ flex: 1 }}>{isSent ? transfer.to : transfer.from}</MText>
           <MImage size={20} />

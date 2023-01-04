@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: '#999',
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 10,
     height: 65,
     width: '100%',
     paddingHorizontal: 20,

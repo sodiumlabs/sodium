@@ -42,7 +42,7 @@ const TextItem = (props: { title: string, value: string }) => {
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 15,
+    borderRadius: 10,
     borderWidth: 1,
     borderColor: 'blue',
     padding: 15,
