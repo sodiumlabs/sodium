@@ -14,6 +14,7 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { MButtonText } from '../baseUI/mButtonText';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
@@ -123,7 +124,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
                 disabled={!isCanDeposit}
                 onPress={onDepositClick}
                 isLoading={depositUrlQuery.isFetching}>
-                <MText style={{ color: '#ffffff', fontWeight: '700' }} >Deposit</MText>
+                <MButtonText title={"Deposit"} />
               </MButton>
               <MText style={{ color: eColor.GrayText }} numberOfLines={null}>You will be redirected to the third party page</MText>
               <MText style={{ color: eColor.GrayText }} numberOfLines={null}>The process would take approximately 10 - 15 min</MText>

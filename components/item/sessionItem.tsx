@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import MButton from "../baseUI/mButton";
+import { MButtonText } from "../baseUI/mButtonText";
 import { MDivider } from "../baseUI/mDivider";
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
@@ -25,7 +26,7 @@ export function SessionItem() {
       <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>Polygon</MText>
 
       <MButton style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} >
-        <MText style={{ color: '#ffffff', fontWeight: '700' }} >Sign out</MText>
+        <MButtonText title={"Sign out"} />
       </MButton>
     </MVStack>
   )

@@ -14,6 +14,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { globalStyle, eColor } from '../../lib/globalStyles';
+import { MButtonText } from "../baseUI/mButtonText";
 
 export function SecurityScreen() {
   // const auth = useAuth();
@@ -39,7 +40,7 @@ export function SecurityScreen() {
                   <MHStack>
 
                     <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
-                      <MText style={{ color: '#ffffff', fontWeight: '700' }} >Set</MText>
+                      <MButtonText title={"Set"} />
                     </MButton>
                   </MHStack>
                 }
@@ -51,7 +52,7 @@ export function SecurityScreen() {
                 right={
                   <MHStack>
                     <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
-                      <MText style={{ color: '#ffffff', fontWeight: '700' }}>Show</MText>
+                      <MButtonText title={"Show"} />
                     </MButton>
                   </MHStack>
                 }

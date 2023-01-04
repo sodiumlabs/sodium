@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from '../../lib/api/history';
 import { HistoryTime } from "../../lib/common/time";
 import { fixWidth } from "../../lib/define";
@@ -30,6 +30,11 @@ export function HistoryScreen() {
             <ClassifyHistoryItem title={HistoryTime["This Month"]} historyMap={transHistoryMap} />
             <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
             <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
+            {
+              queryHistory.isFetching && (
+                <ActivityIndicator size='small' color="#0000ff" />
+              )
+            }
             <Spacer />
             <Information />
           </MVStack>

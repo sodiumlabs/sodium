@@ -8,6 +8,7 @@ import Information from "../base/information";
 import { showUpdateFullScreenModal } from "../base/modalInit";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
+import { MButtonText } from "../baseUI/mButtonText";
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
@@ -31,11 +32,11 @@ export function LoginScreen() {
             <ScreenTitle title="Sign into web3" />
             <MVStack stretchW>
               <MButton style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
-                <MText style={{ color: '#ffffff', fontWeight: '700' }} >Steam login</MText>
+                <MButtonText title={"Steam login"} />
               </MButton>
 
               <MButton style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
-                <MText style={{ color: '#ffffff', fontWeight: '700' }} >Twitter Login</MText>
+                <MButtonText title={"Twitter Login"} />
               </MButton>
             </MVStack>
 

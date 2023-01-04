@@ -21,6 +21,7 @@ import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { MButtonText } from '../baseUI/mButtonText';
 
 export function SendScreen() {
   const authData = useAuth();
@@ -114,7 +115,7 @@ export function SendScreen() {
             <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
             <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
             <MButton stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]} >
-              <MText style={{ color: '#ffffff', fontWeight: '700' }} >Continue</MText>
+              <MButtonText title={"Continue"} />
             </MButton>
             <Spacer />
             <Information />

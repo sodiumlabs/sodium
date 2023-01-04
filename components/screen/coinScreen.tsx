@@ -1,5 +1,5 @@
 import { Divider } from "@ui-kitten/components";
-import { Linking, ScrollView, StyleSheet } from "react-native";
+import { ActivityIndicator, Linking, ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from "../../lib/api/history";
 import { formatWei2Price } from "../../lib/common/common";
 import { getAddressExplorer } from "../../lib/common/network";
@@ -114,6 +114,12 @@ export function CoinScreen(props) {
                   <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
                   <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
                 </MVStack>
+              )
+            }
+
+            {
+              queryHistory.isFetching && (
+                <ActivityIndicator size='small' color="#0000ff" />
               )
             }
 

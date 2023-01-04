@@ -8,6 +8,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { MButtonText } from "../baseUI/mButtonText";
 
 export function AllowanceItem() {
   return (
@@ -25,7 +26,7 @@ export function AllowanceItem() {
       <TextItem title={"TX"} value={"0x93a...97bd"} />
 
       <MButton style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} >
-        <MText style={{ color: '#ffffff', fontWeight: '700' }} >Revoke</MText>
+        <MButtonText title={"Revoke"} />
       </MButton>
     </MVStack>
   )

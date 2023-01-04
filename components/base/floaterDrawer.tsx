@@ -7,6 +7,7 @@ import { globalStyle, eColor } from '../../lib/globalStyles';
 import CopyButton from '../baseUI/copyButton';
 import MAvatar from '../baseUI/mAvatar';
 import MButton from '../baseUI/mButton';
+import { MButtonText } from '../baseUI/mButtonText';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
@@ -169,11 +170,11 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
             <MHStack >
               <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
                 <MImage size={14} style={{ marginRight: 6 }} />
-                <MText style={{ color: '#ffffff', fontWeight: '700' }} >Settings</MText>
+                <MButtonText title={"Settings"} />
               </MButton>
               <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
                 <MImage size={14} style={{ marginRight: 6 }} />
-                <MText style={{ color: '#ffffff', fontWeight: '700' }}>Sign Out</MText>
+                <MButtonText title={"Sign out"} />
               </MButton>
             </MHStack>
           </MVStack>
