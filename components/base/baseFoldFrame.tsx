@@ -70,8 +70,10 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
 const styles = StyleSheet.create({
   container: {
     borderRadius: 15,
-    backgroundColor: '#aaa',
+    backgroundColor: '#FFFFFF',
     overflow: 'hidden',
-    width: '100%'
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#EEF0F2'
   }
 });

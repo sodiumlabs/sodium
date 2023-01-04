@@ -51,40 +51,46 @@ export const ApproveItem = (props: {
 
   return (
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-      header={<MText >{`Approve(${index}/${maxIndex})`}</MText>}>
+      header={<MText style={{ fontWeight: '700' }} >{`Approve(${index}/${maxIndex})`}</MText>}>
 
-      <MText>Spender</MText>
+      <MText style={{ color: "#9F9F9F" }}>Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
-        <MText style={{ flex: 1 }}>{auth?.blockchainAddress}</MText>
+        <MText style={{ flex: 1, color: "#6B6B6B" }}>{auth?.blockchainAddress}</MText>
       </MHStack>
 
       <Divider />
-      <MText>Value</MText>
+      <MText style={{ color: "#9F9F9F" }}>Value</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} url={approveData.token.centerData.logoURI} />
-        <MText style={{ flex: 1 }}>{approveValue}</MText>
+        <MText style={{ flex: 1, color: "#6B6B6B" }}>{approveValue}</MText>
       </MHStack>
       <MVStack>
         <RadioGroup
           // style={{ 'alignItems': 'start' }}
           selectedIndex={approveSelectedIndex}
           onChange={index => setApproveSelectedIndex(index)}>
-          <Radio >
-            <MVStack >
-              <MText>Set the Maximum Allowance</MText>
+          <Radio style={{ marginBottom: 30, position: 'relative' }}>
+            <>
+              <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
               <Slider
-                style={{ width: 300, height: 20 }}
+                style={{ width: '60%', height: 20, position: 'absolute', bottom: -25, left: 32, zIndex: 1 }}
                 minimumValue={0}
                 maximumValue={1}
                 onValueChange={onSliderValueChange}
-                minimumTrackTintColor="#FFFFFF"
-                maximumTrackTintColor="#000000"
+                minimumTrackTintColor="#4AB0FF"
+                maximumTrackTintColor="#FF7B4A"
               />
-            </MVStack>
+            </>
           </Radio>
-          <Radio>Revoke Immediately After This Transaction </Radio>
-          <Radio>Keep the Unlimted Allowance</Radio>
+          <Radio>
+            <>
+              <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
+            </>
+          </Radio>
+          <Radio>
+            <><MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText></>
+          </Radio>
         </RadioGroup>
 
 

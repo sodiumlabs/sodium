@@ -30,7 +30,7 @@ const localStyles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: 'rgba(200,200,200,1)',
+    backgroundColor: '#8B8E9E',
     paddingVertical: 6,
     paddingHorizontal: 10
   }

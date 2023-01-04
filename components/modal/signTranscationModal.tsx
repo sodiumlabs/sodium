@@ -1,14 +1,18 @@
-import { ScrollView, StyleSheet, Text } from 'react-native';
+import { BigNumber, FixedNumber } from 'ethers';
+import { useCallback, useState } from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import { encodeERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { eApproveType, IModalParam, ISignTranscationModalParam, MaxBigNumber, MaxFixedNumber } from '../../lib/define';
+import { eApproveType, IModalParam, ISignTranscationModalParam, MaxFixedNumber } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
 import MButton from '../baseUI/mButton';
+import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -17,9 +21,6 @@ import MVStack from '../baseUI/mVStack';
 import NetworkFeeItem from '../item/networkFeeItem';
 import { ApproveItem } from './modalItem/approveItem';
 import { TransferItem } from './modalItem/transferItem';
-import { useState, useRef, useCallback } from 'react';
-import { encodeERC20Approve } from '../../abi/erc20';
-import { BigNumber, FixedNumber } from 'ethers';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -94,21 +95,21 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>
           <ScrollView >
-            <MHStack stretchW style={{ justifyContent: 'center' }}>
-              <MText>Sign Transaction </MText>
+            <MHStack stretchW style={{ justifyContent: 'center', height: 45 }}>
+              <MText style={{ color: '#000000', fontWeight: '600' }} >Sign Transaction </MText>
             </MHStack>
+            <MDivider />
 
-            <MVStack stretchW>
+            <MVStack stretchW style={{ marginTop: 26 }} >
               <MLineLR
-                left={
-                  <>
-                    <MText >Network</MText>
-                    <MImage size={20} />
-                  </>}
-                right={<MText >{curNetwork?.name?.toUpperCase()}</MText>} />
-              <MLineLR
-                left={<MText >Requested at</MText>}
-                right={<MText>{formatTimeYMDHMS(param?.txn?.timeStamp)}</MText>} />
+                left={<MText >Network</MText>}
+                right={<MHStack>
+                  <MImage size={12} />
+                  <MText style={{ color: '#8247E5', fontWeight: '700' }} >{curNetwork?.name?.toUpperCase()}</MText>
+                </MHStack>} />
+              <MLineLR style={{ marginTop: 16 }}
+                left={<MText  >Requested at</MText>}
+                right={<MText fontSize={8} style={{ color: "#928B8B" }} >{formatTimeYMDHMS(param?.txn?.timeStamp)}</MText>} />
             </MVStack>
 
 
@@ -140,17 +141,19 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             {/* ---------------------Transcation Data------------------------- */}
             {
               param?.decodeDatas && (
-                <BaseFoldFrame header={<MText>{`Transcation Data(${param.decodeDatas.length})`}</MText>} style={{ marginTop: 20 }}>
+                <BaseFoldFrame
+                  header={<MText style={{ fontWeight: '700' }} >{`Transcation Data(${param.decodeDatas.length})`}</MText>}
+                  style={{ marginTop: 20 }}>
                   {
                     param.decodeDatas.map((decodetxn, index) => {
                       return (
                         <MVStack stretchW key={hashcodeObj(decodetxn) + index}
-                          style={{ backgroundColor: '#999', borderRadius: 15, padding: 15 }}>
-                          <Text>
+                          style={{ borderRadius: 15, padding: 15, marginBottom: 10, backgroundColor: 'rgba(1,1,1,0.05)' }}>
+                          <MText numberOfLines={null} style={{ color: "#6B6B6B" }}>
                             {
                               JSON.stringify(decodetxn.originTxReq, null, 2)
                             }
-                          </Text>
+                          </MText>
                         </MVStack>
                       )
                     })
@@ -163,11 +166,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             {
               tokenInfos && paymasterInfos && paymasterInfos.length && (
                 <MVStack>
-                  <MHStack stretchW style={{ alignItems: 'center' }}>
-                    <MText>Network Fee</MText>
-                    <MHStack style={{ borderRadius: 999, width: 20, height: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: '#bbb' }}>
-                      <MImage size={10} />
-                    </MHStack>
+                  <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
+                    <MText>Fee</MText>
                   </MHStack>
 
                   {
@@ -180,12 +180,12 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
           </ScrollView>
         </MVStack>
-        <MHStack stretchW>
-          <MButton style={{ flex: 1 }} onPress={onCancelClick} >
-            <MText>Cancel</MText>
+        <MHStack stretchW style={{ height: 45, marginBottom: 15 }}>
+          <MButton style={{ flex: 1, marginRight: 10 }} onPress={onCancelClick} >
+            <MText style={{ color: '#ffffff' }}>Reject</MText>
           </MButton>
-          <MButton style={{ flex: 1 }} onPress={onConfirmClick} isLoading={isLoading} >
-            <MText>Confirm</MText>
+          <MButton style={{ flex: 1, backgroundColor: "#2178DD", marginLeft: 10 }} onPress={onConfirmClick} isLoading={isLoading} >
+            <MText style={{ color: '#ffffff' }}>Confirm</MText>
           </MButton>
         </MHStack>
       </MVStack>

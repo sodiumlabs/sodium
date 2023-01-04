@@ -21,11 +21,14 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR
-            left={<MText>{`${gasInfo.token.name}(${gasInfo.token.symbol})`}</MText>}
-            right={<MText>{formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals, 10)} {gasInfo.token.symbol}</MText>} />
+            left={<MText style={{ fontWeight: '700' }} fontSize={14}>{`${gasInfo.token.symbol}`}</MText>}
+            right={<MText style={{ color: "#9F9F9F", textDecorationLine: 'line-through' }} >{formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals, 10)} {gasInfo.token.symbol}</MText>} />
           <MLineLR
-            left={<MText>Balance : {balance}</MText>}
-            right={<MText>${gasUsd}</MText>} />
+            left={<MText fontSize={10} style={{ color: "#9F9F9F" }}>Balance : {balance}</MText>}
+            right={<MText style={{ color: "#9F9F9F" }}>${gasUsd}</MText>} />
+          <MHStack stretchW style={{ justifyContent: 'center' }} >
+            <MText fontSize={10}>Paid by Project A</MText>
+          </MHStack>
         </MVStack>
       </MHStack>
     </Pressable>
@@ -36,7 +39,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#999',
-    borderRadius: 15
+    backgroundColor: '#FFFFFF',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#EEF0F2"
   }
 });

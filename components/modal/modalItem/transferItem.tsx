@@ -11,20 +11,20 @@ export const TransferItem = (props: { index: number, maxIndex: number, transferD
   const { index, maxIndex, transferData } = props;
   return (
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-      header={<MText >{`Transfer(${index}/${maxIndex})`}</MText>}>
+      header={<MText style={{ fontWeight: '700' }} >{`Transfer(${index}/${maxIndex})`}</MText>}>
 
-      <MText>Send</MText>
+      <MText style={{ color: "#9F9F9F" }} >Send</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
-        <MText style={{ flex: 1 }}>{`${transferData.token.name}(${transferData.token.symbol})`}</MText>
-        <MText >{formatWei2Price(transferData.amount.toString(), transferData.token.decimals, 10)} {transferData.token.symbol}</MText>
+        <MText style={{ flex: 1, color: "#6B6B6B" }}>{`${transferData.token.name}(${transferData.token.symbol})`}</MText>
+        <MText style={{ color: "#6B6B6B" }}  >{formatWei2Price(transferData.amount.toString(), transferData.token.decimals, 10)} {transferData.token.symbol}</MText>
       </MHStack>
 
       <Divider />
-      <MText>To Recipient</MText>
+      <MText style={{ color: "#9F9F9F" }}>To Recipient</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage size={20} />
-        <MText style={{ flex: 1 }}>{transferData.to}</MText>
+        <MText style={{ flex: 1, color: "#6B6B6B" }}>{transferData.to}</MText>
       </MHStack>
     </BaseFoldFrame>
   )
