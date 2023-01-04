@@ -1,14 +1,12 @@
 import { StyleSheet } from "react-native";
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { showUpdateComModal } from "../base/modalInit";
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import MButton from "../baseUI/mButton";
+import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from "../baseUI/mHStack";
 import MImage from '../baseUI/mImage';
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import { FailModalItem } from "../modal/modalItem/failModalItem";
-import { eColor, globalStyle } from '../../lib/globalStyles';
-import { MButtonText } from "../baseUI/mButtonText";
 
 export function AllowanceItem() {
   return (
