@@ -11,7 +11,7 @@ export const ComModal = (props: { hideModal: () => void, modalParam: IModalParam
       hideModal={hideModal}
       contentHeight={param?.height || 300}
     >
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, padding: 15 }}>
         {param?.reactNode}
       </ScrollView>
     </BaseModal>

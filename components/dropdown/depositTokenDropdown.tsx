@@ -4,6 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, View, ViewProps } from 'react-native';
 import { IDepositToken, ISelectItemData } from '../../lib/define';
 import { useDimensionSize } from '../../lib/hook/dimension';
+import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
@@ -32,21 +33,24 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
     <View style={[styles.container, style]} {...rest}>
 
       <Pressable onPress={toggleDropdown}>
-        <TokenItem option={selectedOption} />
+        <MHStack stretchW style={{ borderWidth: 1, borderColor: '#EEF0F2', padding: 10, borderRadius: 10 }}>
+          <TokenItem option={selectedOption} />
+        </MHStack>
       </Pressable>
 
       {isDropdownVisible && (
         <View style={styles.dropdown}>
           <FlatList
-            style={{ maxHeight: dimension[1] - 300 }}
+            style={{ maxHeight: dimension[1] - 300, borderRadius: 10, borderWidth: 1, borderColor: '#EEF0F2' }}
             data={options}
             keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <Pressable
                 onPress={() => handleOptionPress(item)}
                 style={styles.option}
               >
                 <TokenItem option={item} />
+                {index != options.length - 1 && (<MDivider style={{ marginTop: 15 }} />)}
               </Pressable>
             )}
           />
@@ -68,7 +72,7 @@ const TokenItem = (props: { option: ISelectItemData }) => {
     <MHStack style={styles.sendCoin} stretchW>
       <MHStack style={{ flex: 1, alignItems: 'center', }}>
         <MImage size={32} url={curToken.icon} />
-        <MText>{curToken.tokenID}</MText>
+        <MText style={{ marginLeft: 5 }}>{curToken.tokenID}</MText>
       </MHStack>
     </MHStack>
   )
@@ -78,7 +82,7 @@ const TokenItem = (props: { option: ISelectItemData }) => {
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    padding: 10,
+    // padding: 10,
     borderRadius: 5,
     backgroundColor: 'white',
     zIndex: 2,
@@ -94,7 +98,9 @@ const styles = StyleSheet.create({
     padding: 10,
     // borderRadius: 5,
     // backgroundColor: 'white',
-    backgroundColor: 'rgba(180,180,180,1)',
+    backgroundColor: '#ffffff',
+    // borderWidth: 1,
+    borderColor: '#EEF0F2',
     paddingHorizontal: 15,
   },
   sendCoin: {

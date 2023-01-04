@@ -1,6 +1,6 @@
 
 import { StyleSheet, ViewProps } from 'react-native';
-import MenuButton from '../baseUI/menuButton';
+import InfomationButton from '../baseUI/infomationButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
 import { TermsOfUseModalItem } from '../modal/modalItem/informationModalItem';
@@ -12,9 +12,9 @@ export default function Information(props: ViewProps) {
     <MVStack stretchW style={[styles.container, style]} {...rest}>
 
       <MHStack stretchW style={styles.list}>
-        <MenuButton pointerEvents='auto' title='Terms Of Use' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
-        <MenuButton pointerEvents='auto' title='Privacy Policy' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
-        <MenuButton pointerEvents='auto' title='Support' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
+        <InfomationButton pointerEvents='auto' title='Terms Of Use' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
+        <InfomationButton pointerEvents='auto' title='Privacy Policy' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
+        <InfomationButton pointerEvents='auto' title='Support' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
       </MHStack>
     </MVStack>
 
@@ -23,7 +23,7 @@ export default function Information(props: ViewProps) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#rgba(255,255,255,0.7)',
+    backgroundColor: '#F7F7F7',
     alignItems: 'center',
     justifyContent: 'center',
     marginBottom: 100

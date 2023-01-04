@@ -1,4 +1,4 @@
-import { GestureResponderEvent, Image, Pressable, StyleSheet } from 'react-native';
+import { GestureResponderEvent, Pressable, StyleSheet } from 'react-native';
 import MImage from './mImage';
 import MText from './mText';
 import MVStack from './mVStack';
@@ -10,7 +10,7 @@ export default function WalletButton(props: { onPress?: (event: GestureResponder
       <MVStack style={styles.button}>
         <MImage size={12} />
       </MVStack>
-      <MText > {title} </MText>
+      <MText style={{ marginTop: 5, fontWeight: '700' }} > {title} </MText>
     </Pressable>
 
   )
@@ -26,7 +26,9 @@ const styles = StyleSheet.create({
   button: {
     height: 60,
     width: 60,
-    backgroundColor: 'rgba(200,200,200,1)',
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#EEF0F2',
     borderRadius: 9999,
     justifyContent: 'center',
     alignItems: 'center'

@@ -3,7 +3,7 @@
 
 
 import { useState } from 'react';
-import { StyleSheet, TextInput, TextInputProps, TranslateYTransform, TouchableOpacity } from 'react-native';
+import { StyleSheet, TextInput, TextInputProps, TranslateYTransform } from 'react-native';
 import MHStack from './mHStack';
 import MImage from './mImage';
 

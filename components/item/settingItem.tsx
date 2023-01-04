@@ -30,10 +30,15 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
+    paddingHorizontal: 15,
+    // paddingVertical: 20,
+    height: 60,
+    justifyContent: 'center',
     marginBottom: 12,
-    backgroundColor: 'rgba(200,200,200,0.6)',
+    backgroundColor: '#ffffff',
     borderRadius: 10,
-    width: '100%'
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#EEF0F2'
   }
 });

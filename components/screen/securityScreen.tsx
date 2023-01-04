@@ -1,6 +1,5 @@
 import { Divider } from "@ui-kitten/components";
 import { ScrollView, StyleSheet } from "react-native";
-import { useAuth } from '../../lib/data/auth';
 import { fixWidth, Screens } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
@@ -12,6 +11,7 @@ import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { ScreenTitle } from "../baseUI/screenTitle";
 
 export function SecurityScreen() {
   // const auth = useAuth();
@@ -21,7 +21,7 @@ export function SecurityScreen() {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MText style={{ marginVertical: 6 }}>Security</MText>
+            <ScreenTitle title="Security" />
             <MVStack>
               <MText>Two-factor authentication</MText>
               <Divider />

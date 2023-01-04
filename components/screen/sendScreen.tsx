@@ -18,6 +18,7 @@ import MButton from "../baseUI/mButton";
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
 
 export function SendScreen() {
@@ -86,15 +87,15 @@ export function SendScreen() {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MText style={{ marginVertical: 6 }}>Send</MText>
+            <ScreenTitle title="Send" />
             <MVStack style={styles.send} stretchW>
               <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-              <MInput keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
+              <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
             </MVStack>
-            <MText style={{ marginVertical: 20 }}>To</MText>
+            <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
             <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
-            <MButton stretchW onPress={sendClick} style={{ marginVertical: 20 }} >
-              <MText>Continue</MText>
+            <MButton stretchW onPress={sendClick} style={{ marginVertical: 20, height: 45 }} >
+              <MText style={{ color: '#ffffff', fontWeight: '700' }} >Continue</MText>
             </MButton>
             <Spacer />
             <Information />
@@ -116,7 +117,9 @@ const styles = StyleSheet.create({
   send: {
     zIndex: 10,
     padding: 15,
-    backgroundColor: 'rgba(200,200,200,1)',
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#EEF0F2',
     borderRadius: 10
   }
 });

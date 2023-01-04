@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 10,
     // bottom: 0,
-    backgroundColor: '#rgba(255,255,255,0.7)',
+    backgroundColor: '#F7F7F7',
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute'

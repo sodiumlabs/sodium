@@ -1,6 +1,6 @@
 import { BigNumber, FixedNumber } from 'ethers';
 import { useCallback, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import { encodeERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
@@ -109,6 +109,11 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 right={<MText fontSize={8} style={{ color: "#928B8B" }} >{formatTimeYMDHMS(param?.txn?.timeStamp)}</MText>} />
             </MVStack>
 
+            {
+              !param?.decodeDatas && (
+                <ActivityIndicator size='small' color="#0000ff" />
+              )
+            }
 
             {/* ---------------------approve------------------------- */}
             {

@@ -7,6 +7,7 @@ import { navigationRef } from "../base/navigationInit";
 import { Spacer } from "../base/spacer";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { ScreenTitle } from "../baseUI/screenTitle";
 import SettingItem from "../item/settingItem";
 
 export function SettingScreen() {
@@ -16,7 +17,7 @@ export function SettingScreen() {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MText style={{ marginVertical: 6 }}>Setting</MText>
+            <ScreenTitle title="Setting" />
             <SettingItem onPress={() => navigationRef.navigate(Screens.Profile)} >
               <MText>Profile</MText>
             </SettingItem>

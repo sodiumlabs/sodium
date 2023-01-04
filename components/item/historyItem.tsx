@@ -32,22 +32,22 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
         <MLineLR
           left={
             <MHStack style={{ flex: 1 }}>
-              <MText>{history.prefix}</MText>
-              <MImage size={16} url={token.centerData.logoURI} />
-              <MText> {token.name}</MText>
+              <MText style={{ fontWeight: '700' }} fontSize={14}>{history.prefix}</MText>
+              {/* <MImage size={16} url={token.centerData.logoURI} /> */}
+              {/* <MText> {token.name}</MText> */}
             </MHStack>
           }
-          right={<MText>{formatTime(history.block.blockTimestamp * 1000)}</MText>}
+          right={<MText style={{ color: "#9F9F9F" }} >{formatTime(history.block.blockTimestamp * 1000)}</MText>}
         />
 
-        <MLineLR
+        <MLineLR style={{ marginTop: 3 }}
           left={
             <MHStack style={{ flex: 1 }}>
               <MImage size={16} url={token.centerData.logoURI} />
-              <MText>{token.symbol}</MText>
+              <MText style={{ marginLeft: 5 }}>{token.symbol}</MText>
             </MHStack>
           }
-          right={<MText>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />
+          right={<MText style={{ color: "#9F9F9F" }}>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />
 
       </MVStack>
     </Pressable>
@@ -58,7 +58,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: 'rgba(200,200,200,1)',
+    backgroundColor: '#ffffff',
+    borderWidth: 1,
+    borderColor: '#EEF0F2',
     borderRadius: 10
   }
 });

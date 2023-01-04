@@ -23,16 +23,17 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
           <MLineLR
             left={
               <MHStack >
-                <MText>{tokenInfo.token.symbol}</MText>
-                <MImage size={12} />
-                <MText>{tokenInfo.token.name}</MText>
+                <MText style={{ fontWeight: '700' }} fontSize={14} >{tokenInfo.token.symbol}</MText>
+                {/* <MImage size={12} /> */}
+                {/* <MText>{tokenInfo.token.name}</MText> */}
               </MHStack>
             }
             right={<MText></MText>}
           />
 
           <MLineLR
-            left={<MText>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
+            style={{ marginTop: 2 }}
+            left={<MText style={{ color: "#9F9F9F" }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
             right={<MText></MText>} />
         </MVStack>
       </MHStack>
@@ -44,7 +45,9 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: 'rgba(200,200,200,1)',
-    borderRadius: 10
+    backgroundColor: '#ffffff',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#EEF0F2'
   }
 });

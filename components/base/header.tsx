@@ -19,25 +19,27 @@ export default function Header(props) {
         <MImage size={40} style={{ position: 'absolute', left: 0 }} />
 
         <MHStack pointerEvents='auto'>
-          <Pressable onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })}>
-            <MLineLR
-              left={<MImage size={20} />}
-              right={<MText>wallet</MText>}
-            />
-          </Pressable>
-
-          <Pressable onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })}>
-            <MLineLR
-              left={<MImage size={20} />}
-              right={<MText>history</MText>}
-            />
-          </Pressable>
+          <HeaderItem screen={Screens.Wallet} title={'Wallet'} />
+          <HeaderItem screen={Screens.History} title={'History'} />
         </MHStack>
 
       </MHStack>
 
     </MHStack>
   );
+}
+
+
+const HeaderItem = (props: { screen: Screens, title: string }) => {
+  const { screen, title } = props;
+  return (
+    <Pressable style={{ marginLeft: 20 }} onPress={() => navigationRef.reset({ index: 0, routes: [{ name: screen }], })}>
+      <MLineLR
+        left={<MImage size={20} />}
+        right={<MText style={{ fontWeight: '700' }}>{title}</MText>}
+      />
+    </Pressable>
+  )
 }
 
 const styles = StyleSheet.create({

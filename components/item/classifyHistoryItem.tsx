@@ -12,7 +12,7 @@ export const ClassifyHistoryItem = (props: { title: string, historyMap: Map<stri
   }
   return (
     <MVStack stretchW>
-      <MText>{title}</MText>
+      <MText style={{ marginVertical: 15 }}>{title}</MText>
       {
         historyMap[title].map((item, index) => {
           return <HistoryItem key={index} history={item} />

@@ -1,13 +1,13 @@
-import { useNavigation } from "@react-navigation/native";
 import { ScrollView, StyleSheet } from "react-native";
-import { BaseScreen } from "../base/baseScreen";
-import MText from "../baseUI/mText";
-import MVStack from "../baseUI/mVStack";
 import { useAuth } from '../../lib/data/auth';
 import { fixWidth } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
+import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
+import MText from "../baseUI/mText";
+import MVStack from "../baseUI/mVStack";
+import { ScreenTitle } from "../baseUI/screenTitle";
 
 export function ProfileScreen() {
   const auth = useAuth();
@@ -18,23 +18,23 @@ export function ProfileScreen() {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MText style={{ marginVertical: 6 }}>Profile</MText>
+            <ScreenTitle title="Profile" />
 
             <MVStack stretchW style={styles.item}>
-              <MText>Google</MText>
+              <MText style={styles.title} >Google</MText>
               <MText>xxxxxxxxxx@gmail.com</MText>
             </MVStack>
 
             <MVStack stretchW style={styles.item}>
-              <MText>Public Address</MText>
+              <MText style={styles.title}>Public Address</MText>
               <MText>{auth.blockchainAddress}</MText>
             </MVStack>
 
 
             <MVStack stretchW style={styles.item}>
-              <MText>ENS</MText>
-              <MText>No reverse record found.</MText>
-              <MText>Last check on</MText>
+              <MText style={styles.title}>ENS</MText>
+              <MText style={{ marginBottom: 6 }}>No reverse record found.</MText>
+              <MText style={styles.title}>Last check on</MText>
               <MText>2022/12/1 11:11:20</MText>
             </MVStack>
             <Spacer />
@@ -51,9 +51,11 @@ const styles = StyleSheet.create({
   item: {
     padding: 15,
     marginBottom: 12,
-    backgroundColor: '#999',
+    backgroundColor: '#ffffff',
     borderRadius: 10,
-    width: '100%'
+    width: '100%',
+    borderWidth: 1,
+    borderColor: '#EEF0F2'
   },
   container: {
     // marginVertical: 80,
@@ -62,4 +64,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
     maxWidth: fixWidth
   },
+  title: {
+    fontWeight: '700',
+    marginBottom: 4,
+  }
 });

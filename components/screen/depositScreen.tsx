@@ -6,8 +6,8 @@ import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
-import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { ScreenTitle } from "../baseUI/screenTitle";
 import DepositItem from "../item/depositItem";
 
 export function DepositScreen() {
@@ -32,7 +32,7 @@ export function DepositScreen() {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MText style={{ marginVertical: 6 }}>Deposit</MText>
+            <ScreenTitle title="Deposit" />
             {
               depositItems && depositItems.length > 0 && depositItems.map((data, index) => {
                 return (

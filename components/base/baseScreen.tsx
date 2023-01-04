@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: '100%',
-    backgroundColor: 'white',
+    backgroundColor: '#F7F7F7',
     flexDirection: 'column',
     alignItems: 'center',
   },
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     alignSelf: 'center',
-    backgroundColor: 'white',
+    backgroundColor: '#F7F7F7',
   }
 
 });

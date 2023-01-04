@@ -30,9 +30,10 @@ export function WalletScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]} >
 
+
             <MVStack style={styles.balance}>
-              <MText>Balance</MText>
-              <MText>${usdBalance}</MText>
+              <MText style={{ fontWeight: '700' }} >Balance</MText>
+              <MText style={{ marginTop: 10, fontWeight: '700' }} fontSize={30} >${usdBalance}</MText>
             </MVStack>
 
             <MHStack style={styles.operate}>
@@ -47,7 +48,7 @@ export function WalletScreen() {
             <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
 
             <MVStack stretchW style={styles.coins}>
-              <MText style={{ marginVertical: 15 }}>Coins</MText>
+              <MText style={{ marginBottom: 15 }}>Coins</MText>
               {
                 tokenInfos && tokenInfos.map((tokenInfo, index) => {
                   if ((tokenInfo.token.name + tokenInfo.token.symbol).toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) != -1) {
@@ -77,12 +78,13 @@ const styles = StyleSheet.create({
     maxWidth: fixWidth
   },
   balance: {
+    marginTop: 20,
     marginBottom: 50,
     alignItems: 'center'
   },
   operate: {
   },
   coins: {
-    marginVertical: 25,
+    marginVertical: 20,
   }
 });
