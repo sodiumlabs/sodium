@@ -7,14 +7,14 @@ import MImage from '../baseUI/mImage';
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
-import { globalStyle } from '../../lib/globalStyles';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 
 export function AllowanceItem() {
   return (
     <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
       <MHStack>
         <MImage />
-        <MText>BNB</MText>
+        <MText style={{ fontWeight: '700' }} >BNB</MText>
       </MHStack>
 
       <TextItem title={"Secure Issue"} value={"Unlimited Allowance"} />
@@ -24,8 +24,8 @@ export function AllowanceItem() {
       <TextItem title={"Approve Date"} value={formatTimeYMDHMS(new Date().getTime())} />
       <TextItem title={"TX"} value={"0x93a...97bd"} />
 
-      <MButton onPress={() => showUpdateComModal(true, { 'height': 300, 'reactNode': <FailModalItem /> })} >
-        <MText>Revoke</MText>
+      <MButton style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} >
+        <MText style={{ color: '#ffffff', fontWeight: '700' }} >Revoke</MText>
       </MButton>
     </MVStack>
   )
@@ -34,7 +34,7 @@ export function AllowanceItem() {
 
 const TextItem = (props: { title: string, value: string }) => {
   return (
-    <MHStack>
+    <MHStack style={{ marginTop: 6 }}>
       <MText style={{ width: 100, textAlign: 'right' }}>{props.title}:</MText>
       <MText style={{ marginLeft: 15 }}>{props.value}</MText>
     </MHStack>
@@ -44,6 +44,6 @@ const TextItem = (props: { title: string, value: string }) => {
 const styles = StyleSheet.create({
   container: {
     padding: 15,
-    marginVertical: 20
+    marginTop: 20
   },
 });

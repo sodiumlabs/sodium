@@ -13,6 +13,7 @@ import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
+import { globalStyle, eColor } from '../../lib/globalStyles';
 
 export function SecurityScreen() {
   // const auth = useAuth();
@@ -26,28 +27,31 @@ export function SecurityScreen() {
             <MVStack>
               <MText>Two-factor authentication</MText>
               <MDivider style={{ marginVertical: 10 }} />
-              <MHStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
+              <MHStack style={[globalStyle.whiteBorderWidth, { padding: 15, marginBottom: 20 }]}>
                 <MText numberOfLines={null}>Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. Learn more about two-factor authentication.</MText>
               </MHStack>
+              <MDivider style={{ marginBottom: 10 }} />
               <MText>Two-factor methods</MText>
+
               <MLineLR
                 left={<MText>Primary two-factor method</MText>}
                 right={
                   <MHStack>
 
-                    <MButton onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
-                      <MText>Set</MText>
+                    <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
+                      <MText style={{ color: '#ffffff', fontWeight: '700' }} >Set</MText>
                     </MButton>
                   </MHStack>
                 }
               />
-              <MText>Recovery options</MText>
+              <MDivider style={{ marginVertical: 10 }} />
+              <MText  >Recovery options</MText>
               <MLineLR
                 left={<MText>Recovery codes</MText>}
                 right={
                   <MHStack>
-                    <MButton onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
-                      <MText>Show</MText>
+                    <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
+                      <MText style={{ color: '#ffffff', fontWeight: '700' }}>Show</MText>
                     </MButton>
                   </MHStack>
                 }

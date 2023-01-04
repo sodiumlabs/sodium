@@ -4,6 +4,7 @@ import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
+import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
@@ -18,7 +19,9 @@ export function AllowanceScreen() {
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Allowance Sessions" />
             <MText numberOfLines={null}>You're currently signed in to your sodium wallet on these sessions.Pay close attention and make sure to remove sessions you are no longer using for better security.</MText>
-            <MText>Allowance Keys(4)</MText>
+            <MHStack stretchW style={{ marginTop: 20 }}>
+              <MText >Allowance Keys(2)</MText>
+            </MHStack>
             <AllowanceItem />
             <AllowanceItem />
 
