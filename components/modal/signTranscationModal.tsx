@@ -191,6 +191,6 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
 const styles = StyleSheet.create({
   marginV: {
-    marginVertical: 20
+    marginBottom: 20
   }
 });

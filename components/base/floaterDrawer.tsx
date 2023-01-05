@@ -3,8 +3,8 @@ import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet } from 'reac
 import { useQueryNetwork } from '../../lib/api/network';
 import { loginOut, useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
-import { globalStyle, eColor } from '../../lib/globalStyles';
-import { IconArrowL, IconBack, IconForkClose, IconMore, IconSettings, IconSignout } from '../../lib/imageDefine';
+import { eColor } from '../../lib/globalStyles';
+import { IconArrowL, IconForkClose, IconMore, IconSettings, IconSignout } from '../../lib/imageDefine';
 import CopyButton from '../baseUI/copyButton';
 import MAvatar from '../baseUI/mAvatar';
 import MButton from '../baseUI/mButton';

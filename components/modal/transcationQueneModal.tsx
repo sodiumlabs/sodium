@@ -65,6 +65,6 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
 
 const styles = StyleSheet.create({
   marginV: {
-    marginVertical: 20
+    marginBottom: 20
   }
 });

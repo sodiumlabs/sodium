@@ -49,13 +49,13 @@ export default function Floater(props: { hasNavigationBarBack?: boolean }) {
   return (
     // { top: insets.top }
     <MHStack stretchW style={[styles.container, { top: insets.top }]}>
-      <BlurView style={{ 'width': '100%' }}>
-        <MHStack stretchH stretchW >
-          <MHStack style={[adapterStyle as unknown]}>
-            <FloaterDrawer hasNavigationBarBack={props.hasNavigationBarBack} />
-          </MHStack>
+      {/* <BlurView style={{ 'width': '100%', borderRadius: 15 }}> */}
+      <MHStack stretchH stretchW >
+        <MHStack style={[adapterStyle as unknown]}>
+          <FloaterDrawer hasNavigationBarBack={props.hasNavigationBarBack} />
         </MHStack>
-      </BlurView>
+      </MHStack>
+      {/* </BlurView> */}
     </MHStack>
   );
 }

@@ -70,6 +70,6 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
 
 const styles = StyleSheet.create({
   marginV: {
-    marginTop: 20
+    // marginTop: 20
   }
 });

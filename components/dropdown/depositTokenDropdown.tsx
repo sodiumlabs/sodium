@@ -82,7 +82,7 @@ const TokenItem = (props: { option: ISelectItemData, handleOptionPress: (option:
       <MHStack style={styles.sendCoin} stretchW>
         <MHStack style={{ flex: 1, alignItems: 'center', }}>
           <MImage w={32} h={32} uri={curToken.icon} />
-          <MText style={{ marginLeft: 5 }}>{curToken.tokenID}</MText>
+          <MText style={{ marginLeft: 6, fontWeight: '700' }}>{curToken.tokenID}</MText>
         </MHStack>
       </MHStack>
     </Pressable>
