@@ -1,11 +1,10 @@
 import { useRef, useState } from 'react';
 import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, ViewProps } from 'react-native';
+import { globalStyle } from '../../lib/globalStyles';
+import { AnimArrow } from '../baseUI/animArrow';
 import MHStack from '../baseUI/mHStack';
-import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { globalStyle } from '../../lib/globalStyles';
-import { IconArrow } from '../../lib/imageDefine';
 
 export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: string }) => {
   const minHeight = 50;
@@ -18,20 +17,22 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
     if (targetHeight <= 0) {
       return;
     }
+    setIsFold(false);
     Animated.timing(heightAnim, {
       easing: Easing.quad,
       toValue: targetHeight,
       duration: duration,
       useNativeDriver: false
-    }).start(() => setIsFold(false));
+    }).start();
   }
   const fold = (targetHeight: number, duration: number) => {
+    setIsFold(true)
     Animated.timing(heightAnim, {
       easing: Easing.quad,
       toValue: targetHeight,
       duration: duration,
       useNativeDriver: false
-    }).start(() => setIsFold(true));
+    }).start();
   }
 
   const onBtnClick = () => {
@@ -57,7 +58,7 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
             <MHStack style={{ flex: 1 }}>
               <MText style={{ fontWeight: '700' }}>{header}</MText>
             </MHStack>
-            <MImage w={10} h={10} source={IconArrow} />
+            <AnimArrow isDown={!isFold} />
           </MHStack>
         </Pressable>
 
