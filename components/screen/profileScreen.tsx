@@ -8,7 +8,7 @@ import { Spacer } from "../base/spacer";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
-import { globalStyle } from '../../lib/globalStyles';
+import { globalStyle, eColor } from '../../lib/globalStyles';
 
 export function ProfileScreen() {
   const auth = useAuth();
@@ -23,20 +23,20 @@ export function ProfileScreen() {
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title} >Google</MText>
-              <MText>xxxxxxxxxx@gmail.com</MText>
+              <MText style={{ color: eColor.GrayContentText }} >xxxxxxxxxx@gmail.com</MText>
             </MVStack>
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title}>Public Address</MText>
-              <MText>{auth.blockchainAddress}</MText>
+              <MText style={{ color: eColor.GrayContentText }}>{auth.blockchainAddress}</MText>
             </MVStack>
 
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title}>ENS</MText>
-              <MText style={{ marginBottom: 6 }}>No reverse record found.</MText>
+              <MText style={{ marginBottom: 6, color: eColor.GrayContentText }}>No reverse record found.</MText>
               <MText style={styles.title}>Last check on</MText>
-              <MText>2022/12/1 11:11:20</MText>
+              <MText style={{ color: eColor.GrayContentText }}>2022/12/1 11:11:20</MText>
             </MVStack>
             <Spacer />
             <Information />

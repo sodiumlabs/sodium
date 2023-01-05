@@ -118,7 +118,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
               <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
                 {
                   props.hasNavigationBarBack && (
-                    <Pressable style={{ paddingLeft: 20, paddingRight: 20, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
+                    <Pressable style={{ paddingLeft: 17, paddingRight: 17, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
                       <MImage w={8} h={12} source={IconArrowL} />
                     </Pressable>
                   )

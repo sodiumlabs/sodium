@@ -35,7 +35,7 @@ export function SecurityScreen() {
               <MText>Two-factor methods</MText>
 
               <MLineLR
-                left={<MText>Primary two-factor method</MText>}
+                left={<MText style={{ color: eColor.GrayContentText }} >Primary two-factor method</MText>}
                 right={
                   <MHStack>
 
@@ -48,7 +48,7 @@ export function SecurityScreen() {
               <MDivider style={{ marginVertical: 10 }} />
               <MText  >Recovery options</MText>
               <MLineLR
-                left={<MText>Recovery codes</MText>}
+                left={<MText style={{ color: eColor.GrayContentText }}>Recovery codes</MText>}
                 right={
                   <MHStack>
                     <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >

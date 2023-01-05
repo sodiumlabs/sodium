@@ -35,7 +35,7 @@ const TextItem = (props: { title: string, value: string }) => {
   return (
     <MHStack style={{ marginTop: 6 }}>
       <MText style={{ width: 100, textAlign: 'right' }}>{props.title}:</MText>
-      <MText style={{ marginLeft: 15 }}>{props.value}</MText>
+      <MText style={{ marginLeft: 15, color: eColor.GrayContentText }}>{props.value}</MText>
     </MHStack>
   )
 }
