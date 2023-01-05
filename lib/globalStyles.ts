@@ -3,6 +3,8 @@ import { StyleSheet } from 'react-native';
 
 
 export enum eColor {
+  Red = 'red',
+  GrayHover = '#eeeeee',
   Blue = '#2178DD',
   Black = '#8B8E9E',
   Border = '#EEF0F2',

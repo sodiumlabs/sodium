@@ -8,7 +8,7 @@ import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
-import { globalStyle } from '../../lib/globalStyles';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 
 export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemData[], selectedOption: ISelectItemData, setSelectedOption: Dispatch<SetStateAction<ISelectItemData>> }) => {
   const { options, selectedOption, setSelectedOption, style, ...rest } = props;
@@ -33,11 +33,15 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
   return (
     <View style={[styles.container, style]} {...rest}>
 
-      <Pressable onPress={toggleDropdown}>
+      {/* <Pressable onPress={toggleDropdown}>
         <MHStack stretchW style={[{ padding: 10 }, globalStyle.whiteBorderWidth]}>
           <TokenItem option={selectedOption} />
         </MHStack>
-      </Pressable>
+      </Pressable> */}
+
+      <MHStack stretchW style={[globalStyle.whiteBorderWidth, { overflow: 'hidden' }]}>
+        <TokenItem option={selectedOption} handleOptionPress={toggleDropdown} />
+      </MHStack>
 
       {isDropdownVisible && (
         <View style={styles.dropdown}>
@@ -46,13 +50,10 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
             data={options}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
-              <Pressable
-                onPress={() => handleOptionPress(item)}
-                style={styles.option}
-              >
-                <TokenItem option={item} />
-                {index != options.length - 1 && (<MDivider style={{ marginTop: 15 }} />)}
-              </Pressable>
+              <>
+                <TokenItem option={item} handleOptionPress={handleOptionPress} />
+                {index != options.length - 1 && (<MDivider />)}
+              </>
             )}
           />
         </View>
@@ -61,8 +62,9 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
   );
 };
 
-const TokenItem = (props: { option: ISelectItemData }) => {
-  const { option } = props;
+const TokenItem = (props: { option: ISelectItemData, handleOptionPress: (option: ISelectItemData) => void }) => {
+  const { option, handleOptionPress } = props;
+  const [isItemHovered, setIsItemHovered] = useState(false);
 
   if (option == null) {
     return <></>
@@ -70,12 +72,20 @@ const TokenItem = (props: { option: ISelectItemData }) => {
   const curToken = option.data as IDepositToken;
 
   return (
-    <MHStack style={styles.sendCoin} stretchW>
-      <MHStack style={{ flex: 1, alignItems: 'center', }}>
-        <MImage w={32} h={32} uri={curToken.icon} />
-        <MText style={{ marginLeft: 5 }}>{curToken.tokenID}</MText>
+    <Pressable
+
+      onHoverIn={() => setIsItemHovered(true)}
+      onHoverOut={() => setIsItemHovered(false)}
+      onPress={() => handleOptionPress(option)}
+      style={[styles.option, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}
+    >
+      <MHStack style={styles.sendCoin} stretchW>
+        <MHStack style={{ flex: 1, alignItems: 'center', }}>
+          <MImage w={32} h={32} uri={curToken.icon} />
+          <MText style={{ marginLeft: 5 }}>{curToken.tokenID}</MText>
+        </MHStack>
       </MHStack>
-    </MHStack>
+    </Pressable>
   )
 }
 
@@ -96,6 +106,7 @@ const styles = StyleSheet.create({
     zIndex: 3,
   },
   option: {
+    width: '100%',
     padding: 10,
     backgroundColor: '#ffffff',
     paddingHorizontal: 15,

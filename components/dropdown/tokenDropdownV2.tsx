@@ -35,11 +35,9 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
   return (
     <View style={styles.container}>
 
-      <Pressable onPress={toggleDropdown}>
-        <MHStack stretchW style={[{ padding: 10 }, globalStyle.whiteBorderWidth]}>
-          <TokenItem option={selectedOption} />
-        </MHStack>
-      </Pressable>
+      <MHStack stretchW style={[globalStyle.whiteBorderWidth, { overflow: 'hidden' }]}>
+        <TokenItem option={selectedOption} handleOptionPress={toggleDropdown} />
+      </MHStack>
 
       {isDropdownVisible && (
         <View style={styles.dropdown}>
@@ -48,14 +46,11 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
             data={options}
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
-              <Pressable
-                onPress={() => handleOptionPress(item)}
-                style={styles.option}
-              >
-                <TokenItem option={item} />
-                {index != options.length - 1 && (<MDivider style={{ marginTop: 10 }} />)}
+              <>
+                <TokenItem option={item} handleOptionPress={handleOptionPress} />
+                {index != options.length - 1 && (<MDivider />)}
+              </>
 
-              </Pressable>
             )}
           />
         </View>
@@ -64,26 +59,37 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
   );
 };
 
-const TokenItem = (props: { option: IUserTokenInfo }) => {
-  const { option } = props;
+const TokenItem = (props: { option: IUserTokenInfo, handleOptionPress: (option: IUserTokenInfo) => void }) => {
+  const { option, handleOptionPress } = props;
+  const [isItemHovered, setIsItemHovered] = useState(false);
   if (option == null) {
     return <></>
   }
   return (
-    <MHStack style={styles.sendCoin} stretchW>
-      <MImage w={32} h={32} uri={option.token.centerData.logoURI} />
-      <MVStack style={{ flex: 1 }}>
-        <MHStack style={{ flex: 1 }}>
-          <MText style={{ fontWeight: '700' }} fontSize={14}>{option.token.symbol}</MText>
-          {/* <MImage size={12} /> */}
-          {/* <MText>{option.token.name}</MText> */}
-        </MHStack>
-        <MHStack style={{ flex: 1 }}>
-          {/* <MText>{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText> */}
-          <MText> Balance:{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText>
-        </MHStack>
-      </MVStack>
-    </MHStack>
+    <Pressable
+
+      onHoverIn={() => setIsItemHovered(true)}
+      onHoverOut={() => setIsItemHovered(false)}
+      onPress={() => handleOptionPress(option)}
+      style={[styles.option, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}
+    >
+      <MHStack style={styles.sendCoin} stretchW>
+        <MImage w={32} h={32} uri={option.token.centerData.logoURI} />
+        <MVStack style={{ flex: 1 }}>
+          <MHStack style={{ flex: 1 }}>
+            <MText style={{ fontWeight: '700' }} fontSize={14}>{option.token.symbol}</MText>
+            {/* <MImage size={12} /> */}
+            {/* <MText>{option.token.name}</MText> */}
+          </MHStack>
+          <MHStack style={{ flex: 1 }}>
+            {/* <MText>{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText> */}
+            <MText> Balance:{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText>
+          </MHStack>
+        </MVStack>
+      </MHStack>
+
+    </Pressable>
+
   )
 }
 
@@ -92,7 +98,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'relative',
     // padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
     backgroundColor: 'white',
     zIndex: 1,
   },
@@ -105,6 +111,7 @@ const styles = StyleSheet.create({
   },
   option: {
     padding: 10,
+    width: '100%',
     // borderRadius: 10,
     // backgroundColor: 'white',
     backgroundColor: '#ffffff',

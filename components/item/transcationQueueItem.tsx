@@ -17,11 +17,14 @@ import { formatTimeYMDHMS } from '../../lib/common/time';
 import { showUpdateTranscationQueueModal, showUpdateSignTranscationModal } from '../base/modalInit';
 import { OperateTimeStamp } from '../../lib/data/operateTime';
 import { eColor } from '../../lib/globalStyles';
+import { IconForkClose } from '../../lib/imageDefine';
 
 export default function TranscationQueueItem(props: { transcation: ITranscation }) {
   const { transcation } = props;
   // const [decodeDatas, setDecodeDatas] = useState<IDecodeTranscation[]>();
   const [decodeData, setDecodeData] = useState<IDecodeTranscation>();
+  const [isRejectHovered, setIsRejectHovered] = useState(false);
+  const [isItemHovered, setIsItemHovered] = useState(false);
   const auth = useAuth();
   useEffect(() => {
     const func = async () => {
@@ -48,25 +51,27 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
   }, [auth])
 
   return (
-    <Pressable>
-      <MHStack style={styles.container} stretchW>
-        <Pressable style={{ flex: 1 }} onPress={itemClick}>
-          <MHStack style={styles.pre} >
-            <MText style={{ flex: 1 }}>Send tokens</MText>
-            {/* <MImage size={16} /> */}
-            {/* <MText style={{ flex: 1 }}>{decodeData?.decodeTransferData?.token?.name}</MText> */}
-            <MText >{formatTimeYMDHMS(transcation.timeStamp)}</MText>
-          </MHStack>
-        </Pressable>
+    <MHStack style={styles.container} stretchW>
+      <Pressable onPress={itemClick} style={{ flex: 1, }}
+        onHoverIn={() => setIsItemHovered(true)}
+        onHoverOut={() => setIsItemHovered(false)}>
+        <MHStack style={[styles.pre, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} >
+          <MText style={{ flex: 1 }}>Send tokens</MText>
+          {/* <MImage size={16} /> */}
+          {/* <MText style={{ flex: 1 }}>{decodeData?.decodeTransferData?.token?.name}</MText> */}
+          <MText >{formatTimeYMDHMS(transcation.timeStamp)}</MText>
+        </MHStack>
+      </Pressable>
 
-        <Pressable onPress={rejectClick}>
-          <MHStack style={styles.reject}>
-            {/* <MImage size={16} /> */}
-            <MText style={{ color: eColor.GrayContentText }} >x</MText>
-          </MHStack>
-        </Pressable>
-      </MHStack>
-    </Pressable>
+      <Pressable onPress={rejectClick}
+        onHoverIn={() => setIsRejectHovered(true)}
+        onHoverOut={() => setIsRejectHovered(false)}>
+        <MHStack style={[styles.reject, { backgroundColor: isRejectHovered ? eColor.Red : 'rgba(1,1,1,0.1)' }]}>
+          <MImage w={16} h={16} source={IconForkClose} style={{ opacity: 0.5 }} />
+          {/* <MText style={{ color: eColor.GrayContentText }} >x</MText> */}
+        </MHStack>
+      </Pressable>
+    </MHStack>
   )
 }
 
@@ -75,7 +80,8 @@ const styles = StyleSheet.create({
   },
   pre: {
     flex: 1,
-    padding: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
     marginBottom: 12,
     backgroundColor: '#ffffff',
     borderWidth: 1,
@@ -87,10 +93,11 @@ const styles = StyleSheet.create({
   reject: {
     justifyContent: 'center',
     alignItems: 'center',
-    width: 45,
-    padding: 15,
+    width: 50,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
     marginBottom: 12,
-    backgroundColor: 'rgba(1,1,1,0.1)',
+    // backgroundColor: 'rgba(1,1,1,0.1)',
     borderWidth: 1,
     borderColor: eColor.Border,
     borderLeftWidth: 0,

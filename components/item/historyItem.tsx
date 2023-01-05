@@ -3,6 +3,7 @@
 
 
 import { TransactionHistory } from '@0xsodium/provider';
+import { useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { formatTime } from '../../lib/common/time';
@@ -16,6 +17,7 @@ import MVStack from '../baseUI/mVStack';
 
 export default function HistoryItem(props: { history: TransactionHistory }) {
   const { history } = props;
+  const [isItemHovered, setIsItemHovered] = useState(false);
   const onClick = () => {
     showUpdateTranscationDetailModal(true, history);
   }
@@ -27,8 +29,11 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
   const transfer = history.erc20Transfers[0];
   const token = transfer.token;
   return (
-    <Pressable onPress={onClick}>
-      <MVStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
+    <Pressable
+      onHoverIn={() => setIsItemHovered(true)}
+      onHoverOut={() => setIsItemHovered(false)}
+      onPress={onClick}>
+      <MVStack style={[styles.container, globalStyle.whiteBorderWidth, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} stretchW>
 
         <MLineLR
           left={

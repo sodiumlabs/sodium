@@ -13,8 +13,8 @@ export const IconInfoPolicy = require('./../assets/logoIcon.png');
 export const IconInfoSupport = require('./../assets/logoIcon.png');
 
 
-export const IconMenuSend = require('./../assets/logoIcon.png');
-export const IconMenuDeposit = require('./../assets/logoIcon.png');
+export const IconMenuSend = require('./../assets/send.png');
+export const IconMenuDeposit = require('./../assets/deposit.png');
 
 
 export const IconArrowR = require('./../assets/arrowR.png');

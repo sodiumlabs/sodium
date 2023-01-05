@@ -4,6 +4,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { updateCurScreenTab, useCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
 import { IconLogo, IconArrow, IconMenuWallet, IconMenuHistory } from '../../lib/imageDefine';
+import { useRequestedTransactions } from '../../lib/transaction';
+import { CircleTip } from '../baseUI/circleTip';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -35,16 +37,19 @@ export default function Header(props) {
 
 const HeaderItem = (props: { screen: Screens, source: ImageSourcePropType, isSelect: boolean }) => {
   const { screen, source, isSelect } = props;
+  const requestTranscations = useRequestedTransactions();
   const onItemClick = () => {
     navigationRef.reset({ index: 0, routes: [{ name: screen }], })
     updateCurScreenTab(screen);
   }
   return (
-    <Pressable style={[{ marginHorizontal: 20 }, { opacity: isSelect ? 1 : 0.5 }]} onPress={onItemClick}>
+    <Pressable style={[{ marginHorizontal: 20, position: 'relative' }, { opacity: isSelect ? 1 : 0.5 }]} onPress={onItemClick}>
       <MLineLR
         left={<MImage w={14} h={14} source={source} />}
         right={<MText style={{ fontWeight: '700', marginLeft: 4 }} fontSize={12}>{screen}</MText>}
       />
+      <CircleTip num={requestTranscations.length + ''} style={{ position: 'absolute', right: -10, top: -20, width: 15, height: 15 }} />
+
     </Pressable>
   )
 }

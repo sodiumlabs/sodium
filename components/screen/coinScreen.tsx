@@ -23,6 +23,7 @@ import { globalStyle, eColor } from '../../lib/globalStyles';
 import { MDivider } from "../baseUI/mDivider";
 import CopyButton from "../baseUI/copyButton";
 import LinkButton from "../baseUI/linkButton";
+import { MButtonText } from "../baseUI/mButtonText";
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
@@ -51,9 +52,10 @@ export function CoinScreen(props) {
             </MVStack>
 
             <MVStack stretchW style={{ marginVertical: 20 }}>
-              <MButton style={{ 'width': '100%', height: 50 }} onPress={() => navigationRef.navigate(Screens.Send)} >
-                <MText>Send USDC</MText>
+              <MButton style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send)} >
+                <MButtonText title={"Send USDC"} />
               </MButton>
+
             </MVStack>
 
             <BaseFoldFrame header={"Detail"}>
