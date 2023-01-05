@@ -2,22 +2,21 @@
 
 
 
-import { TransactionRequest } from '@0xsodium/transactions';
 import { useCallback, useEffect, useState } from 'react';
-import { Image, Pressable, StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import { decodeTransactionRequest } from '../../lib/common/decode';
-import { IDecodeTranscation, ITranscation } from '../../lib/define';
-import { useNavigation } from '../../lib/navigation';
-import MHStack from '../baseUI/mHStack';
-import MImage from '../baseUI/mImage';
-import MText from '../baseUI/mText';
-import { useAuth } from '../../lib/data/auth';
-import { transactionQueue } from '../../lib/transaction';
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { showUpdateTranscationQueueModal, showUpdateSignTranscationModal } from '../base/modalInit';
+import { useAuth } from '../../lib/data/auth';
 import { OperateTimeStamp } from '../../lib/data/operateTime';
+import { IDecodeTranscation, ITranscation } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { IconForkClose } from '../../lib/imageDefine';
+import { transactionQueue } from '../../lib/transaction';
+import { showUpdateSignTranscationModal, showUpdateTranscationQueueModal } from '../base/modalInit';
+import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
+import { MLoading } from '../baseUI/mLoading';
+import MText from '../baseUI/mText';
 
 export default function TranscationQueueItem(props: { transcation: ITranscation }) {
   const { transcation } = props;
@@ -25,13 +24,24 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
   const [decodeData, setDecodeData] = useState<IDecodeTranscation>();
   const [isRejectHovered, setIsRejectHovered] = useState(false);
   const [isItemHovered, setIsItemHovered] = useState(false);
+  const [txnType, setTxnType] = useState<string>();
   const auth = useAuth();
   useEffect(() => {
     const func = async () => {
       const decodeDatas = await decodeTransactionRequest(transcation.txReq, auth.web3signer);
       // setDecodeDatas(decodeResult);
       setDecodeData(decodeDatas[0]);
+      if (decodeDatas.findIndex(decode => !!decode.decodeTransferData)) {
+        setTxnType("Send tokens");
+        return;
+      }
+      if (decodeDatas.findIndex(decode => !!decode.decodeApproveData)) {
+        setTxnType("Approve tokens");
+        return;
+      }
     }
+
+
     func();
   }, [transcation.txReq]);
 
@@ -56,10 +66,13 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
         onHoverIn={() => setIsItemHovered(true)}
         onHoverOut={() => setIsItemHovered(false)}>
         <MHStack style={[styles.pre, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} >
-          <MText style={{ flex: 1 }}>Send tokens</MText>
+          {
+            !txnType && <MLoading />
+          }
+          <MText style={{ flex: 1, fontWeight: '700' }}>{txnType}</MText>
           {/* <MImage size={16} /> */}
           {/* <MText style={{ flex: 1 }}>{decodeData?.decodeTransferData?.token?.name}</MText> */}
-          <MText >{formatTimeYMDHMS(transcation.timeStamp)}</MText>
+          <MText style={{ color: eColor.GrayContentText }} >{formatTimeYMDHMS(transcation.timeStamp)}</MText>
         </MHStack>
       </Pressable>
 
