@@ -16,7 +16,7 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
       <MLineLR
         left={
           <MHStack style={{ alignItems: 'center' }}>
-            <MImage w={20} h={20} style={{ marginRight: 7 }} source={source} />
+            <MImage w={15} h={15} style={{ marginRight: 7 }} source={source} />
             <MVStack>
               {
                 props.children
@@ -24,7 +24,7 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
             </MVStack>
           </MHStack>
         }
-        right={<MImage w={10} h={10} source={IconArrowR} />} />
+        right={<MImage w={14} h={11} source={IconArrowR} />} />
     </Pressable>
   )
 }

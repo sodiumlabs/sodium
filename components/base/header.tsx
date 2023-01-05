@@ -1,6 +1,7 @@
 
 import { ImageSourcePropType, Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { updateCurScreenTab, useCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
 import { IconLogo, IconArrow, IconMenuWallet, IconMenuHistory } from '../../lib/imageDefine';
 import MHStack from '../baseUI/mHStack';
@@ -12,6 +13,7 @@ import { navigationRef } from './navigationInit';
 
 export default function Header(props) {
   const insets = useSafeAreaInsets();
+  const curScreenName = useCurScreenTab();
 
   return (
     <MHStack stretchW style={[styles.container, { top: insets.top }]}>
@@ -20,8 +22,8 @@ export default function Header(props) {
         <MImage w={40} h={40} style={{ position: 'absolute', left: 0 }} source={IconLogo} />
 
         <MHStack pointerEvents='auto'>
-          <HeaderItem source={IconMenuWallet} screen={Screens.Wallet} title={'Wallet'} />
-          <HeaderItem source={IconMenuHistory} screen={Screens.History} title={'History'} />
+          <HeaderItem isSelect={curScreenName == Screens.Wallet} source={IconMenuWallet} screen={Screens.Wallet} />
+          <HeaderItem isSelect={curScreenName == Screens.History} source={IconMenuHistory} screen={Screens.History} />
         </MHStack>
 
       </MHStack>
@@ -31,13 +33,17 @@ export default function Header(props) {
 }
 
 
-const HeaderItem = (props: { screen: Screens, title: string, source: ImageSourcePropType }) => {
-  const { screen, title, source } = props;
+const HeaderItem = (props: { screen: Screens, source: ImageSourcePropType, isSelect: boolean }) => {
+  const { screen, source, isSelect } = props;
+  const onItemClick = () => {
+    navigationRef.reset({ index: 0, routes: [{ name: screen }], })
+    updateCurScreenTab(screen);
+  }
   return (
-    <Pressable style={{ marginHorizontal: 20 }} onPress={() => navigationRef.reset({ index: 0, routes: [{ name: screen }], })}>
+    <Pressable style={[{ marginHorizontal: 20 }, { opacity: isSelect ? 1 : 0.5 }]} onPress={onItemClick}>
       <MLineLR
         left={<MImage w={14} h={14} source={source} />}
-        right={<MText style={{ fontWeight: '700', marginLeft: 4 }} fontSize={12}>{title}</MText>}
+        right={<MText style={{ fontWeight: '700', marginLeft: 4 }} fontSize={12}>{screen}</MText>}
       />
     </Pressable>
   )

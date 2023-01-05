@@ -24,6 +24,7 @@ export function SessionScreen() {
             </MHStack>
             <SessionItem />
             <SessionItem />
+            <MHStack style={{ marginBottom: 50 }} />
 
             <Spacer />
             <Information />

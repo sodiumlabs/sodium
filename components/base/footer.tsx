@@ -2,6 +2,7 @@
 import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useCurScreenTab, updateCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
 import { IconMenuHistory, IconMenuWallet } from '../../lib/imageDefine';
 import MenuButton from '../baseUI/menuButton';
@@ -11,18 +12,24 @@ import { navigationRef } from './navigationInit';
 
 export default function Footer() {
   const insets = useSafeAreaInsets();
-  // const size = useDimensionSize();
-  // debugger
+  const curScreenName = useCurScreenTab();
+
+  const onWalletClick = () => {
+    navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })
+    updateCurScreenTab(Screens.Wallet);
+  }
+  const onHistoryClick = () => {
+    navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })
+    updateCurScreenTab(Screens.History);
+  }
   return (
 
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
       <BlurView style={{ width: '100%' }}>
-        {/* <MVStack stretchW style={[styles.container, { top: size[1] - insets.bottom - 80 }]}> */}
         <MHStack stretchW style={styles.list}>
-          <MenuButton source={IconMenuWallet} pointerEvents='auto' title='wallet' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })} />
-          <MenuButton source={IconMenuHistory} pointerEvents='auto' title='history' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })} />
+          <MenuButton isSelect={curScreenName == Screens.Wallet} w={17} h={15} source={IconMenuWallet} pointerEvents='auto' title={Screens.Wallet} onPress={onWalletClick} />
+          <MenuButton isSelect={curScreenName == Screens.History} w={17} h={17} source={IconMenuHistory} pointerEvents='auto' title={Screens.History} onPress={onHistoryClick} />
         </MHStack>
-
       </BlurView>
     </MVStack>
 

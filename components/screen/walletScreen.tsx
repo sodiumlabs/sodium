@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { fixWidth, Screens } from '../../lib/define';
 import { useDimensionSize } from '../../lib/hook/dimension';
@@ -15,6 +15,7 @@ import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
 import { RequestTranscation } from '../transcation/requestTranscation';
 import { IconMenuDeposit, IconMenuSend } from '../../lib/imageDefine';
+import { eColor } from '../../lib/globalStyles';
 
 
 
@@ -56,6 +57,19 @@ export function WalletScreen() {
                     return <CoinItem key={tokenInfo.token.address} tokenInfo={tokenInfo} />
                   }
                 })
+              }
+
+              {
+                tokensQuery.isFetching && (
+                  <ActivityIndicator size='small' color="#0000ff" />
+                )
+              }
+
+              {
+                !tokensQuery.isFetching && !tokenInfos && (
+                  <MHStack stretchW style={{ justifyContent: 'center', marginTop: 30, marginBottom: 30 }}>
+                    <MText style={{ textAlign: 'center', color: eColor.GrayText }} numberOfLines={null}>No coins in your wallet</MText>
+                  </MHStack>)
               }
 
             </MVStack >

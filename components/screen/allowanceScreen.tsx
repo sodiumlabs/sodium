@@ -24,6 +24,7 @@ export function AllowanceScreen() {
             </MHStack>
             <AllowanceItem />
             <AllowanceItem />
+            <MHStack style={{ marginBottom: 50 }} />
 
             <Spacer />
             <Information />

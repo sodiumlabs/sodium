@@ -4,7 +4,7 @@ import { useQueryNetwork } from '../../lib/api/network';
 import { loginOut, useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
 import { globalStyle, eColor } from '../../lib/globalStyles';
-import { IconBack, IconForkClose, IconMore } from '../../lib/imageDefine';
+import { IconArrowL, IconBack, IconForkClose, IconMore, IconSettings, IconSignout } from '../../lib/imageDefine';
 import CopyButton from '../baseUI/copyButton';
 import MAvatar from '../baseUI/mAvatar';
 import MButton from '../baseUI/mButton';
@@ -118,8 +118,8 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
               <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
                 {
                   props.hasNavigationBarBack && (
-                    <Pressable style={{ paddingLeft: 10, paddingRight: 10, backgroundColor: 'rgba(1,1,1,0.1)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
-                      <MImage w={20} h={20} source={IconBack} />
+                    <Pressable style={{ paddingLeft: 20, paddingRight: 20, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
+                      <MImage w={8} h={12} source={IconArrowL} />
                     </Pressable>
                   )
                 }
@@ -162,11 +162,11 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
             <MHStack >
               <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                {/* <MImage size={14} style={{ marginRight: 6 }} /> */}
+                <MImage w={14} h={14} style={{ marginRight: 6 }} source={IconSettings} />
                 <MButtonText title={"Settings"} />
               </MButton>
               <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                {/* <MImage size={14} style={{ marginRight: 6 }} /> */}
+                <MImage w={12} h={10} style={{ marginRight: 6 }} source={IconSignout} />
                 <MButtonText title={"Sign out"} />
               </MButton>
             </MHStack>
@@ -187,7 +187,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F9FAFB',
     borderWidth: 1,
     borderColor: eColor.Border,
-    borderRadius: 6,
+    borderRadius: 15,
   },
   email: {
     // flex: 1,

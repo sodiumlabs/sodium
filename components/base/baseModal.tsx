@@ -5,6 +5,7 @@ import { fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
 import { IconModalClose } from '../../lib/imageDefine';
 import MImage from '../baseUI/mImage';
+import { ModalCloseButton } from '../baseUI/modalCloseButton';
 import MVStack from '../baseUI/mVStack';
 
 export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void, contentHeight?: number }) => {
@@ -68,11 +69,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
           {
             props.children
           }
-          <Pressable
-            onPress={() => hideModal()}
-            style={styles.close}>
-            <MImage w={30} h={30} source={IconModalClose} />
-          </Pressable>
+          <ModalCloseButton onClose={hideModal} />
         </MVStack>
       </MVStack>
     </Modal>
@@ -84,8 +81,5 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
 const styles = StyleSheet.create({
   content: {
     backgroundColor: '#F7F7F7', paddingVertical: 15, alignItems: 'center', flex: 1, position: 'relative'
-  },
-  close: {
-    width: 30, height: 30, position: 'absolute', top: -40, right: 0, borderRadius: 99
   }
 });
