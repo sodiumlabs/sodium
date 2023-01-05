@@ -13,6 +13,7 @@ export default function CopyButton(props: PressableProps & { copyText: string })
   const { copyText, style, ...rest } = props;
   const [clipboardContent, setClipboardContent] = useMClipboard();
   const [isCopied, setIsCopied] = useState(false);
+  const [isItemHovered, setIsItemHovered] = useState(false);
 
   const copyClick = async () => {
     if (isCopied) return;
@@ -23,7 +24,10 @@ export default function CopyButton(props: PressableProps & { copyText: string })
   }
 
   return (
-    <Pressable style={[styles.button, style as unknown]} onPress={copyClick} {...rest}>
+    <Pressable
+      onHoverIn={() => setIsItemHovered(true)}
+      onHoverOut={() => setIsItemHovered(false)}
+      style={[styles.button, style as unknown, { opacity: isItemHovered ? 1 : 0.8 }]} onPress={copyClick} {...rest}>
       <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
         <MImage h={10} w={10} style={{ marginRight: 5 }} source={IconCopy} />
         <MText > {isCopied ? "Copied" : "  Copy"} </MText>

@@ -1,6 +1,7 @@
 
 
 
+import { useState } from 'react';
 import { Linking, Pressable, PressableProps, StyleSheet } from 'react-native';
 import { getAddressExplorer } from '../../lib/common/network';
 import { IUserTokenInfo } from '../../lib/define';
@@ -9,13 +10,16 @@ import MText from './mText';
 
 export default function LinkButton(props: PressableProps & { tokenInfo: IUserTokenInfo }) {
   const { tokenInfo, style, ...rest } = props;
-
+  const [isItemHovered, setIsItemHovered] = useState(false);
   const linkTxHash = () => {
     Linking.openURL(getAddressExplorer(tokenInfo.token.chainId, tokenInfo.token.address))
   }
 
   return (
-    <Pressable style={[styles.button, style as unknown]} onPress={linkTxHash} {...rest}>
+    <Pressable
+      onHoverIn={() => setIsItemHovered(true)}
+      onHoverOut={() => setIsItemHovered(false)}
+      style={[styles.button, style as unknown, { opacity: isItemHovered ? 1 : 0.8 }]} onPress={linkTxHash} {...rest}>
       <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
         {/* <MImage h={10} w={10} style={{ marginRight: 5 }} source={IconCopy} /> */}
         <MText > Link </MText>

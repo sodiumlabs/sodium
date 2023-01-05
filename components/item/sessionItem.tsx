@@ -9,6 +9,8 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 
 export function SessionItem() {
+
+
   return (
     <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
       <MHStack><MText style={{ fontWeight: '700', marginBottom: 10 }} >Carbon scrub</MText></MHStack>

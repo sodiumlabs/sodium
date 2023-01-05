@@ -25,7 +25,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} stretchW>
         <MImage w={32} h={32} uri={tokenInfo.token.centerData.logoURI} />
 
-        <MVStack style={{ flex: 1 }}>
+        <MVStack style={{ flex: 1, marginLeft: 6 }}>
           <MLineLR
             left={
               <MHStack >
