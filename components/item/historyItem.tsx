@@ -44,7 +44,7 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
         <MLineLR style={{ marginTop: 3 }}
           left={
             <MHStack style={{ flex: 1 }}>
-              <MImage size={16} url={token.centerData.logoURI} />
+              <MImage w={16} h={16} uri={token.centerData.logoURI} />
               <MText style={{ marginLeft: 5 }}>{token.symbol}</MText>
             </MHStack>
           }

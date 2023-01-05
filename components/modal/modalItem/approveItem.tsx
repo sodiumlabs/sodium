@@ -57,14 +57,14 @@ export const ApproveItem = (props: {
 
       <MText style={{ color: eColor.GrayText }}>Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-        <MImage size={20} />
+        <MImage w={20} h={20} />
         <MText style={{ flex: 1, color: eColor.GrayContentText }}>{auth?.blockchainAddress}</MText>
       </MHStack>
 
       <MDivider style={{ marginVertical: 10 }} />
       <MText style={{ color: eColor.GrayText }}>Value</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-        <MImage size={20} url={approveData.token.centerData.logoURI} />
+        <MImage w={20} h={20} uri={approveData.token.centerData.logoURI} />
         <MText style={{ flex: 1, color: eColor.GrayContentText }}>{approveValue}</MText>
       </MHStack>
       <MVStack>

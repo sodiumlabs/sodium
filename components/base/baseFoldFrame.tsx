@@ -5,6 +5,7 @@ import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { globalStyle } from '../../lib/globalStyles';
+import { IconArrow } from '../../lib/imageDefine';
 
 export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: string }) => {
   const minHeight = 50;
@@ -56,7 +57,7 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
             <MHStack style={{ flex: 1 }}>
               <MText style={{ fontWeight: '700' }}>{header}</MText>
             </MHStack>
-            <MImage size={10} />
+            <MImage w={10} h={10} source={IconArrow} />
           </MHStack>
         </Pressable>
 

@@ -27,7 +27,7 @@ export default function MInput(props: TextInputProps) {
         onBlur={() => setIsFocused(false)}
         style={[styles.input, globalStyle.whiteBorderWidth, style, fucusStyle]} {...reset}
       />
-      <MImage style={{ position: 'absolute', top: '50%', right: 15, transform: [{ translateY: '-50%' } as unknown as TranslateYTransform] }} />
+      {/* <MImage style={{ position: 'absolute', top: '50%', right: 15, transform: [{ translateY: '-50%' } as unknown as TranslateYTransform] }} /> */}
     </MHStack>
   )
 }

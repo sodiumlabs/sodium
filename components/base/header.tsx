@@ -1,7 +1,8 @@
 
-import { Pressable, StyleSheet } from 'react-native';
+import { ImageSourcePropType, Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Screens } from '../../lib/define';
+import { IconLogo, IconArrow, IconMenuWallet, IconMenuHistory } from '../../lib/imageDefine';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
@@ -16,11 +17,11 @@ export default function Header(props) {
     <MHStack stretchW style={[styles.container, { top: insets.top }]}>
       <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
 
-        <MImage size={40} style={{ position: 'absolute', left: 0 }} />
+        <MImage w={40} h={40} style={{ position: 'absolute', left: 0 }} source={IconLogo} />
 
         <MHStack pointerEvents='auto'>
-          <HeaderItem screen={Screens.Wallet} title={'Wallet'} />
-          <HeaderItem screen={Screens.History} title={'History'} />
+          <HeaderItem source={IconMenuWallet} screen={Screens.Wallet} title={'Wallet'} />
+          <HeaderItem source={IconMenuHistory} screen={Screens.History} title={'History'} />
         </MHStack>
 
       </MHStack>
@@ -30,13 +31,13 @@ export default function Header(props) {
 }
 
 
-const HeaderItem = (props: { screen: Screens, title: string }) => {
-  const { screen, title } = props;
+const HeaderItem = (props: { screen: Screens, title: string, source: ImageSourcePropType }) => {
+  const { screen, title, source } = props;
   return (
-    <Pressable style={{ marginLeft: 20 }} onPress={() => navigationRef.reset({ index: 0, routes: [{ name: screen }], })}>
+    <Pressable style={{ marginHorizontal: 20 }} onPress={() => navigationRef.reset({ index: 0, routes: [{ name: screen }], })}>
       <MLineLR
-        left={<MImage size={20} />}
-        right={<MText style={{ fontWeight: '700' }}>{title}</MText>}
+        left={<MImage w={14} h={14} source={source} />}
+        right={<MText style={{ fontWeight: '700', marginLeft: 4 }} fontSize={12}>{title}</MText>}
       />
     </Pressable>
   )

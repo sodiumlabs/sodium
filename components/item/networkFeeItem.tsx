@@ -18,7 +18,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
   return (
     <Pressable onPress={undefined}>
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
-        <MImage size={32} url={gasInfo.token.centerData.logoURI} />
+        <MImage w={32} h={32} uri={gasInfo.token.centerData.logoURI} />
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR

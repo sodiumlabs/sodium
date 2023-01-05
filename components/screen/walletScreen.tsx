@@ -14,6 +14,7 @@ import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
 import { RequestTranscation } from '../transcation/requestTranscation';
+import { IconMenuDeposit, IconMenuSend } from '../../lib/imageDefine';
 
 
 
@@ -37,8 +38,8 @@ export function WalletScreen() {
             </MVStack>
 
             <MHStack style={styles.operate}>
-              <WalletButton title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
-              <WalletButton title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
+              <WalletButton source={IconMenuSend} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
+              <WalletButton source={IconMenuDeposit} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
             </MHStack>
 
             <RequestTranscation />

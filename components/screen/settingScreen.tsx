@@ -1,6 +1,7 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { fixWidth, Screens } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
+import { IconAllowance, IconProfile, IconSecurity, IconSessions } from "../../lib/imageDefine";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { navigationRef } from "../base/navigationInit";
@@ -18,19 +19,19 @@ export function SettingScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Setting" />
-            <SettingItem onPress={() => navigationRef.navigate(Screens.Profile)} >
+            <SettingItem source={IconProfile} onPress={() => navigationRef.navigate(Screens.Profile)} >
               <MText>Profile</MText>
             </SettingItem>
-            <SettingItem onPress={() => navigationRef.navigate(Screens.Session)} >
+            <SettingItem source={IconSessions} onPress={() => navigationRef.navigate(Screens.Session)} >
               <MText>Active Sessions</MText>
               <MText> 0 Active Sessions</MText>
             </SettingItem>
 
-            <SettingItem onPress={() => navigationRef.navigate(Screens.Security)} >
+            <SettingItem source={IconSecurity} onPress={() => navigationRef.navigate(Screens.Security)} >
               <MText>Security</MText>
             </SettingItem>
 
-            <SettingItem onPress={() => navigationRef.navigate(Screens.Allowance)} >
+            <SettingItem source={IconAllowance} onPress={() => navigationRef.navigate(Screens.Allowance)} >
               <MText>Allowance</MText>
             </SettingItem>
             <Spacer />

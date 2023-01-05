@@ -71,7 +71,7 @@ const TokenItem = (props: { option: IUserTokenInfo }) => {
   }
   return (
     <MHStack style={styles.sendCoin} stretchW>
-      <MImage size={32} />
+      <MImage w={32} h={32} uri={option.token.centerData.logoURI} />
       <MVStack style={{ flex: 1 }}>
         <MHStack style={{ flex: 1 }}>
           <MText style={{ fontWeight: '700' }} fontSize={14}>{option.token.symbol}</MText>

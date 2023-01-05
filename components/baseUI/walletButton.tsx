@@ -1,15 +1,15 @@
-import { GestureResponderEvent, Pressable, StyleSheet } from 'react-native';
+import { GestureResponderEvent, ImageSourcePropType, Pressable, StyleSheet } from 'react-native';
+import { globalStyle } from '../../lib/globalStyles';
 import MImage from './mImage';
 import MText from './mText';
 import MVStack from './mVStack';
-import { globalStyle } from '../../lib/globalStyles';
 
-export default function WalletButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string; }) {
-  const { onPress, title } = props;
+export default function WalletButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string, source: ImageSourcePropType }) {
+  const { onPress, source, title } = props;
   return (
     <Pressable style={styles.container} onPress={onPress}>
       <MVStack style={[globalStyle.whiteBorderWidth, styles.button]}>
-        <MImage size={12} />
+        <MImage w={20} h={20} source={source} />
       </MVStack>
       <MText style={{ marginTop: 5, fontWeight: '700' }} > {title} </MText>
     </Pressable>

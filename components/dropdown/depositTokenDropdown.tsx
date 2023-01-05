@@ -72,7 +72,7 @@ const TokenItem = (props: { option: ISelectItemData }) => {
   return (
     <MHStack style={styles.sendCoin} stretchW>
       <MHStack style={{ flex: 1, alignItems: 'center', }}>
-        <MImage size={32} url={curToken.icon} />
+        <MImage w={32} h={32} uri={curToken.icon} />
         <MText style={{ marginLeft: 5 }}>{curToken.tokenID}</MText>
       </MHStack>
     </MHStack>

@@ -4,6 +4,7 @@ import { useQueryNetwork } from '../../lib/api/network';
 import { loginOut, useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
 import { globalStyle, eColor } from '../../lib/globalStyles';
+import { IconBack, IconForkClose, IconMore } from '../../lib/imageDefine';
 import CopyButton from '../baseUI/copyButton';
 import MAvatar from '../baseUI/mAvatar';
 import MButton from '../baseUI/mButton';
@@ -109,7 +110,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
 
   return (
-    <Animated.View style={[styles.animContainer, globalStyle.whiteBorderWidth, { height: backgroundHeightAnim }]}>
+    <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
       <MVStack stretchW onLayout={onLayout} pointerEvents='auto' >
         {
           <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >
@@ -117,14 +118,14 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
               <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
                 {
                   props.hasNavigationBarBack && (
-                    <Pressable style={{ paddingLeft: 15, paddingRight: 15, backgroundColor: 'rgba(1,1,1,0.1)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
-                      <MImage size={12} />
+                    <Pressable style={{ paddingLeft: 10, paddingRight: 10, backgroundColor: 'rgba(1,1,1,0.1)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
+                      <MImage w={20} h={20} source={IconBack} />
                     </Pressable>
                   )
                 }
-                <MAvatar style={{ marginHorizontal: 10 }} />
+                <MAvatar style={{ marginHorizontal: 10 }} name={authData.blockchainAddress} />
                 <MText style={{ flex: 1, fontWeight: '700' }} >{authData.blockchainAddress}</MText>
-                <MImage size={24} style={{ margin: 10 }} />
+                <MImage w={24} h={24} style={{ margin: 10 }} source={IconMore} />
               </MHStack>
             </Pressable>
           </Animated.View>
@@ -132,48 +133,40 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         <Animated.View style={{ opacity: contentOpacityAnim }}>
           <MVStack style={{ padding: 10, transform: [{ translateY: -minHeaderHeight }] }} >
             <MHStack style={{ flex: 1 }} >
-              <MAvatar style={{ marginHorizontal: 10 }} size={48} />
+              <MAvatar style={{ marginHorizontal: 10 }} size={48} name={authData.blockchainAddress} />
               <MVStack style={{ flex: 1 }}>
                 <MText style={{ fontWeight: '700' }} >{authData.blockchainAddress}</MText>
                 <MHStack >
                   <CopyButton style={{ 'margin': 5, height: 24 }} copyText={authData.blockchainAddress} />
-                  {/* <MButton onPress={undefined} style={{ 'margin': 5, borderRadius: 10 }}>
-                    <MText>Receive</MText>
-                  </MButton> */}
+
                 </MHStack>
               </MVStack>
               <MVStack >
                 <Pressable onPress={() => foldAnim()}>
-                  <MImage size={24} />
+                  <MImage w={24} h={24} source={IconForkClose} />
                 </Pressable>
               </MVStack>
             </MHStack>
 
-            {/* <Pressable> */}
-            <MVStack style={[styles.email, globalStyle.whiteBorderWidth]}>
+            <MVStack style={[styles.email]}>
               <MText style={{ color: eColor.GrayText }} >Google</MText>
-              <MText style={{ fontWeight: '700', marginTop: 5 }} >xxxxxxxxxx@gmail.com</MText>
+              <MText style={{ marginTop: 5, color: "#6B6B6B" }} >xxxxxxxxxx@gmail.com</MText>
             </MVStack>
-            {/* </Pressable> */}
 
-            {/* <Pressable> */}
-            <MHStack style={[styles.connected, globalStyle.whiteBorderWidth]}>
-              {/* <MImage size={10} style={{ marginRight: 10 }} /> */}
+            <MHStack style={[styles.connected]}>
               <MVStack style={{ flex: 1 }}>
                 <MText style={{ color: eColor.GrayText }}>Connected</MText>
-                <MText style={{ fontWeight: '700', marginTop: 5 }}>{network?.name}</MText>
+                <MText style={{ marginTop: 5, color: "#6B6B6B" }}>{network?.name}</MText>
               </MVStack>
-              {/* <MImage size={10} /> */}
             </MHStack>
-            {/* </Pressable> */}
 
             <MHStack >
               <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                <MImage size={14} style={{ marginRight: 6 }} />
+                {/* <MImage size={14} style={{ marginRight: 6 }} /> */}
                 <MButtonText title={"Settings"} />
               </MButton>
               <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                <MImage size={14} style={{ marginRight: 6 }} />
+                {/* <MImage size={14} style={{ marginRight: 6 }} /> */}
                 <MButtonText title={"Sign out"} />
               </MButton>
             </MHStack>
@@ -191,23 +184,25 @@ const styles = StyleSheet.create({
     position: 'relative',
     overflow: 'hidden',
     width: '100%',
-  },
-  container: {
-    flexDirection: 'column',
-    borderRadius: 10,
-    padding: 10,
-    backgroundColor: '#ffffff',
+    backgroundColor: '#F9FAFB',
+    borderWidth: 1,
+    borderColor: eColor.Border,
+    borderRadius: 6,
   },
   email: {
     // flex: 1,
+    backgroundColor: 'rgba(217, 217, 217, 0.2)',
     padding: 15,
     marginTop: 25,
     marginBottom: 15,
+    borderRadius: 6
   },
   connected: {
     // flex: 1,
+    backgroundColor: 'rgba(217, 217, 217, 0.2)',
     padding: 15,
     marginBottom: 15,
-    alignItems: 'center'
+    alignItems: 'center',
+    borderRadius: 6
   },
 });

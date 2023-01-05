@@ -102,7 +102,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
               <MLineLR
                 left={<MText >Network</MText>}
                 right={<MHStack>
-                  <MImage size={12} />
+                  {/* <MImage w={12} h={12} uri={curNetwork?.bundlerUrl} /> */}
                   <MText style={{ color: '#8247E5', fontWeight: '700' }} >{curNetwork?.name?.toUpperCase()}</MText>
                 </MHStack>} />
               <MLineLR style={{ marginTop: 16 }}

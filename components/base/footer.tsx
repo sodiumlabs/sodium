@@ -3,6 +3,7 @@ import { BlurView } from 'expo-blur';
 import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Screens } from '../../lib/define';
+import { IconMenuHistory, IconMenuWallet } from '../../lib/imageDefine';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
@@ -18,8 +19,8 @@ export default function Footer() {
       <BlurView style={{ width: '100%' }}>
         {/* <MVStack stretchW style={[styles.container, { top: size[1] - insets.bottom - 80 }]}> */}
         <MHStack stretchW style={styles.list}>
-          <MenuButton pointerEvents='auto' title='wallet' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })} />
-          <MenuButton pointerEvents='auto' title='history' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })} />
+          <MenuButton source={IconMenuWallet} pointerEvents='auto' title='wallet' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })} />
+          <MenuButton source={IconMenuHistory} pointerEvents='auto' title='history' onPress={() => navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })} />
         </MHStack>
 
       </BlurView>

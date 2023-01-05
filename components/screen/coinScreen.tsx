@@ -21,25 +21,25 @@ import MVStack from "../baseUI/mVStack";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
 import { globalStyle, eColor } from '../../lib/globalStyles';
 import { MDivider } from "../baseUI/mDivider";
+import CopyButton from "../baseUI/copyButton";
+import LinkButton from "../baseUI/linkButton";
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [clipboardContent, setClipboardContent] = useMClipboard();
   const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(null, tokenInfo.token.address);
-  const copyTxHash = () => {
-    setClipboardContent(tokenInfo.token.address)
-  }
-  const linkTxHash = () => {
-    Linking.openURL(getAddressExplorer(tokenInfo.token.chainId, tokenInfo.token.address))
-  }
+  // const copyTxHash = () => {
+  //   setClipboardContent(tokenInfo.token.address)
+  // }
+
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={{ alignItems: 'center', marginTop: 20 }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MImage size={64} url={tokenInfo.token.centerData.logoURI} />
-            <MText style={{ marginVertical: 6, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
+            <MImage w={64} h={64} uri={tokenInfo.token.centerData.logoURI} />
+            <MText style={{ marginVertical: 12, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
             {/* <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MImage size={16} />
               <MText  >{tokenInfo.token.name}</MText>
@@ -59,26 +59,22 @@ export function CoinScreen(props) {
             <BaseFoldFrame header={"Detail"}>
 
               <MText style={{ marginBottom: 10, color: eColor.GrayText }}>Description</MText>
-              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description}</MText>
+              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unkonw'}</MText>
 
               <MDivider style={{ marginVertical: 10 }} />
               <MText style={{ color: eColor.GrayText, marginBottom: 10 }} >Website</MText>
-              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website}</MText>
+              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website || 'unkonw'}</MText>
 
               {!tokenInfo.token.isNativeToken && (
                 <>
                   <MDivider style={{ marginVertical: 10 }} />
-                  <MText >Contract Address</MText>
+                  <MText style={{ color: eColor.GrayText }} >Contract Address</MText>
                   <MLineLR
-                    left={<MText >{tokenInfo.token.address}</MText>}
+                    left={<MText style={{ color: eColor.GrayContentText }} >{tokenInfo.token.address}</MText>}
                     right={
                       <MHStack>
-                        <MButton onPress={copyTxHash} >
-                          <MText>copy</MText>
-                        </MButton>
-                        <MButton onPress={linkTxHash} >
-                          <MText>link</MText>
-                        </MButton>
+                        <CopyButton copyText={tokenInfo.token.address} />
+                        <LinkButton tokenInfo={tokenInfo} style={{ marginHorizontal: 5 }} />
                       </MHStack>
                     } />
                 </>
@@ -93,7 +89,7 @@ export function CoinScreen(props) {
               <MDivider style={{ marginVertical: 10 }} />
               <MHStack>
                 <MText style={{ flex: 1, color: eColor.GrayText }}>Network</MText>
-                <MImage size={16} />
+                {/* <MImage w={16} h={16} /> */}
                 <MText style={{ color: eColor.GrayContentText }}>{tokenInfo.token.name}</MText>
               </MHStack>
             </BaseFoldFrame>

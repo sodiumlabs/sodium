@@ -18,7 +18,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
   return (
     <Pressable onPress={() => navigationRef.navigate(Screens.Coin, tokenInfo)}>
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
-        <MImage size={32} url={tokenInfo.token.centerData.logoURI} />
+        <MImage w={32} h={32} uri={tokenInfo.token.centerData.logoURI} />
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR

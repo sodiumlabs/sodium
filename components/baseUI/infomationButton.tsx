@@ -1,14 +1,14 @@
-import { GestureResponderEvent, Image, Pressable, PressableProps, StyleSheet } from 'react-native';
+import { GestureResponderEvent, Image, ImageSourcePropType, Pressable, PressableProps, StyleSheet } from 'react-native';
 import { eColor } from '../../lib/globalStyles';
 import MImage from './mImage';
 import MText from './mText';
 
-export default function InfomationButton(props: PressableProps & { title?: string; }) {
-  const { title, style, ...reset } = props;
+export default function InfomationButton(props: PressableProps & { title?: string, source: ImageSourcePropType }) {
+  const { title, source, style, ...reset } = props;
   return (
     <Pressable style={[styles.button, style as unknown]} {...reset}>
-      <MImage size={20} />
-      <MText style={{ fontWeight: '700', color: eColor.GrayText }}> {title} </MText>
+      <MImage w={20} h={20} source={source} />
+      <MText style={{ fontWeight: '700', color: eColor.GrayText, marginTop: 20 }}> {title} </MText>
     </Pressable>
   )
 }

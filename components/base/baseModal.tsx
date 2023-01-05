@@ -3,6 +3,7 @@ import { Animated, Dimensions, Easing, Modal, Pressable, StyleSheet, TouchableWi
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
+import { IconModalClose } from '../../lib/imageDefine';
 import MImage from '../baseUI/mImage';
 import MVStack from '../baseUI/mVStack';
 
@@ -70,7 +71,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
           <Pressable
             onPress={() => hideModal()}
             style={styles.close}>
-            <MImage size={30} source={require('./../../assets/close.png')} />
+            <MImage w={30} h={30} source={IconModalClose} />
           </Pressable>
         </MVStack>
       </MVStack>

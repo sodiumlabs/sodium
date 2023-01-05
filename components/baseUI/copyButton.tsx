@@ -1,13 +1,13 @@
 
 
 import { useState } from 'react';
-import { Pressable, StyleSheet, PressableProps } from 'react-native';
+import { Pressable, PressableProps, StyleSheet } from 'react-native';
 import { waitTime } from '../../lib/common/common';
 import { useMClipboard } from '../../lib/hook/clipboard';
+import { IconCopy } from '../../lib/imageDefine';
 import MHStack from './mHStack';
 import MImage from './mImage';
 import MText from './mText';
-import { eColor } from '../../lib/globalStyles';
 
 export default function CopyButton(props: PressableProps & { copyText: string }) {
   const { copyText, style, ...rest } = props;
@@ -25,7 +25,7 @@ export default function CopyButton(props: PressableProps & { copyText: string })
   return (
     <Pressable style={[styles.button, style as unknown]} onPress={copyClick} {...rest}>
       <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
-        <MImage size={8} style={{ marginRight: 5 }} />
+        <MImage h={10} w={10} style={{ marginRight: 5 }} source={IconCopy} />
         <MText > {isCopied ? "Copied" : "  Copy"} </MText>
       </MHStack>
     </Pressable>
@@ -34,10 +34,13 @@ export default function CopyButton(props: PressableProps & { copyText: string })
 
 const styles = StyleSheet.create({
   button: {
+    height: 26,
     justifyContent: 'center',
     alignItems: 'center',
-    borderRadius: 10,
-    backgroundColor: eColor.Black,
-    paddingHorizontal: 10
+    borderRadius: 18,
+    backgroundColor: "#EDF2F5",
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: "#E5E7EB",
   }
 })

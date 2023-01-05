@@ -52,9 +52,9 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
       <MHStack style={styles.container} stretchW>
         <Pressable style={{ flex: 1 }} onPress={itemClick}>
           <MHStack style={styles.pre} >
-            <MText>Send tokens</MText>
-            <MImage size={16} />
-            <MText style={{ flex: 1 }}>{decodeData?.decodeTransferData?.token?.name}</MText>
+            <MText style={{ flex: 1 }}>Send tokens</MText>
+            {/* <MImage size={16} /> */}
+            {/* <MText style={{ flex: 1 }}>{decodeData?.decodeTransferData?.token?.name}</MText> */}
             <MText >{formatTimeYMDHMS(transcation.timeStamp)}</MText>
           </MHStack>
         </Pressable>
