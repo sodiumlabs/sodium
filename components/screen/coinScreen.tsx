@@ -1,10 +1,9 @@
-import { Divider } from "@ui-kitten/components";
-import { ActivityIndicator, Linking, ScrollView, StyleSheet } from "react-native";
+import { Linking, ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from "../../lib/api/history";
 import { formatWei2Price } from "../../lib/common/common";
-import { getAddressExplorer } from "../../lib/common/network";
 import { HistoryTime } from "../../lib/common/time";
 import { fixWidth, IUserTokenInfo, Screens } from '../../lib/define';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useMClipboard } from "../../lib/hook/clipboard";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
@@ -12,18 +11,18 @@ import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { navigationRef } from "../base/navigationInit";
 import { Spacer } from "../base/spacer";
+import CopyButton from "../baseUI/copyButton";
+import LinkButton from "../baseUI/linkButton";
 import MButton from "../baseUI/mButton";
+import { MButtonText } from "../baseUI/mButtonText";
+import { MDivider } from "../baseUI/mDivider";
 import MHStack from "../baseUI/mHStack";
 import MImage from "../baseUI/mImage";
 import MLineLR from "../baseUI/mLineLR";
+import { MLoading } from "../baseUI/mLoading";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
-import { globalStyle, eColor } from '../../lib/globalStyles';
-import { MDivider } from "../baseUI/mDivider";
-import CopyButton from "../baseUI/copyButton";
-import LinkButton from "../baseUI/linkButton";
-import { MButtonText } from "../baseUI/mButtonText";
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
@@ -116,9 +115,7 @@ export function CoinScreen(props) {
             }
 
             {
-              queryHistory.isFetching && (
-                <ActivityIndicator size='small' color="#0000ff" />
-              )
+              queryHistory.isFetching && <MLoading />
             }
 
             <Spacer />

@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useQueryDeposit } from "../../lib/api/deposit";
 import { fixWidth, IDepositItemData } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
+import { MLoading } from "../baseUI/mLoading";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import DepositItem from "../item/depositItem";
@@ -41,9 +42,7 @@ export function DepositScreen() {
               })
             }
             {
-              depositQuery.isFetching && (
-                <ActivityIndicator size='small' color="#0000ff" />
-              )
+              depositQuery.isFetching && <MLoading />
             }
 
             <Spacer />

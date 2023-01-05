@@ -1,6 +1,6 @@
 import { FixedNumber } from '@ethersproject/bignumber';
 import Slider from '@react-native-community/slider';
-import { Divider, Radio, RadioGroup } from '@ui-kitten/components';
+import { Radio, RadioGroup } from '@ui-kitten/components';
 import { BigNumber } from 'ethers';
 import { useEffect, useState } from 'react';
 import { ERC20Approve } from "../../../abi/erc20";
@@ -69,10 +69,11 @@ export const ApproveItem = (props: {
       </MHStack>
       <MVStack>
         <RadioGroup
+          // appearance
           // style={{ 'alignItems': 'start' }}
           selectedIndex={approveSelectedIndex}
           onChange={index => setApproveSelectedIndex(index)}>
-          <Radio style={{ marginBottom: 30, position: 'relative' }}>
+          <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'}>
             <>
               <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
               <Slider
@@ -85,12 +86,12 @@ export const ApproveItem = (props: {
               />
             </>
           </Radio>
-          <Radio>
+          <Radio status={'success'}>
             <>
               <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
             </>
           </Radio>
-          <Radio>
+          <Radio status={'success'}>
             <><MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText></>
           </Radio>
         </RadioGroup>

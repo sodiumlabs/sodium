@@ -7,14 +7,14 @@ import { Linking, Pressable, StyleSheet } from 'react-native';
 import { DepositAtLeastAmount, useQueryDepositCurrencies, useQueryDepositUrl, useQueryPreDeposit } from '../../lib/api/deposit';
 import { useQueryNetwork } from '../../lib/api/network';
 import { IDepositItemData, IDepositToken, ISelectItemData } from '../../lib/define';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import MButton from '../baseUI/mButton';
+import { MButtonText } from '../baseUI/mButtonText';
 import MHStack from '../baseUI/mHStack';
 import MInput from '../baseUI/mInput';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
-import { eColor, globalStyle } from '../../lib/globalStyles';
-import { MButtonText } from '../baseUI/mButtonText';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
@@ -38,6 +38,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
 
   const onDepositClick = () => {
+    if (!isCanDeposit) return;
     if (depositUrlQuery.isFetching) return;
     if (!youPayTokenCount) return;
     if (!curYouPayToken?.data) return;
@@ -120,8 +121,9 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
             </MVStack>
             <MVStack stretchW style={{ alignItems: 'center', marginBottom: 30 }}>
-              <MButton style={{ 'width': '100%', height: 45, marginVertical: 10 }}
-                disabled={!isCanDeposit}
+              <MButton style={{ 'width': '100%', height: 45, marginVertical: 10, }}
+                // disabled={!isCanDeposit}
+
                 onPress={onDepositClick}
                 isLoading={depositUrlQuery.isFetching}>
                 <MButtonText title={"Deposit"} />

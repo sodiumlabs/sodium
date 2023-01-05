@@ -1,4 +1,4 @@
-import { ActivityIndicator, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from '../../lib/api/history';
 import { HistoryTime } from "../../lib/common/time";
 import { fixWidth } from "../../lib/define";
@@ -6,6 +6,8 @@ import { useDimensionSize } from '../../lib/hook/dimension';
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
+import MHStack from "../baseUI/mHStack";
+import { MLoading } from "../baseUI/mLoading";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
@@ -23,7 +25,7 @@ export function HistoryScreen() {
             {/* <MText style={{ marginTop: 20, marginBottom: 30, fontWeight: '700' }}>Transaction History </MText> */}
             <ScreenTitle title="Transaction History" />
             <RequestTranscation />
-
+            <MHStack style={{ marginTop: 10 }} />
             <ClassifyHistoryItem title={HistoryTime.ToDay} historyMap={transHistoryMap} />
             <ClassifyHistoryItem title={HistoryTime["This Week"]} historyMap={transHistoryMap} />
             <ClassifyHistoryItem title={HistoryTime["Last Week"]} historyMap={transHistoryMap} />
@@ -31,9 +33,7 @@ export function HistoryScreen() {
             <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
             <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
             {
-              queryHistory.isFetching && (
-                <ActivityIndicator size='small' color="#0000ff" />
-              )
+              queryHistory.isFetching && <MLoading />
             }
             <Spacer />
             <Information />

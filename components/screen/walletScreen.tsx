@@ -1,21 +1,22 @@
 import { useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { fixWidth, Screens } from '../../lib/define';
+import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
+import { IconMenuDeposit, IconMenuSend } from '../../lib/imageDefine';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
 import { navigationRef } from '../base/navigationInit';
 import { Spacer } from '../base/spacer';
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
+import { MLoading } from '../baseUI/mLoading';
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
 import { RequestTranscation } from '../transcation/requestTranscation';
-import { IconMenuDeposit, IconMenuSend } from '../../lib/imageDefine';
-import { eColor } from '../../lib/globalStyles';
 
 
 
@@ -60,9 +61,7 @@ export function WalletScreen() {
               }
 
               {
-                tokensQuery.isFetching && (
-                  <ActivityIndicator size='small' color="#0000ff" />
-                )
+                tokensQuery.isFetching && <MLoading />
               }
 
               {

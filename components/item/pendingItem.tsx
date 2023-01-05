@@ -2,14 +2,14 @@
 
 
 
-import { ActivityIndicator, Image, Pressable, StyleSheet, TextInputProps, View } from 'react-native';
+import { StyleSheet, TextInputProps } from 'react-native';
+import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
+import MImage from '../baseUI/mImage';
+import MLineLR from '../baseUI/mLineLR';
+import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import MLineLR from '../baseUI/mLineLR';
-import MImage from '../baseUI/mImage';
-import { Divider } from '@ui-kitten/components';
-import { MDivider } from '../baseUI/mDivider';
 
 export default function PendingItem(props: TextInputProps) {
   const { style, ...reset } = props;
@@ -21,7 +21,7 @@ export default function PendingItem(props: TextInputProps) {
         <MLineLR
           left={
             <>
-              <ActivityIndicator size='small' color="#0000ff" />
+              <MLoading />
               <MText>Send tokens...</MText>
             </>
           }

@@ -1,6 +1,6 @@
 import { BigNumber, FixedNumber } from 'ethers';
 import { useCallback, useState } from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { encodeERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
@@ -13,8 +13,8 @@ import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
 import MHStack from '../baseUI/mHStack';
-import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
+import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import NetworkFeeItem from '../item/networkFeeItem';
@@ -111,9 +111,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             </MVStack>
 
             {
-              !param?.decodeDatas && (
-                <ActivityIndicator size='small' color="#0000ff" />
-              )
+              !param?.decodeDatas && <MLoading />
             }
 
             {/* ---------------------approve------------------------- */}

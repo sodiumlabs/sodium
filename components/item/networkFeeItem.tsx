@@ -9,6 +9,7 @@ import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { IconLogo } from '../../lib/imageDefine';
 
 export default function NetworkFeeItem(props: TextInputProps & { gasInfo: PaymasterInfo, ownToken: IUserTokenInfo }) {
   const { style, gasInfo, ownToken, ...reset } = props;
@@ -27,8 +28,9 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
           <MLineLR
             left={<MText fontSize={10} style={{ color: eColor.GrayText }}>Balance : {balance}</MText>}
             right={<MText style={{ color: eColor.GrayText }}>${gasUsd}</MText>} />
-          <MHStack stretchW style={{ justifyContent: 'center' }} >
-            <MText fontSize={10}>Paid by Project A</MText>
+          <MHStack stretchW style={{ justifyContent: 'center', alignItems: 'center' }} >
+            <MText fontSize={10}>Paid by Colin</MText>
+            <MImage style={{ marginLeft: 5 }} source={IconLogo} />
           </MHStack>
         </MVStack>
       </MHStack>
@@ -38,7 +40,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
-    marginBottom: 12,
+    padding: 10,
+    marginBottom: 0,
   }
 });
