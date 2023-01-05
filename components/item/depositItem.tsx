@@ -58,8 +58,8 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
 
   useEffect(() => {
-    setIsCanDeposit(curYouBuyToken && curYouPayToken && youPayTokenCount.length > 0 && +youPayTokenCount >= DepositAtLeastAmount);
-  }, [curYouBuyToken, curYouPayToken, youPayTokenCount])
+    setIsCanDeposit(curYouBuyToken && curYouPayToken && youPayTokenCount.length > 0 && +youPayTokenCount >= DepositAtLeastAmount && !!preDepositQueryData);
+  }, [curYouBuyToken, curYouPayToken, youPayTokenCount, preDepositQueryData])
 
 
   const onYouBuyTokenClick = (selectItemData: ISelectItemData) => {
@@ -121,7 +121,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
             </MVStack>
             <MVStack stretchW style={{ alignItems: 'center', marginBottom: 30 }}>
-              <MButton style={{ 'width': '100%', height: 45, marginVertical: 10, }}
+              <MButton style={{ 'width': '100%', height: 45, marginVertical: 10, backgroundColor: isCanDeposit ? eColor.Blue : eColor.Black }}
                 // disabled={!isCanDeposit}
 
                 onPress={onDepositClick}

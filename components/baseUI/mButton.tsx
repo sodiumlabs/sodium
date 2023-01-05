@@ -11,6 +11,9 @@ export default function MButton(props: PressableProps & { stretchW?: boolean, is
   const stretchWidth = {
     width: stretchW ? '100%' : 'auto'
   }
+  // const backgroundColorStyle = {
+  //   backgroundColor: style['backgroundColor'] || eColor.Black
+  // }
   return (
     <Pressable
       onHoverIn={() => setIsItemHovered(true)}
