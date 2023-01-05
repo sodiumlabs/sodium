@@ -1,10 +1,11 @@
 
+import { createNavigationContainerRef } from '@react-navigation/native';
 import { atom } from "nanostores";
 import { useEffect } from 'react';
-import { useAuth } from '../../lib/data/auth';
-import { Screens } from '../../lib/define';
-import { createNavigationContainerRef } from '@react-navigation/native';
 import { waitTime } from "../../lib/common/common";
+import { useAuth } from '../../lib/data/auth';
+import { updateCurScreenTab } from '../../lib/data/screen';
+import { Screens } from '../../lib/define';
 
 const navigateInitAtom = atom(false);
 const isNavigateInit = () => {
@@ -43,8 +44,10 @@ export default function NavigationInit() {
 
     if (auth.isLogin) {
       navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], });
+      updateCurScreenTab(Screens.Wallet);
     } else {
       navigationRef.reset({ index: 0, routes: [{ name: Screens.Login }], });
+      updateCurScreenTab(Screens.Login);
     }
     navigateInitAtom.set(true);
   }, [auth.isLogin, navigationRef.isReady()])

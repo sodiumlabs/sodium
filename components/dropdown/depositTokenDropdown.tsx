@@ -93,9 +93,8 @@ const TokenItem = (props: { option: ISelectItemData, handleOptionPress: (option:
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    // padding: 10,
     borderRadius: 5,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
     zIndex: 2,
   },
   dropdown: {
@@ -108,7 +107,7 @@ const styles = StyleSheet.create({
   option: {
     width: '100%',
     padding: 10,
-    backgroundColor: '#ffffff',
+    // backgroundColor: '#ffffff',
     paddingHorizontal: 15,
   },
   sendCoin: {

@@ -3,7 +3,7 @@ import { ImageSourcePropType, Pressable, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { updateCurScreenTab, useCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
-import { IconLogo, IconArrow, IconMenuWallet, IconMenuHistory } from '../../lib/imageDefine';
+import { IconLogo, IconMenuHistory, IconMenuWallet } from '../../lib/imageDefine';
 import { useRequestedTransactions } from '../../lib/transaction';
 import { CircleTip } from '../baseUI/circleTip';
 import MHStack from '../baseUI/mHStack';
@@ -20,8 +20,11 @@ export default function Header(props) {
   return (
     <MHStack stretchW style={[styles.container, { top: insets.top }]}>
       <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
+        <MHStack style={{ position: 'absolute', left: 20, top: -15, alignItems: 'center', }}>
+          <MImage w={30} h={30} source={IconLogo} style={{ marginRight: 8 }} />
+          <MText fontSize={20} style={{ fontWeight: '700' }}>Sodium</MText>
+        </MHStack>
 
-        <MImage w={40} h={40} style={{ position: 'absolute', left: 0 }} source={IconLogo} />
 
         <MHStack pointerEvents='auto'>
           <HeaderItem isSelect={curScreenName == Screens.Wallet} source={IconMenuWallet} screen={Screens.Wallet} />

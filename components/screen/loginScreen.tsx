@@ -9,7 +9,7 @@ import { showUpdateFullScreenModal } from "../base/modalInit";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import { MButtonText } from "../baseUI/mButtonText";
-import MText from "../baseUI/mText";
+import MHStack from "../baseUI/mHStack";
 import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { LoginLoading } from "../full/loginLoading";
@@ -42,6 +42,7 @@ export function LoginScreen() {
 
             <Spacer />
             <Information style={{ marginBottom: 0 }} />
+            <MHStack style={{ marginBottom: 30 }} />
           </MVStack>
         </MVStack>
       </ScrollView>

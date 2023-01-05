@@ -47,7 +47,7 @@ export function WalletScreen() {
 
             {/* <PendingItem /> */}
 
-            <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor='#999' />
+            <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor={eColor.GrayText} />
 
             <MVStack stretchW style={styles.coins}>
               <MText style={{ marginBottom: 15 }}>Coins</MText>

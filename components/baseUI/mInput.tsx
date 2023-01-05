@@ -3,10 +3,9 @@
 
 
 import { useState } from 'react';
-import { StyleSheet, TextInput, TextInputProps, TranslateYTransform } from 'react-native';
+import { StyleSheet, TextInput, TextInputProps } from 'react-native';
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import MHStack from './mHStack';
-import MImage from './mImage';
-import { globalStyle, eColor } from '../../lib/globalStyles';
 
 export default function MInput(props: TextInputProps) {
   const { style, ...reset } = props;
@@ -40,5 +39,6 @@ const styles = StyleSheet.create({
     width: '100%',
     paddingHorizontal: 20,
     position: 'relative',
+
   }
 });

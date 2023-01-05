@@ -110,10 +110,10 @@ export function SendScreen() {
             <ScreenTitle title="Send" />
             <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
               <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-              <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="quantity" onChangeText={onChangeTokenCountText} value={inputTokenCount} />
+              <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity" placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText} value={inputTokenCount} />
             </MVStack>
             <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
-            <MInput placeholder="address" onChangeText={onChangeAddressText} value={inputAddress} />
+            <MInput placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText} onChangeText={onChangeAddressText} value={inputAddress} />
             <MButton stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]} >
               <MButtonText title={"Continue"} />
             </MButton>

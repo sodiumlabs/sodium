@@ -97,9 +97,6 @@ const TokenItem = (props: { option: IUserTokenInfo, handleOptionPress: (option: 
 const styles = StyleSheet.create({
   container: {
     position: 'relative',
-    // padding: 10,
-    borderRadius: 10,
-    backgroundColor: 'white',
     zIndex: 1,
   },
   dropdown: {
@@ -112,9 +109,6 @@ const styles = StyleSheet.create({
   option: {
     padding: 10,
     width: '100%',
-    // borderRadius: 10,
-    // backgroundColor: 'white',
-    backgroundColor: '#ffffff',
     borderColor: eColor.Border,
     paddingHorizontal: 15,
   },
