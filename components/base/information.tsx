@@ -13,9 +13,9 @@ export default function Information(props: ViewProps) {
     <MVStack stretchW style={[styles.container, style]} {...rest}>
 
       <MHStack stretchW style={styles.list}>
-        <InfomationButton source={IconInfoTerm} pointerEvents='auto' title='Terms Of Use' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
+        <InfomationButton pointerEvents='auto' title='Terms Of Use' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
         <InfomationButton source={IconInfoPolicy} pointerEvents='auto' title='Privacy Policy' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
-        <InfomationButton source={IconInfoSupport} pointerEvents='auto' title='Support' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
+        <InfomationButton pointerEvents='auto' title='Support' onPress={() => showUpdateComModal(true, { 'height': Number.MAX_SAFE_INTEGER, 'reactNode': <TermsOfUseModalItem /> })} />
       </MHStack>
     </MVStack>
 

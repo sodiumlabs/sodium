@@ -99,6 +99,7 @@ const styles = StyleSheet.create({
   operate: {
   },
   coins: {
-    marginVertical: 20,
+    marginTop: 20,
+    marginBottom: 40,
   }
 });

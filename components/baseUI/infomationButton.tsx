@@ -3,11 +3,11 @@ import { eColor } from '../../lib/globalStyles';
 import MImage from './mImage';
 import MText from './mText';
 
-export default function InfomationButton(props: PressableProps & { title?: string, source: ImageSourcePropType }) {
+export default function InfomationButton(props: PressableProps & { title?: string, source?: ImageSourcePropType }) {
   const { title, source, style, ...reset } = props;
   return (
     <Pressable style={[styles.button, style as unknown]} {...reset}>
-      <MImage w={20} h={20} source={source} />
+      <MImage w={30} h={30} source={source} />
       <MText style={{ fontWeight: '700', color: eColor.GrayText, marginTop: 20 }}> {title} </MText>
     </Pressable>
   )
@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 72,
-    width: 80,
+    width: 100,
     borderRadius: 4,
     elevation: 3,
   }
