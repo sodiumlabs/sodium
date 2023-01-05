@@ -6,6 +6,7 @@ import { ViewProps, StyleSheet } from 'react-native';
 
 export const CircleTip = (props: ViewProps & { num: string }) => {
   const { num, style, ...reset } = props;
+  if (+num <= 0) return <></>
   return (
     <MHStack style={[localStyles.button, style]} {...reset}>
       <MButtonText title={num} />

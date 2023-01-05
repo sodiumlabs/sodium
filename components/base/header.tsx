@@ -61,7 +61,8 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 10,
     // top: 0,
-    backgroundColor: 'transparent',
+    // backgroundColor: 'transparent',
+    backgroundColor: "#F7F7F7",
     alignItems: 'center',
     justifyContent: 'center',
     position: 'absolute',
