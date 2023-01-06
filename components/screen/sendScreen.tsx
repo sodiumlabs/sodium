@@ -3,10 +3,10 @@ import { Signer } from "@0xsodium/wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { BigNumberish } from 'ethers';
 import { useCallback, useState, useEffect } from 'react';
-import { ScrollView, StyleSheet } from "react-native";
+import { Platform, ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
-import { formatPrice2Wei, isMatchEnsAddress, isMatchEthAddress } from '../../lib/common/common';
+import { formatPrice2Wei, isMatchEnsAddress, isMatchEthAddress, formatWei2Price } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { fixWidth, IUserTokenInfo } from "../../lib/define";
 import { useDimensionSize } from '../../lib/hook/dimension';
@@ -22,6 +22,11 @@ import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { MButtonText } from '../baseUI/mButtonText';
+import MHStack from '../baseUI/mHStack';
+import { Clipboard } from 'react-native';
+import { useMClipboard } from '../../lib/hook/clipboard';
+import { platform } from 'process';
+
 
 export function SendScreen() {
   const authData = useAuth();
@@ -31,6 +36,7 @@ export function SendScreen() {
   const [inputAddress, setInputAddress] = useState('');
   const [inputTokenCount, setInputTokenCount] = useState('');
   const [isCanSend, setIsCanSend] = useState(false);
+  const [clipboardContent, setClipboardContent] = useMClipboard();
 
   const onChangeAddressText = (text: string) => {
     setInputAddress(text.trim());
@@ -98,6 +104,22 @@ export function SendScreen() {
     showUpdateSignTranscationModal(true, null);
   }
 
+  const onQuantityMaxClick = () => {
+    if (selectedOption) {
+      setInputTokenCount(formatWei2Price(selectedOption.balance.toString(), selectedOption.token.decimals));
+    }
+  }
+
+  const onAddressPasteClick = async () => {
+    if (Platform.OS === 'web') {
+      const text = await navigator.clipboard.readText();
+      setInputAddress(text || "");
+    } else {
+      setInputAddress(clipboardContent || "");
+    }
+
+  }
+
   const sendStyle = {
     backgroundColor: isCanSend ? eColor.Blue : eColor.Black
   }
@@ -113,14 +135,30 @@ export function SendScreen() {
             <ScreenTitle title="Send" />
             <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
               <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-              <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity"
-                placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}
-                value={inputTokenCount} errorTip={isShowCountInputError ? "Please enter the correct quantity" : ""} />
+              <MHStack style={{ position: 'relative' }} >
+                <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity"
+                  placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}
+                  value={inputTokenCount} errorTip={isShowCountInputError ? "Please enter the correct quantity" : ""} />
+                <MButton
+                  onPress={onQuantityMaxClick}
+                  style={{ position: 'absolute', right: 20, top: 30, borderRadius: 15, backgroundColor: eColor.GrayText }}>
+                  <MButtonText title='Max' />
+                </MButton>
+              </MHStack>
+
             </MVStack>
             <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
-            <MInput placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
-              onChangeText={onChangeAddressText} value={inputAddress}
-              errorTip={isShowAddressInputError ? "Please enter the correct address" : ""} />
+            <MHStack stretchW style={{ position: 'relative' }}>
+              <MInput placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
+                onChangeText={onChangeAddressText} value={inputAddress}
+                errorTip={isShowAddressInputError ? "Please enter the correct address" : ""} />
+              <MButton
+                onPress={onAddressPasteClick}
+                style={{ position: 'absolute', right: 20, top: 20, borderRadius: 15, backgroundColor: eColor.GrayText }}>
+                <MButtonText title='Paste' />
+              </MButton>
+            </MHStack>
+
             <MButton stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]} >
               <MButtonText title={"Continue"} />
             </MButton>
