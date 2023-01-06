@@ -59,17 +59,17 @@ export function CoinScreen(props) {
 
             <BaseFoldFrame header={"Detail"}>
 
-              <MText style={{ marginBottom: 10, color: eColor.GrayText }}>Description</MText>
+              <MText style={{ marginBottom: 10 }}>Description</MText>
               <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unkonw'}</MText>
 
               <MDivider style={{ marginVertical: 10 }} />
-              <MText style={{ color: eColor.GrayText, marginBottom: 10 }} >Website</MText>
+              <MText style={{ marginBottom: 10 }} >Website</MText>
               <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website || 'unkonw'}</MText>
 
               {!tokenInfo.token.isNativeToken && (
                 <>
                   <MDivider style={{ marginVertical: 10 }} />
-                  <MText style={{ color: eColor.GrayText }} >Contract Address</MText>
+                  <MText  >Contract Address</MText>
                   <MLineLR
                     left={<MText style={{ color: eColor.GrayContentText }} >{tokenInfo.token.address}</MText>}
                     right={
@@ -83,13 +83,13 @@ export function CoinScreen(props) {
 
               <MDivider style={{ marginVertical: 10 }} />
               <MHStack >
-                <MText style={{ flex: 1, color: eColor.GrayText }}>Token Standard</MText>
+                <MText style={{ flex: 1 }}>Token Standard</MText>
                 <MText style={{ color: eColor.GrayContentText }}>{!tokenInfo.token.isNativeToken ? "ERC20" : `${tokenInfo.token.name} Native Token`}</MText>
               </MHStack>
 
               <MDivider style={{ marginVertical: 10 }} />
               <MHStack>
-                <MText style={{ flex: 1, color: eColor.GrayText }}>Network</MText>
+                <MText style={{ flex: 1 }}>Network</MText>
                 {/* <MImage w={16} h={16} /> */}
                 <MText style={{ color: eColor.GrayContentText }}>{tokenInfo.token.name}</MText>
               </MHStack>

@@ -75,7 +75,7 @@ const TokenItem = (props: { option: IUserTokenInfo, handleOptionPress: (option: 
     >
       <MHStack style={styles.sendCoin} stretchW>
         <MImage w={32} h={32} uri={option.token.centerData.logoURI} />
-        <MVStack style={{ flex: 1, marginLeft: 6 }}>
+        <MVStack style={{ flex: 1, marginLeft: 8 }}>
           <MHStack style={{ flex: 1 }}>
             <MText style={{ fontWeight: '700' }} fontSize={14}>{option.token.symbol}</MText>
             {/* <MImage size={12} /> */}
@@ -83,7 +83,7 @@ const TokenItem = (props: { option: IUserTokenInfo, handleOptionPress: (option: 
           </MHStack>
           <MHStack style={{ flex: 1 }}>
             {/* <MText>{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText> */}
-            <MText> Balance:{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText>
+            <MText style={{ color: eColor.GrayContentText }}> Balance:{formatWei2Price(option.balance.toString(), option.token.decimals)}</MText>
           </MHStack>
         </MVStack>
       </MHStack>

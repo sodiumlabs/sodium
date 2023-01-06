@@ -171,7 +171,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
             {
               tokenInfos && paymasterInfos && paymasterInfos.length ? (
-                <MVStack>
+                <MVStack style={{ marginBottom: 20 }}>
                   {
                     paymasterInfos.map((gasInfo, index) => {
                       const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
@@ -180,7 +180,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   }
                 </MVStack>)
                 : (
-                  <MVStack style={{ marginTop: 20 }}>
+                  <MVStack style={{ marginVertical: 20 }}>
                     <MLoading />
                   </MVStack>
                 )

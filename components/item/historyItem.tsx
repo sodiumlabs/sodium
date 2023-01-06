@@ -14,6 +14,7 @@ import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { IconLogo } from '../../lib/imageDefine';
 
 export default function HistoryItem(props: { history: TransactionHistory }) {
   const { history } = props;
@@ -46,11 +47,11 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
           right={<MText style={{ color: eColor.GrayText }} >{formatTime(history.block.blockTimestamp * 1000)}</MText>}
         />
 
-        <MLineLR style={{ marginTop: 3 }}
+        <MLineLR style={{ marginTop: 5 }}
           left={
-            <MHStack style={{ flex: 1 }}>
-              <MImage w={16} h={16} uri={token.centerData.logoURI} />
-              <MText style={{ marginLeft: 5 }}>{token.symbol}</MText>
+            <MHStack style={{ flex: 1, alignItems: 'center' }}>
+              <MImage w={14} h={14} uri={token?.centerData?.logoURI} />
+              <MText style={{ marginLeft: 5, color: eColor.GrayContentText }}>{token.symbol}</MText>
             </MHStack>
           }
           right={<MText style={{ color: eColor.GrayText }}>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />

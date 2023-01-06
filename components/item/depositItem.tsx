@@ -89,7 +89,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
     <MVStack stretchW>
       <Pressable onPress={() => onDeposiItemClick(depositItemData)}>
         <MVStack style={[styles.title, globalStyle.whiteBorderWidth, selectStyle]}>
-          <MHStack>
+          <MHStack style={{ marginBottom: 5 }}>
             <MText fontSize={14}>Deposit from</MText>
             <MText fontSize={14} style={{ fontWeight: '700', marginLeft: 3 }}>{`${depositItemData.name}`}</MText>
           </MHStack>
@@ -128,10 +128,10 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
                 isLoading={depositUrlQuery.isFetching}>
                 <MButtonText title={"Deposit"} />
               </MButton>
-              <MText style={{ color: eColor.GrayText }} numberOfLines={null}>You will be redirected to the third party page</MText>
+              <MText style={{ color: eColor.GrayText, marginTop: 10 }} numberOfLines={null}>You will be redirected to the third party page</MText>
               <MText style={{ color: eColor.GrayText }} numberOfLines={null}>The process would take approximately 10 - 15 min</MText>
               <Pressable onPress={() => Linking.openURL('https://chaingas.shop/')}>
-                <MText numberOfLines={null} style={{ textDecorationLine: 'underline', color: eColor.GrayText }} >from mainland china?</MText>
+                <MText numberOfLines={null} style={{ textDecorationLine: 'underline', color: eColor.GrayText, marginTop: 10 }} >from mainland china?</MText>
               </Pressable>
             </MVStack>
 

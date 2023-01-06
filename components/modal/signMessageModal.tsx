@@ -44,7 +44,7 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
             <BaseFoldFrame defaultExpansion
               header={'Detail'}>
 
-              <MText style={{ color: eColor.GrayText }} >Signee</MText>
+              <MText  >Signee</MText>
               <MHStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)', flex: 1 }}>
                 {/* <MImage size={20} url={auth.} /> */}
                 <MVStack style={{ flex: 1 }}>
@@ -53,7 +53,7 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
                 </MVStack>
               </MHStack>
 
-              <MText style={{ color: eColor.GrayText, marginTop: 15, }}>Message</MText>
+              <MText style={{ marginTop: 15, }}>Message</MText>
               <MVStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)' }}>
                 <MText style={{ color: eColor.GrayContentText }}>Signed Message:</MText>
                 <MText style={{ color: eColor.GrayContentText, marginTop: 10 }} >{param?.message?.message}</MText>

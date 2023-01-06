@@ -18,6 +18,7 @@ import MHStack from '../baseUI/mHStack';
 import { MDivider } from '../baseUI/mDivider';
 import { ModalTitle } from './modalItem/modalTitle';
 import { eColor } from '../../lib/globalStyles';
+import { MButtonText } from '../baseUI/mButtonText';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -59,8 +60,8 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                   }
 
                   <MHStack stretchW style={{ height: 45, marginTop: 15 }}>
-                    <MButton style={{ flex: 1 }} onPress={linkTxHash} >
-                      <MText style={[{ color: '#ffffff' }, styles.contentWeight]}>View On Polygon</MText>
+                    <MButton style={{ flex: 1, backgroundColor: eColor.Blue, height: 30 }} onPress={linkTxHash}  >
+                      <MButtonText title='View On Polygon' />
                     </MButton>
                   </MHStack>
 

@@ -137,7 +137,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
               <MVStack style={{ flex: 1 }}>
                 <MText style={{ fontWeight: '700' }} >{authData.blockchainAddress}</MText>
                 <MHStack >
-                  <CopyButton style={{ 'margin': 5, height: 24 }} copyText={authData.blockchainAddress} />
+                  <CopyButton style={{ marginHorizontal: 5, height: 24, marginTop: 10 }} copyText={authData.blockchainAddress} />
 
                 </MHStack>
               </MVStack>
@@ -149,13 +149,13 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
             </MHStack>
 
             <MVStack style={[styles.email]}>
-              <MText style={{ color: eColor.GrayText }} >Google</MText>
+              <MText  >Google</MText>
               <MText style={{ marginTop: 5, color: "#6B6B6B" }} >xxxxxxxxxx@gmail.com</MText>
             </MVStack>
 
             <MHStack style={[styles.connected]}>
               <MVStack style={{ flex: 1 }}>
-                <MText style={{ color: eColor.GrayText }}>Connected</MText>
+                <MText>Connected</MText>
                 <MText style={{ marginTop: 5, color: "#6B6B6B" }}>{network?.name}</MText>
               </MVStack>
             </MHStack>

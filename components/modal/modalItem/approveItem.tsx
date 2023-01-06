@@ -15,6 +15,7 @@ import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
+import { IconLogo } from '../../../lib/imageDefine';
 
 
 export const ApproveItem = (props: {
@@ -56,7 +57,7 @@ export const ApproveItem = (props: {
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
       header={`Approve(${index}/${maxIndex})`}>
 
-      <MText style={{ color: eColor.GrayText }}>Spender</MText>
+      <MText >Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         {/* <MImage w={20} h={20} /> */}
         <MAvatar name={auth?.blockchainAddress} />
@@ -64,10 +65,10 @@ export const ApproveItem = (props: {
       </MHStack>
 
       <MDivider style={{ marginVertical: 10 }} />
-      <MText style={{ color: eColor.GrayText }}>Value</MText>
+      <MText >Value</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
         <MImage w={20} h={20} uri={approveData.token.centerData.logoURI} />
-        <MText style={{ flex: 1, color: eColor.GrayContentText }}>{approveValue}</MText>
+        <MText style={{ flex: 1, color: eColor.GrayContentText, marginLeft: 5 }}>{approveValue}</MText>
       </MHStack>
       <MVStack>
         <RadioGroup
