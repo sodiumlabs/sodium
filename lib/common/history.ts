@@ -12,5 +12,11 @@ export function classifyHistory(transcationHistorys: TransactionHistory[]): Map<
     }
     transHistoryMap[group].push(history);
   });
+
+  transHistoryMap.forEach(historys => {
+    historys.sort((hA, hB) => {
+      return hA.block.blockTimestamp - hB.block.blockTimestamp;
+    })
+  })
   return transHistoryMap;
 }

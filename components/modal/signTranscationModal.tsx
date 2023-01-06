@@ -142,6 +142,20 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 })
               )
             }
+            {/* ---------------------unknow Decode data------------------------- */}
+            {
+              param?.decodeDatas && (
+                param.decodeDatas.map((decodeTxn, index) => {
+                  if (!decodeTxn.decodeStr) return;
+                  return (
+                    <BaseFoldFrame defaultExpansion key={hashcodeObj(decodeTxn) + index} header={`Transcation(${index + 1}/${param.decodeDatas.length})`} style={{ marginTop: 20 }}>
+                      <MText style={{ color: eColor.GrayContentText }}>{decodeTxn.decodeStr}</MText>
+                    </BaseFoldFrame>
+                  )
+                })
+              )
+            }
+
             {/* ---------------------Transcation Data------------------------- */}
             {
               param?.decodeDatas && (

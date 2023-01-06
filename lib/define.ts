@@ -125,7 +125,7 @@ export interface IDecodeTranscation {
   originTxReq: Transaction,
   decodeTransferData: ERC20Transfer,
   decodeApproveData: ERC20Approve,
-  // decodeStr: string
+  decodeStr: string
 }
 
 //---- from sdk define

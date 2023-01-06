@@ -11,20 +11,7 @@ export async function decodeTransactionRequest(txn: TransactionRequest, web3sign
   const txs = flattenAuxTransactions(txn) as Transaction[];
   const decodes: IDecodeTranscation[] = [];
   for (let tx of txs) {
-    const decodeTsfData = await decodeTransfer(tx, web3signer, chainId);
-    const decodeApproveData = await decodeApprove(tx, web3signer, chainId);
-    const decodeData = {
-      'originTxReq': tx,
-      'decodeTransferData': decodeTsfData,
-      'decodeApproveData': decodeApproveData,
-      // 'decodeStr': !decodeTsfData && !decodeApproveData && tx.data.toString().slice(0, 10)
-    } as IDecodeTranscation;
-    if (decodeApproveData) {
-      decodes.unshift(decodeData);
-    }
-    else {
-      decodes.push(decodeData);
-    }
+    await decodeTx(decodes, tx, web3signer, chainId);
   }
 
   console.log("decodeTransactionRequest decodes:");
@@ -32,22 +19,25 @@ export async function decodeTransactionRequest(txn: TransactionRequest, web3sign
   return decodes;
 }
 
-async function decodeTransfer(tran: Transaction, web3signer: Web3Signer, chainId?: number): Promise<ERC20Transfer> {
-  let decodeData = null;
+async function decodeTx(decodes: IDecodeTranscation[], tran: Transaction, web3signer: Web3Signer, chainId?: number): Promise<void> {
+  const decodeData = {
+    'originTxReq': tran,
+  } as IDecodeTranscation;
+
   if (checkIsERC20Transfer(tran)) {
-    decodeData = await decodeERC20Transfer(tran, web3signer, chainId);
+    decodeData.decodeTransferData = await decodeERC20Transfer(tran, web3signer, chainId);
+    decodes.push(decodeData);
   }
   else if (checkIsNativeTokenTransfer(tran)) {
-    decodeData = decodeNativeTokenTransfer(tran, chainId);
+    decodeData.decodeTransferData = decodeNativeTokenTransfer(tran, chainId);
+    decodes.push(decodeData);
   }
-  return decodeData;
-}
-
-
-async function decodeApprove(tran: Transaction, web3signer: Web3Signer, chainId?: number): Promise<ERC20Approve> {
-  let decodeData = null;
-  if (checkIsERC20Approve(tran)) {
-    decodeData = await decodeERC20Approve(tran, web3signer, chainId);
+  else if (checkIsERC20Approve(tran)) {
+    decodeData.decodeApproveData = await decodeERC20Approve(tran, web3signer, chainId);
+    decodes.unshift(decodeData);
   }
-  return decodeData;
+  else {
+    decodeData.decodeStr = tran.data.toString().slice(0, 10);
+    decodes.push(decodeData);
+  }
 }

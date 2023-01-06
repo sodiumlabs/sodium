@@ -6,15 +6,15 @@ import { TransactionHistory } from '@0xsodium/provider';
 import { useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
-import { formatTime } from '../../lib/common/time';
+import { formatTimeYMDHMS } from '../../lib/common/time';
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { IconTokenDefault } from '../../lib/imageDefine';
 import { showUpdateTranscationDetailModal } from '../base/modalInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { IconLogo, IconTokenDefault } from '../../lib/imageDefine';
 
 export default function HistoryItem(props: { history: TransactionHistory }) {
   const { history } = props;
@@ -44,7 +44,7 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
               {/* <MText> {token.name}</MText> */}
             </MHStack>
           }
-          right={<MText style={{ color: eColor.GrayText }} >{formatTime(history.block.blockTimestamp * 1000)}</MText>}
+          right={<MText style={{ color: eColor.GrayText }} >{formatTimeYMDHMS(history.block.blockTimestamp * 1000)}</MText>}
         />
 
         <MLineLR style={{ marginTop: 5 }}

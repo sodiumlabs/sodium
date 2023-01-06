@@ -36,8 +36,9 @@ export class WalletPrompter implements WalletUserPrompter {
 
     //signTransactions
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        console.log("WalletPrompter promptSendTransaction");
+        console.log("WalletPrompter promptSignTransaction");
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
+
             await waitNavigateInit();
             const auth = getAuth();
             if (!auth.isLogin) {
