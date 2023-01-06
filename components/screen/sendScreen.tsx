@@ -6,7 +6,7 @@ import { useCallback, useState, useEffect } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
-import { formatPrice2Wei } from '../../lib/common/common';
+import { formatPrice2Wei, isMatchEnsAddress, isMatchEthAddress } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { fixWidth, IUserTokenInfo } from "../../lib/define";
 import { useDimensionSize } from '../../lib/hook/dimension';
@@ -71,7 +71,7 @@ export function SendScreen() {
       console.log('The quantity format is incorrect');
       return false;
     }
-    if (!/^0x[0-9a-fA-F]{40}$/.test(inputAddress)) {
+    if (!isMatchEthAddress(inputAddress) && !isMatchEnsAddress(inputAddress)) {
       console.log('The address format is incorrect');
       return false;
     }
@@ -103,7 +103,7 @@ export function SendScreen() {
   }
 
   const isShowCountInputError = inputTokenCount != "" && !/^\d+(\.\d+)?$/.test(inputTokenCount);
-  const isShowAddressInputError = inputAddress != "" && !/^0x[0-9a-fA-F]{40}$/.test(inputAddress);
+  const isShowAddressInputError = inputAddress != "" && !isMatchEthAddress(inputAddress) && !isMatchEnsAddress(inputAddress);
 
   return (
     <BaseScreen isNavigationBarBack>

@@ -101,3 +101,13 @@ export function hashcodeObj(obj: unknown) {
 export function mapRange(x: number, a: number, b: number, c: number, d: number): number {
   return (x - a) * (d - c) / (b - a) + c;
 }
+
+
+export function isMatchEthAddress(address: string) {
+  return /^0x[0-9a-fA-F]{40}$/.test(address);
+}
+
+
+export function isMatchEnsAddress(address: string) {
+  return /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(address);
+}
