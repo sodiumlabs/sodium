@@ -117,7 +117,7 @@ export function CoinScreen(props) {
             {
               queryHistory.isFetching && <MLoading />
             }
-
+            <MHStack style={{ marginBottom: 40 }} />
             <Spacer />
             <Information />
 
