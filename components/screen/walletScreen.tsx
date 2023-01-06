@@ -51,7 +51,7 @@ export function WalletScreen() {
             <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor={eColor.GrayText} />
 
             <MVStack stretchW style={styles.coins}>
-              <MText style={{ marginBottom: 15 }}>Coins</MText>
+              <MText style={{ marginBottom: 15, color: eColor.GrayContentText }}>Coins</MText>
               {
                 tokenInfos && tokenInfos.map((tokenInfo, index) => {
                   if ((tokenInfo.token.name + tokenInfo.token.symbol).toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) != -1) {
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   operate: {
   },
   coins: {
-    marginTop: 20,
+    // marginTop: 20,
     marginBottom: 40,
   }
 });

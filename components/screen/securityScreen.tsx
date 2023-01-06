@@ -32,7 +32,7 @@ export function SecurityScreen() {
               </MHStack>
 
 
-              <MText style={{ marginBottom: 10 }}>Two-factor authentication</MText>
+              <MText style={{ marginBottom: 10, color: eColor.GrayContentText }}>Two-factor authentication</MText>
               {/* <MDivider style={{ marginBottom: 10 }} /> */}
               <MVStack style={[globalStyle.whiteBorderWidth, { padding: 15, marginTop: 2 }]}>
                 <MText>Two-factor methods</MText>

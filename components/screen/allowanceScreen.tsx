@@ -1,5 +1,6 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { fixWidth } from "../../lib/define";
+import { eColor } from "../../lib/globalStyles";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
@@ -20,7 +21,7 @@ export function AllowanceScreen() {
             <ScreenTitle title="Allowance Sessions" />
             <MText numberOfLines={null}>You're currently signed in to your sodium wallet on these sessions.Pay close attention and make sure to remove sessions you are no longer using for better security.</MText>
             <MHStack stretchW style={{ marginTop: 20 }}>
-              <MText >Allowance Keys(2)</MText>
+              <MText style={{ color: eColor.GrayContentText }} >Allowance Keys(2)</MText>
             </MHStack>
             <AllowanceItem />
             <AllowanceItem />
