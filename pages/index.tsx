@@ -8,7 +8,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { BarUI } from '../components/base/barUI';
 import ModalInit from '../components/base/modalInit';
-import NavigationInit, { navigationRef } from '../components/base/navigationInit';
+import NavigationInit, { isNavigationReadyAtom, navigationRef } from '../components/base/navigationInit';
 import {
   CoinScreen,
   ConnectScreen,
@@ -23,7 +23,8 @@ import {
   AllowanceScreen,
   RecoveryCodeScreen,
   SecurityScreen,
-  SetupAuthScreen
+  SetupAuthScreen,
+  OpeningScreen
 } from '../components/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
@@ -85,13 +86,14 @@ export default function App() {
     <SafeAreaProvider>
       <ApplicationProvider {...eva} theme={eva.light}>
         <QueryClientProvider client={queryClient}>
-          <NavigationContainer ref={navigationRef}>
+          <NavigationContainer ref={navigationRef} onReady={() => isNavigationReadyAtom.set(true)}>
             <ModalInit />
             <NavigationInit />
             <BarUI />
 
             {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
             <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
+              <Stack.Screen name={Screens.Opening} component={OpeningScreen} />
               <Stack.Screen name={Screens.Login} component={LoginScreen} />
               <Stack.Screen name={Screens.Wallet} component={WalletScreen} />
               <Stack.Screen name={Screens.Setting} component={SettingScreen} />

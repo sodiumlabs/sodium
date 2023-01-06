@@ -1,4 +1,5 @@
 import { ScrollView, StyleSheet } from 'react-native';
+import { isBeOpenedByThirdParty } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { IModalParam, ISignMessageModalParam } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
@@ -34,6 +35,8 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
+      isFullScreen={isBeOpenedByThirdParty()}
+      isAnim={!isBeOpenedByThirdParty()}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>

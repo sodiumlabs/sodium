@@ -12,3 +12,4 @@ export * from './settingScreen';
 export * from './setupAuthScreen';
 export * from './walletScreen';
 export * from './allowanceScreen';
+export * from './openingScreen';

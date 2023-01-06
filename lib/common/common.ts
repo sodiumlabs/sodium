@@ -130,3 +130,7 @@ export function downText(text: string) {
     })
     .catch((error) => console.error(error));
 }
+
+export function isBeOpenedByThirdParty() {
+  return !!window.opener;
+}

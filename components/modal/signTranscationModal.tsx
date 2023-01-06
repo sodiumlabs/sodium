@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { encodeERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
-import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
+import { hashcodeObj, isBeOpenedByThirdParty, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { eApproveType, IModalParam, ISignTranscationModalParam, MaxFixedNumber } from '../../lib/define';
@@ -93,6 +93,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
+      isFullScreen={isBeOpenedByThirdParty()}
+      isAnim={!isBeOpenedByThirdParty()}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>

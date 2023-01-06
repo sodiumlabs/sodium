@@ -48,6 +48,7 @@ export enum Screens {
   SetupAuth = 'SetupAuth',
   RecoveryCode = 'RecoveryCode',
   Allowance = 'Allowance',
+  Opening = 'Opening',
 }
 
 export type ScreenParamList = {
@@ -65,6 +66,7 @@ export type ScreenParamList = {
   SetupAuth: undefined,
   RecoveryCode: undefined,
   Allowance: undefined,
+  Opening: undefined,
 }
 
 export interface IConnectScreenParam {
