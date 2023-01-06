@@ -165,7 +165,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
             {/* ---------------------Fee------------------------- */}
             {
-              tokenInfos && paymasterInfos && paymasterInfos.length && (
+              tokenInfos && paymasterInfos && paymasterInfos.length ? (
                 <MVStack>
                   <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
                     <MText>Fee</MText>
@@ -178,6 +178,11 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                     })
                   }
                 </MVStack>)
+                : (
+                  <MVStack style={{ marginTop: 20 }}>
+                    <MLoading />
+                  </MVStack>
+                )
             }
           </ScrollView>
         </MVStack>
