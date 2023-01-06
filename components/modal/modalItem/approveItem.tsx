@@ -15,7 +15,7 @@ import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
-import { IconLogo } from '../../../lib/imageDefine';
+import { IconLogo, IconTokenDefault } from '../../../lib/imageDefine';
 
 
 export const ApproveItem = (props: {
@@ -67,7 +67,7 @@ export const ApproveItem = (props: {
       <MDivider style={{ marginVertical: 10 }} />
       <MText >Value</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-        <MImage w={20} h={20} uri={approveData.token.centerData.logoURI} />
+        <MImage w={20} h={20} uri={approveData.token.centerData.logoURI} source={IconTokenDefault} />
         <MText style={{ flex: 1, color: eColor.GrayContentText, marginLeft: 5 }}>{approveValue}</MText>
       </MHStack>
       <MVStack>

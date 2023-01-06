@@ -7,6 +7,7 @@ import { Pressable, StyleSheet, TextInputProps } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo, Screens } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { IconTokenDefault } from '../../lib/imageDefine';
 import { navigationRef } from '../base/navigationInit';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -23,7 +24,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
       onHoverOut={() => setIsItemHovered(false)}
       onPress={() => navigationRef.navigate(Screens.Coin, tokenInfo)}>
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} stretchW>
-        <MImage w={32} h={32} uri={tokenInfo.token.centerData.logoURI} />
+        <MImage w={24} h={24} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
 
         <MVStack style={{ flex: 1, marginLeft: 6 }}>
           <MLineLR
@@ -51,5 +52,6 @@ const styles = StyleSheet.create({
   container: {
     padding: 15,
     marginBottom: 12,
+    alignItems: 'center'
   }
 });

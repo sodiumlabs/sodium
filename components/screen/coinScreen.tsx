@@ -6,6 +6,7 @@ import { fixWidth, IUserTokenInfo, Screens } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useMClipboard } from "../../lib/hook/clipboard";
 import { useDimensionSize } from "../../lib/hook/dimension";
+import { IconTokenDefault } from "../../lib/imageDefine";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
@@ -38,8 +39,8 @@ export function CoinScreen(props) {
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={{ alignItems: 'center', marginTop: 20 }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MImage w={64} h={64} uri={tokenInfo.token.centerData.logoURI} />
-            <MText style={{ marginVertical: 12, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
+            <MImage w={60} h={60} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
+            <MText style={{ marginTop: 20, marginBottom: 12, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
             {/* <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MImage size={16} />
               <MText  >{tokenInfo.token.name}</MText>

@@ -9,7 +9,7 @@ import MHStack from "../baseUI/mHStack";
 import MImage from "../baseUI/mImage";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
-import { IconArrowR, IconLogo } from '../../lib/imageDefine';
+import { IconArrowR, IconLogo, IconTokenDefault } from '../../lib/imageDefine';
 import MAvatar from "../baseUI/mAvatar";
 
 
@@ -22,7 +22,7 @@ export const TranscationDetailItem = (props: ViewProps & { transfer: Transaction
   return (
     <BaseFoldFrame {...props} defaultExpansion header={isSent ? 'Sent' : 'Receive'}>
       <MHStack style={{ flex: 1, alignItems: 'center' }}>
-        <MImage w={20} h={20} uri={transfer.token.centerData.logoURI} />
+        <MImage w={20} h={20} uri={transfer.token.centerData.logoURI} source={IconTokenDefault} />
         <MText style={{ flex: 1, color: eColor.GrayContentText, marginLeft: 5 }}>{transfer.token.symbol}</MText>
         <MText style={{ color: eColor.GrayContentText }} >{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>
       </MHStack>

@@ -7,7 +7,7 @@ import MHStack from './mHStack';
 
 
 export default function MImage(props: ImageProps & { w?: number, h?: number, uri?: string }) {
-  let { uri: url, w = 12, h = 12, source, style } = props;
+  let { uri, w = 12, h = 12, source, style } = props;
   // test
   // url = url || "https://tokens.1inch.io/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png";
   // const sizeStyle = {
@@ -25,14 +25,14 @@ export default function MImage(props: ImageProps & { w?: number, h?: number, uri
 
   // source = require('./../../assets/icon.png')
 
-  if (Platform.OS === 'web' && source != null) {
+  if (Platform.OS === 'web' && source != null && uri == null) {
     return (
       <MHStack style={style}>
         <Image width={w} height={h} src={source as string} alt={""} />
       </MHStack>
     )
   } else {
-    if (url != null) { source = { uri: url } }
+    if (uri != null) { source = { uri: uri } }
     return (
       <MHStack style={style}>
         <Avatar source={source} style={{ width: w, height: h }} />

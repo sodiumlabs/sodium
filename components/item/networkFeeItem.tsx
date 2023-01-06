@@ -9,7 +9,7 @@ import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { IconLogo } from '../../lib/imageDefine';
+import { IconLogo, IconTokenDefault } from '../../lib/imageDefine';
 
 export default function NetworkFeeItem(props: TextInputProps & { gasInfo: PaymasterInfo, ownToken: IUserTokenInfo }) {
   const { style, gasInfo, ownToken, ...reset } = props;
@@ -19,7 +19,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
   return (
     <Pressable onPress={undefined}>
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
-        <MImage w={32} h={32} uri={gasInfo.token.centerData.logoURI} />
+        <MImage w={32} h={32} uri={gasInfo.token.centerData.logoURI} source={IconTokenDefault} />
 
         <MVStack style={{ flex: 1 }}>
           <MLineLR

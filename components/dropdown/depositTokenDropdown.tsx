@@ -9,6 +9,7 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { IconTokenDefault } from '../../lib/imageDefine';
 
 export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemData[], selectedOption: ISelectItemData, setSelectedOption: Dispatch<SetStateAction<ISelectItemData>> }) => {
   const { options, selectedOption, setSelectedOption, style, ...rest } = props;
@@ -81,7 +82,7 @@ const TokenItem = (props: { option: ISelectItemData, handleOptionPress: (option:
     >
       <MHStack style={styles.sendCoin} stretchW>
         <MHStack style={{ flex: 1, alignItems: 'center', }}>
-          <MImage w={32} h={32} uri={curToken.icon} />
+          <MImage w={24} h={24} uri={curToken.icon} source={IconTokenDefault} />
           <MText style={{ marginLeft: 6, fontWeight: '700' }}>{curToken.tokenID}</MText>
         </MHStack>
       </MHStack>

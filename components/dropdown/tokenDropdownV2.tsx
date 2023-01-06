@@ -6,6 +6,7 @@ import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo } from '../../lib/define';
 import { globalStyle, eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
+import { IconTokenDefault } from '../../lib/imageDefine';
 import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -74,7 +75,7 @@ const TokenItem = (props: { option: IUserTokenInfo, handleOptionPress: (option: 
       style={[styles.option, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}
     >
       <MHStack style={styles.sendCoin} stretchW>
-        <MImage w={32} h={32} uri={option.token.centerData.logoURI} />
+        <MImage w={32} h={32} uri={option.token.centerData.logoURI} source={IconTokenDefault} />
         <MVStack style={{ flex: 1, marginLeft: 8 }}>
           <MHStack style={{ flex: 1 }}>
             <MText style={{ fontWeight: '700' }} fontSize={14}>{option.token.symbol}</MText>
