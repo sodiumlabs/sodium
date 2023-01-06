@@ -10,6 +10,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import SettingItem from "../item/settingItem";
+import { eColor } from '../../lib/globalStyles';
 
 export function SettingScreen() {
   const dimension = useDimensionSize();
@@ -20,19 +21,19 @@ export function SettingScreen() {
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Setting" />
             <SettingItem source={IconProfile} onPress={() => navigationRef.navigate(Screens.Profile)} >
-              <MText>Profile</MText>
+              <MText style={{ fontWeight: '700' }} >Profile</MText>
             </SettingItem>
             <SettingItem source={IconSessions} onPress={() => navigationRef.navigate(Screens.Session)} >
-              <MText>Active Sessions</MText>
-              <MText> 0 Active Sessions</MText>
+              <MText style={{ fontWeight: '700' }}>Active Sessions</MText>
+              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> 0 Active Sessions</MText>
             </SettingItem>
 
             <SettingItem source={IconSecurity} onPress={() => navigationRef.navigate(Screens.Security)} >
-              <MText>Security</MText>
+              <MText style={{ fontWeight: '700' }}>Security</MText>
             </SettingItem>
 
             <SettingItem source={IconAllowance} onPress={() => navigationRef.navigate(Screens.Allowance)} >
-              <MText>Allowance</MText>
+              <MText style={{ fontWeight: '700' }}>Allowance</MText>
             </SettingItem>
             <Spacer />
             <Information />
