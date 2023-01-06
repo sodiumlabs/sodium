@@ -85,6 +85,8 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
   const selectStyle = {
     borderColor: isSelected ? eColor.Blue : eColor.Border
   }
+
+  const isShowErrorTip = youPayTokenCount.length != 0 && +youPayTokenCount < DepositAtLeastAmount;
   return (
     <MVStack stretchW>
       <Pressable onPress={() => onDeposiItemClick(depositItemData)}>
@@ -106,7 +108,9 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
             <MText style={{ marginVertical: 10 }}>You bug</MText>
             <DepositTokenDropdown style={{ zIndex: 2 }} selectedOption={curYouBuyToken} setSelectedOption={onYouBuyTokenClick} options={youBuyTokens} />
             <MText style={{ marginVertical: 10 }}>You pay</MText>
-            <MInput style={{ marginBottom: 10 }} placeholder='Enter the amount' placeholderTextColor={eColor.GrayText} onChangeText={onInputYouPayTokenCount} value={youPayTokenCount} />
+            <MInput style={{ marginBottom: 10 }}
+              placeholder='Enter the amount' placeholderTextColor={eColor.GrayText}
+              onChangeText={onInputYouPayTokenCount} value={youPayTokenCount} errorTip={isShowErrorTip ? `The value must be at least ${DepositAtLeastAmount}` : null} />
             <DepositTokenDropdown style={{ zIndex: 1 }} selectedOption={curYouPayToken} setSelectedOption={onYouPayTokenClick} options={youPayTokens} />
             <MText style={{ marginVertical: 10 }}>You Receive (Estimated)</MText>
             <MVStack stretchW style={[{ padding: 15, zIndex: 0 }, globalStyle.whiteBorderWidth]}>

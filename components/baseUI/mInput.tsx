@@ -5,10 +5,12 @@
 import { useState } from 'react';
 import { StyleSheet, TextInput, TextInputProps } from 'react-native';
 import { eColor, globalStyle } from '../../lib/globalStyles';
-import MHStack from './mHStack';
+import MLineLR from './mLineLR';
+import MText from './mText';
+import MVStack from './mVStack';
 
-export default function MInput(props: TextInputProps) {
-  const { style, ...reset } = props;
+export default function MInput(props: TextInputProps & { errorTip?: string }) {
+  const { errorTip, style, ...reset } = props;
   const [isHovered, setIsHovered] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
 
@@ -18,7 +20,7 @@ export default function MInput(props: TextInputProps) {
   }
 
   return (
-    <MHStack stretchW style={styles.container} >
+    <MVStack stretchW style={styles.container} >
       <TextInput
         onPressIn={() => setIsHovered(true)}
         onPressOut={() => setIsHovered(false)}
@@ -27,12 +29,17 @@ export default function MInput(props: TextInputProps) {
         style={[styles.input, globalStyle.whiteBorderWidth, style, fucusStyle]} {...reset}
       />
       {/* <MImage style={{ position: 'absolute', top: '50%', right: 15, transform: [{ translateY: '-50%' } as unknown as TranslateYTransform] }} /> */}
-    </MHStack>
+      {
+        errorTip && (<MLineLR right={<MText style={{ color: eColor.Red, marginBottom: 10 }} >{errorTip}</MText>} />)
+      }
+
+    </MVStack>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    // marginBottom: 10,
   },
   input: {
     height: 65,
