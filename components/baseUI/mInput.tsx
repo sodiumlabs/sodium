@@ -30,7 +30,7 @@ export default function MInput(props: TextInputProps & { errorTip?: string }) {
       />
       {/* <MImage style={{ position: 'absolute', top: '50%', right: 15, transform: [{ translateY: '-50%' } as unknown as TranslateYTransform] }} /> */}
       {
-        errorTip && (<MLineLR right={<MText style={{ color: eColor.Red, marginBottom: 10 }} >{errorTip}</MText>} />)
+        errorTip && (<MLineLR right={<MText style={{ color: eColor.Red, marginTop: 5 }} >{errorTip}</MText>} />)
       }
 
     </MVStack>
@@ -39,7 +39,7 @@ export default function MInput(props: TextInputProps & { errorTip?: string }) {
 
 const styles = StyleSheet.create({
   container: {
-    // marginBottom: 10,
+    marginBottom: 10,
   },
   input: {
     height: 65,

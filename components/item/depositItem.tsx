@@ -108,7 +108,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
             <MText style={{ marginVertical: 10 }}>You bug</MText>
             <DepositTokenDropdown style={{ zIndex: 2 }} selectedOption={curYouBuyToken} setSelectedOption={onYouBuyTokenClick} options={youBuyTokens} />
             <MText style={{ marginVertical: 10 }}>You pay</MText>
-            <MInput style={{ marginBottom: 10 }}
+            <MInput
               placeholder='Enter the amount' placeholderTextColor={eColor.GrayText}
               onChangeText={onInputYouPayTokenCount} value={youPayTokenCount} errorTip={isShowErrorTip ? `The value must be at least ${DepositAtLeastAmount}` : null} />
             <DepositTokenDropdown style={{ zIndex: 1 }} selectedOption={curYouPayToken} setSelectedOption={onYouPayTokenClick} options={youPayTokens} />

@@ -71,7 +71,7 @@ export function SendScreen() {
       console.log('The quantity format is incorrect');
       return false;
     }
-    if (!/^0x[0-9a-zA-Z]+$/.test(inputAddress)) {
+    if (!/^0x[0-9a-fA-F]{40}$/.test(inputAddress)) {
       console.log('The address format is incorrect');
       return false;
     }
@@ -102,6 +102,9 @@ export function SendScreen() {
     backgroundColor: isCanSend ? eColor.Blue : eColor.Black
   }
 
+  const isShowCountInputError = inputTokenCount != "" && !/^\d+(\.\d+)?$/.test(inputTokenCount);
+  const isShowAddressInputError = inputAddress != "" && !/^0x[0-9a-fA-F]{40}$/.test(inputAddress);
+
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
@@ -110,10 +113,14 @@ export function SendScreen() {
             <ScreenTitle title="Send" />
             <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
               <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-              <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity" placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText} value={inputTokenCount} />
+              <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity"
+                placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}
+                value={inputTokenCount} errorTip={isShowCountInputError ? "Please enter the correct quantity" : ""} />
             </MVStack>
             <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
-            <MInput placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText} onChangeText={onChangeAddressText} value={inputAddress} />
+            <MInput placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
+              onChangeText={onChangeAddressText} value={inputAddress}
+              errorTip={isShowAddressInputError ? "Please enter the correct address" : ""} />
             <MButton stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]} >
               <MButtonText title={"Continue"} />
             </MButton>
