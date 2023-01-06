@@ -26,37 +26,43 @@ export function SecurityScreen() {
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Security" />
             <MVStack>
-              <MText>Two-factor authentication</MText>
-              <MDivider style={{ marginVertical: 10 }} />
-              <MHStack style={[globalStyle.whiteBorderWidth, { padding: 15, marginBottom: 20 }]}>
+              {/* <MDivider style={{ marginVertical: 10 }} /> */}
+              <MHStack style={[{ marginBottom: 20 }]}>
                 <MText numberOfLines={null}>Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. Learn more about two-factor authentication.</MText>
               </MHStack>
-              <MDivider style={{ marginBottom: 10 }} />
-              <MText>Two-factor methods</MText>
 
-              <MLineLR
-                left={<MText style={{ color: eColor.GrayContentText }} >Primary two-factor method</MText>}
-                right={
-                  <MHStack>
 
-                    <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
-                      <MButtonText title={"Set"} />
-                    </MButton>
-                  </MHStack>
-                }
-              />
-              <MDivider style={{ marginVertical: 10 }} />
-              <MText  >Recovery options</MText>
-              <MLineLR
-                left={<MText style={{ color: eColor.GrayContentText }}>Recovery codes</MText>}
-                right={
-                  <MHStack>
-                    <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
-                      <MButtonText title={"Show"} />
-                    </MButton>
-                  </MHStack>
-                }
-              />
+              <MText style={{ marginBottom: 10 }}>Two-factor authentication</MText>
+              {/* <MDivider style={{ marginBottom: 10 }} /> */}
+              <MVStack style={[globalStyle.whiteBorderWidth, { padding: 15, marginTop: 2 }]}>
+                <MText>Two-factor methods</MText>
+                <MLineLR
+                  left={<MText style={{ color: eColor.GrayContentText }} >Primary two-factor method</MText>}
+                  right={
+                    <MHStack>
+
+                      <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
+                        <MButtonText title={"Set"} />
+                      </MButton>
+                    </MHStack>
+                  }
+                />
+
+                <MText style={{ marginTop: 20 }}  >Recovery options</MText>
+                <MLineLR
+                  left={<MText style={{ color: eColor.GrayContentText }}>Recovery codes</MText>}
+                  right={
+                    <MHStack>
+                      <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
+                        <MButtonText title={"Show"} />
+                      </MButton>
+                    </MHStack>
+                  }
+                />
+              </MVStack>
+
+              {/* <MDivider style={{ marginVertical: 10 }} /> */}
+
             </MVStack>
             <Spacer />
             <Information />
