@@ -125,9 +125,8 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
             </MVStack>
             <MVStack stretchW style={{ alignItems: 'center', marginBottom: 30 }}>
-              <MButton style={{ 'width': '100%', height: 45, marginVertical: 10, backgroundColor: isCanDeposit ? eColor.Blue : eColor.Black }}
-                // disabled={!isCanDeposit}
-
+              <MButton style={{ 'width': '100%', height: 45, marginVertical: 20, backgroundColor: isCanDeposit ? eColor.Blue : eColor.Black }}
+                isBanHover={!isCanDeposit}
                 onPress={onDepositClick}
                 isLoading={depositUrlQuery.isFetching}>
                 <MButtonText title={"Deposit"} />

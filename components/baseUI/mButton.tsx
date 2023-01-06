@@ -4,8 +4,8 @@ import { eColor } from '../../lib/globalStyles';
 import MHStack from './mHStack';
 import { MLoading } from './mLoading';
 
-export default function MButton(props: PressableProps & { stretchW?: boolean, isLoading?: boolean, hoverColor?: string }) {
-  const { style, hoverColor, stretchW, isLoading, ...reset } = props;
+export default function MButton(props: PressableProps & { stretchW?: boolean, isLoading?: boolean, hoverColor?: string, isBanHover?: boolean }) {
+  const { style, isBanHover, hoverColor, stretchW, isLoading, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
 
   const stretchWidth = {
@@ -18,7 +18,7 @@ export default function MButton(props: PressableProps & { stretchW?: boolean, is
     <Pressable
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
-      style={[localStyles.button, stretchWidth, { backgroundColor: isItemHovered ? hoverColor : eColor.Black, opacity: isItemHovered ? 1 : 0.8 }, style as StyleProp<ViewStyle>]} {...reset}>
+      style={[localStyles.button, stretchWidth, { backgroundColor: !isBanHover && isItemHovered ? hoverColor : eColor.Black, opacity: !isBanHover && isItemHovered ? 1 : 0.8 }, style as StyleProp<ViewStyle>]} {...reset}>
       {
         isLoading ? (
           <MLoading />

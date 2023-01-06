@@ -61,7 +61,7 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
             </BaseFoldFrame>
           </ScrollView>
 
-          <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick} isConfirmLoading={isLoading} />
+          <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick} isConfirmLoading={isLoading} isConfirmEnable={true} />
         </MVStack>
       </MVStack>
     </BaseModal>

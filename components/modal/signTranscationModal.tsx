@@ -187,7 +187,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
           </ScrollView>
         </MVStack>
-        <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick} isConfirmLoading={isLoading} />
+        <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick}
+          isConfirmLoading={isLoading} isConfirmEnable={!!tokenInfos && !!paymasterInfos && !!paymasterInfos.length} />
       </MVStack>
     </BaseModal >
   );
