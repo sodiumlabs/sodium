@@ -28,7 +28,8 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
   const auth = useAuth();
   useEffect(() => {
     const func = async () => {
-      const decodeDatas = await decodeTransactionRequest(transcation.txReq, auth.web3signer);
+      // const decodeDatas = await decodeTransactionRequest(transcation.txReq, auth.web3signer);
+      const decodeDatas = transcation.decodeDatas;
       // setDecodeDatas(decodeResult);
       setDecodeData(decodeDatas[0]);
       if (decodeDatas.findIndex(decode => !!decode.decodeTransferData) != -1) {

@@ -169,6 +169,7 @@ export type PaymasterInfo = {
 export interface ITranscation {
   txReq: TransactionRequest,
   timeStamp: number,
+  decodeDatas: IDecodeTranscation[]
 }
 
 export enum eStotageKey {
