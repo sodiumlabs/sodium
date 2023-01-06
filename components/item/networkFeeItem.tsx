@@ -24,7 +24,9 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
         <MVStack style={{ flex: 1 }}>
           <MLineLR
             left={<MText style={{ fontWeight: '700' }} fontSize={14}>{`${gasInfo.token.symbol}`}</MText>}
-            right={<MText style={{ color: eColor.GrayText, textDecorationLine: 'line-through' }} >{formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals, 10)} {gasInfo.token.symbol}</MText>} />
+            right={<MText style={{ color: eColor.GrayText, textDecorationLine: 'line-through' }} >
+              {formatWei2Price(gasInfo.amount.toString(), gasInfo.token.decimals, 10)} {gasInfo.token.symbol}
+            </MText>} />
           <MLineLR
             left={<MText fontSize={10} style={{ color: eColor.GrayText }}>Balance : {balance}</MText>}
             right={<MText style={{ color: eColor.GrayText }}>${gasUsd}</MText>} />

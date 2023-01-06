@@ -41,6 +41,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
   const onConfirmClick = useCallback(async () => {
     if (!param) return;
+    if (!tokenInfos || !paymasterInfos || !paymasterInfos.length) return;
     if (isLoading) return;
     // const tx = param.txn.txReq;
     if (!param?.decodeDatas) return;
@@ -80,7 +81,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
     setIsLoading(false);
     hideModal();
-  }, [decodeApproveData, param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex]);
+  }, [decodeApproveData, param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
 
   const onCancelClick = () => {
     if (!param) return;
@@ -164,13 +165,13 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
 
             {/* ---------------------Fee------------------------- */}
+            <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
+              <MText>Fee</MText>
+            </MHStack>
+
             {
               tokenInfos && paymasterInfos && paymasterInfos.length ? (
                 <MVStack>
-                  <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
-                    <MText>Fee</MText>
-                  </MHStack>
-
                   {
                     paymasterInfos.map((gasInfo, index) => {
                       const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
@@ -186,7 +187,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
           </ScrollView>
         </MVStack>
-        <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick} isLoading={isLoading} />
+        <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick} isConfirmLoading={isLoading} />
       </MVStack>
     </BaseModal >
   );

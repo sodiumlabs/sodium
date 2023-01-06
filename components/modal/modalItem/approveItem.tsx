@@ -9,6 +9,7 @@ import { useAuth } from "../../../lib/data/auth";
 import { eApproveType, MaxFixedNumber } from "../../../lib/define";
 import { eColor } from '../../../lib/globalStyles';
 import { BaseFoldFrame } from "../../base/baseFoldFrame";
+import MAvatar from '../../baseUI/mAvatar';
 import { MDivider } from '../../baseUI/mDivider';
 import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
@@ -57,8 +58,9 @@ export const ApproveItem = (props: {
 
       <MText style={{ color: eColor.GrayText }}>Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-        <MImage w={20} h={20} />
-        <MText style={{ flex: 1, color: eColor.GrayContentText }}>{auth?.blockchainAddress}</MText>
+        {/* <MImage w={20} h={20} /> */}
+        <MAvatar name={auth?.blockchainAddress} />
+        <MText style={{ flex: 1, color: eColor.GrayContentText, marginLeft: 6 }}>{auth?.blockchainAddress}</MText>
       </MHStack>
 
       <MDivider style={{ marginVertical: 10 }} />
