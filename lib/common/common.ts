@@ -111,3 +111,22 @@ export function isMatchEthAddress(address: string) {
 export function isMatchEnsAddress(address: string) {
   return /^(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,63}$/.test(address);
 }
+
+
+export function downText(text: string) {
+  // const text = 'This is the text that will be downloaded';
+
+  fetch('data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+    .then((response) => response.blob())
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.style.display = 'none';
+      a.href = url;
+      a.download = 'recovery-codes.txt';
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+    })
+    .catch((error) => console.error(error));
+}

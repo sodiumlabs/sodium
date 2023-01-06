@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
+import { downText } from '../../lib/common/common';
 import { fixWidth } from "../../lib/define";
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useDimensionSize } from "../../lib/hook/dimension";
@@ -27,6 +28,11 @@ export function SetupAuthScreen() {
     const value = text.replace(/[^\d]/g, '');
     setAuthCode(value);
   }
+
+  const onDownCodeClick = () => {
+    downText("77670-2e15d 77670-2e15d 77670-2e15d 77670-2e15d");
+  }
+
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
@@ -86,7 +92,7 @@ export function SetupAuthScreen() {
                     style={{ marginTop: 20 }}
                     right={
                       <MHStack>
-                        <MButton style={{ backgroundColor: eColor.Blue }} >
+                        <MButton style={{ backgroundColor: eColor.Blue }} onPress={onDownCodeClick} >
                           <MButtonText title="Download" />
                         </MButton>
                       </MHStack>
