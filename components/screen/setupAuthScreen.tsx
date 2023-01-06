@@ -1,13 +1,13 @@
-import { Divider } from "@ui-kitten/components";
 import { useState } from 'react';
 import { ScrollView, StyleSheet } from "react-native";
-import { useAuth } from '../../lib/data/auth';
 import { fixWidth } from "../../lib/define";
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
+import { MButtonText } from "../baseUI/mButtonText";
 import { MDivider } from "../baseUI/mDivider";
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
@@ -15,14 +15,18 @@ import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
-import { eColor, globalStyle } from '../../lib/globalStyles';
-import { MButtonText } from "../baseUI/mButtonText";
 import { CodeItemText } from "../item/codeItemText";
 
 export function SetupAuthScreen() {
   // const auth = useAuth();
   const dimension = useDimensionSize();
   const [step, setStep] = useState<number>(1);
+  const [authCode, setAuthCode] = useState<string>('');
+
+  const onInputAuthCode = (text: string) => {
+    const value = text.replace(/[^\d]/g, '');
+    setAuthCode(value);
+  }
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
@@ -43,13 +47,14 @@ export function SetupAuthScreen() {
                   <MText style={{ marginBottom: 5 }} >Scan the QR code</MText>
                   <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }}>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
                   <MText style={{ marginBottom: 10 }}>Verify the code from the app</MText>
-                  <MInput />
+                  <MInput placeholder="Authenticator code" placeholderTextColor={eColor.GrayText}
+                    value={authCode} onChangeText={onInputAuthCode} />
                   {/* <MDivider style={{ marginVertical: 10 }} /> */}
                   <MLineLR
                     style={{ marginTop: 10 }}
                     right={
                       <MHStack>
-                        <MButton onPress={() => setStep(2)} style={{ backgroundColor: eColor.Blue }} >
+                        <MButton onPress={() => setStep(2)} isBanHover={!authCode} style={{ backgroundColor: !!authCode ? eColor.Blue : eColor.Black }} >
                           <MButtonText title="Continue" />
                         </MButton>
                       </MHStack>
