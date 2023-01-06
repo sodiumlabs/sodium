@@ -31,11 +31,11 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
       const decodeDatas = await decodeTransactionRequest(transcation.txReq, auth.web3signer);
       // setDecodeDatas(decodeResult);
       setDecodeData(decodeDatas[0]);
-      if (decodeDatas.findIndex(decode => !!decode.decodeTransferData)) {
+      if (decodeDatas.findIndex(decode => !!decode.decodeTransferData) != -1) {
         setTxnType("Send tokens");
         return;
       }
-      if (decodeDatas.findIndex(decode => !!decode.decodeApproveData)) {
+      if (decodeDatas.findIndex(decode => !!decode.decodeApproveData) != -1) {
         setTxnType("Approve tokens");
         return;
       }
