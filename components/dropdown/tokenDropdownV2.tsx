@@ -101,13 +101,13 @@ const styles = StyleSheet.create({
   },
   dropdown: {
     position: 'absolute',
-    top: 60,
+    top: 70,
     left: 0,
     right: 0,
     zIndex: 2,
   },
   option: {
-    padding: 10,
+    paddingVertical: 15,
     width: '100%',
     borderColor: eColor.Border,
     paddingHorizontal: 15,
