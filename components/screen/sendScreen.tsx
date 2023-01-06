@@ -2,30 +2,29 @@ import { Transaction } from '@0xsodium/transactions';
 import { Signer } from "@0xsodium/wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { BigNumberish } from 'ethers';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Platform, ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
-import { formatPrice2Wei, isMatchEnsAddress, isMatchEthAddress, formatWei2Price } from '../../lib/common/common';
+import { formatPrice2Wei, formatWei2Price, isMatchEnsAddress, isMatchEthAddress } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { fixWidth, IUserTokenInfo } from "../../lib/define";
+import { eColor, globalStyle } from '../../lib/globalStyles';
+import { useMClipboard } from '../../lib/hook/clipboard';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
 import { showUpdateSignTranscationModal } from '../base/modalInit';
 import { Spacer } from '../base/spacer';
+import { InputEndButton } from '../baseUI/inputEndButton';
 import MButton from "../baseUI/mButton";
+import { MButtonText } from '../baseUI/mButtonText';
+import MHStack from '../baseUI/mHStack';
 import MInput from "../baseUI/mInput";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
-import { eColor, globalStyle } from '../../lib/globalStyles';
-import { MButtonText } from '../baseUI/mButtonText';
-import MHStack from '../baseUI/mHStack';
-import { Clipboard } from 'react-native';
-import { useMClipboard } from '../../lib/hook/clipboard';
-import { platform } from 'process';
 
 
 export function SendScreen() {
@@ -139,11 +138,7 @@ export function SendScreen() {
                 <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity"
                   placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}
                   value={inputTokenCount} errorTip={isShowCountInputError ? "Please enter the correct quantity" : ""} />
-                <MButton
-                  onPress={onQuantityMaxClick}
-                  style={{ position: 'absolute', right: 20, top: 30, borderRadius: 15, backgroundColor: eColor.GrayText }}>
-                  <MButtonText title='Max' />
-                </MButton>
+                <InputEndButton style={{ position: 'absolute', right: 20, top: 30 }} onPress={onQuantityMaxClick} title='Max' />
               </MHStack>
 
             </MVStack>
@@ -152,11 +147,7 @@ export function SendScreen() {
               <MInput placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
                 onChangeText={onChangeAddressText} value={inputAddress}
                 errorTip={isShowAddressInputError ? "Please enter the correct address" : ""} />
-              <MButton
-                onPress={onAddressPasteClick}
-                style={{ position: 'absolute', right: 20, top: 20, borderRadius: 15, backgroundColor: eColor.GrayText }}>
-                <MButtonText title='Paste' />
-              </MButton>
+              <InputEndButton style={{ position: 'absolute', right: 20, top: 20 }} onPress={onAddressPasteClick} title='Paste' />
             </MHStack>
 
             <MButton
