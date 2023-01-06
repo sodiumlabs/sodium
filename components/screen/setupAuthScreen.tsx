@@ -15,6 +15,9 @@ import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
+import { eColor, globalStyle } from '../../lib/globalStyles';
+import { MButtonText } from "../baseUI/mButtonText";
+import { CodeItemText } from "../item/codeItemText";
 
 export function SetupAuthScreen() {
   // const auth = useAuth();
@@ -26,7 +29,7 @@ export function SetupAuthScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Reconfigure two-factor authentication (2FA)" />
-            <MHStack stretchW style={{ justifyContent: 'space-evenly' }}>
+            <MHStack stretchW style={{ justifyContent: 'space-evenly', marginBottom: 20 }}>
               <StepItem step={1} isSelected={1 <= step} />
               <StepItem step={2} isSelected={2 <= step} />
               <StepItem step={3} isSelected={3 <= step} />
@@ -34,54 +37,60 @@ export function SetupAuthScreen() {
 
             {
               step == 1 && (
-                <MVStack stretchW style={{ backgroundColor: 'white' }}>
-                  <MText>Setup authenticator app</MText>
-                  <MText>Use a phone app like 1Password, Authy, LastPass Authenticator, or Microsoft Authenticator, etc. to get 2FA codes when prompted during sign-in.</MText>
-                  <MText>Scan the QR code</MText>
-                  <MText>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
-                  <MText>Verify the code from the app</MText>
+                <MVStack stretchW style={[{ backgroundColor: 'white', padding: 15 }, globalStyle.whiteBorderWidth]}>
+                  <MText style={{ marginBottom: 5 }} >Setup authenticator app</MText>
+                  <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }} numberOfLines={null}>Use a phone app like 1Password, Authy, LastPass Authenticator, or Microsoft Authenticator, etc. to get 2FA codes when prompted during sign-in.</MText>
+                  <MText style={{ marginBottom: 5 }} >Scan the QR code</MText>
+                  <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }}>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
+                  <MText style={{ marginBottom: 10 }}>Verify the code from the app</MText>
                   <MInput />
-                  <MDivider style={{ marginVertical: 10 }} />
-                  <MLineLR right={
-                    <MHStack>
-                      <MButton onPress={() => setStep(2)} >
-                        <MText>continue</MText>
-                      </MButton>
-                    </MHStack>
-                  } />
+                  {/* <MDivider style={{ marginVertical: 10 }} /> */}
+                  <MLineLR
+                    style={{ marginTop: 10 }}
+                    right={
+                      <MHStack>
+                        <MButton onPress={() => setStep(2)} style={{ backgroundColor: eColor.Blue }} >
+                          <MButtonText title="Continue" />
+                        </MButton>
+                      </MHStack>
+                    } />
                 </MVStack>
               )
             }
 
             {
               step == 2 && (
-                <MVStack stretchW style={{ backgroundColor: 'white' }}>
-                  <MText>Download your recovery codes </MText>
-                  <MText numberOfLines={null}>You can use recovery codes as a second factor to authenticate in case you lose access to your device. We recommend saving them with a secure password manager such as Lastpass, 1Password, or Keeper.                </MText>
-                  <MVStack style={{ backgroundColor: 'rgba(200,200,200,0.5)' }}>
-                    <MText>Keep your recovery codes in a safe spot </MText>
-                    <MText>If you lose your device and can't find your recovery codes, you will lose access to your account. </MText>
+                <MVStack stretchW style={[{ backgroundColor: 'white', padding: 15 }, globalStyle.whiteBorderWidth]}>
+                  <MText style={{ marginBottom: 5 }}>Download your recovery codes </MText>
+                  <MText numberOfLines={null} style={{ color: eColor.GrayContentText, marginBottom: 10 }}>
+                    You can use recovery codes as a second factor to authenticate in case you lose access to your device. We recommend saving them with a secure password manager such as Lastpass, 1Password, or Keeper.
+                  </MText>
+                  <MVStack>
+                    <MText style={{ marginBottom: 5 }}>Keep your recovery codes in a safe spot </MText>
+                    <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }}>If you lose your device and can't find your recovery codes, you will lose access to your account. </MText>
                   </MVStack>
-                  <MVStack style={{ paddingHorizontal: 40 }} >
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                  <MVStack style={{ paddingHorizontal: 100 }} >
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
                   </MVStack>
 
+                  <MLineLR
+                    style={{ marginTop: 20 }}
+                    right={
+                      <MHStack>
+                        <MButton style={{ backgroundColor: eColor.Blue }} >
+                          <MButtonText title="Download" />
+                        </MButton>
+                      </MHStack>
+                    } />
+                  <MDivider style={{ marginVertical: 15 }} />
                   <MLineLR right={
                     <MHStack>
-                      <MButton  >
-                        <MText>download</MText>
-                      </MButton>
-                    </MHStack>
-                  } />
-                  <MDivider style={{ marginVertical: 10 }} />
-                  <MLineLR right={
-                    <MHStack>
-                      <MButton onPress={() => setStep(3)} >
-                        <MText>I have saved my recovery codes</MText>
+                      <MButton onPress={() => setStep(3)} style={{ backgroundColor: eColor.Blue }}>
+                        <MButtonText title="I have saved my recovery codes" />
                       </MButton>
                     </MHStack>
                   } />
@@ -90,8 +99,8 @@ export function SetupAuthScreen() {
             }
             {
               step == 3 && (
-                <MVStack stretchW style={{ backgroundColor: 'white', alignItems: 'center' }}>
-                  <MText>Finish </MText>
+                <MVStack stretchW style={[{ backgroundColor: 'white', alignItems: 'center', padding: 15 }, globalStyle.whiteBorderWidth]}>
+                  <MText style={{ color: eColor.GrayContentText }} >Finish </MText>
                 </MVStack>
               )
             }
@@ -108,8 +117,8 @@ export function SetupAuthScreen() {
 function StepItem(props: { step: number, isSelected: boolean }) {
   const { step, isSelected } = props;
   return (
-    <MHStack style={{ backgroundColor: isSelected ? 'blue' : 'white', borderWidth: 1, borderColor: 'blue', borderRadius: 10, width: 20, height: 20, justifyContent: 'center', alignItems: 'center' }}>
-      <MText>{step}</MText>
+    <MHStack style={{ backgroundColor: isSelected ? eColor.Blue : 'white', borderWidth: 1, borderColor: eColor.Blue, borderRadius: 10, width: 20, height: 20, justifyContent: 'center', alignItems: 'center' }}>
+      <MText style={{ color: isSelected ? "#ffffff" : eColor.Blue, fontWeight: '700' }}>{step}</MText>
     </MHStack>
   )
 }

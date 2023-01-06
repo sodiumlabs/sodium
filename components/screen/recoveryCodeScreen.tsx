@@ -14,6 +14,9 @@ import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
+import { globalStyle, eColor } from '../../lib/globalStyles';
+import { CodeItemText } from "../item/codeItemText";
+import { MButtonText } from '../baseUI/mButtonText';
 
 export function RecoveryCodeScreen() {
   // const auth = useAuth();
@@ -30,46 +33,51 @@ export function RecoveryCodeScreen() {
             <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
               <ScreenTitle title="Recovery Code" />
               <MVStack>
-                <MText>Two-factor recovery codes</MText>
-                <MText numberOfLines={null}>Recovery codes can be used to access your account in the event you lose access to your device and cannot receive two-factor authentication codes.</MText>
-                <MDivider style={{ marginVertical: 10 }} />
+                <MText style={{ marginBottom: 5 }}>Two-factor recovery codes</MText>
+                <MText style={{ color: eColor.GrayContentText }} numberOfLines={null}>Recovery codes can be used to access your account in the event you lose access to your device and cannot receive two-factor authentication codes.</MText>
+                {/* <MDivider style={{ marginVertical: 10 }} /> */}
 
-                <MVStack style={{ borderWidth: 1, borderRadius: 5 }}>
-                  <MText>Recovery code</MText>
-                  <MText numberOfLines={null}>Keep your recovery codes as safe as your password. We recommend saving them with a password manager such as Lastpass, 1Password, or Keeper.</MText>
+                <MVStack style={[{ padding: 15, marginTop: 20 }, globalStyle.whiteBorderWidth]}>
+                  <MText style={{ marginBottom: 5 }}>Recovery code</MText>
+                  <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }} numberOfLines={null}>Keep your recovery codes as safe as your password. We recommend saving them with a password manager such as Lastpass, 1Password, or Keeper.</MText>
 
                   {
                     !isNewRecoveryCode && (
-                      <MHStack style={{ backgroundColor: 'rgba(255,255,100,1)' }}>
+                      <MHStack style={{ backgroundColor: 'rgba(255,255,100,1)', marginBottom: 10, borderRadius: 6, padding: 10 }}>
                         <MText numberOfLines={null}> Keep your recovery codes in a safe spot. These codes are the last resort for accessing your account in case you lose your password and second factors. If you cannot find these codes, you will lose access to your account.</MText>
                       </MHStack>
                     )
                   }
                   {
                     isNewRecoveryCode && (
-                      <MHStack style={{ backgroundColor: 'rgba(100,255,100,1)' }}>
+                      <MHStack style={{ backgroundColor: 'rgba(100,255,100,1)', marginBottom: 10, borderRadius: 6, padding: 10 }}>
                         <MText numberOfLines={null}>These new codes have replaced your old codes. Save them in a safe spot. These codes are the last resort for accessing your account in case you lose your password and second factors. If you cannot find these codes, you will lose access to your account.</MText>
                       </MHStack>
                     )
                   }
-                  <MVStack style={{ paddingHorizontal: 40 }} >
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
-                    <MLineLR left={<MText>06f49-01c5x</MText>} right={<MText>77670-2e15d</MText>} />
+                  <MVStack style={{ paddingHorizontal: 100 }} >
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
+                    <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />
                   </MVStack>
 
-                  <MHStack style={{ paddingHorizontal: 40 }}>
+                  <MHStack style={{ marginTop: 20 }}>
                     <MLineLR
-                      left={<MButton><MText>Download</MText></MButton>}
-                      right={<MButton  ><MText>Copy</MText></MButton>} />
+                      left={null}
+                      right={
+                        <>
+                          <MButton  ><MButtonText title="Copy" /></MButton>
+                          <MButton style={{ marginLeft: 10 }} ><MButtonText title="Download" /></MButton>
+                        </>
+                      } />
                   </MHStack>
 
-                  <MText>Generate new recovery codes</MText>
-                  <MText numberOfLines={null}>When you generate new recovery codes, you must download or print the new codes. Your old codes won't work anymore.</MText>
+                  <MText style={{ marginVertical: 10 }}>Generate new recovery codes</MText>
+                  <MText numberOfLines={null} style={{ color: eColor.GrayContentText, marginBottom: 20 }}>When you generate new recovery codes, you must download or print the new codes. Your old codes won't work anymore.</MText>
                   <MButton onPress={generateClick} >
-                    <MText>Generate new recovery codes</MText>
+                    <MButtonText title="Generate new recovery codes" />
                   </MButton>
 
                 </MVStack>
