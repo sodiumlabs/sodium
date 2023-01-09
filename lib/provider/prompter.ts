@@ -1,5 +1,5 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
-import { flattenAuxTransactions, Transaction, TransactionRequest } from '@0xsodium/transactions';
+import { TransactionRequest } from '@0xsodium/transactions';
 import { showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../../components/base/modalInit';
 import { navigate, waitNavigateInit } from '../../components/base/navigationInit';
 import { decodeTransactionRequest } from '../common/decode';
@@ -95,11 +95,16 @@ export class WalletPrompter implements WalletUserPrompter {
             } as ITranscation;
 
             const transactionQueueFindIndex = transactionQueue.add(txnWithTime);
-            const continueClick = async (continueTxn: TransactionRequest) => {
+            const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: () => void, onPendingEnd?: () => void) => {
                 transactionQueue.remove(transactionQueueFindIndex);
                 const txnResponse = await auth.signer.sendTransaction(continueTxn, chaindId);
+                console.log("txnResponse:" + JSON.stringify(txnResponse));
+                onPendingStart && onPendingStart();
+                // await txnResponse.wait();
+                onPendingEnd && onPendingEnd();
                 tResolve(txnResponse.hash);
             }
+
             showUpdateSignTranscationModal(true, {
                 continueClick: continueClick,
                 cancelClick: () => {

@@ -41,7 +41,7 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
       </Pressable> */}
 
       <MHStack stretchW style={[globalStyle.whiteBorderWidth, { overflow: 'hidden' }]}>
-        <TokenItem option={selectedOption} handleOptionPress={toggleDropdown} />
+        <TokenItem isSelected={false} option={selectedOption} handleOptionPress={toggleDropdown} />
       </MHStack>
 
       {isDropdownVisible && (
@@ -52,7 +52,7 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
               <>
-                <TokenItem option={item} handleOptionPress={handleOptionPress} />
+                <TokenItem isSelected={item.data == selectedOption.data} option={item} handleOptionPress={handleOptionPress} />
                 {index != options.length - 1 && (<MDivider />)}
               </>
             )}
@@ -63,8 +63,8 @@ export const DepositTokenDropdown = (props: ViewProps & { options: ISelectItemDa
   );
 };
 
-const TokenItem = (props: { option: ISelectItemData, handleOptionPress: (option: ISelectItemData) => void }) => {
-  const { option, handleOptionPress } = props;
+const TokenItem = (props: { option: ISelectItemData, isSelected: boolean, handleOptionPress: (option: ISelectItemData) => void }) => {
+  const { option, isSelected, handleOptionPress } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
 
   if (option == null) {
@@ -78,7 +78,7 @@ const TokenItem = (props: { option: ISelectItemData, handleOptionPress: (option:
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       onPress={() => handleOptionPress(option)}
-      style={[styles.option, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}
+      style={[styles.option, { backgroundColor: isSelected || isItemHovered ? eColor.GrayHover : '#ffffff' }]}
     >
       <MHStack style={styles.sendCoin} stretchW>
         <MHStack style={{ flex: 1, alignItems: 'center', }}>

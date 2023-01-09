@@ -1,13 +1,13 @@
 import { hashcodeObj } from '../../lib/common/common';
 import { eColor } from '../../lib/globalStyles';
-import { useRequestedTransactions } from "../../lib/transaction";
+import { usePendingTransactions } from '../../lib/transaction/pending';
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import PendingItem from '../item/pendingItem';
 
 
 export function PendingTranscation() {
-  const pendingTranscations = useRequestedTransactions();
+  const pendingTranscations = usePendingTransactions();
 
   if (!pendingTranscations || pendingTranscations.length <= 0) {
     return <></>

@@ -8,9 +8,10 @@ import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useProjectSetting } from '../../lib/data/project';
-import { eApproveType, IModalParam, ISignTranscationModalParam, MaxFixedNumber } from '../../lib/define';
+import { eApproveType, IModalParam, ISignTranscationModalParam, ITranscation, MaxFixedNumber, Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
+import { transactionPending } from '../../lib/transaction/pending';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
 import MHStack from '../baseUI/mHStack';
@@ -23,6 +24,7 @@ import { ApproveItem } from './modalItem/approveItem';
 import { ModalTitle } from './modalItem/modalTitle';
 import { OperateBtnItem } from './modalItem/operateBtnItem';
 import { TransferItem } from './modalItem/transferItem';
+import { navigate } from '../base/navigationInit';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -52,13 +54,13 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
     setIsLoading(true);
     if (decodeApproveData) {
-      const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
       if (approveSelectedIndex == eApproveType.SetAllowance) {
         console.log("eApproveType.SetAllowance");
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
         const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
 
+        const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
         const transaction = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, approveNum, decodeApproveData.decodeApproveData.token.address);
         txs.splice(approveIndex, 1, transaction);
       }
@@ -70,19 +72,30 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       else {
         console.log("Let's keep our original tx the same");
       }
-      console.log("txs:");
-      console.log(txs)
-      await param.continueClick(txs);
+    }
 
+    console.log("txs:");
+    console.log(txs);
+
+    const decodeTransferData = param?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeTransferData);
+    const isPending = !!decodeTransferData;
+
+    if (isPending) {
+      const onPendingStart = () => {
+        setIsLoading(false);
+        hideModal();
+        transactionPending.add(param.txn);
+        navigate(Screens.Wallet);
+      }
+      const onPendingEnd = () => {
+        transactionPending.removeByTxn(param.txn);
+      }
+      await param.continueClick(txs, onPendingStart, onPendingEnd);
     }
     else {
-      console.log("txs:");
-      console.log(txs)
       await param.continueClick(txs);
     }
 
-    setIsLoading(false);
-    hideModal();
   }, [decodeApproveData, param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
 
   const onCancelClick = () => {

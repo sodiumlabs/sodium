@@ -27,9 +27,10 @@ import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
 
 
-export function SendScreen() {
+export function SendScreen(props) {
   const authData = useAuth();
   const dimension = useDimensionSize();
+  const defaultToken = props.route.params as IUserTokenInfo;
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
   const [inputAddress, setInputAddress] = useState('');
@@ -133,7 +134,7 @@ export function SendScreen() {
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Send" />
             <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
-              <TokenDropdown options={tokenInfos} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+              <TokenDropdown options={tokenInfos} defaultOption={defaultToken} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
               <MHStack style={{ position: 'relative' }} >
                 <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity"
                   placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}

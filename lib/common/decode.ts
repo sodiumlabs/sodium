@@ -1,10 +1,9 @@
 import { Web3Signer } from "@0xsodium/provider";
 import { flattenAuxTransactions, Transaction, TransactionRequest } from "@0xsodium/transactions";
 import { checkIsERC20Transfer, decodeERC20Transfer } from "../../abi";
-import { ERC20Transfer } from "../../abi/index";
+import { checkIsERC20Approve, decodeERC20Approve } from '../../abi/erc20';
 import { checkIsNativeTokenTransfer, decodeNativeTokenTransfer } from "../../abi/nativeToken";
 import { IDecodeTranscation } from "../define";
-import { checkIsERC20Approve, decodeERC20Approve, ERC20Approve } from '../../abi/erc20';
 
 
 export async function decodeTransactionRequest(txn: TransactionRequest, web3signer: Web3Signer, chainId?: number) {

@@ -15,9 +15,14 @@ import { formatTime2Today } from '../../lib/common/time';
 import { IconTokenDefault } from '../../lib/imageDefine';
 import MAvatar from '../baseUI/mAvatar';
 import { ITranscation } from '../../lib/define';
+import { formatWei2Price } from '../../lib/common/common';
 
 export default function PendingItem(props: TextInputProps & { data: ITranscation }) {
   const { data, style, ...reset } = props;
+
+  const decodeTransferData = data?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeTransferData);
+  const transferToken = decodeTransferData?.decodeTransferData?.token;
+  const transferTokenAmount = decodeTransferData?.decodeTransferData?.amount;
 
   return (
     <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
@@ -30,17 +35,17 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
           </>
         }
         right={
-          <MText style={{ color: eColor.GrayText }} >{formatTime2Today(Date.now())}</MText>
+          <MText style={{ color: eColor.GrayText }} >{formatTime2Today(data.timeStamp)}</MText>
         } />
 
       <MLineLR
         left={
           <MHStack style={{ alignItems: 'center' }} >
             <MImage w={20} h={20} uri={null} source={IconTokenDefault} />
-            <MText style={{ marginLeft: 6, fontWeight: '700' }} >PLOYGON(Matic)</MText>
+            <MText style={{ marginLeft: 6, fontWeight: '700' }} >{transferToken.symbol}</MText>
           </MHStack>
         }
-        right={<MText style={{ color: eColor.GrayContentText }} >-0.001 Matic</MText>} />
+        right={<MText style={{ color: eColor.GrayContentText }} >{formatWei2Price(transferTokenAmount.toString(), transferToken.decimals)} {transferToken.symbol}</MText>} />
 
       <MDivider style={{ marginVertical: 10 }} />
 
@@ -60,7 +65,7 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
       <MText style={{ marginBottom: 10 }} >To Recipient</MText>
       <MHStack style={{ alignItems: 'center' }}>
         <MAvatar name={'test'} />
-        <MText style={{ color: eColor.GrayContentText, marginLeft: 6 }}>0x178798731273218372818</MText>
+        <MText style={{ color: eColor.GrayContentText, marginLeft: 6 }}>{decodeTransferData.decodeTransferData.to}</MText>
       </MHStack>
 
     </MVStack>

@@ -41,7 +41,7 @@ const queryClient = new QueryClient(
       onError: (error: Error) => {
         // toastError(error.message);
         console.log(error.message);
-        showUpdateComModal(true, { 'height': 300, 'reactNode': <FailModalItem error={error.message} /> });
+        showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={error.message} /> });
       }
     }),
   }

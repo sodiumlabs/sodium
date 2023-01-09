@@ -4,7 +4,7 @@ import { loadTxnQueue, saveTxnQueue } from "../common/asyncStorage";
 import { hashcodeObj } from '../common/common';
 import { eStotageKey, ITranscation } from '../define';
 
-export const requestedTransactions = atom<ITranscation[]>([]);
+const requestedTransactions = atom<ITranscation[]>([]);
 
 
 const add = (tx: ITranscation) => {
