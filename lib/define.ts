@@ -101,7 +101,7 @@ export interface IDeployConfirmModalParam {
 }
 
 export interface ISignTranscationModalParam {
-  continueClick: (continueTxn: Transaction[], onPendingStart?: () => void, onPendingEnd?: () => void, onError?: () => void) => Promise<void>,
+  continueClick: (continueTxn: Transaction[], onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => Promise<void>,
   cancelClick: () => void,
   decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,
@@ -169,7 +169,8 @@ export type PaymasterInfo = {
 export interface ITranscation {
   txReq: TransactionRequest,
   timeStamp: number,
-  decodeDatas: IDecodeTranscation[]
+  decodeDatas: IDecodeTranscation[],
+  txHash?: string
 }
 
 export enum eStotageKey {

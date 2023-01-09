@@ -10,6 +10,7 @@ export enum eColor {
   Border = '#EEF0F2',
   GrayText = '#9F9F9F',
   GrayContentText = '#6B6B6B',
+  GrayWhite = '#dddddd',
 }
 
 export const globalStyle = StyleSheet.create({

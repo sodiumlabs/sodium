@@ -82,9 +82,10 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     const isPending = !!decodeTransferData;
 
     if (isPending) {
-      const onPendingStart = () => {
+      const onPendingStart = (txHash: string) => {
         setIsLoading(false);
         hideModal();
+        param.txn.txHash = txHash;
         transactionPending.add(param.txn);
         navigate(Screens.Wallet);
       }
@@ -122,17 +123,21 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
           <ScrollView style={{ paddingHorizontal: 15 }}>
             <ModalTitle title='Sign Transaction' />
 
-            <MVStack stretchW  >
-              <MLineLR
-                left={<MText >Network</MText>}
-                right={<MHStack>
-                  {/* <MImage w={12} h={12} uri={curNetwork?.bundlerUrl} /> */}
-                  <MText style={{ color: '#8247E5', fontWeight: '700' }} >{curNetwork?.name?.toUpperCase()}</MText>
-                </MHStack>} />
-              <MLineLR style={{ marginTop: 16 }}
-                left={<MText  >Requested at</MText>}
-                right={<MText fontSize={8} style={{ color: "#928B8B" }} >{formatTimeYMDHMS(param?.txn?.timeStamp)}</MText>} />
-            </MVStack>
+            {
+              param?.decodeDatas && (
+                <MVStack stretchW  >
+                  <MLineLR
+                    left={<MText >Network</MText>}
+                    right={<MHStack>
+                      {/* <MImage w={12} h={12} uri={curNetwork?.bundlerUrl} /> */}
+                      <MText style={{ color: '#8247E5', fontWeight: '700' }} >{curNetwork?.name?.toUpperCase()}</MText>
+                    </MHStack>} />
+                  <MLineLR style={{ marginTop: 16 }}
+                    left={<MText  >Requested at</MText>}
+                    right={<MText fontSize={8} style={{ color: "#928B8B" }} >{formatTimeYMDHMS(param?.txn?.timeStamp)}</MText>} />
+                </MVStack>
+              )
+            }
 
             {
               !param?.decodeDatas && <MLoading />

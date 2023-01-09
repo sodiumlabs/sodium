@@ -100,19 +100,19 @@ export class WalletPrompter implements WalletUserPrompter {
             } as ITranscation;
 
             transactionQueue.add(txnWithTime);
-            const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: () => void, onPendingEnd?: () => void, onError?: () => void) => {
-                transactionQueue.removeByTxn(txnWithTime);
+            const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => {
+
 
                 try {
                     let txnResponse;
                     if (handleName == "send") {
                         txnResponse = await auth.signer.sendTransaction(continueTxn, chaindId);
                     } else {
-                        txnResponse = await auth.signer.signTransaction(continueTxn, chaindId);
+                        txnResponse = await auth.signer.signTransaction(continueTxn);
                     }
-
+                    transactionQueue.removeByTxn(txnWithTime);
                     console.log("txnResponse:" + JSON.stringify(txnResponse));
-                    onPendingStart && onPendingStart();
+                    onPendingStart && onPendingStart(txnResponse.hash);
                     await txnResponse.wait();
                     onPendingEnd && onPendingEnd();
                     tResolve(txnResponse.hash);

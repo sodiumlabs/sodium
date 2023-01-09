@@ -27,6 +27,7 @@ export const IconAllowance = require('./../assets/wallet.png');
 
 export const IconSignout = require('./../assets/signout.png');
 export const IconSettings = require('./../assets/settings.png');
+export const IconShare = require('./../assets/share.png');
 
 
 export const IconTokenDefault = require('./../assets/token_default.png');
