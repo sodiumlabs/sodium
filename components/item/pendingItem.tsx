@@ -2,7 +2,14 @@
 
 
 
+import { BigNumber } from "@ethersproject/bignumber";
 import { StyleSheet, TextInputProps } from 'react-native';
+import { formatWei2Price } from '../../lib/common/common';
+import { formatTime2Today } from '../../lib/common/time';
+import { ITranscation } from '../../lib/define';
+import { eColor, globalStyle } from '../../lib/globalStyles';
+import { IconTokenDefault } from '../../lib/imageDefine';
+import MAvatar from '../baseUI/mAvatar';
 import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -10,12 +17,7 @@ import MLineLR from '../baseUI/mLineLR';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { globalStyle, eColor } from '../../lib/globalStyles';
-import { formatTime2Today } from '../../lib/common/time';
-import { IconTokenDefault } from '../../lib/imageDefine';
-import MAvatar from '../baseUI/mAvatar';
-import { ITranscation } from '../../lib/define';
-import { formatWei2Price } from '../../lib/common/common';
+
 
 export default function PendingItem(props: TextInputProps & { data: ITranscation }) {
   const { data, style, ...reset } = props;
@@ -23,6 +25,11 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
   const decodeTransferData = data?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeTransferData);
   const transferToken = decodeTransferData?.decodeTransferData?.token;
   const transferTokenAmount = decodeTransferData?.decodeTransferData?.amount;
+  const tokenAmount = BigNumber.from(transferTokenAmount['_hex'] || transferTokenAmount['hex'])
+
+  // console.log("transferTokenAmount");
+  // console.log(transferTokenAmount);
+  if (!decodeTransferData) return <></>
 
   return (
     <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
@@ -45,7 +52,7 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
             <MText style={{ marginLeft: 6, fontWeight: '700' }} >{transferToken.symbol}</MText>
           </MHStack>
         }
-        right={<MText style={{ color: eColor.GrayContentText }} >{formatWei2Price(transferTokenAmount.toString(), transferToken.decimals)} {transferToken.symbol}</MText>} />
+        right={<MText style={{ color: eColor.GrayContentText }} >{formatWei2Price(tokenAmount.toString(), transferToken.decimals)} {transferToken.symbol}</MText>} />
 
       <MDivider style={{ marginVertical: 10 }} />
 
