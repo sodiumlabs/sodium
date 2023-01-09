@@ -174,6 +174,7 @@ export interface ITranscation {
 
 export enum eStotageKey {
   requestedTxs = '@sodium.requestedTxs',
+  pendingTxs = '@sodium.pendingTxs',
 
   session = '@sodium.session.security'
 }

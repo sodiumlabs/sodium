@@ -2,7 +2,7 @@ import { useStore } from "@nanostores/react";
 import { atom, computed } from 'nanostores';
 import { loadTxnQueue, saveTxnQueue } from "../common/asyncStorage";
 import { hashcodeObj } from '../common/common';
-import { ITranscation } from '../define';
+import { eStotageKey, ITranscation } from '../define';
 
 export const requestedTransactions = atom<ITranscation[]>([]);
 
@@ -45,11 +45,11 @@ const removeAll = () => {
 }
 
 const unbindListener = requestedTransactions.subscribe(value => {
-    saveTxnQueue(value);
+    saveTxnQueue(eStotageKey.requestedTxs, value);
 });
 
-const loadReqTxsAsyncStorage = async () => {
-    const txs = await loadTxnQueue();
+const loadAsyncStorage = async () => {
+    const txs = await loadTxnQueue(eStotageKey.requestedTxs);
     requestedTransactions.set(txs);
 }
 
@@ -59,6 +59,6 @@ export const transactionQueue = {
     removeByTxn,
     removeAll,
     useRequestedTransactions,
-    loadAsyncStorage: loadReqTxsAsyncStorage
+    loadAsyncStorage
 }
 

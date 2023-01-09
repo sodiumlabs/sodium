@@ -4,6 +4,7 @@ import { waitTime } from "../common/common";
 import { AuthData } from "../define";
 import { initWalletByTest, logout, SodiumWallet, walletAtom } from '../provider';
 import { transactionQueue } from "../transaction";
+import { transactionPending } from '../transaction/pending';
 
 export const authAtom = computed<AuthData, Atom<SodiumWallet | null>>(walletAtom, (w) => {
   console.log(w);
@@ -25,6 +26,7 @@ export const authAtom = computed<AuthData, Atom<SodiumWallet | null>>(walletAtom
 authAtom.subscribe((value) => {
   if (value.isLogin) {
     transactionQueue.loadAsyncStorage();
+    transactionPending.loadAsyncStorage();
   }
 });
 
