@@ -10,12 +10,12 @@
     "gen": "rimraf gen && typechain --target ethers-v5 --out-dir gen './abi/*.json'"
   },
   "dependencies": {
-    "@0xsodium/config": "^0.10.0",
-    "@0xsodium/network": "^0.10.0",
-    "@0xsodium/provider": "^0.10.0",
-    "@0xsodium/transactions": "^0.10.0",
-    "@0xsodium/utils": "^0.10.0",
-    "@0xsodium/wallet": "^0.10.0",
+    "@0xsodium/config": "^0.11.0",
+    "@0xsodium/network": "^0.11.0",
+    "@0xsodium/provider": "^0.11.0",
+    "@0xsodium/transactions": "^0.11.0",
+    "@0xsodium/utils": "^0.11.0",
+    "@0xsodium/wallet": "^0.11.0",
     "@ethersproject/shims": "^5.7.0",
     "@eva-design/eva": "^2.1.1",
     "@nanostores/react": "^0.4.0",
