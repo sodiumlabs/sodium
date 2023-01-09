@@ -10,11 +10,12 @@ import { IconTokenDefault } from '../../lib/imageDefine';
 import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
+import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
-export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
-  const { options, selectedOption, setSelectedOption } = props;
+export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption: IUserTokenInfo, defaultOption?: IUserTokenInfo, setSelectedOption: Dispatch<SetStateAction<IUserTokenInfo>> }) => {
+  const { options, selectedOption, setSelectedOption, defaultOption } = props;
   const [isDropdownVisible, setIsDropdownVisible] = useState(false);
   const dimension = useDimensionSize();
 
@@ -29,15 +30,24 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
 
   useEffect(() => {
     if (selectedOption == null && options != null) {
-      handleOptionPress(options[0]);
+      if (defaultOption) {
+        handleOptionPress(options.find(item => item.token.address == defaultOption.token.address));
+      } else {
+        handleOptionPress(options[0]);
+      }
+
     }
-  }, [selectedOption, options])
+  }, [selectedOption, options, defaultOption])
 
   return (
     <View style={styles.container}>
 
-      <MHStack stretchW style={[globalStyle.whiteBorderWidth, { overflow: 'hidden' }]}>
-        <TokenItem option={selectedOption} handleOptionPress={toggleDropdown} />
+      <MHStack stretchW style={[globalStyle.whiteBorderWidth, { overflow: 'hidden', minHeight: 62 }]}>
+        {
+          options == null ?
+            (<MHStack style={{ marginLeft: 15 }} ><MLoading /></MHStack>)
+            : (<TokenItem option={selectedOption} isSelected={false} handleOptionPress={toggleDropdown} />)
+        }
       </MHStack>
 
       {isDropdownVisible && (
@@ -48,7 +58,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
               <>
-                <TokenItem option={item} handleOptionPress={handleOptionPress} />
+                <TokenItem option={item} isSelected={selectedOption.token.address == item.token.address} handleOptionPress={handleOptionPress} />
                 {index != options.length - 1 && (<MDivider />)}
               </>
 
@@ -60,8 +70,8 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
   );
 };
 
-const TokenItem = (props: { option: IUserTokenInfo, handleOptionPress: (option: IUserTokenInfo) => void }) => {
-  const { option, handleOptionPress } = props;
+const TokenItem = (props: { option: IUserTokenInfo, isSelected: boolean, handleOptionPress: (option: IUserTokenInfo) => void }) => {
+  const { option, isSelected, handleOptionPress } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   if (option == null) {
     return <></>
@@ -72,7 +82,7 @@ const TokenItem = (props: { option: IUserTokenInfo, handleOptionPress: (option: 
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       onPress={() => handleOptionPress(option)}
-      style={[styles.option, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}
+      style={[styles.option, { backgroundColor: isSelected || isItemHovered ? eColor.GrayHover : '#ffffff' }]}
     >
       <MHStack style={styles.sendCoin} stretchW>
         <MImage w={32} h={32} uri={option.token.centerData.logoURI} source={IconTokenDefault} />

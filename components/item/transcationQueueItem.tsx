@@ -40,13 +40,13 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
       if (decodeApproveData) {
         console.log(decodeApproveData.decodeApproveData)
         const amount = decodeApproveData.decodeApproveData.amount;
+        // Possible recovery from localstore,the data structure may be different
         if (parseInt(amount['hex'] || amount['_hex']) == 0) {
           setTxnType("Revoke Approve tokens");
         }
         else {
           setTxnType("Approve tokens");
         }
-        // setTxnType("Approve tokens");
         return;
       }
     }

@@ -58,7 +58,7 @@ export type ScreenParamList = {
   Session: undefined,
   History: undefined,
   Coin: IUserTokenInfo,
-  Send: undefined,
+  Send: IUserTokenInfo,
   Deposit: undefined,
   Login: undefined,
   Connect: IConnectScreenParam,
@@ -101,7 +101,7 @@ export interface IDeployConfirmModalParam {
 }
 
 export interface ISignTranscationModalParam {
-  continueClick: (continueTxn: Transaction[]) => Promise<void>,
+  continueClick: (continueTxn: Transaction[], onPendingStart?: () => void, onPendingEnd?: () => void, onError?: () => void) => Promise<void>,
   cancelClick: () => void,
   decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,

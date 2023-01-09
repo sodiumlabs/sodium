@@ -1,10 +1,9 @@
 import { Web3Signer } from "@0xsodium/provider";
 import { flattenAuxTransactions, Transaction, TransactionRequest } from "@0xsodium/transactions";
 import { checkIsERC20Transfer, decodeERC20Transfer } from "../../abi";
-import { ERC20Transfer } from "../../abi/index";
+import { checkIsERC20Approve, decodeERC20Approve } from '../../abi/erc20';
 import { checkIsNativeTokenTransfer, decodeNativeTokenTransfer } from "../../abi/nativeToken";
 import { IDecodeTranscation } from "../define";
-import { checkIsERC20Approve, decodeERC20Approve, ERC20Approve } from '../../abi/erc20';
 
 
 export async function decodeTransactionRequest(txn: TransactionRequest, web3signer: Web3Signer, chainId?: number) {
@@ -34,7 +33,8 @@ async function decodeTx(decodes: IDecodeTranscation[], tran: Transaction, web3si
   }
   else if (checkIsERC20Approve(tran)) {
     decodeData.decodeApproveData = await decodeERC20Approve(tran, web3signer, chainId);
-    decodes.unshift(decodeData);
+    decodes.push(decodeData);
+    // decodes.unshift(decodeData);
   }
   else {
     decodeData.decodeStr = tran.data.toString().slice(0, 10);

@@ -7,7 +7,7 @@ import { Platform, UIManager } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { BarUI } from '../components/base/barUI';
-import ModalInit from '../components/base/modalInit';
+import ModalInit, { showErrorModal } from '../components/base/modalInit';
 import NavigationInit, { isNavigationReadyAtom, navigationRef } from '../components/base/navigationInit';
 import {
   CoinScreen,
@@ -39,9 +39,7 @@ const queryClient = new QueryClient(
   {
     queryCache: new QueryCache({
       onError: (error: Error) => {
-        // toastError(error.message);
-        console.log(error.message);
-        showUpdateComModal(true, { 'height': 300, 'reactNode': <FailModalItem error={error.message} /> });
+        showErrorModal(error.message);
       }
     }),
   }

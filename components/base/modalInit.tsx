@@ -6,6 +6,7 @@ import { IComModalParam, IDeployConfirmModalParam, IModalParam, ISignMessageModa
 import { ComModal } from "../modal/comModal";
 import { DeployConfirmModal } from "../modal/deployConfirmModal";
 import { FullScreenModal } from "../modal/fullScreenModal";
+import { FailModalItem } from '../modal/modalItem/failModalItem';
 import { SignMessageModal } from '../modal/signMessageModal';
 import { SignTranscationModal } from '../modal/signTranscationModal';
 import { TranscationDetailModal } from "../modal/transcationDetailModal";
@@ -42,6 +43,14 @@ export const showUpdateFullScreenModal = (visible: boolean, param?: ReactNode) =
   fullScreenModalAtom.set({ visible: visible, param: param });
 }
 
+
+//extra
+
+export const showErrorModal = (message: string) => {
+  console.error(message);
+  showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={message} /> });
+}
+
 export default function ModalInit() {
   // debugger
   const transcationDetailModal = useStore(transcationDetailModalAtom);
@@ -63,3 +72,4 @@ export default function ModalInit() {
     </>
   );
 }
+

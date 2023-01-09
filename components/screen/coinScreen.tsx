@@ -52,7 +52,7 @@ export function CoinScreen(props) {
             </MVStack>
 
             <MVStack stretchW style={{ marginVertical: 20 }}>
-              <MButton style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send)} >
+              <MButton style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send, tokenInfo)} >
                 <MButtonText title={"Send USDC"} />
               </MButton>
 
@@ -116,7 +116,10 @@ export function CoinScreen(props) {
             }
 
             {
-              queryHistory.isFetching && <MLoading />
+              queryHistory.isFetching && <>
+                <MHStack style={{ marginBottom: 20 }} />
+                <MLoading />
+              </>
             }
             <MHStack style={{ marginBottom: 40 }} />
             <Spacer />

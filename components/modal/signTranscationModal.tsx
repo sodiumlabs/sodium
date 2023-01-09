@@ -8,9 +8,10 @@ import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useProjectSetting } from '../../lib/data/project';
-import { eApproveType, IModalParam, ISignTranscationModalParam, MaxFixedNumber } from '../../lib/define';
+import { eApproveType, IModalParam, ISignTranscationModalParam, ITranscation, MaxFixedNumber, Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
+import { transactionPending } from '../../lib/transaction/pending';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
 import MHStack from '../baseUI/mHStack';
@@ -23,6 +24,7 @@ import { ApproveItem } from './modalItem/approveItem';
 import { ModalTitle } from './modalItem/modalTitle';
 import { OperateBtnItem } from './modalItem/operateBtnItem';
 import { TransferItem } from './modalItem/transferItem';
+import { navigate } from '../base/navigationInit';
 
 // sign transcation - send transcation - deploy transcation
 
@@ -39,7 +41,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const [approveSliderValue, setApproveSliderValue] = useState(1);
 
   const curNetwork = getNetwork(param?.chaindId);
-  const decodeApproveData = param?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeApproveData);
+  // 
 
   const onConfirmClick = useCallback(async () => {
     if (!param) return;
@@ -48,17 +50,18 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     // const tx = param.txn.txReq;
     if (!param?.decodeDatas) return;
 
+    const decodeApproveData = param.decodeDatas.find((decodeTxn) => !!decodeTxn.decodeApproveData);
     const txs = param.decodeDatas.map(decodeTxn => decodeTxn.originTxReq);
 
     setIsLoading(true);
     if (decodeApproveData) {
-      const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
       if (approveSelectedIndex == eApproveType.SetAllowance) {
         console.log("eApproveType.SetAllowance");
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
         const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
 
+        const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
         const transaction = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, approveNum, decodeApproveData.decodeApproveData.token.address);
         txs.splice(approveIndex, 1, transaction);
       }
@@ -70,26 +73,42 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       else {
         console.log("Let's keep our original tx the same");
       }
-      console.log("txs:");
-      console.log(txs)
-      await param.continueClick(txs);
+    }
 
+    console.log("txs:");
+    console.log(txs);
+
+    const decodeTransferData = param?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeTransferData);
+    const isPending = !!decodeTransferData;
+
+    if (isPending) {
+      const onPendingStart = () => {
+        setIsLoading(false);
+        hideModal();
+        transactionPending.add(param.txn);
+        navigate(Screens.Wallet);
+      }
+      const onPendingEnd = () => {
+        transactionPending.removeByTxn(param.txn);
+      }
+      const onError = () => {
+        transactionPending.removeByTxn(param.txn);
+      }
+      await param.continueClick(txs, onPendingStart, onPendingEnd, onError);
     }
     else {
-      console.log("txs:");
-      console.log(txs)
       await param.continueClick(txs);
     }
 
-    setIsLoading(false);
-    hideModal();
-  }, [decodeApproveData, param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
+  }, [param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
 
   const onCancelClick = () => {
     if (!param) return;
     param.cancelClick();
     hideModal();
   }
+
+  let transcationIndex = 0;
 
   return (
     <BaseModal
@@ -121,14 +140,18 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
             {/* ---------------------approve------------------------- */}
             {
-              decodeApproveData && (
-                <ApproveItem
-                  index={1} maxIndex={param.decodeDatas.length}
-                  approveData={decodeApproveData.decodeApproveData}
-                  approveSelectedIndex={approveSelectedIndex}
-                  setApproveSelectedIndex={setApproveSelectedIndex}
-                  approveSliderValue={approveSliderValue}
-                  setApproveSliderValue={setApproveSliderValue} />
+              param?.decodeDatas && (
+                param.decodeDatas.map((decodeTxn, index) => {
+                  if (!decodeTxn.decodeApproveData) return;
+                  return <ApproveItem
+                    key={hashcodeObj(decodeTxn) + index}
+                    index={++transcationIndex} maxIndex={param.decodeDatas.length}
+                    approveData={decodeTxn.decodeApproveData}
+                    approveSelectedIndex={approveSelectedIndex}
+                    setApproveSelectedIndex={setApproveSelectedIndex}
+                    approveSliderValue={approveSliderValue}
+                    setApproveSliderValue={setApproveSliderValue} />
+                })
               )
             }
 
@@ -139,7 +162,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   if (!decodeTxn.decodeTransferData) return;
                   return <TransferItem
                     key={hashcodeObj(decodeTxn) + index}
-                    index={index + 1} maxIndex={param.decodeDatas.length}
+                    index={++transcationIndex} maxIndex={param.decodeDatas.length}
                     transferData={decodeTxn.decodeTransferData} />
                 })
               )
@@ -150,7 +173,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 param.decodeDatas.map((decodeTxn, index) => {
                   if (!decodeTxn.decodeStr) return;
                   return (
-                    <BaseFoldFrame defaultExpansion key={hashcodeObj(decodeTxn) + index} header={`Transcation(${index + 1}/${param.decodeDatas.length})`} style={{ marginTop: 20 }}>
+                    <BaseFoldFrame defaultExpansion key={hashcodeObj(decodeTxn) + index} header={`Transcation(${++transcationIndex}/${param.decodeDatas.length})`} style={{ marginTop: 20 }}>
                       <MText style={{ color: eColor.GrayContentText }}>{decodeTxn.decodeStr}</MText>
                     </BaseFoldFrame>
                   )
@@ -183,26 +206,33 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
 
             {/* ---------------------Fee------------------------- */}
-            <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
-              <MText>Fee</MText>
-            </MHStack>
-
             {
-              tokenInfos && paymasterInfos && paymasterInfos.length ? (
-                <MVStack style={{ marginBottom: 20 }}>
+              param?.decodeDatas && (
+                <>
+                  <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
+                    <MText>Fee</MText>
+                  </MHStack>
+
                   {
-                    paymasterInfos.map((gasInfo, index) => {
-                      const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
-                      return (<NetworkFeeItem key={hashcodeObj(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
-                    })
+                    tokenInfos && paymasterInfos && paymasterInfos.length ? (
+                      <MVStack style={{ marginBottom: 20 }}>
+                        {
+                          paymasterInfos.map((gasInfo, index) => {
+                            const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
+                            return (<NetworkFeeItem key={hashcodeObj(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
+                          })
+                        }
+                      </MVStack>)
+                      : (
+                        <MVStack style={{ marginVertical: 20 }}>
+                          <MLoading />
+                        </MVStack>
+                      )
                   }
-                </MVStack>)
-                : (
-                  <MVStack style={{ marginVertical: 20 }}>
-                    <MLoading />
-                  </MVStack>
-                )
+                </>
+              )
             }
+
           </ScrollView>
         </MVStack>
         <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick}
