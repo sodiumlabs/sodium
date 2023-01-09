@@ -41,8 +41,6 @@ export const ApproveItem = (props: {
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
         const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
-
-        // setApproveValue(approveNum.toString());
         console.log("bigSlider:" + bigSlider + "  approveData.token.decimals:" + approveData.token.decimals);
         console.log("approveNum:" + approveNum);
         setApproveValue(formatWei2Price(approveNum.toString(), approveData.token.decimals, 2));
@@ -53,9 +51,10 @@ export const ApproveItem = (props: {
     }
   }, [approveSelectedIndex, approveSliderValue]);
 
+  const header = approveData.amount.eq(0) ? `Revoke Approve(${index}/${maxIndex})` : `Approve(${index}/${maxIndex})`
+
   return (
-    <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }}
-      header={`Approve(${index}/${maxIndex})`}>
+    <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }} header={header}>
 
       <MText >Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
@@ -64,43 +63,48 @@ export const ApproveItem = (props: {
         <MText style={{ flex: 1, color: eColor.GrayContentText, marginLeft: 6 }}>{auth?.blockchainAddress}</MText>
       </MHStack>
 
-      <MDivider style={{ marginVertical: 10 }} />
-      <MText >Value</MText>
-      <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
-        <MImage w={20} h={20} uri={approveData.token.centerData.logoURI} source={IconTokenDefault} />
-        <MText style={{ flex: 1, color: eColor.GrayContentText, marginLeft: 5 }}>{approveValue}</MText>
-      </MHStack>
-      <MVStack>
-        <RadioGroup
-          // appearance
-          // style={{ 'alignItems': 'start' }}
-          selectedIndex={approveSelectedIndex}
-          onChange={index => setApproveSelectedIndex(index)}>
-          <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'}>
-            <>
-              <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-              <Slider
-                style={{ width: '60%', height: 20, position: 'absolute', bottom: -25, left: 32, zIndex: 1 }}
-                minimumValue={0}
-                maximumValue={1}
-                onValueChange={onSliderValueChange}
-                minimumTrackTintColor="#4AB0FF"
-                maximumTrackTintColor="#FF7B4A"
-              />
-            </>
-          </Radio>
-          <Radio status={'success'}>
-            <>
-              <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
-            </>
-          </Radio>
-          <Radio status={'success'}>
-            <><MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText></>
-          </Radio>
-        </RadioGroup>
+      {
+        approveData.amount.gt(0) &&
+        <>
+          <MDivider style={{ marginVertical: 10 }} />
+          <MText >Value</MText>
+          <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
+            <MImage w={20} h={20} uri={approveData.token.centerData.logoURI} source={IconTokenDefault} />
+            <MText style={{ flex: 1, color: eColor.GrayContentText, marginLeft: 5 }}>{approveValue}</MText>
+          </MHStack>
+          <MVStack>
+            <RadioGroup
+              // appearance
+              // style={{ 'alignItems': 'start' }}
+              selectedIndex={approveSelectedIndex}
+              onChange={index => setApproveSelectedIndex(index)}>
+              <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'}>
+                <>
+                  <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
+                  <Slider
+                    style={{ width: '60%', height: 20, position: 'absolute', bottom: -25, left: 32, zIndex: 1 }}
+                    minimumValue={0}
+                    maximumValue={1}
+                    onValueChange={onSliderValueChange}
+                    minimumTrackTintColor="#4AB0FF"
+                    maximumTrackTintColor="#FF7B4A"
+                  />
+                </>
+              </Radio>
+              <Radio status={'success'}>
+                <>
+                  <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
+                </>
+              </Radio>
+              <Radio status={'success'}>
+                <><MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText></>
+              </Radio>
+            </RadioGroup>
 
 
-      </MVStack>
+          </MVStack>
+        </>
+      }
     </BaseFoldFrame>
   )
 }

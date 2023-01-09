@@ -7,23 +7,41 @@ import MHStack from "../baseUI/mHStack";
 import MImage from '../baseUI/mImage';
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { Allowance } from "@0xsodium/provider";
+import { useAuth } from "../../lib/data/auth";
+import { useCallback } from "react";
+import { encodeERC20Approve } from '../../abi';
+import { BigNumber } from 'ethers';
 
-export function AllowanceItem() {
+export function AllowanceItem(props: { allowance: Allowance  }) {
+  const allowance = props.allowance;
+  const authData = useAuth();
+
+  const revokeAllowance = useCallback(async () => {
+    if (authData.isLogin) {
+      const tx = await encodeERC20Approve(allowance.to, BigNumber.from(0), allowance.token.address);
+      const txr = await authData.web3signer.sendTransaction(tx);
+      await txr.wait();
+    }
+  }, [authData, allowance]);
+
   return (
     <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
       <MHStack>
         <MImage />
-        <MText style={{ fontWeight: '700' }} >BNB</MText>
+        <MText style={{ fontWeight: '700' }} >
+          {allowance.token.name}({allowance.token.symbol})
+        </MText>
       </MHStack>
 
       <TextItem title={"Secure Issue"} value={"Unlimited Allowance"} />
       <TextItem title={"Danger Level"} value={"High"} />
-      <TextItem title={"Contract"} value={"0x93a...97bd"} />
-      <TextItem title={"Token"} value={"0x93a...97bd"} />
-      <TextItem title={"Approve Date"} value={formatTimeYMDHMS(new Date().getTime())} />
-      <TextItem title={"TX"} value={"0x93a...97bd"} />
+      <TextItem title={"Contract"} value={allowance.to} />
+      <TextItem title={"Token"} value={allowance.token.address} />
+      <TextItem title={"Approve Date"} value={formatTimeYMDHMS(allowance.blockTimestamp * 1000)} />
+      <TextItem title={"TX"} value={allowance.transactionHash} />
 
-      <MButton style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} >
+      <MButton onPress={revokeAllowance} style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} >
         <MButtonText title={"Revoke"} />
       </MButton>
     </MVStack>
