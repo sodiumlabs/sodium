@@ -4,7 +4,6 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
-import { decodeTransactionRequest } from '../../lib/common/decode';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/auth';
 import { OperateTimeStamp } from '../../lib/data/operateTime';
@@ -36,8 +35,18 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
         setTxnType("Send tokens");
         return;
       }
-      if (decodeDatas.findIndex(decode => !!decode.decodeApproveData) != -1) {
-        setTxnType("Approve tokens");
+
+      const decodeApproveData = decodeDatas.find(decode => !!decode.decodeApproveData);
+      if (decodeApproveData) {
+        console.log(decodeApproveData.decodeApproveData)
+        const amount = decodeApproveData.decodeApproveData.amount;
+        if (parseInt(amount['hex'] || amount['_hex']) == 0) {
+          setTxnType("Revoke Approve tokens");
+        }
+        else {
+          setTxnType("Approve tokens");
+        }
+        // setTxnType("Approve tokens");
         return;
       }
     }
