@@ -33,7 +33,8 @@ async function decodeTx(decodes: IDecodeTranscation[], tran: Transaction, web3si
   }
   else if (checkIsERC20Approve(tran)) {
     decodeData.decodeApproveData = await decodeERC20Approve(tran, web3signer, chainId);
-    decodes.unshift(decodeData);
+    decodes.push(decodeData);
+    // decodes.unshift(decodeData);
   }
   else {
     decodeData.decodeStr = tran.data.toString().slice(0, 10);

@@ -41,7 +41,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const [approveSliderValue, setApproveSliderValue] = useState(1);
 
   const curNetwork = getNetwork(param?.chaindId);
-  const decodeApproveData = param?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeApproveData);
+  // 
 
   const onConfirmClick = useCallback(async () => {
     if (!param) return;
@@ -50,6 +50,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     // const tx = param.txn.txReq;
     if (!param?.decodeDatas) return;
 
+    const decodeApproveData = param.decodeDatas.find((decodeTxn) => !!decodeTxn.decodeApproveData);
     const txs = param.decodeDatas.map(decodeTxn => decodeTxn.originTxReq);
 
     setIsLoading(true);
@@ -96,13 +97,15 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       await param.continueClick(txs);
     }
 
-  }, [decodeApproveData, param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
+  }, [param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
 
   const onCancelClick = () => {
     if (!param) return;
     param.cancelClick();
     hideModal();
   }
+
+  let transcationIndex = 0;
 
   return (
     <BaseModal
@@ -134,14 +137,18 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
             {/* ---------------------approve------------------------- */}
             {
-              decodeApproveData && (
-                <ApproveItem
-                  index={1} maxIndex={param.decodeDatas.length}
-                  approveData={decodeApproveData.decodeApproveData}
-                  approveSelectedIndex={approveSelectedIndex}
-                  setApproveSelectedIndex={setApproveSelectedIndex}
-                  approveSliderValue={approveSliderValue}
-                  setApproveSliderValue={setApproveSliderValue} />
+              param?.decodeDatas && (
+                param.decodeDatas.map((decodeTxn, index) => {
+                  if (!decodeTxn.decodeApproveData) return;
+                  return <ApproveItem
+                    key={hashcodeObj(decodeTxn) + index}
+                    index={++transcationIndex} maxIndex={param.decodeDatas.length}
+                    approveData={decodeTxn.decodeApproveData}
+                    approveSelectedIndex={approveSelectedIndex}
+                    setApproveSelectedIndex={setApproveSelectedIndex}
+                    approveSliderValue={approveSliderValue}
+                    setApproveSliderValue={setApproveSliderValue} />
+                })
               )
             }
 
@@ -152,7 +159,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   if (!decodeTxn.decodeTransferData) return;
                   return <TransferItem
                     key={hashcodeObj(decodeTxn) + index}
-                    index={index + 1} maxIndex={param.decodeDatas.length}
+                    index={++transcationIndex} maxIndex={param.decodeDatas.length}
                     transferData={decodeTxn.decodeTransferData} />
                 })
               )
@@ -163,7 +170,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 param.decodeDatas.map((decodeTxn, index) => {
                   if (!decodeTxn.decodeStr) return;
                   return (
-                    <BaseFoldFrame defaultExpansion key={hashcodeObj(decodeTxn) + index} header={`Transcation(${index + 1}/${param.decodeDatas.length})`} style={{ marginTop: 20 }}>
+                    <BaseFoldFrame defaultExpansion key={hashcodeObj(decodeTxn) + index} header={`Transcation(${++transcationIndex}/${param.decodeDatas.length})`} style={{ marginTop: 20 }}>
                       <MText style={{ color: eColor.GrayContentText }}>{decodeTxn.decodeStr}</MText>
                     </BaseFoldFrame>
                   )
