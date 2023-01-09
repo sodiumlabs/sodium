@@ -57,6 +57,7 @@ export enum HistoryTime {
   "Last Week" = "Last Week",
   "This Month" = "This Month",
   "This Year" = "This Year",
+  "Last Year" = "Last Year",
   "Other" = "Other",
 }
 
@@ -71,6 +72,8 @@ export function formatHistoryTime2Today(tTimeStamp: number): string {
     return HistoryTime["This Month"];
   } else if (tTimeStamp >= getThisYearBegin()) {
     return HistoryTime["This Year"];
+  } else if (tTimeStamp >= getLastYearBegin()) {
+    return HistoryTime["Last Year"];
   } else {
     return HistoryTime.Other;
   }
@@ -90,6 +93,7 @@ function getThisWeekBegin() {
   // console.log("getThisWeekBegin " + date.toString());
   return date.getTime()
 }
+
 function getLastWeekBegin() {
   return getThisWeekBegin() - 7 * OneDayTime;
 }
@@ -104,8 +108,18 @@ function getThisMonthBegin() {
 function getThisYearBegin() {
   const date = new Date();
   date.setHours(0, 0, 0, 0);
-  date.setDate(0);
-  date.setMonth(1);
+  date.setDate(1);
+  date.setMonth(0);
+  // console.log("getThisYearBegin " + date.toString());
+  return date.getTime();
+}
+
+function getLastYearBegin() {
+  const date = new Date();
+  date.setHours(0, 0, 0, 0);
+  date.setDate(1);
+  date.setMonth(0);
+  date.setFullYear(date.getFullYear() - 1);
   // console.log("getThisYearBegin " + date.toString());
   return date.getTime();
 }

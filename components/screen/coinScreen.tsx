@@ -110,6 +110,7 @@ export function CoinScreen(props) {
                   <ClassifyHistoryItem title={HistoryTime["Last Week"]} historyMap={transHistoryMap} />
                   <ClassifyHistoryItem title={HistoryTime["This Month"]} historyMap={transHistoryMap} />
                   <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
+                  <ClassifyHistoryItem title={HistoryTime["Last Year"]} historyMap={transHistoryMap} />
                   <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
                 </MVStack>
               )
