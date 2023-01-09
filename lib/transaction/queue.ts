@@ -26,12 +26,12 @@ export const useRequestedTransactions = () => {
     return useStore(requestedTransactions);
 }
 
-const remove = (findIndex: number) => {
-    const newRequestedTransactions = computed(requestedTransactions, txs => {
-        return txs.filter((_, index) => index != findIndex);
-    });
-    requestedTransactions.set(newRequestedTransactions.get());
-}
+// const remove = (findIndex: number) => {
+//     const newRequestedTransactions = computed(requestedTransactions, txs => {
+//         return txs.filter((_, index) => index != findIndex);
+//     });
+//     requestedTransactions.set(newRequestedTransactions.get());
+// }
 
 const removeByTxn = (txn: ITranscation) => {
     const newRequestedTransactions = computed(requestedTransactions, txs => {
@@ -55,7 +55,7 @@ const loadAsyncStorage = async () => {
 
 export const transactionQueue = {
     add,
-    remove,
+    // remove,
     removeByTxn,
     removeAll,
     useRequestedTransactions,

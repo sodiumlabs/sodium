@@ -25,13 +25,13 @@ import MVStack from '../baseUI/mVStack';
 
 export default function PendingItem(props: TextInputProps & { data: ITranscation }) {
   const { data, style, ...reset } = props;
+  const auth = useAuth();
 
-  const decodeTransferData = data?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeTransferData);
-  const transferToken = decodeTransferData?.decodeTransferData?.token;
-  const transferTokenAmount = decodeTransferData?.decodeTransferData?.amount;
+  const decodeTransferData = data.decodeDatas.find((decodeTxn) => !!decodeTxn.decodeTransferData);
+  const transferToken = decodeTransferData.decodeTransferData.token;
+  const transferTokenAmount = decodeTransferData.decodeTransferData?.amount;
   const tokenAmount = BigNumber.from(transferTokenAmount['_hex'] || transferTokenAmount['hex'])
 
-  const auth = useAuth();
   const linkTxHash = async () => {
     const chainId = await auth.signer.getChainId();
     const url = getTranscationExplorer(chainId, data.txHash);

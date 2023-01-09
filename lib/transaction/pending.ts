@@ -24,12 +24,12 @@ export const usePendingTransactions = () => {
   return useStore(pendingTransactions);
 }
 
-const remove = (findIndex: number) => {
-  const newPendingTransactions = computed(pendingTransactions, txs => {
-    return txs.filter((_, index) => index != findIndex);
-  });
-  pendingTransactions.set(newPendingTransactions.get());
-}
+// const remove = (findIndex: number) => {
+//   const newPendingTransactions = computed(pendingTransactions, txs => {
+//     return txs.filter((_, index) => index != findIndex);
+//   });
+//   pendingTransactions.set(newPendingTransactions.get());
+// }
 
 const removeByTxn = (txn: ITranscation) => {
   const newPendingTransactions = computed(pendingTransactions, txs => {
@@ -48,12 +48,15 @@ const unbindListener = pendingTransactions.subscribe(value => {
 
 const loadAsyncStorage = async () => {
   const txs = await loadTxnQueue(eStotageKey.pendingTxs);
+  // Check whether it is complete. If yes, remove it
+  // ...
+
   pendingTransactions.set(txs);
 }
 
 export const transactionPending = {
   add,
-  remove,
+  // remove,
   removeByTxn,
   removeAll,
   usePendingTransactions,

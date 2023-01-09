@@ -2,12 +2,10 @@ import { hashcodeObj } from '../../lib/common/common';
 import { eColor } from '../../lib/globalStyles';
 import { transactionPending, usePendingTransactions } from '../../lib/transaction/pending';
 import MButton from '../baseUI/mButton';
-import { MButtonText } from '../baseUI/mButtonText';
+import MLineLR from '../baseUI/mLineLR';
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import PendingItem from '../item/pendingItem';
-import { useRequestedTransactions } from '../../lib/transaction/queue';
-import MLineLR from '../baseUI/mLineLR';
 
 
 export function PendingTranscation() {
