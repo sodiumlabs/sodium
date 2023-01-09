@@ -16,6 +16,7 @@ import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
+import PendingItem from '../item/pendingItem';
 import { RequestTranscation } from '../transcation/requestTranscation';
 
 
@@ -46,7 +47,7 @@ export function WalletScreen() {
 
             <RequestTranscation />
 
-            {/* <PendingItem /> */}
+            <PendingItem />
 
             <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor={eColor.GrayText} />
 

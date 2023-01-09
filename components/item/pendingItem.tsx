@@ -10,70 +10,70 @@ import MLineLR from '../baseUI/mLineLR';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { globalStyle, eColor } from '../../lib/globalStyles';
+import { formatTime2Today } from '../../lib/common/time';
+import { IconTokenDefault } from '../../lib/imageDefine';
+import MAvatar from '../baseUI/mAvatar';
 
 export default function PendingItem(props: TextInputProps) {
   const { style, ...reset } = props;
   return (
-    <MHStack style={styles.container} stretchW>
-      <MText style={{ marginVertical: 15 }}>Pending Transcations</MText>
+    <MVStack stretchW style={{ marginBottom: 30 }} >
+      <MText style={{ marginTop: 30, marginBottom: 15, color: eColor.GrayContentText }}>Pending Transcations</MText>
 
-      <MVStack stretchW>
+      <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
         <MLineLR
+          style={{ marginBottom: 20 }}
           left={
             <>
               <MLoading />
-              <MText>Send tokens...</MText>
+              <MText style={{ marginLeft: 10, color: eColor.Blue, fontWeight: '700' }} >Send tokens...</MText>
             </>
           }
           right={
-            <MHStack>
-              <MText>a few seconds ago</MText>
-              <MImage />
-              <MImage />
-            </MHStack>
+            <MText style={{ color: eColor.GrayText }} >{formatTime2Today(Date.now())}</MText>
           } />
 
         <MLineLR
           left={
-            <MHStack>
-              <MImage />
-              <MText>PLOYGON Matic</MText>
+            <MHStack style={{ alignItems: 'center' }} >
+              <MImage w={20} h={20} uri={null} source={IconTokenDefault} />
+              <MText style={{ marginLeft: 6, fontWeight: '700' }} >PLOYGON(Matic)</MText>
             </MHStack>
           }
-          right={<MText>-0.001 Matic</MText>} />
+          right={<MText style={{ color: eColor.GrayContentText }} >-0.001 Matic</MText>} />
 
-        <MDivider />
+        <MDivider style={{ marginVertical: 10 }} />
 
 
-        <MText>Network Fee</MText>
+        <MText style={{ marginBottom: 10 }} >Network Fee</MText>
         <MLineLR
           left={
-            <MHStack>
-              <MImage />
-              <MText>PLOYGON Matic</MText>
+            <MHStack style={{ alignItems: 'center' }}>
+              <MImage w={20} h={20} uri={null} source={IconTokenDefault} />
+              <MText style={{ marginLeft: 6, fontWeight: '700' }}>PLOYGON Matic</MText>
             </MHStack>
           }
-          right={<MText>-0.001 Matic</MText>} />
+          right={<MText style={{ color: eColor.GrayContentText }}>-0.001 Matic</MText>} />
 
-        <MDivider />
+        <MDivider style={{ marginVertical: 10 }} />
 
-        <MText>To Recipient</MText>
-        <MHStack>
-          <MImage />
-          <MText>0x178798731273218372818</MText>
+        <MText style={{ marginBottom: 10 }} >To Recipient</MText>
+        <MHStack style={{ alignItems: 'center' }}>
+          <MAvatar name={'test'} />
+          <MText style={{ color: eColor.GrayContentText, marginLeft: 6 }}>0x178798731273218372818</MText>
         </MHStack>
 
       </MVStack>
-    </MHStack >
+    </MVStack >
   )
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    // marginTop: 20,
     padding: 15,
-    marginBottom: 12,
-    backgroundColor: '#999',
-    borderRadius: 10
+    paddingBottom: 20,
+    // marginBottom: 12,
   }
 });
