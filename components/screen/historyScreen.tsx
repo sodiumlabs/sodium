@@ -35,6 +35,7 @@ export function HistoryScreen() {
             {
               queryHistory.isFetching && <MLoading />
             }
+            <MHStack style={{ marginBottom: 50 }} />
             <Spacer />
             <Information />
           </MVStack>

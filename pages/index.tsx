@@ -33,6 +33,7 @@ import { asyncSession, initHandler } from '../lib/provider';
 import { useEffect } from 'react';
 import { showUpdateComModal } from '../components/base/modalInit';
 import { FailModalItem } from '../components/modal/modalItem/failModalItem';
+import { initProjectSetting } from '../lib/data/project';
 
 const queryClient = new QueryClient(
   {
@@ -68,6 +69,7 @@ export default function App() {
   useListenerDimensionSize();
 
   useEffect(() => {
+    initProjectSetting();
     const handler = initHandler();
     const wmh = new WindowMessageHandler(handler);
     const imh = new IframeMessageHandler(handler);

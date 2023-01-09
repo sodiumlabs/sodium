@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet } from 'react-native';
-import { isBeOpenedByThirdParty } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
+import { useProjectSetting } from '../../lib/data/project';
 import { IModalParam, ISignMessageModalParam } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
@@ -16,7 +16,7 @@ import { OperateBtnItem } from './modalItem/operateBtnItem';
 export const SignMessageModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignMessageModalParam;
-
+  const projectSetting = useProjectSetting();
   const auth = useAuth();
   const [isLoading, setIsLoading] = useModalLoading(modalParam);
 
@@ -35,8 +35,8 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
-      isFullScreen={isBeOpenedByThirdParty()}
-      isAnim={!isBeOpenedByThirdParty()}
+      isFullScreen={projectSetting.isBeOpenedByThirdParty}
+      isAnim={!projectSetting.isBeOpenedByThirdParty}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>

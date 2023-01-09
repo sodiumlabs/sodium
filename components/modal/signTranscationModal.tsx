@@ -4,9 +4,10 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { encodeERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
-import { hashcodeObj, isBeOpenedByThirdParty, removeAllDecimalPoint } from '../../lib/common/common';
+import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
+import { useProjectSetting } from '../../lib/data/project';
 import { eApproveType, IModalParam, ISignTranscationModalParam, MaxFixedNumber } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
@@ -29,6 +30,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
+  const projectSetting = useProjectSetting();
   const [isLoading, setIsLoading] = useModalLoading(modalParam);
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
@@ -66,7 +68,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         txs.push(revokeTx);
       }
       else {
-        console.log("eApproveType.KeepUnlimted");
+        console.log("Let's keep our original tx the same");
       }
       console.log("txs:");
       console.log(txs)
@@ -93,8 +95,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
-      isFullScreen={isBeOpenedByThirdParty()}
-      isAnim={!isBeOpenedByThirdParty()}
+      isFullScreen={projectSetting.isBeOpenedByThirdParty}
+      isAnim={!projectSetting.isBeOpenedByThirdParty}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>

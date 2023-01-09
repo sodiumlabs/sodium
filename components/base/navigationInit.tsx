@@ -1,12 +1,13 @@
 
+import { useStore } from '@nanostores/react';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { atom } from "nanostores";
 import { useEffect } from 'react';
-import { isBeOpenedByThirdParty, waitTime } from "../../lib/common/common";
+import { waitTime } from "../../lib/common/common";
 import { useAuth } from '../../lib/data/auth';
+import { useProjectSetting } from '../../lib/data/project';
 import { updateCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
-import { useStore } from '@nanostores/react';
 
 const navigateInitAtom = atom(false);
 const isNavigateInit = () => {
@@ -37,6 +38,7 @@ export const navigate = <RouteName extends keyof ParamList>(...args: RouteName e
 export default function NavigationInit() {
   const auth = useAuth();
   const isNavigationReady = useStore(isNavigationReadyAtom);
+  const projectSetting = useProjectSetting();
   useEffect(() => {
     if (!isNavigationReady) {
       return;
@@ -48,7 +50,7 @@ export default function NavigationInit() {
     }
     console.log("NavigationInit");
     // If it is opened by a third party, the opening page is displayed directly
-    if (!!window.opener) {
+    if (projectSetting.isBeOpenedByThirdParty) {
 
       navigationRef.reset({ index: 0, routes: [{ name: Screens.Opening }], });
     }
@@ -63,7 +65,7 @@ export default function NavigationInit() {
       }
     }
     navigateInitAtom.set(true);
-  }, [auth.isLogin, isNavigationReady]);
+  }, [auth.isLogin, isNavigationReady, projectSetting.isBeOpenedByThirdParty]);
 
   return (
     <></>
