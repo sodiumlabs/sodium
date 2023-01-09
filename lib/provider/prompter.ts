@@ -1,6 +1,6 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
-import { TransactionRequest } from '@0xsodium/transactions';
-import { showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../../components/base/modalInit';
+import { TransactionRequest, TransactionResponse } from '@0xsodium/transactions';
+import { showErrorModal, showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../../components/base/modalInit';
 import { navigate, waitNavigateInit } from '../../components/base/navigationInit';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
@@ -37,86 +37,12 @@ export class WalletPrompter implements WalletUserPrompter {
     //signTransactions
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         console.log("WalletPrompter promptSignTransaction");
-        return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
-
-            await waitNavigateInit();
-            const auth = getAuth();
-            if (!auth.isLogin) {
-                return Promise.reject();
-            }
-            if (chaindId == null) {
-                chaindId = await auth.signer.getChainId();
-            }
-            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
-
-            const txnWithTime = {
-                'txReq': txn,
-                'timeStamp': OperateTimeStamp.getAndReset(),
-                'decodeDatas': decodes,
-            } as ITranscation;
-
-            const transactionQueueFindIndex = transactionQueue.add(txnWithTime);
-            const continueClick = async (continueTxn: TransactionRequest) => {
-                transactionQueue.remove(transactionQueueFindIndex);
-                const txnResponse = await auth.signer.signTransactions(continueTxn, chaindId);
-                tResolve(txnResponse.hash);
-            }
-            showUpdateSignTranscationModal(true, {
-                continueClick: continueClick,
-                cancelClick: () => {
-                    transactionQueue.remove(transactionQueueFindIndex);
-                    tReject();
-                },
-                decodeDatas: decodes,
-                options: options,
-                chaindId: chaindId,
-                txn: txnWithTime
-            } as ISignTranscationModalParam);
-        });
+        return this.handleSignOrSendTranscation(txn, chaindId, options, "sign");
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
         console.log("WalletPrompter promptSendTransaction");
-        return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
-            await waitNavigateInit();
-            const auth = getAuth();
-            if (!auth.isLogin) {
-                return Promise.reject();
-            }
-            if (chaindId == null) {
-                chaindId = await auth.signer.getChainId();
-            }
-            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
-
-            const txnWithTime = {
-                'txReq': txn,
-                'timeStamp': OperateTimeStamp.getAndReset(),
-                'decodeDatas': decodes,
-            } as ITranscation;
-
-            const transactionQueueFindIndex = transactionQueue.add(txnWithTime);
-            const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: () => void, onPendingEnd?: () => void) => {
-                transactionQueue.remove(transactionQueueFindIndex);
-                const txnResponse = await auth.signer.sendTransaction(continueTxn, chaindId);
-                console.log("txnResponse:" + JSON.stringify(txnResponse));
-                onPendingStart && onPendingStart();
-                // await txnResponse.wait();
-                onPendingEnd && onPendingEnd();
-                tResolve(txnResponse.hash);
-            }
-
-            showUpdateSignTranscationModal(true, {
-                continueClick: continueClick,
-                cancelClick: () => {
-                    transactionQueue.remove(transactionQueueFindIndex);
-                    tReject();
-                },
-                decodeDatas: decodes,
-                options: options,
-                chaindId: chaindId,
-                txn: txnWithTime
-            } as ISignTranscationModalParam);
-        });
+        return this.handleSignOrSendTranscation(txn, chaindId, options, "send");
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
@@ -152,6 +78,63 @@ export class WalletPrompter implements WalletUserPrompter {
                 options: options,
                 network: network,
             } as IDeployConfirmModalParam);
+        });
+    }
+
+    handleSignOrSendTranscation(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions, handleName?: string): Promise<string> {
+        return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
+            await waitNavigateInit();
+            const auth = getAuth();
+            if (!auth.isLogin) {
+                return Promise.reject();
+            }
+            if (chaindId == null) {
+                chaindId = await auth.signer.getChainId();
+            }
+            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
+
+            const txnWithTime = {
+                'txReq': txn,
+                'timeStamp': OperateTimeStamp.getAndReset(),
+                'decodeDatas': decodes,
+            } as ITranscation;
+
+            transactionQueue.add(txnWithTime);
+            const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: () => void, onPendingEnd?: () => void, onError?: () => void) => {
+                transactionQueue.removeByTxn(txnWithTime);
+
+                try {
+                    let txnResponse;
+                    if (handleName == "send") {
+                        txnResponse = await auth.signer.sendTransaction(continueTxn, chaindId);
+                    } else {
+                        txnResponse = await auth.signer.signTransaction(continueTxn, chaindId);
+                    }
+
+                    console.log("txnResponse:" + JSON.stringify(txnResponse));
+                    onPendingStart && onPendingStart();
+                    await txnResponse.wait();
+                    onPendingEnd && onPendingEnd();
+                    tResolve(txnResponse.hash);
+                } catch (error) {
+                    tReject();
+                    showUpdateSignTranscationModal(false);
+                    showErrorModal(error.message);
+                    onError && onError();
+                }
+            }
+
+            showUpdateSignTranscationModal(true, {
+                continueClick: continueClick,
+                cancelClick: () => {
+                    transactionQueue.removeByTxn(txnWithTime);
+                    tReject();
+                },
+                decodeDatas: decodes,
+                options: options,
+                chaindId: chaindId,
+                txn: txnWithTime
+            } as ISignTranscationModalParam);
         });
     }
 }

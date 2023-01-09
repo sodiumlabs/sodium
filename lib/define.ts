@@ -101,7 +101,7 @@ export interface IDeployConfirmModalParam {
 }
 
 export interface ISignTranscationModalParam {
-  continueClick: (continueTxn: Transaction[], onPendingStart?: () => void, onPendingEnd?: () => void) => Promise<void>,
+  continueClick: (continueTxn: Transaction[], onPendingStart?: () => void, onPendingEnd?: () => void, onError?: () => void) => Promise<void>,
   cancelClick: () => void,
   decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,

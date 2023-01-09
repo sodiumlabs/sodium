@@ -91,7 +91,10 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       const onPendingEnd = () => {
         transactionPending.removeByTxn(param.txn);
       }
-      await param.continueClick(txs, onPendingStart, onPendingEnd);
+      const onError = () => {
+        transactionPending.removeByTxn(param.txn);
+      }
+      await param.continueClick(txs, onPendingStart, onPendingEnd, onError);
     }
     else {
       await param.continueClick(txs);
@@ -203,26 +206,33 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             }
 
             {/* ---------------------Fee------------------------- */}
-            <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
-              <MText>Fee</MText>
-            </MHStack>
-
             {
-              tokenInfos && paymasterInfos && paymasterInfos.length ? (
-                <MVStack style={{ marginBottom: 20 }}>
+              param?.decodeDatas && (
+                <>
+                  <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
+                    <MText>Fee</MText>
+                  </MHStack>
+
                   {
-                    paymasterInfos.map((gasInfo, index) => {
-                      const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
-                      return (<NetworkFeeItem key={hashcodeObj(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
-                    })
+                    tokenInfos && paymasterInfos && paymasterInfos.length ? (
+                      <MVStack style={{ marginBottom: 20 }}>
+                        {
+                          paymasterInfos.map((gasInfo, index) => {
+                            const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
+                            return (<NetworkFeeItem key={hashcodeObj(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
+                          })
+                        }
+                      </MVStack>)
+                      : (
+                        <MVStack style={{ marginVertical: 20 }}>
+                          <MLoading />
+                        </MVStack>
+                      )
                   }
-                </MVStack>)
-                : (
-                  <MVStack style={{ marginVertical: 20 }}>
-                    <MLoading />
-                  </MVStack>
-                )
+                </>
+              )
             }
+
           </ScrollView>
         </MVStack>
         <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick}

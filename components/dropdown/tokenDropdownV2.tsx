@@ -10,6 +10,7 @@ import { IconTokenDefault } from '../../lib/imageDefine';
 import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
+import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
@@ -41,8 +42,12 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
   return (
     <View style={styles.container}>
 
-      <MHStack stretchW style={[globalStyle.whiteBorderWidth, { overflow: 'hidden' }]}>
-        <TokenItem option={selectedOption} isSelected={false} handleOptionPress={toggleDropdown} />
+      <MHStack stretchW style={[globalStyle.whiteBorderWidth, { overflow: 'hidden', minHeight: 62 }]}>
+        {
+          options == null ?
+            (<MHStack style={{ marginLeft: 15 }} ><MLoading /></MHStack>)
+            : (<TokenItem option={selectedOption} isSelected={false} handleOptionPress={toggleDropdown} />)
+        }
       </MHStack>
 
       {isDropdownVisible && (
