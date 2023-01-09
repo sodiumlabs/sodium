@@ -4,16 +4,21 @@ import { eColor, globalStyle } from '../../lib/globalStyles';
 import MButton from "../baseUI/mButton";
 import { MButtonText } from "../baseUI/mButtonText";
 import { MDivider } from "../baseUI/mDivider";
-import MHStack from "../baseUI/mHStack";
+import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 
-export function SessionItem() {
-
-
+export function SessionItem(props: { isSelected: boolean }) {
+  const { isSelected } = props;
+  const selectStyle = {
+    borderColor: isSelected ? eColor.Blue : eColor.Border
+  }
   return (
-    <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth]}>
-      <MHStack><MText style={{ fontWeight: '700', marginBottom: 10 }} >Carbon scrub</MText></MHStack>
+    <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth, selectStyle]}>
+      <MLineLR
+        style={{ marginBottom: 10 }}
+        left={<MText style={{ fontWeight: '700', flex: 1 }} >Carbon scrub</MText>}
+        right={<MText style={{ fontWeight: '700', color: eColor.GrayText }} fontSize={12} >{isSelected ? "Current Session" : ""}</MText>} />
       <MText >Session key</MText>
       <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>0x899880842ejlrjljr</MText>
       <MDivider style={{ marginVertical: 10 }} />
