@@ -31,7 +31,7 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
   const transferToken = decodeTransferData.decodeTransferData.token;
   const transferTokenAmount = decodeTransferData.decodeTransferData?.amount;
   const tokenAmount = BigNumber.from(transferTokenAmount['_hex'] || transferTokenAmount['hex'])
-
+  const txGasAmount = BigNumber.from(data.txGas.amount['_hex'] || data.txGas.amount['hex'])
   const linkTxHash = async () => {
     const chainId = await auth.signer.getChainId();
     const url = getTranscationExplorer(chainId, data.txHash);
@@ -83,10 +83,10 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
         left={
           <MHStack style={{ alignItems: 'center' }}>
             <MImage w={20} h={20} uri={null} source={IconTokenDefault} />
-            <MText style={{ marginLeft: 6, fontWeight: '700' }}>PLOYGON Matic</MText>
+            <MText style={{ marginLeft: 6, fontWeight: '700' }}>{data.txGas.token.symbol}</MText>
           </MHStack>
         }
-        right={<MText style={{ color: eColor.GrayContentText }}>-0.001 Matic</MText>} />
+        right={<MText style={{ color: eColor.GrayContentText }}>-{formatWei2Price(txGasAmount.toString(), data.txGas.token.decimals, 10)} {data.txGas.token.symbol}</MText>} />
 
       <MDivider style={{ marginVertical: 10 }} />
 

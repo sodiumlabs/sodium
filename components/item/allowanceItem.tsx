@@ -12,13 +12,15 @@ import { useAuth } from "../../lib/data/auth";
 import { useCallback } from "react";
 import { encodeERC20Approve } from '../../abi';
 import { BigNumber } from 'ethers';
+import { showUpdateSignTranscationModal } from "../base/modalInit";
 
-export function AllowanceItem(props: { allowance: Allowance  }) {
+export function AllowanceItem(props: { allowance: Allowance }) {
   const allowance = props.allowance;
   const authData = useAuth();
 
   const revokeAllowance = useCallback(async () => {
     if (authData.isLogin) {
+      showUpdateSignTranscationModal(true, null);
       const tx = await encodeERC20Approve(allowance.to, BigNumber.from(0), allowance.token.address);
       const txr = await authData.web3signer.sendTransaction(tx);
       await txr.wait();

@@ -170,7 +170,8 @@ export interface ITranscation {
   txReq: TransactionRequest,
   timeStamp: number,
   decodeDatas: IDecodeTranscation[],
-  txHash?: string
+  txHash?: string,
+  txGas?: PaymasterInfo
 }
 
 export enum eStotageKey {

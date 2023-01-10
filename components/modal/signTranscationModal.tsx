@@ -86,6 +86,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         setIsLoading(false);
         hideModal();
         param.txn.txHash = txHash;
+        param.txn.txGas = paymasterInfos[0]; // todo 
+
         transactionPending.addCurPending(param.txn);
         navigate(Screens.Wallet);
       }
