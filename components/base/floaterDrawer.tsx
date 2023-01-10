@@ -151,8 +151,8 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
             </MHStack>
 
             <MVStack style={[styles.email]}>
-              <MText  >Google</MText>
-              <MText style={{ marginTop: 5, color: "#6B6B6B" }} >xxxxxxxxxx@gmail.com</MText>
+              <MText  >Twitter</MText>
+              <MText style={{ marginTop: 5, color: "#6B6B6B" }} >Linco</MText>
             </MVStack>
 
             <MHStack style={[styles.connected]}>

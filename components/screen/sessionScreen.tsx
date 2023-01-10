@@ -23,8 +23,8 @@ export function SessionScreen() {
             <MHStack stretchW style={{ marginTop: 20 }}>
               <MText style={{ color: eColor.GrayContentText }} >Session Keys(2)</MText>
             </MHStack>
-            <SessionItem />
-            <SessionItem />
+            <SessionItem isSelected />
+            <SessionItem isSelected={false} />
             <MHStack style={{ marginBottom: 50 }} />
 
             <Spacer />

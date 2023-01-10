@@ -31,7 +31,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
             left={<MText fontSize={10} style={{ color: eColor.GrayText }}>Balance : {balance}</MText>}
             right={<MText style={{ color: eColor.GrayText }}>${gasUsd}</MText>} />
           <MHStack stretchW style={{ justifyContent: 'center', alignItems: 'center' }} >
-            <MText fontSize={10}>Paid by Colin</MText>
+            <MText fontSize={10}>Paid by Linco</MText>
             <MImage style={{ marginLeft: 5 }} source={IconLogo} />
           </MHStack>
         </MVStack>

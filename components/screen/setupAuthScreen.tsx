@@ -48,10 +48,10 @@ export function SetupAuthScreen() {
             {
               step == 1 && (
                 <MVStack stretchW style={[{ backgroundColor: 'white', padding: 15 }, globalStyle.whiteBorderWidth]}>
-                  <MText style={{ marginBottom: 5 }} >Setup authenticator app</MText>
-                  <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }} numberOfLines={null}>Use a phone app like 1Password, Authy, LastPass Authenticator, or Microsoft Authenticator, etc. to get 2FA codes when prompted during sign-in.</MText>
-                  <MText style={{ marginBottom: 5 }} >Scan the QR code</MText>
-                  <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }}>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
+                  <MText style={{ marginBottom: 6 }} >Setup authenticator app</MText>
+                  <MText style={{ color: eColor.GrayContentText, marginBottom: 12, textAlign: 'left' }} numberOfLines={undefined}>Use a phone app like 1Password, Authy, LastPass Authenticator, or Microsoft Authenticator, etc. to get 2FA codes when prompted during sign-in.</MText>
+                  <MText style={{ marginBottom: 6 }} >Scan the QR code</MText>
+                  <MText style={{ color: eColor.GrayContentText, marginBottom: 12 }}>Use an authenticator app from your phone to scan. If you are unable to scan,  instead. Learn more.</MText>
                   <MText style={{ marginBottom: 10 }}>Verify the code from the app</MText>
                   <MInput placeholder="Authenticator code" placeholderTextColor={eColor.GrayText}
                     value={authCode} onChangeText={onInputAuthCode} />
@@ -72,13 +72,13 @@ export function SetupAuthScreen() {
             {
               step == 2 && (
                 <MVStack stretchW style={[{ backgroundColor: 'white', padding: 15 }, globalStyle.whiteBorderWidth]}>
-                  <MText style={{ marginBottom: 5 }}>Download your recovery codes </MText>
-                  <MText numberOfLines={null} style={{ color: eColor.GrayContentText, marginBottom: 10 }}>
+                  <MText style={{ marginBottom: 6 }}>Download your recovery codes </MText>
+                  <MText numberOfLines={null} style={{ color: eColor.GrayContentText, marginBottom: 12 }}>
                     You can use recovery codes as a second factor to authenticate in case you lose access to your device. We recommend saving them with a secure password manager such as Lastpass, 1Password, or Keeper.
                   </MText>
                   <MVStack>
-                    <MText style={{ marginBottom: 5 }}>Keep your recovery codes in a safe spot </MText>
-                    <MText style={{ color: eColor.GrayContentText, marginBottom: 10 }}>If you lose your device and can't find your recovery codes, you will lose access to your account. </MText>
+                    <MText style={{ marginBottom: 6 }}>Keep your recovery codes in a safe spot </MText>
+                    <MText style={{ color: eColor.GrayContentText, marginBottom: 12 }}>If you lose your device and can't find your recovery codes, you will lose access to your account. </MText>
                   </MVStack>
                   <MVStack style={{ paddingHorizontal: 100 }} >
                     <MLineLR left={<CodeItemText title="77670-2e15d" />} right={<CodeItemText title="77670-2e15d" />} />

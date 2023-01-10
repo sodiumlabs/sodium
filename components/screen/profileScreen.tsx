@@ -22,8 +22,8 @@ export function ProfileScreen() {
             <ScreenTitle title="Profile" />
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
-              <MText style={styles.title} >Google</MText>
-              <MText style={{ color: eColor.GrayContentText }} >xxxxxxxxxx@gmail.com</MText>
+              <MText style={styles.title} >Twitter</MText>
+              <MText style={{ color: eColor.GrayContentText }} >Linco</MText>
             </MVStack>
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
