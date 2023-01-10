@@ -16,7 +16,7 @@ export const saveTxnQueue = (key: eStotageKey, queue: readonly ITranscation[]) =
   }
 }
 
-export const loadTxnQueue = async (key: eStotageKey) => {
+export const loadTxnQueue = async (key: eStotageKey): Promise<ITranscation[]> => {
   const auth = getAuth();
   if (auth.isLogin) {
     console.log('load AsyncStorage:' + key);

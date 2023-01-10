@@ -8,14 +8,14 @@ import HistoryItem from "./historyItem";
 
 export const ClassifyHistoryItem = (props: { title: string, historyMap: Map<string, TransactionHistory[]> }) => {
   const { title, historyMap } = props;
-  if (!historyMap || !historyMap[title]) {
+  if (!historyMap || !historyMap.has(title)) {
     return <></>
   }
   return (
     <MVStack stretchW>
       <MText style={{ marginVertical: 15, color: eColor.GrayContentText }}>{title}</MText>
       {
-        historyMap[title].map((item, index) => {
+        historyMap.get(title).map((item, index) => {
           return <HistoryItem key={index} history={item} />
         })
       }

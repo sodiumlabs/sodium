@@ -7,15 +7,15 @@ export function classifyHistory(transcationHistorys: TransactionHistory[]): Map<
 
   transcationHistorys.forEach((history) => {
     const group = formatHistoryTime2Today(history.block.blockTimestamp * 1000);
-    if (!transHistoryMap[group]) {
-      transHistoryMap[group] = [];
+    if (!transHistoryMap.has(group)) {
+      transHistoryMap.set(group, []);
     }
-    transHistoryMap[group].push(history);
+    transHistoryMap.get(group).push(history);
   });
-
-  transHistoryMap.forEach(historys => {
+  transHistoryMap.forEach((historys, group) => {
     historys.sort((hA, hB) => {
-      return hA.block.blockTimestamp - hB.block.blockTimestamp;
+      return hB.block.blockTimestamp - hA.block.blockTimestamp;
+      // return hA.block.blockTimestamp - hB.block.blockTimestamp;
     })
   })
   return transHistoryMap;

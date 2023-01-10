@@ -38,7 +38,7 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
     Linking.openURL(url);
   }
   const closePendingClick = () => {
-    transactionPending.removeByTxn(data);
+    transactionPending.removeCurPending(data);
   }
 
 

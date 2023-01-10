@@ -8,8 +8,10 @@ import { useAuth } from '../../lib/data/auth';
 import { useProjectSetting } from '../../lib/data/project';
 import { updateCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
-
 const navigateInitAtom = atom(false);
+// console.log("navigateInitAtom");
+// console.log(navigateInitAtom.get());
+
 const isNavigateInit = () => {
   return !!navigateInitAtom.get();
 }

@@ -2,7 +2,7 @@
 
 export function getScroller(scollEndCb: () => void) {
   let lastScrollOffset = null;
-  let lastDown = false;
+  let isLastEndReached = false;
   const handleScrollEnd = (event) => {
     // console.log(event)
     // debugger
@@ -14,17 +14,18 @@ export function getScroller(scollEndCb: () => void) {
     // const isContentFillPage = contentHeight >= scrollViewHeight; // Whether the content height is greater than the list height
 
     const isDown = scrollOffset - lastScrollOffset >= 0;
-    // console.log(`scrollOffset ${scrollOffset} lastScrollOffset ${lastScrollOffset} isDowning ${isDown}`);
 
+    // console.log(`scrollOffset ${scrollOffset} lastScrollOffset ${lastScrollOffset} isDowning ${isDown}`);
+    // console.log(`isEndReached ${isEndReached}, isDown ${isDown}, isLastEndReached ${isLastEndReached}`);
     // isDirectionChange = isDirectionChange || lastDown != isDown;
     // if (isContentFillPage && isEndReached && isDowning) {
-    if (isEndReached && isDown != lastDown) {
+    if (isDown && isEndReached && !isLastEndReached) {
       // lastScrollOffset = null;
       console.log('load more');
       scollEndCb();
     }
     lastScrollOffset = scrollOffset;
-    lastDown = isDown;
+    isLastEndReached = isEndReached && isDown;
   }
 
   return handleScrollEnd;

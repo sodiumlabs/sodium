@@ -1,6 +1,6 @@
 import { hashcodeObj } from '../../lib/common/common';
 import { eColor } from '../../lib/globalStyles';
-import { transactionPending, usePendingTransactions } from '../../lib/transaction/pending';
+import { transactionPending } from '../../lib/transaction/pending';
 import MButton from '../baseUI/mButton';
 import MLineLR from '../baseUI/mLineLR';
 import MText from "../baseUI/mText";
@@ -9,8 +9,7 @@ import PendingItem from '../item/pendingItem';
 
 
 export function PendingTranscation() {
-  // const pendingTranscations = useRequestedTransactions();
-  const pendingTranscations = usePendingTransactions();
+  const pendingTranscations = transactionPending.usePendingTransactions();
 
   if (!pendingTranscations || pendingTranscations.length <= 0) {
     return <></>
