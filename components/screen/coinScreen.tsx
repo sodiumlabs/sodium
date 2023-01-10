@@ -48,7 +48,7 @@ export function CoinScreen(props) {
             <MVStack stretchW style={[{ alignItems: 'center', paddingVertical: 15 }, globalStyle.whiteBorderWidth]}>
               <MText  >Balance</MText>
               <MText style={{ marginVertical: 10, color: eColor.GrayContentText }} >${tokenInfo.usdBalance}</MText>
-              <MText style={{ fontWeight: '700' }} >{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol}</MText>
+              <MText style={{ fontWeight: '700' }} >{formatWei2Price(tokenInfo.balance.toString(), tokenInfo.token.decimals)} {tokenInfo.token.symbol}</MText>
             </MVStack>
 
             <MVStack stretchW style={{ marginVertical: 20 }}>

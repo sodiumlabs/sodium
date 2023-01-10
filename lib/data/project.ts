@@ -11,7 +11,8 @@ const projectSettingAtom = atom<IProjectSetting>({});
 export const initProjectSetting = () => {
   projectSettingAtom.set({
     'name': "Sodium",
-    'isBeOpenedByThirdParty': !!window.opener
+    // 'isBeOpenedByThirdParty': !!window.opener
+    'isBeOpenedByThirdParty': window.self != window.top  // open by iframe
   })
 }
 
