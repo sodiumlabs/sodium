@@ -11,9 +11,12 @@ import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import SettingItem from "../item/settingItem";
 import { eColor } from '../../lib/globalStyles';
+import { useQueryAllowances } from "../../lib/api/allowance";
 
 export function SettingScreen() {
   const dimension = useDimensionSize();
+  const [queryAllowance, allowances, onScroll] = useQueryAllowances();
+
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%', }}>
@@ -23,17 +26,20 @@ export function SettingScreen() {
             <SettingItem source={IconProfile} onPress={() => navigationRef.navigate(Screens.Profile)} >
               <MText style={{ fontWeight: '700' }} >Profile</MText>
             </SettingItem>
-            <SettingItem source={IconSessions} onPress={() => navigationRef.navigate(Screens.Session)} >
-              <MText style={{ fontWeight: '700' }}>Active Sessions</MText>
-              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> 0 Active Sessions</MText>
-            </SettingItem>
 
             <SettingItem source={IconSecurity} onPress={() => navigationRef.navigate(Screens.Security)} >
               <MText style={{ fontWeight: '700' }}>Security</MText>
             </SettingItem>
 
+
+            <SettingItem source={IconSessions} onPress={() => navigationRef.navigate(Screens.Session)} >
+              <MText style={{ fontWeight: '700' }}>Active Sessions</MText>
+              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> 2 Active Sessions</MText>
+            </SettingItem>
+
             <SettingItem source={IconAllowance} onPress={() => navigationRef.navigate(Screens.Allowance)} >
               <MText style={{ fontWeight: '700' }}>Allowance</MText>
+              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> {allowances.length} Active Allowances</MText>
             </SettingItem>
             <Spacer />
             <Information />
