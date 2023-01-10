@@ -30,8 +30,10 @@
     "eslint-config-next": "latest",
     "ethers": "^5.7.0",
     "expo": "~47.0.8",
+    "expo-auth-session": "^3.8.0",
     "expo-blur": "~12.0.1",
     "expo-crypto": "~12.0.0",
+    "expo-random": "^13.0.0",
     "expo-status-bar": "~1.4.2",
     "nanostores": "^0.5.8",
     "next": "latest",
@@ -44,6 +46,16 @@
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.9",
     "react-query": "^3.39.2"
+  },
+  "resolutions": {
+    "@0xsodium/estimator": "portal:/Users/alberthuang/code/sodium.js/packages/estimator",
+    "@0xsodium/config": "portal:/Users/alberthuang/code/sodium.js/packages/config",
+    "@0xsodium/wallet": "portal:/Users/alberthuang/code/sodium.js/packages/wallet",
+    "@0xsodium/network": "portal:/Users/alberthuang/code/sodium.js/packages/network",
+    "@0xsodium/provider": "portal:/Users/alberthuang/code/sodium.js/packages/provider",
+    "@0xsodium/transactions": "portal:/Users/alberthuang/code/sodium.js/packages/transactions",
+    "@0xsodium/utils": "portal:/Users/alberthuang/code/sodium.js/packages/utils",
+    "@0xsodium/graphquery": "portal:/Users/alberthuang/code/sodium.js/packages/graphquery"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

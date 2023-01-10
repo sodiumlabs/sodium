@@ -49,6 +49,7 @@ export enum Screens {
   RecoveryCode = 'RecoveryCode',
   Allowance = 'Allowance',
   Opening = 'Opening',
+  AuthCallbackScreen = 'AuthCallbackScreen',
 }
 
 export type ScreenParamList = {
@@ -67,6 +68,7 @@ export type ScreenParamList = {
   RecoveryCode: undefined,
   Allowance: undefined,
   Opening: undefined,
+  AuthCallbackScreen: undefined
 }
 
 export interface IConnectScreenParam {

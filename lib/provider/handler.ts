@@ -6,13 +6,20 @@ import { Platform as SodiumPlatform } from '@0xsodium/config';
 import { atom } from 'nanostores';
 import { Wallet } from 'ethers';
 import { WalletPrompter } from './prompter';
-import { loadSession } from '../common/asyncStorage';
+import { clearSession, loadSession, saveSession } from '../common/asyncStorage';
+
+export type Session = {
+    sodiumUserId: string, 
+    platform: SodiumPlatform, 
+    w: Wallet
+}
 
 export type SodiumWallet = {
     address: string,
     handler: WalletRequestHandler,
     signer: Account,
-    web3signer: Web3Signer
+    web3signer: Web3Signer,
+    session: Session
 }
 
 const prompter: WalletUserPrompter = new WalletPrompter();
@@ -29,8 +36,16 @@ export const walletAtom = atom<SodiumWallet | null>(null);
 export const walletHandlerAtom = atom<WalletRequestHandler>();
 
 export const logout = () => {
-    walletAtom.set(null);
+    clearSession().then(() => walletAtom.set(null));
 }
+
+walletAtom.subscribe(newValue => {
+    if (newValue == null) {
+        
+    } else {
+        saveSession(newValue.session);
+    }
+})
 
 export const initHandler = (): WalletRequestHandler => {
     const walletHandler = new WalletRequestHandler(
@@ -59,11 +74,11 @@ export const asyncSession = async () => {
         };
         const w = s.w;
         const account = new Account(options, w);
-        await signIn(account, false);
+        await signIn(account,s,false);
     }
 }
 
-const signIn = async (account: Account, connect: boolean) => {
+const signIn = async (account: Account, session: Session, connect: boolean) => {
     const walletHandler = walletHandlerAtom.get();
     await walletHandler.signIn(account, {
         connect: connect,
@@ -76,21 +91,26 @@ const signIn = async (account: Account, connect: boolean) => {
         address: walletAddress,
         handler: walletHandler,
         signer: account,
-        web3signer: web3signer
+        web3signer: web3signer,
+        session,
     });
 }
 
 export const initWalletByTest = async (email: string) => {
+    const session: Session = {
+        platform: getCurrentSodiumPlatform(),
+        sodiumUserId: email,
+        w: Wallet.createRandom()
+    }
     const options: AccountOptions = {
         networks: networks,
         initialConfig: {
-            platform: getCurrentSodiumPlatform(),
-            sodiumUserId: email,
+            platform: session.platform,
+            sodiumUserId: session.sodiumUserId,
         }
     };
-    const w = Wallet.createRandom();
-    const account = new Account(options, w);
-    signIn(account, true);
+    const account = new Account(options, session.w);
+    signIn(account, session, true);
 }
 
 function getCurrentSodiumPlatform(): SodiumPlatform {

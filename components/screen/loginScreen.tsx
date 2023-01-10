@@ -15,18 +15,102 @@ import MImage from "../baseUI/mImage";
 import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { LoginLoading } from "../full/loginLoading";
+import * as React from 'react';
+import * as WebBrowser from 'expo-web-browser';
+import { TwitterAuthService } from '../../lib/mpc-auth/twitter';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
+import { Platform } from 'react-native';
+
+/// 临时实现的web twitter auth
+/// 为了demo day 临时，后续换成 expo auth 以支持react native
+interface OpenWindow {
+  url: string;
+  name?: string;
+}
+
+export const openWindow = ({ url, name }: OpenWindow) => {
+  const top = (window.innerHeight - 400) / 2 + window.screenY;
+  const left = (window.innerWidth - 400) / 2 + window.screenX;
+
+  return window.open(
+    url,
+    name,
+    `dialog=yes,top=${top}px,left=${left},width=${400}px,height=${500}px`
+  );
+};
+
+interface ObserveWindow {
+  popup: Window;
+  interval?: number;
+  onClose: () => void;
+}
+
+export const observeWindow = ({ popup, interval, onClose }: ObserveWindow) => {
+  const intervalId = setInterval(() => {
+    if (popup.closed) {
+      clearInterval(intervalId);
+      onClose();
+    }
+  }, interval || 100);
+};
+
+/// temp - end 
+
+
+
+// const useProxy = Platform.select({ web: true, default: false });
+WebBrowser.maybeCompleteAuthSession();
+
+// Endpoint
+const discovery = {
+  authorizationEndpoint: "https://twitter.com/i/oauth2/authorize",
+  tokenEndpoint: "https://twitter.com/i/oauth2/token",
+  revocationEndpoint: "https://twitter.com/i/oauth2/revoke",
+};
+
+const twauth = new TwitterAuthService("//twitter-auth.melandworld.com", global.fetch);
 
 export function LoginScreen() {
   const dimension = useDimensionSize();
 
+  /// temp
+  React.useEffect(() => {
+    const handle = async (event) => {
+      if (event.data.target === TWITTER_OAUTH_CALLBACK) {
+        const { oauthToken, oauthVerifier } = event.data;
+        const { response } = await twauth.auth({
+          request: {
+            token: oauthToken,
+            verifier: oauthVerifier,
+            messageHash: ""
+          }
+        });
+        await loginIn("r.albert.huang@gmail.com");
+        // await loginIn(response.email);
+      }
+    };
+    window.addEventListener('message', handle);
+
+    return () => {
+      window.removeEventListener('message', handle);
+    }
+  }, [window]);
+  /// temp - end
+
   const loginClick = async () => {
+    const { authURL } = await twauth.authURL({
+      request: {
+        oauthCallback: "http://127.0.0.1:3000"
+      }
+    });
+    openWindow({ url: authURL, name: "twteet login" });
+    // promptAsync({ 
+    // });
     // showUpdateFullScreenModal(true, <TwoFactorAuth />);
     showUpdateFullScreenModal(true, <LoginLoading />);
-    await loginIn("r.albert.huang@gmail.com");
-    // await waitFinish();
-    await waitTime(1);// Call next frame to avoid flash screen
     showUpdateFullScreenModal(false);
   }
+
   return (
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
       <ScrollView style={{ width: '100%', height: '100%', paddingHorizontal: 15 }}>
@@ -70,3 +154,9 @@ const styles = StyleSheet.create({
     maxWidth: fixWidth
   }
 });
+
+
+
+/// 临时实现的web twitter auth
+/// 为了demo day 临时，后续换成 expo auth 以支持react native
+const TWITTER_OAUTH_CALLBACK = 'TWITTER_OAUTH_CALLBACK';

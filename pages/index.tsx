@@ -34,6 +34,7 @@ import { useEffect } from 'react';
 import { showUpdateComModal } from '../components/base/modalInit';
 import { FailModalItem } from '../components/modal/modalItem/failModalItem';
 import { initProjectSetting } from '../lib/data/project';
+import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
 
 const queryClient = new QueryClient(
   {
@@ -108,6 +109,7 @@ export default function App() {
               <Stack.Screen name={Screens.SetupAuth} component={SetupAuthScreen} />
               <Stack.Screen name={Screens.RecoveryCode} component={RecoveryCodeScreen} />
               <Stack.Screen name={Screens.Allowance} component={AllowanceScreen} />
+              <Stack.Screen name={Screens.AuthCallbackScreen} component={AuthCallbackScreen} />
             </Stack.Navigator>
 
           </NavigationContainer>

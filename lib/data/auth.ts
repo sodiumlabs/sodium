@@ -7,7 +7,6 @@ import { transactionQueue } from "../transaction";
 import { transactionPending } from '../transaction/pending';
 
 export const authAtom = computed<AuthData, Atom<SodiumWallet | null>>(walletAtom, (w) => {
-
   if (w === null) {
     return {
       isLogin: false,
@@ -28,8 +27,6 @@ authAtom.subscribe((value) => {
     transactionQueue.loadAsyncStorage();
     transactionPending.loadAsyncStorage();
   }
-  console.log("authAtom:");
-  console.log(value);
 });
 
 export const getAuth = (): AuthData => {
@@ -41,11 +38,9 @@ export const useAuth = (): AuthData => {
 }
 
 export const loginOut = async () => {
-  await waitTime(500);// test code
   logout();
 }
 
 export const loginIn = async (email: string) => {
-  await waitTime(500); // test code
   await initWalletByTest(email);
 }

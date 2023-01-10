@@ -27,9 +27,7 @@ export const fetchNetwork = async (): Promise<NetworkConfig> => {
   if (!authData.isLogin) {
     return;
   }
-
   const chainId = await authData.signer.getChainId();
-
   const network = getNetwork(chainId);
   console.log("fetchNetwork");
   console.log(network);

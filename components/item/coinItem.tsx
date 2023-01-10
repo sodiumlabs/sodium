@@ -30,7 +30,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
           <MLineLR
             left={
               <MHStack >
-                <MText style={{ fontWeight: '700' }} fontSize={14} >{tokenInfo.token.symbol}</MText>
+                <MText style={{ fontWeight: '700' }} fontSize={14} >{tokenInfo.token.symbol == "MELD" ? "USDC" : tokenInfo.token.symbol}</MText>
                 {/* <MImage size={12} /> */}
                 {/* <MText>{tokenInfo.token.name}</MText> */}
               </MHStack>
@@ -40,7 +40,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
 
           <MLineLR
             style={{ marginTop: 2 }}
-            left={<MText style={{ color: eColor.GrayText }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
+            left={<MText style={{ color: eColor.GrayText }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString())} {tokenInfo.token.symbol == "MELD" ? "USDC" : tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
             right={<MText></MText>} />
         </MVStack>
       </MHStack>

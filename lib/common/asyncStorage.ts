@@ -31,13 +31,23 @@ export const loadTxnQueue = async (key: eStotageKey): Promise<ITranscation[]> =>
 }
 
 export const saveSession = async (s: { sodiumUserId: string, platform: string, w: Wallet }) => {
-  // TODO
+  return AsyncStorage.setItem("@sodium.wallet.session", JSON.stringify({
+    sodiumUserId: s.sodiumUserId,
+  }));
+}
+
+export const clearSession = async () => {
+  return AsyncStorage.removeItem("@sodium.wallet.session");
 }
 
 export const loadSession = async (): Promise<{ sodiumUserId: string, platform: SodiumPlatform, w: Wallet } | null> => {
-  return Promise.resolve({
-    sodiumUserId: "r.albert.huang@gmail.com",
-    platform: "web",
-    w: Wallet.createRandom()
-  })
+  const value = await AsyncStorage.getItem("@sodium.wallet.session");
+  if (value && value != "") {
+    return Promise.resolve({
+      sodiumUserId: "r.albert.huang@gmail.com",
+      platform: "web",
+      w: Wallet.createRandom()
+    })
+  }
+  return null;
 }

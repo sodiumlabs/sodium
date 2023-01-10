@@ -31,7 +31,6 @@ let last = null;
 export const isNavigationReadyAtom = atom<boolean>(false);
 
 export const navigate = <RouteName extends keyof ParamList>(...args: RouteName extends unknown ? undefined extends ParamList[RouteName] ? [screen: RouteName] | [screen: RouteName, params: ParamList[RouteName]] : [screen: RouteName, params: ParamList[RouteName]] : never) => {
-  console.log("navigate args:" + args);
   if (navigationRef.isReady()) {
     return navigationRef.navigate(...args);
   }
@@ -42,19 +41,25 @@ export default function NavigationInit() {
   const auth = useAuth();
   const isNavigationReady = useStore(isNavigationReadyAtom);
   const projectSetting = useProjectSetting();
+
   useEffect(() => {
     if (!isNavigationReady) {
       return;
     }
-
     if (last) {
       navigationRef.navigate(...last);
       last = null;
     }
-    console.log("NavigationInit");
+    const url = new URL(window.location.href);
+
+    if (url.searchParams.get("oauth_token")) {
+      navigationRef.reset({ index: 0, routes: [{ name: Screens.AuthCallbackScreen }], });
+      updateCurScreenTab(Screens.AuthCallbackScreen);
+      return;
+    }
+
     // If it is opened by a third party, the opening page is displayed directly
     if (projectSetting.isBeOpenedByThirdParty) {
-
       navigationRef.reset({ index: 0, routes: [{ name: Screens.Opening }], });
     }
     // Non-third party, display login or wallet page based on login or not
@@ -68,7 +73,7 @@ export default function NavigationInit() {
       }
     }
     navigateInitAtom.set(true);
-  }, [auth.isLogin, isNavigationReady, projectSetting.isBeOpenedByThirdParty]);
+  }, [auth.isLogin, isNavigationReady, projectSetting.isBeOpenedByThirdParty, window.location.href]);
 
   return (
     <></>

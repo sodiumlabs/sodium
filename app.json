@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "sodium-wallet",
     "name": "sodium",
     "slug": "sodium",
     "version": "1.0.0",
@@ -19,6 +20,9 @@
       "**/*"
     ],
     "ios": {
+      "infoPlist": {
+        "LSApplicationQueriesSchemes": ["sodium-wallet"]
+      },
       "supportsTablet": true
     },
     "android": {
