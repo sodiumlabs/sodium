@@ -41,7 +41,11 @@ class PendingTxs {
   }
 }
 
-
+/**
+ * pending can be divided into two types. 
+ * One type is the recovery from Local. You need to check the tx status constantly to determine whether to remove it. 
+ * The other is the Cur, which is automatically removed at runtime.
+ */
 const LocalPendingTxs = new PendingTxs();
 const CurPendingTxs = new PendingTxs();
 const TotalPendingTxs = new PendingTxs();

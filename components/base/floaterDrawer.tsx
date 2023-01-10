@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
+import { waitTime } from '../../lib/common/common';
 import { loginOut, useAuth } from '../../lib/data/auth';
 import { Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
@@ -105,6 +106,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   const onLogoutClick = async () => {
     showUpdateFullScreenModal(true, <LogoutLoading />);
     await loginOut();
+    await waitTime(1); // Call next frame to avoid flash screen
     showUpdateFullScreenModal(false);
   }
 

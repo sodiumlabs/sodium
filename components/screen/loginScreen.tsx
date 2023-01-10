@@ -1,4 +1,5 @@
 import { ScrollView, StyleSheet } from "react-native";
+import { waitTime } from '../../lib/common/common';
 import { loginIn } from "../../lib/data/auth";
 import { fixWidth } from "../../lib/define";
 import { eColor } from '../../lib/globalStyles';
@@ -7,7 +8,6 @@ import { IconLogo } from "../../lib/imageDefine";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { showUpdateFullScreenModal } from "../base/modalInit";
-import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from "../baseUI/mHStack";
@@ -23,6 +23,8 @@ export function LoginScreen() {
     // showUpdateFullScreenModal(true, <TwoFactorAuth />);
     showUpdateFullScreenModal(true, <LoginLoading />);
     await loginIn("r.albert.huang@gmail.com");
+    // await waitFinish();
+    await waitTime(1);// Call next frame to avoid flash screen
     showUpdateFullScreenModal(false);
   }
   return (

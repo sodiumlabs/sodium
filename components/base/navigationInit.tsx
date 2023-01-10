@@ -3,7 +3,7 @@ import { useStore } from '@nanostores/react';
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { atom } from "nanostores";
 import { useEffect } from 'react';
-import { waitTime } from "../../lib/common/common";
+import { waitFinish, waitTime } from "../../lib/common/common";
 import { useAuth } from '../../lib/data/auth';
 import { useProjectSetting } from '../../lib/data/project';
 import { updateCurScreenTab } from '../../lib/data/screen';
@@ -17,10 +17,11 @@ const isNavigateInit = () => {
 }
 
 export const waitNavigateInit = async () => {
-  while (!isNavigateInit()) {
-    console.log("waitNavigateInit");
-    await waitTime(50);
-  }
+  // while (!isNavigateInit()) {
+  //   console.log("waitNavigateInit");
+  //   await waitTime(50);
+  // }
+  await waitFinish(isNavigateInit, 'waitNavigateInit');
 }
 
 type ParamList = ReactNavigation.RootParamList;
