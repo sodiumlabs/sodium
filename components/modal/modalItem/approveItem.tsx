@@ -2,7 +2,7 @@ import { FixedNumber } from '@ethersproject/bignumber';
 import Slider from '@react-native-community/slider';
 import { Radio, RadioGroup } from '@ui-kitten/components';
 import { BigNumber } from 'ethers';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { ERC20Approve } from "../../../abi/erc20";
 import { formatWei2Price, removeAllDecimalPoint } from '../../../lib/common/common';
 import { useAuth } from "../../../lib/data/auth";
@@ -16,6 +16,7 @@ import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
 import { IconLogo, IconTokenDefault } from '../../../lib/imageDefine';
+import { useProjectSetting } from '../../../lib/data/project';
 
 
 export const ApproveItem = (props: {
@@ -27,6 +28,20 @@ export const ApproveItem = (props: {
   const { approveSelectedIndex, setApproveSelectedIndex } = props;
   const { approveSliderValue, setApproveSliderValue } = props;
   const auth = useAuth();
+  // const projectSetting = useProjectSetting();
+
+  // slider 滑动错位问题，可以临时通过resizeTo重置浏览器大小 得到解决，但仅限于 window,不可用于iframe
+  // useEffect(() => {
+  //   if (projectSetting.isBeOpenedByThirdParty) {
+  //     if (projectSetting.isBeOpenByWindow) {
+  //       window.resizeTo(window.outerWidth + 1, window.outerHeight);
+  //       console.log(`window resizeTo window.outerWidth: ${window.outerWidth}  window.outerHeight: ${window.outerHeight}`);
+  //     } else if (projectSetting.isBeOpenByIframe) {
+  //       window.resizeTo(window.outerWidth + 1, window.outerHeight);
+  //       console.log(`iframe resizeTo window.outerWidth: ${window.outerWidth}  window.outerHeight: ${window.outerHeight}`);
+  //     }
+  //   }
+  // }, [projectSetting.isBeOpenedByThirdParty])
 
   const [approveValue, setApproveValue] = useState('Unlimted');
   const onSliderValueChange = (progress: number) => {
@@ -49,10 +64,20 @@ export const ApproveItem = (props: {
     else {
       setApproveValue('Unlimted');
     }
+
   }, [approveSelectedIndex, approveSliderValue]);
 
   const header = approveData.amount.eq(0) ? `Revoke Approve(${index}/${maxIndex})` : `Approve(${index}/${maxIndex})`
 
+  const sliderBox = useMemo(() => {
+    return <Slider
+      minimumValue={0}
+      maximumValue={1}
+      onValueChange={onSliderValueChange}
+      minimumTrackTintColor="#4AB0FF"
+      maximumTrackTintColor="#FF7B4A"
+    />
+  }, []);
   return (
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }} header={header}>
 
@@ -81,14 +106,9 @@ export const ApproveItem = (props: {
               <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'}>
                 <>
                   <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-                  <Slider
-                    style={{ width: '60%', height: 20, position: 'absolute', bottom: -25, left: 32, zIndex: 1 }}
-                    minimumValue={0}
-                    maximumValue={1}
-                    onValueChange={onSliderValueChange}
-                    minimumTrackTintColor="#4AB0FF"
-                    maximumTrackTintColor="#FF7B4A"
-                  />
+                  <MHStack style={{ width: "60%", height: 20, position: 'absolute', bottom: -25, left: 32, zIndex: 1 }}>
+                    {sliderBox}
+                  </MHStack>
                 </>
               </Radio>
               <Radio status={'success'}>

@@ -1,5 +1,5 @@
 import { BigNumber, FixedNumber } from 'ethers';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { encodeERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
@@ -39,6 +39,13 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
   const [approveSelectedIndex, setApproveSelectedIndex] = useState(eApproveType.KeepUnlimted);
   const [approveSliderValue, setApproveSliderValue] = useState(1);
+
+  useEffect(() => {
+    if (!modalParam.visible) {
+      setApproveSelectedIndex(eApproveType.KeepUnlimted);
+      setApproveSliderValue(1);
+    }
+  }, [modalParam.visible])
 
   const curNetwork = getNetwork(param?.chaindId);
   // 

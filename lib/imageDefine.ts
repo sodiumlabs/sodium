@@ -32,3 +32,4 @@ export const IconShare = require('./../assets/share.png');
 
 
 export const IconTokenDefault = require('./../assets/token_default.png');
+// export const IconTokenDefault = require('./../assets/iconUsdt.png');
