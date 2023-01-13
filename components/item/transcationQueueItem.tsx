@@ -17,8 +17,8 @@ import MImage from '../baseUI/mImage';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 
-export default function TranscationQueueItem(props: { transcation: ITranscation }) {
-  const { transcation } = props;
+export default function TranscationQueueItem(props: { transcation: ITranscation, hideModal: () => void }) {
+  const { transcation, hideModal } = props;
   // const [decodeDatas, setDecodeDatas] = useState<IDecodeTranscation[]>();
   const [decodeData, setDecodeData] = useState<IDecodeTranscation>();
   const [isRejectHovered, setIsRejectHovered] = useState(false);
@@ -60,7 +60,7 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
   }
   const itemClick = useCallback(async () => {
     if (auth.isLogin) {
-      showUpdateTranscationQueueModal(false);
+      hideModal();
       showUpdateSignTranscationModal(true, null);
 
       OperateTimeStamp.set(transcation.timeStamp);
@@ -68,7 +68,7 @@ export default function TranscationQueueItem(props: { transcation: ITranscation 
       const txr = await auth.web3signer.sendTransaction(transcation.txReq);
       await txr.wait();
     }
-  }, [auth])
+  }, [auth, hideModal])
 
   return (
     <MHStack style={styles.container} stretchW>

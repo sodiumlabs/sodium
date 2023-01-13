@@ -116,7 +116,7 @@ export class WalletPrompter implements WalletUserPrompter {
                     console.log("txnResponse.wait end");
                     onPendingEnd && onPendingEnd();
                     tResolve(txnResponse.hash);
-                    showUpdateSignTranscationModal(false, null, txnWithTime.txReq);
+                    showUpdateSignTranscationModal(false, null, txnWithTime.timeStamp);
                 } catch (error) {
                     tReject();
                     showErrorModal(error.message);

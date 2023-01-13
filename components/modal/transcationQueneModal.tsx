@@ -45,7 +45,7 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
                   {
                     requestTranscations.map((txn, index) => {
                       return (
-                        <TranscationQueueItem transcation={txn} key={hashcodeObj(txn) + index} />
+                        <TranscationQueueItem transcation={txn} key={hashcodeObj(txn) + index} hideModal={hideModal} />
                       )
                     })
                   }
