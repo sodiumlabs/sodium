@@ -30,6 +30,7 @@ export interface ProfileData {
 export interface IModalParam {
   visible?: boolean,
   param?: unknown,
+  uniqueKey?: unknown
 }
 
 export interface IDepositItemData {
@@ -115,7 +116,7 @@ export interface ISignTranscationModalParam {
   decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,
   chaindId: number,
-  txn: ITranscation
+  txn: ITranscation,
 }
 
 

@@ -101,8 +101,6 @@ export class WalletPrompter implements WalletUserPrompter {
 
             transactionQueue.add(txnWithTime);
             const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => {
-
-
                 try {
                     let txnResponse;
                     if (handleName == "send") {
@@ -113,12 +111,14 @@ export class WalletPrompter implements WalletUserPrompter {
                     transactionQueue.removeByTxn(txnWithTime);
                     console.log("txnResponse:" + JSON.stringify(txnResponse));
                     onPendingStart && onPendingStart(txnResponse.hash);
+                    console.log("txnResponse.wait start");
                     await txnResponse.wait();
+                    console.log("txnResponse.wait end");
                     onPendingEnd && onPendingEnd();
                     tResolve(txnResponse.hash);
+                    showUpdateSignTranscationModal(false, null, txnWithTime.txReq);
                 } catch (error) {
                     tReject();
-                    showUpdateSignTranscationModal(false);
                     showErrorModal(error.message);
                     onError && onError();
                 }

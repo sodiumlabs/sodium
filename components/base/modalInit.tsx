@@ -33,7 +33,17 @@ export const showUpdateTranscationDetailModal = (visible: boolean, param?: Trans
 export const showUpdateSignMessageModal = (visible: boolean, param?: ISignMessageModalParam) => {
   signMessageModalAtom.set({ visible: visible, param: param });
 }
-export const showUpdateSignTranscationModal = (visible: boolean, param?: ISignTranscationModalParam) => {
+export const showUpdateSignTranscationModal = (visible: boolean, param?: ISignTranscationModalParam, uniqueKey?: unknown) => {
+  const signTranscationModal = signTranscationModalAtom.get() as IModalParam;
+  if (!visible) {
+    // When you close it, you need the same key
+    if (signTranscationModal.uniqueKey == uniqueKey) {
+      signTranscationModalAtom.set({ visible: visible, param: param });
+    }
+    return;
+  }
+  // When it opens, set the new key
+  signTranscationModal.uniqueKey = param?.txn?.txReq;
   signTranscationModalAtom.set({ visible: visible, param: param });
 }
 export const showUpdateTranscationQueueModal = (visible: boolean, param?: unknown) => {
@@ -64,7 +74,7 @@ export default function ModalInit() {
     <>
       <TranscationDetailModal modalParam={transcationDetailModal} hideModal={() => showUpdateTranscationDetailModal(false)} />
       <TranscationQueueModal modalParam={transcationQueueModal} hideModal={() => showUpdateTranscationQueueModal(false)} />
-      <SignTranscationModal modalParam={signTranscationModal} hideModal={() => showUpdateSignTranscationModal(false)} />
+      <SignTranscationModal modalParam={signTranscationModal} hideModal={() => showUpdateSignTranscationModal(false, null, transcationDetailModal.uniqueKey)} />
       <SignMessageModal modalParam={signMessageModal} hideModal={() => showUpdateSignMessageModal(false)} />
       <ComModal modalParam={comModal} hideModal={() => showUpdateComModal(false)} />
       <FullScreenModal modalParam={fullScreenModal} hideModal={() => showUpdateFullScreenModal(false)} />

@@ -132,6 +132,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
     if (isPending) {
       const onPendingStart = (txHash: string) => {
+        console.log("onPendingStart");
         setTxHandling(false);
         hideModal();
         param.txn.txHash = txHash;
@@ -141,9 +142,11 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         navigate(Screens.Wallet);
       }
       const onPendingEnd = () => {
+        console.log("onPendingEnd");
         transactionPending.removeCurPending(param.txn);
       }
       const onError = () => {
+        hideModal();
         transactionPending.removeCurPending(param.txn);
       }
       await param.continueClick(txs, onPendingStart, onPendingEnd, onError);
