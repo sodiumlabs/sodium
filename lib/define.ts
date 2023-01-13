@@ -6,6 +6,7 @@ import { Account } from '@0xsodium/wallet';
 import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
 import { ERC20Approve } from '../abi/erc20';
+import { Session } from './provider/handler';
 
 export const fixWidth = 720;
 export const designWidth = 1280;
@@ -17,7 +18,13 @@ export interface AuthData {
   blockchainAddress: string,
   wallet: WalletRequestHandler,
   signer: Account,
-  web3signer: Web3Signer
+  web3signer: Web3Signer,
+  session: Session
+}
+
+export interface ProfileData {
+  authorizedSource: string,
+  userName: string
 }
 
 export interface IModalParam {

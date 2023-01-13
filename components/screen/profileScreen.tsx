@@ -9,9 +9,11 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { globalStyle, eColor } from '../../lib/globalStyles';
+import { useProfile } from '../../lib/data/profile';
 
 export function ProfileScreen() {
   const auth = useAuth();
+  const profile = useProfile();
   const dimension = useDimensionSize();
   // const nav = useNavigation();
   return (
@@ -22,8 +24,8 @@ export function ProfileScreen() {
             <ScreenTitle title="Profile" />
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
-              <MText style={styles.title} >Twitter</MText>
-              <MText style={{ color: eColor.GrayContentText }} >Linco</MText>
+              <MText style={styles.title} >{profile.authorizedSource}</MText>
+              <MText style={{ color: eColor.GrayContentText }} >{profile.userName}</MText>
             </MVStack>
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>

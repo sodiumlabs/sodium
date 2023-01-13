@@ -17,6 +17,7 @@ import MVStack from '../baseUI/mVStack';
 import { LogoutLoading } from '../full/logoutLoading';
 import { showUpdateFullScreenModal } from './modalInit';
 import { navigate, navigationRef } from './navigationInit';
+import { useProfile } from '../../lib/data/profile';
 
 export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) {
 
@@ -96,7 +97,8 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
 
   // ------ ------ ------ ------service logic ------ ------ ------ ------ ------ ------
-  const authData = useAuth();
+  const auth = useAuth();
+  const profile = useProfile();
   const [queryNetwork, network] = useQueryNetwork();
 
   const onSettingsClick = () => {
@@ -125,8 +127,8 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
                     </Pressable>
                   )
                 }
-                <MAvatar style={{ marginHorizontal: 10 }} name={authData.blockchainAddress} />
-                <MText style={{ flex: 1, fontWeight: '700' }} >{authData.blockchainAddress}</MText>
+                <MAvatar style={{ marginHorizontal: 10 }} name={auth.blockchainAddress} />
+                <MText style={{ flex: 1, fontWeight: '700' }} >{auth.blockchainAddress}</MText>
                 <MImage w={24} h={24} style={{ margin: 10 }} source={IconMore} />
               </MHStack>
             </Pressable>
@@ -135,11 +137,11 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         <Animated.View style={{ opacity: contentOpacityAnim }}>
           <MVStack style={{ padding: 10, transform: [{ translateY: -minHeaderHeight }] }} >
             <MHStack style={{ flex: 1 }} >
-              <MAvatar style={{ marginHorizontal: 10 }} size={48} name={authData.blockchainAddress} />
+              <MAvatar style={{ marginHorizontal: 10 }} size={48} name={auth.blockchainAddress} />
               <MVStack style={{ flex: 1 }}>
-                <MText style={{ fontWeight: '700' }} >{authData.blockchainAddress}</MText>
+                <MText style={{ fontWeight: '700' }} >{auth.blockchainAddress}</MText>
                 <MHStack >
-                  <CopyButton style={{ marginHorizontal: 5, height: 24, marginTop: 10 }} copyText={authData.blockchainAddress} />
+                  <CopyButton style={{ marginHorizontal: 5, height: 24, marginTop: 10 }} copyText={auth.blockchainAddress} />
 
                 </MHStack>
               </MVStack>
@@ -151,8 +153,8 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
             </MHStack>
 
             <MVStack style={[styles.email]}>
-              <MText  >Twitter</MText>
-              <MText style={{ marginTop: 5, color: "#6B6B6B" }} >Linco</MText>
+              <MText  >{profile.authorizedSource}</MText>
+              <MText style={{ marginTop: 5, color: "#6B6B6B" }} >{profile.userName}</MText>
             </MVStack>
 
             <MHStack style={[styles.connected]}>
