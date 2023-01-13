@@ -34,12 +34,12 @@ export function ProfileScreen() {
             </MVStack>
 
 
-            <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
+            {/* <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title}>ENS</MText>
               <MText style={{ marginBottom: 6, color: eColor.GrayContentText }}>No reverse record found.</MText>
               <MText style={styles.title}>Last check on</MText>
               <MText style={{ color: eColor.GrayContentText }}>2022/12/1 11:11:20</MText>
-            </MVStack>
+            </MVStack> */}
             <Spacer />
             <Information />
           </MVStack>
