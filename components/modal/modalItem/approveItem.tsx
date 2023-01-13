@@ -21,9 +21,10 @@ import MVStack from "../../baseUI/mVStack";
 export const ApproveItem = (props: {
   index: number, maxIndex: number, approveData: ERC20Approve,
   approveSelectedIndex, setApproveSelectedIndex,
-  approveSliderValue, setApproveSliderValue
+  approveSliderValue, setApproveSliderValue,
+  disabled: boolean
 }) => {
-  const { index, maxIndex, approveData } = props;
+  const { index, maxIndex, approveData, disabled } = props;
   const { approveSelectedIndex, setApproveSelectedIndex } = props;
   const { approveSliderValue, setApproveSliderValue } = props;
   const auth = useAuth();
@@ -96,11 +97,12 @@ export const ApproveItem = (props: {
           </MHStack>
           <MVStack>
             <RadioGroup
+
               // appearance
               // style={{ 'alignItems': 'start' }}
               selectedIndex={approveSelectedIndex}
               onChange={index => setApproveSelectedIndex(index)}>
-              <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'}>
+              <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'} disabled={disabled}>
                 <>
                   <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
                   <MHStack style={{ width: "60%", height: 20, position: 'absolute', bottom: -25, left: 32, zIndex: 1 }}>
@@ -108,12 +110,12 @@ export const ApproveItem = (props: {
                   </MHStack>
                 </>
               </Radio>
-              <Radio status={'success'}>
+              <Radio status={'success'} disabled={disabled}>
                 <>
                   <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
                 </>
               </Radio>
-              <Radio status={'success'}>
+              <Radio status={'success'} disabled={disabled}>
                 <><MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText></>
               </Radio>
             </RadioGroup>

@@ -34,7 +34,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
   const projectSetting = useProjectSetting();
-  const [isLoading, setIsLoading] = useModalLoading(modalParam);
+  const [isTxHandling, setTxHandling] = useModalLoading(modalParam);
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
 
@@ -95,14 +95,14 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const onConfirmClick = useCallback(async () => {
     if (!param) return;
     if (!tokenInfos || !paymasterInfos || !paymasterInfos.length) return;
-    if (isLoading) return;
+    if (isTxHandling) return;
     // const tx = param.txn.txReq;
     if (!param?.decodeDatas) return;
 
     const decodeApproveData = param.decodeDatas.find((decodeTxn) => !!decodeTxn.decodeApproveData);
     const txs = param.decodeDatas.map(decodeTxn => decodeTxn.originTxReq);
 
-    setIsLoading(true);
+    setTxHandling(true);
     if (decodeApproveData) {
       if (approveSelectedIndex == eApproveType.SetAllowance) {
         console.log("eApproveType.SetAllowance");
@@ -132,7 +132,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
     if (isPending) {
       const onPendingStart = (txHash: string) => {
-        setIsLoading(false);
+        setTxHandling(false);
         hideModal();
         param.txn.txHash = txHash;
         param.txn.txGas = paymasterInfos[0]; // todo 
@@ -152,7 +152,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       await param.continueClick(txs);
     }
 
-  }, [param, isLoading, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
+  }, [param, isTxHandling, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
 
   const onCancelClick = () => {
     if (!param) return;
@@ -209,6 +209,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                     // approve 
                     return decodeTxn.decodeApproveData.amount.gt(0) ? (
                       <ApproveItem
+                        disabled={isTxHandling}
                         key={key}
                         index={transcationIndex} maxIndex={transcationMaxIndex}
                         approveData={decodeTxn.decodeApproveData}
@@ -292,7 +293,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
           </ScrollView>
         </MVStack>
         <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick}
-          isConfirmLoading={isLoading} isConfirmEnable={!!tokenInfos && !!paymasterInfos && !!paymasterInfos.length} />
+          isConfirmLoading={isTxHandling} isConfirmEnable={!!tokenInfos && !!paymasterInfos && !!paymasterInfos.length} />
       </MVStack>
     </BaseModal >
   );
