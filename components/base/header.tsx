@@ -51,7 +51,7 @@ const HeaderItem = (props: { screen: Screens, source: ImageSourcePropType, isSel
         left={<MImage w={14} h={14} source={source} />}
         right={<MText style={{ fontWeight: '700', marginLeft: 4 }} fontSize={12}>{screen}</MText>}
       />
-      <CircleTip num={requestTranscations.length + ''} style={{ position: 'absolute', right: -10, top: -20, width: 15, height: 15 }} />
+      <CircleTip num={requestTranscations.length + ''} style={{ position: 'absolute', right: -10, top: -20, width: 15, height: 15 }} fontSize={8} />
 
     </Pressable>
   )

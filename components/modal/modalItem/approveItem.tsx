@@ -30,7 +30,7 @@ export const ApproveItem = (props: {
   const auth = useAuth();
   // const projectSetting = useProjectSetting();
 
-  // slider 滑动错位问题，可以临时通过resizeTo重置浏览器大小 得到解决，但仅限于 window,不可用于iframe
+  // slider dislocation problem can be temporarily resolved by resizeTo resizing the browser, but it is limited to Windows and cannot be used for iframe
   // useEffect(() => {
   //   if (projectSetting.isBeOpenedByThirdParty) {
   //     if (projectSetting.isBeOpenByWindow) {
@@ -69,6 +69,7 @@ export const ApproveItem = (props: {
 
   const header = approveData.amount.eq(0) ? `Revoke Approve(${index}/${maxIndex})` : `Approve(${index}/${maxIndex})`
 
+  // The confused slider must be used this way, not directly mounted to the view (slider offset will occur).
   const sliderBox = useMemo(() => {
     return <Slider
       minimumValue={0}

@@ -33,7 +33,7 @@ export function RequestTranscation() {
       onHoverOut={() => setIsItemHovered(false)}>
       <MHStack stretchW style={[styles.transcationQueue, globalStyle.whiteBorderWidth, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}>
 
-        <CircleTip num={requestTranscations.length + ''} />
+        <CircleTip num={requestTranscations.length + ''} fontSize={8} />
         <MText style={{ flex: 1, marginLeft: 5, fontWeight: '700' }}>Requested Transcations...</MText>
         <MText style={{ color: eColor.GrayText }}>{formatTime2Today(lastRequestTxn.timeStamp)}</MText>
       </MHStack>

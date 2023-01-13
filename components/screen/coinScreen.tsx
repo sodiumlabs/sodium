@@ -53,7 +53,7 @@ export function CoinScreen(props) {
 
             <MVStack stretchW style={{ marginVertical: 20 }}>
               <MButton style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send, tokenInfo)} >
-                <MButtonText title={"Send USDC"} />
+                <MButtonText title={`Send ${tokenInfo.token.symbol}`} />
               </MButton>
 
             </MVStack>
