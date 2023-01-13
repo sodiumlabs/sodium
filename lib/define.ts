@@ -156,18 +156,6 @@ export declare type ERC20OrNativeTokenMetadata = {
 };
 
 
-export declare type GasPrice = {
-  maxPriorityFeePerGas: BigNumber;
-  maxFeePerGas: BigNumber;
-};
-
-export declare type GasSuggest = {
-  standard: GasPrice;
-  fast: GasPrice;
-  rapid: GasPrice;
-};
-
-
 export type PaymasterInfo = {
   token: ERC20OrNativeTokenMetadata
   // wei

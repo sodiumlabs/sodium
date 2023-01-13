@@ -61,6 +61,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
   useEffect(() => {
     (async () => {
+      if (!param?.decodeDatas) return;
       if (approveSelectedIndex == eApproveType.RevokeAfter) {
         const decodeApproveData = param.decodeDatas.find((decodeTxn) => !!decodeTxn.decodeApproveData);
         // encode from approve
