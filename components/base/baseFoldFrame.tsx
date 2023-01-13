@@ -42,10 +42,9 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
       fold(minHeight, 300);
     }
   }
-
   const onLayout = (event: LayoutChangeEvent) => {
     setHeight(event.nativeEvent.layout.height);
-    if (props.defaultExpansion) {
+    if (props.defaultExpansion || !isFold) {
       explance(event.nativeEvent.layout.height, 0);
     }
   }

@@ -2,12 +2,13 @@ import { FixedNumber } from '@ethersproject/bignumber';
 import Slider from '@react-native-community/slider';
 import { Radio, RadioGroup } from '@ui-kitten/components';
 import { BigNumber } from 'ethers';
-import { useEffect, useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { ERC20Approve } from "../../../abi/erc20";
 import { formatWei2Price, removeAllDecimalPoint } from '../../../lib/common/common';
 import { useAuth } from "../../../lib/data/auth";
 import { eApproveType, MaxFixedNumber } from "../../../lib/define";
 import { eColor } from '../../../lib/globalStyles';
+import { IconTokenDefault } from '../../../lib/imageDefine';
 import { BaseFoldFrame } from "../../base/baseFoldFrame";
 import MAvatar from '../../baseUI/mAvatar';
 import { MDivider } from '../../baseUI/mDivider';
@@ -15,8 +16,6 @@ import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
-import { IconLogo, IconTokenDefault } from '../../../lib/imageDefine';
-import { useProjectSetting } from '../../../lib/data/project';
 
 
 export const ApproveItem = (props: {
@@ -67,8 +66,6 @@ export const ApproveItem = (props: {
 
   }, [approveSelectedIndex, approveSliderValue]);
 
-  const header = approveData.amount.eq(0) ? `Revoke Approve(${index}/${maxIndex})` : `Approve(${index}/${maxIndex})`
-
   // The confused slider must be used this way, not directly mounted to the view (slider offset will occur).
   const sliderBox = useMemo(() => {
     return <Slider
@@ -80,7 +77,7 @@ export const ApproveItem = (props: {
     />
   }, []);
   return (
-    <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }} header={header}>
+    <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }} header={`Approve(${index}/${maxIndex})`}>
 
       <MText >Spender</MText>
       <MHStack style={{ flex: 1, alignItems: 'center', marginVertical: 20 }}>
@@ -90,7 +87,6 @@ export const ApproveItem = (props: {
       </MHStack>
 
       {
-        approveData.amount.gt(0) &&
         <>
           <MDivider style={{ marginVertical: 10 }} />
           <MText >Value</MText>
