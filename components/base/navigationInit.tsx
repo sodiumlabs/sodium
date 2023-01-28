@@ -60,7 +60,11 @@ export default function NavigationInit() {
 
     // If it is opened by a third party, the opening page is displayed directly
     if (projectSetting.isBeOpenedByThirdParty) {
-      navigationRef.reset({ index: 0, routes: [{ name: Screens.Opening }], });
+      if (!auth.isLogin) {
+        navigationRef.reset({ index: 1, routes: [{ name: Screens.Opening }, { name: Screens.Login }], });
+      } else {
+        navigationRef.reset({ index: 0, routes: [{ name: Screens.Opening }], });
+      }
     }
     // Non-third party, display login or wallet page based on login or not
     else {
