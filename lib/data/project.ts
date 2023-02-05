@@ -19,7 +19,7 @@ export const initProjectSetting = () => {
   if (Platform.OS === "web") {
     isBeOpenByWindow = !!window.opener;
     isBeOpenByIframe = window.self != window.top;
-    isBeOpenedByThirdParty = isBeOpenByWindow || isBeOpenByIframe,
+    isBeOpenedByThirdParty = isBeOpenByWindow || isBeOpenByIframe;
   }
 
   projectSettingAtom.set({

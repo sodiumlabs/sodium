@@ -7,7 +7,7 @@ import { Wallet } from 'ethers';
 import { WalletPrompter } from './prompter';
 import { clearSession, loadSession, saveSession } from '../common/asyncStorage';
 import { walletAtom, walletHandlerAtom } from './atom';
-import { Session, SodiumWallet } from './types';
+import { Session } from './types';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
 const networks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {

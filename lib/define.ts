@@ -6,7 +6,7 @@ import { Account } from '@0xsodium/wallet';
 import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
 import { ERC20Approve } from '../abi/erc20';
-import { Session } from './provider/handler';
+import { Session } from './provider/types';
 
 export const fixWidth = 720;
 export const designWidth = 1280;
