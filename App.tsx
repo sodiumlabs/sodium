@@ -1,8 +1,3 @@
-import { Buffer } from "buffer"
-
-// @ts-ignore
-global.Buffer = Buffer
-
 // Import the crypto getRandomValues shim (**BEFORE** the shims)
 import "react-native-get-random-values"
 

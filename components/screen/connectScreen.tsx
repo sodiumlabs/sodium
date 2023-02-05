@@ -3,7 +3,7 @@ import { fixWidth, IConnectScreenParam } from "../../lib/define";
 import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
-import { navigationRef } from "../base/navigationInit";
+import { navigationRef } from "../base/navigation";
 import MButton from "../baseUI/mButton";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";

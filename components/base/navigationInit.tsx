@@ -1,46 +1,25 @@
 
 import { useStore } from '@nanostores/react';
-import { createNavigationContainerRef } from '@react-navigation/native';
-import { atom } from "nanostores";
-import { useEffect } from 'react';
-import { waitFinish, waitTime } from "../../lib/common/common";
-import { useAuth } from '../../lib/data/auth';
+import { useEffect, useState } from 'react';
+import { Platform } from 'react-native';
+import { useAuth } from '../../lib/data/authAtom';
 import { useProjectSetting } from '../../lib/data/project';
 import { updateCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
-const navigateInitAtom = atom(false);
-// console.log("navigateInitAtom");
-// console.log(navigateInitAtom.get());
-
-const isNavigateInit = () => {
-  return !!navigateInitAtom.get();
-}
-
-export const waitNavigateInit = async () => {
-  // while (!isNavigateInit()) {
-  //   console.log("waitNavigateInit");
-  //   await waitTime(50);
-  // }
-  await waitFinish(isNavigateInit, 'waitNavigateInit');
-}
-
-type ParamList = ReactNavigation.RootParamList;
-export const navigationRef = createNavigationContainerRef();
-let last = null;
-
-export const isNavigationReadyAtom = atom<boolean>(false);
-
-export const navigate = <RouteName extends keyof ParamList>(...args: RouteName extends unknown ? undefined extends ParamList[RouteName] ? [screen: RouteName] | [screen: RouteName, params: ParamList[RouteName]] : [screen: RouteName, params: ParamList[RouteName]] : never) => {
-  if (navigationRef.isReady()) {
-    return navigationRef.navigate(...args);
-  }
-  last = args;
-}
+import { isNavigationReadyAtom, navigationRef, lastAtom, navigateInitAtom } from './navigation';
 
 export default function NavigationInit() {
   const auth = useAuth();
+  const last = useStore(lastAtom);
+  const [locationURL, setLocationURL] = useState("");
   const isNavigationReady = useStore(isNavigationReadyAtom);
   const projectSetting = useProjectSetting();
+
+  if (Platform.OS == "web") {
+    useEffect(() => {
+      setLocationURL(window.location.href);
+    }, [window.location.href])
+  }
 
   useEffect(() => {
     if (!isNavigationReady) {
@@ -48,14 +27,16 @@ export default function NavigationInit() {
     }
     if (last) {
       navigationRef.navigate(...last);
-      last = null;
+      lastAtom.set(null);
     }
-    const url = new URL(window.location.href);
 
-    if (url.searchParams.get("oauth_token")) {
-      navigationRef.reset({ index: 0, routes: [{ name: Screens.AuthCallbackScreen }], });
-      updateCurScreenTab(Screens.AuthCallbackScreen);
-      return;
+    if (locationURL != "") {
+      const url = new URL(locationURL);
+      if (url.searchParams.get("oauth_token")) {
+        navigationRef.reset({ index: 0, routes: [{ name: Screens.AuthCallbackScreen }], });
+        updateCurScreenTab(Screens.AuthCallbackScreen);
+        return;
+      }
     }
 
     // If it is opened by a third party, the opening page is displayed directly
@@ -77,7 +58,7 @@ export default function NavigationInit() {
       }
     }
     navigateInitAtom.set(true);
-  }, [auth.isLogin, isNavigationReady, projectSetting.isBeOpenedByThirdParty, window.location.href]);
+  }, [auth.isLogin, isNavigationReady, projectSetting.isBeOpenedByThirdParty, locationURL]);
 
   return (
     <></>

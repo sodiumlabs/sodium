@@ -1,8 +1,10 @@
 
-import Avatar from "boring-avatars";
+import Avatar from "react-native-boring-avatars";
 import { ViewProps } from 'react-native';
 import MHStack from './mHStack';
 
+// TODO
+// boring-avatars support react native
 
 export default function MAvatar(props: ViewProps & { name?: string, size?: number }) {
   const { name, size, ...reset } = props;

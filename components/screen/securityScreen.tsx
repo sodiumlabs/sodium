@@ -4,7 +4,7 @@ import { fixWidth, Screens } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { navigationRef } from "../base/navigationInit";
+import { navigationRef } from "../base/navigation";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
 import { MDivider } from "../baseUI/mDivider";

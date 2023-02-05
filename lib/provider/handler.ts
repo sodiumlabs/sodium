@@ -3,24 +3,11 @@ import { testnetNetworks } from '@0xsodium/network';
 import { Account, AccountOptions } from '@0xsodium/wallet';
 import { Platform } from 'react-native';
 import { Platform as SodiumPlatform } from '@0xsodium/config';
-import { atom } from 'nanostores';
 import { Wallet } from 'ethers';
 import { WalletPrompter } from './prompter';
 import { clearSession, loadSession, saveSession } from '../common/asyncStorage';
-
-export type Session = {
-    sodiumUserId: string, 
-    platform: SodiumPlatform, 
-    w: Wallet
-}
-
-export type SodiumWallet = {
-    address: string,
-    handler: WalletRequestHandler,
-    signer: Account,
-    web3signer: Web3Signer,
-    session: Session
-}
+import { walletAtom, walletHandlerAtom } from './atom';
+import { Session, SodiumWallet } from './types';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
 const networks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
@@ -30,10 +17,6 @@ const networks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
         bundlerUrl: "http://localhost:3002",
     }
 });
-// const prompter: WalletUserPrompter = null;
-
-export const walletAtom = atom<SodiumWallet | null>(null);
-export const walletHandlerAtom = atom<WalletRequestHandler>();
 
 export const logout = () => {
     clearSession().then(() => walletAtom.set(null));
@@ -41,7 +24,7 @@ export const logout = () => {
 
 walletAtom.subscribe(newValue => {
     if (newValue == null) {
-        
+
     } else {
         saveSession(newValue.session);
     }
@@ -74,7 +57,7 @@ export const asyncSession = async () => {
         };
         const w = s.w;
         const account = new Account(options, w);
-        await signIn(account,s,false);
+        await signIn(account, s, false);
     }
 }
 
@@ -86,7 +69,6 @@ const signIn = async (account: Account, session: Session, connect: boolean) => {
     const walletAddress = await walletHandler.getAddress();
     const provider = new Web3Provider(walletHandler, walletHandler.defaultNetworkId);
     const web3signer = new Web3Signer(provider, parseInt(`${walletHandler.defaultNetworkId}`))
-
     walletAtom.set({
         address: walletAddress,
         handler: walletHandler,

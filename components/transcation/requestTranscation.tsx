@@ -4,7 +4,7 @@ import { formatTime2Today } from '../../lib/common/time';
 import { ITranscation } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useRequestedTransactions } from "../../lib/transaction";
-import { showUpdateTranscationQueueModal } from "../base/modalInit";
+import { showUpdateTranscationQueueModal } from "../../lib/data/modal";
 import { CircleTip } from '../baseUI/circleTip';
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";

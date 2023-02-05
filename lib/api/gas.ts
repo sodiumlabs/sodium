@@ -3,7 +3,7 @@
 import { GasSuggest, TransactionRequest } from "@0xsodium/transactions";
 import { useEffect } from "react";
 import { useQuery, UseQueryResult } from "react-query";
-import { useAuth } from '../data/auth';
+import { useAuth } from '../data/authAtom';
 import { AuthData, PaymasterInfo } from "../define";
 
 

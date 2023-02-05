@@ -7,7 +7,7 @@ import { useDimensionSize } from '../../lib/hook/dimension';
 import { IconMenuDeposit, IconMenuSend } from '../../lib/imageDefine';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
-import { navigationRef } from '../base/navigationInit';
+import { navigationRef } from '../base/navigation';
 import { Spacer } from '../base/spacer';
 import MHStack from "../baseUI/mHStack";
 import MInput from "../baseUI/mInput";
@@ -33,8 +33,6 @@ export function WalletScreen() {
       <ScrollView style={{ width: '100%', height: '100%' }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]} >
-
-
             <MVStack style={styles.balance}>
               <MText style={{ fontWeight: '700' }} >Balance</MText>
               <MText style={{ marginTop: 10, fontWeight: '700' }} fontSize={30} >${usdBalance}</MText>

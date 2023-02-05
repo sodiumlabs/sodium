@@ -1,11 +1,11 @@
 
 import { StyleSheet, ViewProps } from 'react-native';
-import { IconInfoTerm, IconInfoPolicy, IconInfoSupport } from '../../lib/imageDefine';
+import { IconInfoPolicy } from '../../lib/imageDefine';
 import InfomationButton from '../baseUI/infomationButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
 import { TermsOfUseModalItem } from '../modal/modalItem/informationModalItem';
-import { showUpdateComModal } from './modalInit';
+import { showUpdateComModal } from '../../lib/data/modal';
 
 export default function Information(props: ViewProps) {
   const { style, ...rest } = props;

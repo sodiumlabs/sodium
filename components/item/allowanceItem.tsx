@@ -12,7 +12,7 @@ import { useAuth } from "../../lib/data/auth";
 import { useCallback } from "react";
 import { encodeERC20Approve } from '../../abi';
 import { BigNumber } from 'ethers';
-import { showUpdateSignTranscationModal } from "../base/modalInit";
+import { showUpdateSignTranscationModal } from "../../lib/data/modal";
 
 export function AllowanceItem(props: { allowance: Allowance }) {
   const allowance = props.allowance;

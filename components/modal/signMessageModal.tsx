@@ -1,5 +1,5 @@
 import { ScrollView, StyleSheet } from 'react-native';
-import { useAuth } from '../../lib/data/auth';
+import { useAuth } from '../../lib/data/authAtom';
 import { useProjectSetting } from '../../lib/data/project';
 import { IModalParam, ISignMessageModalParam } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';

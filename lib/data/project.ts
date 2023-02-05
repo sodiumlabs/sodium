@@ -1,5 +1,6 @@
 import { atom } from "nanostores";
 import { useStore } from '@nanostores/react';
+import { Platform } from "react-native";
 
 export interface IProjectSetting {
   name?: string,
@@ -11,11 +12,19 @@ export interface IProjectSetting {
 const projectSettingAtom = atom<IProjectSetting>({});
 
 export const initProjectSetting = () => {
-  const isBeOpenByWindow = !!window.opener;
-  const isBeOpenByIframe = window.self != window.top;
+  let isBeOpenedByThirdParty = false;
+  let isBeOpenByWindow = false;
+  let isBeOpenByIframe = false;
+
+  if (Platform.OS === "web") {
+    isBeOpenByWindow = !!window.opener;
+    isBeOpenByIframe = window.self != window.top;
+    isBeOpenedByThirdParty = isBeOpenByWindow || isBeOpenByIframe,
+  }
+
   projectSettingAtom.set({
     'name': "Sodium",
-    'isBeOpenedByThirdParty': isBeOpenByWindow || isBeOpenByIframe,
+    'isBeOpenedByThirdParty': isBeOpenedByThirdParty,
     'isBeOpenByWindow': isBeOpenByWindow,
     'isBeOpenByIframe': isBeOpenByIframe,
 

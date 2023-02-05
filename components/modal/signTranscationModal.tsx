@@ -14,7 +14,6 @@ import { useModalLoading } from '../../lib/hook/modalLoading';
 import { transactionPending } from '../../lib/transaction/pending';
 import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
-import { navigate } from '../base/navigationInit';
 import MHStack from '../baseUI/mHStack';
 import MLineLR from '../baseUI/mLineLR';
 import { MLoading } from '../baseUI/mLoading';
@@ -26,6 +25,7 @@ import { ApproveRevokeItem } from './modalItem/approveRevokeItem';
 import { ModalTitle } from './modalItem/modalTitle';
 import { OperateBtnItem } from './modalItem/operateBtnItem';
 import { TransferItem } from './modalItem/transferItem';
+import { navigate } from '../base/navigation';
 
 // sign transcation - send transcation - deploy transcation
 

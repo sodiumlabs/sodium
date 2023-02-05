@@ -1,4 +1,4 @@
-import { useClipboard } from '@react-native-community/clipboard';
+// import { useClipboard } from '@react-native-community/clipboard';
 import { useState } from 'react';
 import { Platform } from 'react-native';
 
@@ -11,9 +11,14 @@ export function useMClipboard() {
 }
 
 function useNativeClipboard(): [string, (content: string) => void] {
-  const [clipboardContent, setClipboardContent] = useClipboard();
+  const [clipboardContent, setClipboardContent] = useState();
 
-  return [clipboardContent, setClipboardContent];
+  function setMClipboardContent(text) {
+    navigator.clipboard.writeText(text);
+    setClipboardContent(text);
+  }
+
+  return [clipboardContent, setMClipboardContent];
 }
 
 function useWebClipboard(): [string, (content: string) => void] {

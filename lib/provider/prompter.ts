@@ -1,26 +1,26 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
 import { TransactionRequest, TransactionResponse } from '@0xsodium/transactions';
-import { showErrorModal, showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../../components/base/modalInit';
-import { navigate, waitNavigateInit } from '../../components/base/navigationInit';
+import { showErrorModal, showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../data/modal';
+import { navigate, waitNavigateInit } from '../../components/base/navigation';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
-import { getAuth } from '../data/auth';
 import { OperateTimeStamp } from '../data/operateTime';
 import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation, Screens } from '../define';
 import { transactionQueue } from '../transaction';
+import { walletAtom, walletHandlerAtom } from './atom';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
         console.log("WalletPrompter promptConnect options:" + JSON.stringify(options));
         return new Promise(async (tResolve: (value: PromptConnectDetails) => void, tReject: () => void) => {
             await waitNavigateInit();
-            const auth = getAuth();
-            if (!auth.isLogin) {
+            const wallet = walletAtom.get();
+            if (wallet === null) {
                 console.log("WalletPrompter promptConnect auth is no Login,reject");
                 return Promise.reject();
             }
             const continueClick = async () => {
-                const result = await auth.wallet.connect(options) as PromptConnectDetails;
+                const result = await wallet.handler.connect(options) as PromptConnectDetails;
                 tResolve(result);
             }
             navigate(Screens.Connect,
@@ -50,12 +50,12 @@ export class WalletPrompter implements WalletUserPrompter {
 
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
             await waitNavigateInit();
-            const auth = getAuth();
-            if (!auth.isLogin) {
+            const wallet = walletAtom.get();
+            if (wallet === null) {
                 return Promise.reject();
             }
             const continueClick = async () => {
-                const sign = await auth.signer.signMessage(message.message, message.chainId);
+                const sign = await wallet.signer.signMessage(message.message, message.chainId);
                 tResolve(sign);
             }
             showUpdateSignMessageModal(true, {
@@ -84,14 +84,14 @@ export class WalletPrompter implements WalletUserPrompter {
     handleSignOrSendTranscation(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions, handleName?: string): Promise<string> {
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
             await waitNavigateInit();
-            const auth = getAuth();
-            if (!auth.isLogin) {
+            const wallet = walletAtom.get();
+            if (wallet === null) {
                 return Promise.reject();
             }
             if (chaindId == null) {
-                chaindId = await auth.signer.getChainId();
+                chaindId = await wallet.signer.getChainId();
             }
-            const decodes = await decodeTransactionRequest(txn, auth.web3signer, chaindId);
+            const decodes = await decodeTransactionRequest(txn, wallet.web3signer, chaindId);
 
             const txnWithTime = {
                 'txReq': txn,
@@ -104,9 +104,9 @@ export class WalletPrompter implements WalletUserPrompter {
                 try {
                     let txnResponse;
                     if (handleName == "send") {
-                        txnResponse = await auth.signer.sendTransaction(continueTxn, chaindId);
+                        txnResponse = await wallet.signer.sendTransaction(continueTxn, chaindId);
                     } else {
-                        txnResponse = await auth.signer.signTransaction(continueTxn);
+                        txnResponse = await wallet.signer.signTransaction(continueTxn);
                     }
                     transactionQueue.removeByTxn(txnWithTime);
                     console.log("txnResponse:" + JSON.stringify(txnResponse));

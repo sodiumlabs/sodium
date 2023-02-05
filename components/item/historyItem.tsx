@@ -1,7 +1,3 @@
-
-
-
-
 import { TransactionHistory } from '@0xsodium/provider';
 import { useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
@@ -9,7 +5,7 @@ import { formatWei2Price } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { IconTokenDefault } from '../../lib/imageDefine';
-import { showUpdateTranscationDetailModal } from '../base/modalInit';
+import { showUpdateTranscationDetailModal } from '../../lib/data/modal';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';

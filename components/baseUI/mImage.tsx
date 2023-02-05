@@ -1,10 +1,10 @@
 // import { Image, ImageProps } from 'react-native';
 
 import { Avatar } from "@ui-kitten/components";
-import Image from "next/image";
+// import { Image } from 'expo-image';
 import { ImageProps, Platform } from "react-native";
 import MHStack from './mHStack';
-
+import { StyleSheet, View } from 'react-native';
 
 export default function MImage(props: ImageProps & { w?: number, h?: number, uri?: string }) {
   let { uri, w = 12, h = 12, source, style } = props;
@@ -24,11 +24,19 @@ export default function MImage(props: ImageProps & { w?: number, h?: number, uri
   // }
 
   // source = require('./../../assets/icon.png')
+  const styles = StyleSheet.create({
+    image: {
+      flex: 1,
+      width: w,
+      height: h,
+      backgroundColor: '#0553',
+    },
+  });
 
   if (Platform.OS === 'web' && source != null && uri == null) {
     return (
       <MHStack style={style}>
-        <Image width={w} height={h} src={source as string} alt={""} />
+        {/* <Image style={styles.image} source={source as string} placeholder={""} /> */}
       </MHStack>
     )
   } else {
@@ -39,13 +47,4 @@ export default function MImage(props: ImageProps & { w?: number, h?: number, uri
       </MHStack>
     )
   }
-
-  // return (
-  // <Image {...reset} style={[style, sizeStyle]} src={source} />
-  // <Image source={require('./../../assets/icon.png')} style={{ width: 12, height: 12 }} />
-
-  // <Avatar source={{ uri: "https://tokens.1inch.io/0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0.png" }} style={{ width: 12, height: 12 }} />
-  // <Image src={require('./../../assets/close.png')} alt={""} />
-
-  // )
 }

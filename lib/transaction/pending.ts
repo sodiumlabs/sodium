@@ -3,7 +3,7 @@ import { atom, computed, WritableAtom } from 'nanostores';
 import { loadTxnQueue, saveTxnQueue } from "../common/asyncStorage";
 import { hashcodeObj, waitTime } from '../common/common';
 import { eStotageKey, ITranscation } from '../define';
-import { getAuth } from '../data/auth';
+import { getAuth } from '../data/authAtom';
 
 class PendingTxs {
   public transcations: WritableAtom<ITranscation[]>;

@@ -4,7 +4,7 @@ import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconAllowance, IconProfile, IconSecurity, IconSessions } from "../../lib/imageDefine";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { navigationRef } from "../base/navigationInit";
+import { navigationRef } from "../base/navigation";
 import { Spacer } from "../base/spacer";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";

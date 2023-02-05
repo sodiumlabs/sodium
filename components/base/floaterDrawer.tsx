@@ -2,7 +2,8 @@ import { useRef, useState } from 'react';
 import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
 import { waitTime } from '../../lib/common/common';
-import { loginOut, useAuth } from '../../lib/data/auth';
+import { loginOut } from '../../lib/data/auth';
+import { useAuth } from '../../lib/data/authAtom';
 import { Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { IconArrowL, IconForkClose, IconMore, IconSettings, IconSignout } from '../../lib/imageDefine';
@@ -15,8 +16,8 @@ import MImage from '../baseUI/mImage';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { LogoutLoading } from '../full/logoutLoading';
-import { showUpdateFullScreenModal } from './modalInit';
-import { navigate, navigationRef } from './navigationInit';
+import { showUpdateFullScreenModal } from '../../lib/data/modal';
+import { navigate, navigationRef } from './navigation';
 import { useProfile } from '../../lib/data/profile';
 
 export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) {

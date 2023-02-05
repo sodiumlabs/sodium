@@ -1,5 +1,5 @@
 import { loginIn } from '../../lib/data/auth';
-import { showUpdateFullScreenModal } from '../base/modalInit';
+import { showUpdateFullScreenModal } from '../../lib/data/modal';
 import MButton from '../baseUI/mButton';
 import MImage from '../baseUI/mImage';
 import MInput from '../baseUI/mInput';
@@ -7,7 +7,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { LoginLoading } from './loginLoading';
 import { useState } from 'react';
-import { navigationRef } from '../base/navigationInit';
+import { navigationRef } from '../base/navigation';
 import { Screens } from '../../lib/define';
 
 export const TwoFactorAuth = (props) => {

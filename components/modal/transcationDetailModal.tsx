@@ -5,7 +5,7 @@ import { Divider } from '@ui-kitten/components';
 import { useQueryNetwork } from '../../lib/api/network';
 import { getTranscationExplorer } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { useAuth } from '../../lib/data/auth';
+import { useAuth } from '../../lib/data/authAtom';
 import { IModalParam } from '../../lib/define';
 import { BaseModal } from '../base/baseModal';
 import CopyButton from '../baseUI/copyButton';

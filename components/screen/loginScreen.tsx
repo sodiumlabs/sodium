@@ -1,5 +1,4 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { waitTime } from '../../lib/common/common';
 import { loginIn } from "../../lib/data/auth";
 import { fixWidth } from "../../lib/define";
 import { eColor } from '../../lib/globalStyles';
@@ -7,7 +6,7 @@ import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconLogo } from "../../lib/imageDefine";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { showUpdateFullScreenModal } from "../base/modalInit";
+import { showUpdateFullScreenModal } from "../../lib/data/modal";
 import MButton from "../baseUI/mButton";
 import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from "../baseUI/mHStack";
@@ -16,9 +15,7 @@ import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { LoginLoading } from "../full/loginLoading";
 import * as React from 'react';
-import * as WebBrowser from 'expo-web-browser';
 import { TwitterAuthService } from '../../lib/mpc-auth/twitter';
-import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { Platform } from 'react-native';
 
 /// 临时实现的web twitter auth
@@ -59,7 +56,7 @@ export const observeWindow = ({ popup, interval, onClose }: ObserveWindow) => {
 
 
 // const useProxy = Platform.select({ web: true, default: false });
-WebBrowser.maybeCompleteAuthSession();
+// WebBrowser.maybeCompleteAuthSession();
 
 // Endpoint
 const discovery = {
@@ -68,47 +65,53 @@ const discovery = {
   revocationEndpoint: "https://twitter.com/i/oauth2/revoke",
 };
 
-const twauth = new TwitterAuthService("//twitter-auth.melandworld.com", global.fetch);
-
 export function LoginScreen() {
   const dimension = useDimensionSize();
 
   /// temp
-  React.useEffect(() => {
-    const handle = async (event) => {
-      if (event.data.target === TWITTER_OAUTH_CALLBACK) {
-        const { oauthToken, oauthVerifier } = event.data;
-        const { response } = await twauth.auth({
-          request: {
-            token: oauthToken,
-            verifier: oauthVerifier,
-            messageHash: ""
-          }
-        });
-        await loginIn("r.albert.huang@gmail.com");
-        // await loginIn(response.email);
-      }
-    };
-    window.addEventListener('message', handle);
+  if (Platform.OS == "web") {
+    const twauth = new TwitterAuthService("//twitter-auth.melandworld.com", global.fetch);
+    React.useEffect(() => {
+      const handle = async (event) => {
+        if (event.data.target === TWITTER_OAUTH_CALLBACK) {
+          const { oauthToken, oauthVerifier } = event.data;
+          const { response } = await twauth.auth({
+            request: {
+              token: oauthToken,
+              verifier: oauthVerifier,
+              messageHash: ""
+            }
+          });
+          await loginIn("r.albert.huang@gmail.com");
+          // await loginIn(response.email);
+        }
+      };
+      window.addEventListener('message', handle);
 
-    return () => {
-      window.removeEventListener('message', handle);
-    }
-  }, [window]);
+      return () => {
+        window.removeEventListener('message', handle);
+      }
+    }, [window]);
+  }
   /// temp - end
 
   const loginClick = async () => {
-    const { authURL } = await twauth.authURL({
-      request: {
-        oauthCallback: "http://127.0.0.1:3000"
-      }
-    });
-    openWindow({ url: authURL, name: "twteet login" });
-    // promptAsync({ 
-    // });
-    // showUpdateFullScreenModal(true, <TwoFactorAuth />);
-    showUpdateFullScreenModal(true, <LoginLoading />);
-    showUpdateFullScreenModal(false);
+    if (Platform.OS == "web") {
+      const twauth = new TwitterAuthService("//twitter-auth.melandworld.com", global.fetch);
+      const { authURL } = await twauth.authURL({
+        request: {
+          oauthCallback: "http://127.0.0.1:3000"
+        }
+      });
+      openWindow({ url: authURL, name: "twteet login" });
+      // promptAsync({ 
+      // });
+      // showUpdateFullScreenModal(true, <TwoFactorAuth />);
+      showUpdateFullScreenModal(true, <LoginLoading />);
+      showUpdateFullScreenModal(false);
+    } else {
+      await loginIn("r.albert.huang@gmail.com");
+    }
   }
 
   return (
@@ -123,18 +126,15 @@ export function LoginScreen() {
               <MButton style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
                 <MButtonText title={"Steam login"} />
               </MButton>
-
               <MButton style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
                 <MButtonText title={"Twitter Login"} />
               </MButton>
             </MVStack>
-
             {/* <Spacer /> */}
             <MVStack stretchW style={{ position: 'absolute', bottom: 0 }}>
               <Information style={{ marginBottom: 0 }} />
               <MHStack style={{ marginBottom: 30 }} />
             </MVStack>
-
           </MVStack>
         </MVStack>
       </ScrollView>

@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from "react-query";
 import { token2Usd } from "../common/common";
-import { getAuth } from '../data/auth';
+import { getAuth } from '../data/authAtom';
 import { IUserTokenInfo } from "../define";
 import { fetchTokenRates } from "./tokenRate";
 

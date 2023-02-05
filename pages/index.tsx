@@ -1,4 +1,3 @@
-
 import * as eva from '@eva-design/eva';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -7,8 +6,11 @@ import { Platform, UIManager } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { BarUI } from '../components/base/barUI';
-import ModalInit, { showErrorModal } from '../components/base/modalInit';
-import NavigationInit, { isNavigationReadyAtom, navigationRef } from '../components/base/navigationInit';
+import ModalInit from '../components/base/modalInit';
+import { showErrorModal } from '../lib/data/modal';
+import { isNavigationReadyAtom, navigationRef } from '../components/base/navigation';
+import NavigationInit from '../components/base/navigationInit';
+import * as SplashScreen from 'expo-splash-screen';
 import {
   CoinScreen,
   ConnectScreen,
@@ -31,8 +33,6 @@ import { useListenerDimensionSize } from '../lib/hook/dimension';
 import { WindowMessageHandler, IframeMessageHandler } from '@0xsodium/provider';
 import { asyncSession, initHandler } from '../lib/provider';
 import { useEffect } from 'react';
-import { showUpdateComModal } from '../components/base/modalInit';
-import { FailModalItem } from '../components/modal/modalItem/failModalItem';
 import { initProjectSetting } from '../lib/data/project';
 import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
 
@@ -67,19 +67,31 @@ if (
 export default function App() {
   useListenerDimensionSize();
 
+  if (Platform.OS != "web") {
+    // Keep the splash screen visible while we fetch resources
+    SplashScreen.preventAutoHideAsync();
+  }
+
   useEffect(() => {
     initProjectSetting();
-    const handler = initHandler();
-    const wmh = new WindowMessageHandler(handler);
-    const imh = new IframeMessageHandler(handler);
 
-    const regp1 = imh.register(location.href);
-    const regp2 = wmh.register(location.href);
-    Promise.all([
-      regp1,
-      regp2
-    ]).then(() => {
-      asyncSession()
+    const initPromises = [];
+    const handler = initHandler();
+    if (Platform.OS == "web") {
+      const wmh = new WindowMessageHandler(handler);
+      const imh = new IframeMessageHandler(handler);
+      const regp1 = imh.register(location.href);
+      const regp2 = wmh.register(location.href);
+      initPromises.push(regp1, regp2);
+    } else {
+      initPromises.push(Promise.resolve())
+    }
+    Promise.all(initPromises).then(() => {
+      return asyncSession()
+    }).then(() => {
+      if (Platform.OS != "web") {
+        SplashScreen.hideAsync();
+      }
     })
   }, [1])
 
@@ -91,7 +103,6 @@ export default function App() {
             <ModalInit />
             <NavigationInit />
             <BarUI />
-
             {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
             <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
               <Stack.Screen name={Screens.Opening} component={OpeningScreen} />
@@ -111,7 +122,6 @@ export default function App() {
               <Stack.Screen name={Screens.Allowance} component={AllowanceScreen} />
               <Stack.Screen name={Screens.AuthCallbackScreen} component={AuthCallbackScreen} />
             </Stack.Navigator>
-
           </NavigationContainer>
         </QueryClientProvider>
       </ApplicationProvider>

@@ -8,7 +8,7 @@ import { IconMenuHistory, IconMenuWallet } from '../../lib/imageDefine';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
-import { navigationRef } from './navigationInit';
+import { navigationRef } from './navigation';
 
 export default function Footer() {
   const insets = useSafeAreaInsets();

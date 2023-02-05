@@ -1,17 +1,13 @@
-
-
-
-
 import { useCallback, useEffect, useState } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { formatTimeYMDHMS } from '../../lib/common/time';
-import { useAuth } from '../../lib/data/auth';
+import { useAuth } from '../../lib/data/authAtom';
 import { OperateTimeStamp } from '../../lib/data/operateTime';
 import { IDecodeTranscation, ITranscation } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { IconForkClose } from '../../lib/imageDefine';
 import { transactionQueue } from '../../lib/transaction';
-import { showUpdateSignTranscationModal, showUpdateTranscationQueueModal } from '../base/modalInit';
+import { showUpdateSignTranscationModal, showUpdateTranscationQueueModal } from '../../lib/data/modal';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import { MLoading } from '../baseUI/mLoading';

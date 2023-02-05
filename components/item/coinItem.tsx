@@ -1,14 +1,10 @@
-
-
-
-
 import { useState } from 'react';
 import { Pressable, StyleSheet, TextInputProps } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { IUserTokenInfo, Screens } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { IconTokenDefault } from '../../lib/imageDefine';
-import { navigationRef } from '../base/navigationInit';
+import { navigationRef } from '../base/navigation';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';

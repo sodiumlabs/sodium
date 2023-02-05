@@ -19,7 +19,7 @@ import { NetworkConfig } from "@0xsodium/network";
 
 import { useQuery, UseQueryResult } from "react-query";
 import { getNetwork } from '../common/network';
-import { getAuth } from '../data/auth';
+import { getAuth } from '../data/authAtom';
 
 
 export const fetchNetwork = async (): Promise<NetworkConfig> => {

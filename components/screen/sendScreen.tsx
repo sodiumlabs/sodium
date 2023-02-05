@@ -14,7 +14,7 @@ import { useMClipboard } from '../../lib/hook/clipboard';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
-import { showUpdateSignTranscationModal } from '../base/modalInit';
+import { showUpdateSignTranscationModal } from '../../lib/data/modal';
 import { Spacer } from '../base/spacer';
 import { InputEndButton } from '../baseUI/inputEndButton';
 import MButton from "../baseUI/mButton";

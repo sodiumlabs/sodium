@@ -10,7 +10,7 @@ import { IconTokenDefault } from "../../lib/imageDefine";
 import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { navigationRef } from "../base/navigationInit";
+import { navigationRef } from "../base/navigation";
 import { Spacer } from "../base/spacer";
 import CopyButton from "../baseUI/copyButton";
 import LinkButton from "../baseUI/linkButton";

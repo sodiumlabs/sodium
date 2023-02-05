@@ -10,7 +10,7 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
-import { navigationRef } from './navigationInit';
+import { navigationRef } from './navigation';
 
 
 export default function Header(props) {
