@@ -20,9 +20,9 @@ export function BarUI() {
   const isAdapterWeb = useAdapterWeb();
   const dimension = useDimensionSize();
   return (
-    <MVStack stretchW style={{ position: 'absolute', zIndex: 1000, height: dimension[1] }} pointerEvents={'none'}>
-      <MHStack stretchW stretchH style={{ position: 'relative' }} pointerEvents={'none'}>
-        <MHStack stretchW pointerEvents={'none'}>
+    <MVStack stretchW style={{ position: 'absolute', zIndex: 1000, height: dimension[1] }} pointerEvents={'box-none'} >
+      <MHStack stretchW stretchH style={{ position: 'relative' }} pointerEvents={'box-none'}>
+        <MHStack stretchW pointerEvents={'box-none'} >
           {barParam.hasNavigationBar && (!isAdapterWeb ? <Footer /> : <Header />)}
           {barParam.hasFloatingBar && <Floater hasNavigationBarBack={barParam.hasNavigationBarBack} />}
         </MHStack>

@@ -25,12 +25,12 @@ export default function Footer() {
   return (
 
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
-      <BlurView style={{ width: '100%' }}>
-        <MHStack stretchW style={styles.list}>
-          <MenuButton isSelect={curScreenName == Screens.Wallet} w={17} h={15} source={IconMenuWallet} pointerEvents='auto' title={Screens.Wallet} onPress={onWalletClick} />
-          <MenuButton isSelect={curScreenName == Screens.History} w={17} h={17} source={IconMenuHistory} pointerEvents='auto' title={Screens.History} onPress={onHistoryClick} />
-        </MHStack>
-      </BlurView>
+      {/* <BlurView style={{ width: '100%' }}> */}
+      <MHStack stretchW style={styles.list}>
+        <MenuButton isSelect={curScreenName == Screens.Wallet} w={17} h={15} source={IconMenuWallet} title={Screens.Wallet} onPress={onWalletClick} />
+        <MenuButton isSelect={curScreenName == Screens.History} w={17} h={17} source={IconMenuHistory} title={Screens.History} onPress={onHistoryClick} />
+      </MHStack>
+      {/* </BlurView> */}
     </MVStack>
 
   );

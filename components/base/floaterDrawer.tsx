@@ -116,7 +116,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
   return (
     <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
-      <MVStack stretchW onLayout={onLayout} pointerEvents='auto' >
+      <MVStack stretchW onLayout={onLayout}  >
         {
           <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >
             <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >

@@ -48,7 +48,7 @@ export default function Floater(props: { hasNavigationBarBack?: boolean }) {
 
   return (
     // { top: insets.top }
-    <MHStack stretchW style={[styles.container, { top: insets.top }]}>
+    <MHStack stretchW style={[styles.container, { top: insets.top }]} pointerEvents={'box-none'}>
       {/* <BlurView style={{ 'width': '100%', borderRadius: 15 }}> */}
       <MHStack stretchH stretchW >
         <MHStack style={[adapterStyle as unknown]}>
