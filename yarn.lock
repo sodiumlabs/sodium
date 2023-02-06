@@ -2964,6 +2964,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@koale/useworker@npm:^4.0.2":
+  version: 4.0.2
+  resolution: "@koale/useworker@npm:4.0.2"
+  dependencies:
+    dequal: ^1.0.0
+  peerDependencies:
+    react: ^16.8.0
+  checksum: 5d0894979ca9f24db747df21e0ded53b7ee24f9db4cf714a18f9f9bab79af538554cc5915fe8bd7e89560a1abfac036679b9985bbfdd3f4ddc9d820c1b676c9b
+  languageName: node
+  linkType: hard
+
 "@nanostores/react@npm:^0.4.0":
   version: 0.4.0
   resolution: "@nanostores/react@npm:0.4.0"
@@ -6743,6 +6754,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dequal@npm:^1.0.0":
+  version: 1.0.1
+  resolution: "dequal@npm:1.0.1"
+  checksum: 92a80c10ec52c256e306ef44c6640f0f2451edfba795b314aec90ee2770930f472c95e8f438b2fb80b0060033d0b5589f2ccb243c0ddd3e9a427c0faa92035c3
+  languageName: node
+  linkType: hard
+
 "des.js@npm:^1.0.0":
   version: 1.0.1
   resolution: "des.js@npm:1.0.1"
@@ -7652,12 +7670,35 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-barcode-scanner@npm:~12.1.0":
+  version: 12.1.0
+  resolution: "expo-barcode-scanner@npm:12.1.0"
+  dependencies:
+    expo-image-loader: ~4.0.0
+  peerDependencies:
+    expo: "*"
+  checksum: 196ed1433f561bc46a7bc6bd2085b4ede8c3e82a7f0ea0cc3d6aeaec7f6636246eafb2d46a6ae81af202365f66cb3c6b4a8df098aa694cd805ada7c7fead9201
+  languageName: node
+  linkType: hard
+
 "expo-blur@npm:~12.0.1":
   version: 12.0.1
   resolution: "expo-blur@npm:12.0.1"
   peerDependencies:
     expo: "*"
   checksum: 4b76c5618fdc390d7cb2468f0f6fa8e5a1fe44c11706f8ee4002dd2ffb79eaae940b3956cf04bf67fcfaa088b9d82f1c732467ada7a8be8a586dfd775292633c
+  languageName: node
+  linkType: hard
+
+"expo-camera@npm:~13.1.0":
+  version: 13.1.0
+  resolution: "expo-camera@npm:13.1.0"
+  dependencies:
+    "@koale/useworker": ^4.0.2
+    invariant: ^2.2.4
+  peerDependencies:
+    expo: "*"
+  checksum: 78bfa446f6e6f5c3f86aa7b9ab33069074cba46fbc20237ad9db0655c263063f70fe57d2882ae766d0bd335b8a0435e862ef9339d710cb2680531fac67f34b0d
   languageName: node
   linkType: hard
 
@@ -7710,6 +7751,26 @@ __metadata:
   peerDependencies:
     expo: "*"
   checksum: 9a04b1fac7834641ddf001a365ddbbfac11b7a2377686e3765fba4b415189e107d7f494488a590458d724ce792ae98b7b9ab5bf25b99e0f84b60c4c0a97f263f
+  languageName: node
+  linkType: hard
+
+"expo-image-loader@npm:~4.0.0":
+  version: 4.0.0
+  resolution: "expo-image-loader@npm:4.0.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 21b0a77bd9fd3b434db70e16e21f8531db668c30bd539bb230a52d47f7536b3baf8742db7fd70b41e2165330d92881ef31b8eb1c69b5088fa5d36e57464ca0e4
+  languageName: node
+  linkType: hard
+
+"expo-image-picker@npm:~14.0.2":
+  version: 14.0.3
+  resolution: "expo-image-picker@npm:14.0.3"
+  dependencies:
+    expo-image-loader: ~4.0.0
+  peerDependencies:
+    expo: "*"
+  checksum: 98d3658a9b3f20634676af9d8f1526d56696c0e46a2fb24fba25b92981077d0505ca962a6e843bf67a1868f1ee0bbc2b16c503851393458379234f767cc711e1
   languageName: node
   linkType: hard
 
@@ -14849,8 +14910,11 @@ __metadata:
     ethers: ^5.7.0
     expo: ~47.0.12
     expo-auth-session: ^3.8.0
+    expo-barcode-scanner: ~12.1.0
     expo-blur: ~12.0.1
+    expo-camera: ~13.1.0
     expo-crypto: ~12.0.0
+    expo-image-picker: ~14.0.2
     expo-random: ^13.0.0
     expo-splash-screen: ~0.17.5
     expo-status-bar: ~1.4.2

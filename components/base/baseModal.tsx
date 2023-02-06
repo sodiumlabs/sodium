@@ -8,10 +8,10 @@ import MImage from '../baseUI/mImage';
 import { ModalCloseButton } from '../baseUI/modalCloseButton';
 import MVStack from '../baseUI/mVStack';
 
-export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void, contentHeight?: number }) => {
+export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void, contentHeight?: number, contentStyle?: any }) => {
   const screenHeight = Dimensions.get('screen').height;
 
-  let { visible, hideModal, isFullScreen, isAnim = true, contentHeight = screenHeight } = props;
+  let { visible, hideModal, isFullScreen, isAnim = true, contentHeight = screenHeight, contentStyle = {} } = props;
   let marginTop = Math.max(screenHeight - contentHeight, 100);
 
   const backgroundFadeAnim = useRef(new Animated.Value(0)).current;
@@ -65,7 +65,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
           </Animated.View>
         </TouchableWithoutFeedback>
 
-        <MVStack stretchW stretchH style={[styles.content, adapterStyle]}>
+        <MVStack stretchW stretchH style={[styles.content, contentStyle, adapterStyle]}>
           {
             props.children
           }

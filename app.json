@@ -33,15 +33,23 @@
         "foregroundImage": "./assets/logoIcon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "package": "com.sodiumlabs.sodium"
+      "package": "com.sodiumlabs.sodium",
+      "permissions": [
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/logoIcon.png"
     },
     "extra": {
-      "eas": {
-        "projectId": "35d77772-b33c-4c47-a5fe-554521e0846d"
-      }
-    }
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
+    ]
   }
 }

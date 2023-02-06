@@ -24,8 +24,11 @@ import {
   deployConfirmModalAtom,
   signTranscationModalAtom,
   signMessageModalAtom,
-  fullScreenModalAtom
+  fullScreenModalAtom,
+  scanModalAtom,
+  showUpdateScanModal
 } from '../../lib/data/modal';
+import { ScanModal } from '../modal/scanModal';
 
 export default function ModalInit() {
   // debugger
@@ -36,15 +39,17 @@ export default function ModalInit() {
   const comModal = useStore(comModalAtom);
   const fullScreenModal = useStore(fullScreenModalAtom);
   const deployConfirmModal = useStore(deployConfirmModalAtom);
+  const scanModal = useStore(scanModalAtom);
   return (
     <>
       <TranscationDetailModal modalParam={transcationDetailModal} hideModal={() => showUpdateTranscationDetailModal(false, null, transcationDetailModal.uniqueKey)} />
       <TranscationQueueModal modalParam={transcationQueueModal} hideModal={() => showUpdateTranscationQueueModal(false, null, transcationQueueModal.uniqueKey)} />
       <SignTranscationModal modalParam={signTranscationModal} hideModal={() => showUpdateSignTranscationModal(false, null, signTranscationModal.uniqueKey)} />
       <SignMessageModal modalParam={signMessageModal} hideModal={() => showUpdateSignMessageModal(false, null, signMessageModal.uniqueKey)} />
-      <ComModal modalParam={comModal} hideModal={() => showUpdateComModal(false, null, comModal.uniqueKey)} />
-      <FullScreenModal modalParam={fullScreenModal} hideModal={() => showUpdateFullScreenModal(false, null, fullScreenModal.uniqueKey)} />
       <DeployConfirmModal modalParam={deployConfirmModal} hideModal={() => showUpdateDeployConfirmModal(false, null, deployConfirmModal.uniqueKey)} />
+      <ScanModal modalParam={scanModal} hideModal={() => showUpdateScanModal(false, null, scanModal.uniqueKey)} />
+      <FullScreenModal modalParam={fullScreenModal} hideModal={() => showUpdateFullScreenModal(false, null, fullScreenModal.uniqueKey)} />
+      <ComModal modalParam={comModal} hideModal={() => showUpdateComModal(false, null, comModal.uniqueKey)} />
     </>
   );
 }

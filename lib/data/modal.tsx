@@ -11,6 +11,7 @@ export const deployConfirmModalAtom = atom<IModalParam>({ visible: false });
 export const signTranscationModalAtom = atom<IModalParam>({ visible: false });
 export const signMessageModalAtom = atom<IModalParam>({ visible: false });
 export const fullScreenModalAtom = atom<IModalParam>({ visible: false });
+export const scanModalAtom = atom<IModalParam>({ visible: false });
 
 export const showUpdateComModal = (visible: boolean, param?: IComModalParam, closeUniqueKey?: unknown) => {
     // comModalAtom.set({ visible: visible, param: param });
@@ -43,6 +44,10 @@ export const showUpdateTranscationQueueModal = (visible: boolean, param?: unknow
 export const showUpdateFullScreenModal = (visible: boolean, param?: ReactNode, closeUniqueKey?: unknown) => {
     // fullScreenModalAtom.set({ visible: visible, param: param });
     setModal(fullScreenModalAtom, visible, param, undefined, undefined);
+}
+export const showUpdateScanModal = (visible: boolean, param?: ReactNode, closeUniqueKey?: unknown) => {
+    // fullScreenModalAtom.set({ visible: visible, param: param });
+    setModal(scanModalAtom, visible, param, undefined, undefined);
 }
 
 const setModal = (modalAtom: WritableAtom<IModalParam>, visible: boolean, param: unknown, openUniqueKey: unknown, closeUniqueKey: unknown) => {

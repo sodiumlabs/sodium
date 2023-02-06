@@ -18,6 +18,7 @@ import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
 import { PendingTranscation } from '../transcation/pendingTranscation';
 import { RequestTranscation } from '../transcation/requestTranscation';
+import { showUpdateScanModal } from '../../lib/data/modal';
 
 
 
@@ -41,6 +42,7 @@ export function WalletScreen() {
             <MHStack style={styles.operate}>
               <WalletButton source={IconMenuSend} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
               <WalletButton source={IconMenuDeposit} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
+              <WalletButton source={IconMenuDeposit} title='Scan' onPress={() => showUpdateScanModal(true)} />
             </MHStack>
 
             <RequestTranscation />
@@ -88,7 +90,8 @@ const styles = StyleSheet.create({
     // marginVertical: 80,
     alignItems: 'center',
     paddingHorizontal: 15,
-    maxWidth: fixWidth
+    maxWidth: fixWidth,
+    overflow: 'hidden'
   },
   balance: {
     marginTop: 20,
