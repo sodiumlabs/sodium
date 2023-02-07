@@ -4,7 +4,7 @@ import { useQueryTokens } from '../../lib/api/tokens';
 import { fixWidth, Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
-import { IconMenuDeposit, IconMenuSend } from '../../lib/imageDefine';
+import { IconMenuDeposit, IconMenuScan, IconMenuSend } from '../../lib/imageDefine';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
 import { navigationRef } from '../base/navigation';
@@ -42,7 +42,7 @@ export function WalletScreen() {
             <MHStack style={styles.operate}>
               <WalletButton source={IconMenuSend} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
               <WalletButton source={IconMenuDeposit} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
-              <WalletButton source={IconMenuDeposit} title='Scan' onPress={() => showUpdateScanModal(true)} />
+              <WalletButton source={IconMenuScan} title='Scan' onPress={() => showUpdateScanModal(true)} />
             </MHStack>
 
             <RequestTranscation />

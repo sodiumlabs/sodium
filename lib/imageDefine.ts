@@ -16,6 +16,7 @@ export const IconInfoSupport = require('./../assets/logoIcon.png');
 
 export const IconMenuSend = require('./../assets/send.png');
 export const IconMenuDeposit = require('./../assets/deposit.png');
+export const IconMenuScan = require('./../assets/scan.png');
 
 
 export const IconArrowR = require('./../assets/arrowR.png');

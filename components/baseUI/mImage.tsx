@@ -1,10 +1,7 @@
-// import { Image, ImageProps } from 'react-native';
-
-import { Avatar } from "@ui-kitten/components";
 // import { Image } from 'expo-image';
-import { ImageProps, Platform } from "react-native";
+
+import { Image as ReactNativeImage, ImageProps, Platform, StyleSheet } from "react-native";
 import MHStack from './mHStack';
-import { StyleSheet, View } from 'react-native';
 
 export default function MImage(props: ImageProps & { w?: number, h?: number, uri?: string }) {
   let { uri, w = 12, h = 12, source, style } = props;
@@ -36,14 +33,14 @@ export default function MImage(props: ImageProps & { w?: number, h?: number, uri
   if (Platform.OS === 'web' && source != null && uri == null) {
     return (
       <MHStack style={style}>
-        {/* <Image style={styles.image} source={source as string} placeholder={""} /> */}
+        {/* <Image width={w} height={h} src={source as string} alt={""} /> */}
       </MHStack>
     )
   } else {
     if (uri != null) { source = { uri: uri } }
     return (
       <MHStack style={style}>
-        <Avatar source={source} style={{ width: w, height: h }} />
+        <ReactNativeImage source={source} style={{ width: w, height: h }} ></ReactNativeImage>
       </MHStack>
     )
   }

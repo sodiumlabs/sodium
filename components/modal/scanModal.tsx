@@ -30,16 +30,17 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
     if (modalParam.visible) {
       (async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
+        // showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={'requestPermissionsAsync' + status} /> });
         setHasPermission(status === 'granted');
       })();
     }
 
   }, [modalParam.visible]);
 
-  const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-  };
+  // const handleBarCodeScanned = ({ type, data }) => {
+  //   setScanned(true);
+  //   alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+  // };
 
   // if (hasPermission === null) {
   //   return <Text>Requesting for camera permission</Text>;
@@ -58,7 +59,7 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
       quality: 1,
