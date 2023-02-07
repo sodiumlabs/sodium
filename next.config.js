@@ -5,4 +5,10 @@ const withTM = require("next-transpile-modules")([
     "@ui-kitten/components"
 ]);
 
-module.exports = withPlugins([withTM, withExpo], {});
+// module.exports = withPlugins([withTM, withExpo], {});
+module.exports = withPlugins([withTM, withExpo], {
+    images: {
+        domains: ['tokens.1inch.io'],
+        formats: ['image/avif', 'image/webp'],
+    }
+});
