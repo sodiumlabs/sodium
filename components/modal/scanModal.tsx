@@ -15,6 +15,7 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { FailModalItem } from './modalItem/failModalItem';
 import { DecodeQR } from '../decode/decodeQR';
+import { useMClipboard } from '../../lib/hook/clipboard';
 
 export const ScanModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -25,13 +26,12 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [imageAsset, setImageAsset] = useState<ImagePicker.ImagePickerAsset>(null);
-
+  const [clipboardContent, setClipboardContent] = useMClipboard();
 
   useEffect(() => {
     if (modalParam.visible) {
       (async () => {
         const { status } = await BarCodeScanner.requestPermissionsAsync();
-        // showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={'requestPermissionsAsync' + status} /> });
         setHasPermission(status === 'granted');
       })();
     } else {
@@ -45,19 +45,9 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
   //   alert(`Bar code with type ${type} and data ${data} has been scanned!`);
   // };
 
-  // if (hasPermission === null) {
-  //   return <Text>Requesting for camera permission</Text>;
-  // }
-  // if (hasPermission === false) {
-  //   return <Text>No access to camera</Text>;
-  // }
-
   const onBarCodeScanned = (qrData: BarCodeScanningResult) => {
-    // debugger
-    // console.log("onBarCodeScanned");
-    // console.log(qrData);
+    // todo goto connect
     showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={qrData.data} /> });
-
   }
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -68,6 +58,7 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
       // base64: true
     });
 
+    console.log("pickImage:");
     console.log(result);
 
     if (!result.canceled) {
@@ -75,6 +66,11 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
       // setImageAsset(result.assets[0]);
     }
   };
+
+  const onPasteCodeClick = () => {
+    // todo goto connect
+    console.log(clipboardContent);
+  }
 
   return (
     <BaseModal
@@ -117,7 +113,7 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
               <MButtonText title={'Upload QR Code image'} fontSize={16} />
             </MButton>
             <MHStack style={{ height: 15 }}></MHStack>
-            <MButton style={{ backgroundColor: eColor.Blue, height: 65, borderRadius: 15 }}>
+            <MButton onPress={onPasteCodeClick} style={{ backgroundColor: eColor.Blue, height: 65, borderRadius: 15 }}>
               <MButtonText title={'Paste code'} fontSize={16} />
             </MButton>
           </MVStack>

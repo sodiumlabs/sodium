@@ -13,9 +13,10 @@ export const DecodeQR = (props: { imageAsset: ImagePickerAsset }) => {
     (async () => {
       const codeScannerResults = await BarCodeScanner.scanFromURLAsync(imageAsset.uri, [BarCodeScanner.Constants.BarCodeType.qr]);
       if (codeScannerResults && codeScannerResults[0]) {
+        // todo goto connect
         showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={codeScannerResults[0].data} /> });
       } else {
-        showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={"fail to identify"} /> });
+        showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={"Unable to recognize QR code"} /> });
       }
 
     })()

@@ -29,9 +29,10 @@ export const DecodeQR = (props: { imageAsset: ImagePickerAsset }) => {
     const decodeImage = decode(imageAsset.uri); // uri to buffer
     const qrResult = decodeImage ? jsQR(decodeImage.data, decodeImage.width, decodeImage.height) : null;
     if (qrResult) {
+      // todo goto connect
       showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={qrResult.data} /> });
     } else {
-      showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={"fail to identify"} /> });
+      showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={"Unable to recognize QR code"} /> });
     }
   }, [imageAsset])
   return <></>

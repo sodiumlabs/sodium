@@ -8,7 +8,7 @@ const withTM = require("next-transpile-modules")([
 // module.exports = withPlugins([withTM, withExpo], {});
 module.exports = withPlugins([withTM, withExpo], {
     images: {
-        domains: ['tokens.1inch.io'],
+        domains: ['tokens.1inch.io', 'etherscan.io'],
         formats: ['image/avif', 'image/webp'],
     }
 });

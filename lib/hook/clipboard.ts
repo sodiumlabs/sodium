@@ -23,8 +23,12 @@ export function useMClipboard(): [string, (text: string) => void] {
 
   useEffect(() => {
     (async () => {
-      const text = await Clipboard.getStringAsync();
-      clipboardAtom.set(text);
+      try {
+        const text = await Clipboard.getStringAsync();
+        clipboardAtom.set(text);
+      } catch (e) {
+        console.error(e);
+      }
     })()
   }, [])
 
