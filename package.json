@@ -39,6 +39,7 @@
     "expo-random": "^13.0.0",
     "expo-splash-screen": "~0.17.5",
     "expo-status-bar": "~1.4.2",
+    "image-decode": "^1.2.2",
     "nanostores": "^0.5.8",
     "next": "latest",
     "react": "18.1.0",

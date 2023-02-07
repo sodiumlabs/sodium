@@ -1,5 +1,5 @@
 import { BarCodeScanner } from 'expo-barcode-scanner';
-import { Camera } from 'expo-camera';
+import { BarCodeScanningResult, Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useState } from 'react';
 import { showUpdateComModal } from '../../lib/data/modal';
@@ -14,7 +14,7 @@ import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { FailModalItem } from './modalItem/failModalItem';
-
+import { DecodeQR } from '../decode/decodeQR';
 
 export const ScanModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -24,6 +24,7 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
 
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [imageAsset, setImageAsset] = useState<ImagePicker.ImagePickerAsset>(null);
 
 
   useEffect(() => {
@@ -33,6 +34,8 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
         // showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={'requestPermissionsAsync' + status} /> });
         setHasPermission(status === 'granted');
       })();
+    } else {
+      setImageAsset(null);
     }
 
   }, [modalParam.visible]);
@@ -49,10 +52,10 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
   //   return <Text>No access to camera</Text>;
   // }
 
-  const onBarCodeScanned = (qrData: { data: string }) => {
+  const onBarCodeScanned = (qrData: BarCodeScanningResult) => {
     // debugger
-    console.log("onBarCodeScanned");
-    console.log(qrData);
+    // console.log("onBarCodeScanned");
+    // console.log(qrData);
     showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={qrData.data} /> });
 
   }
@@ -60,17 +63,16 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
+      allowsEditing: false,
       quality: 1,
+      // base64: true
     });
 
     console.log(result);
 
     if (!result.canceled) {
-      const image = result.assets[0].uri;
-      // setImage(result.assets[0].uri);
-      showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={'iamge'} /> });
+      setImageAsset(result.assets[0]);
+      // setImageAsset(result.assets[0]);
     }
   };
 
@@ -83,6 +85,7 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
       contentStyle={{ paddingVertical: 0 }}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
+        <DecodeQR imageAsset={imageAsset} />
         <MVStack stretchW style={{ flex: 1, overflow: 'hidden', borderRadius: 15 }}>
           {
             hasPermission === null && (

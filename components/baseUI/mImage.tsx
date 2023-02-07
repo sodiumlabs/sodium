@@ -9,9 +9,6 @@ export default function MImage(props: ImageProps & { w?: number, h?: number, uri
     return <></>
   }
 
-  console.log("--------");
-  console.log("source:" + source);
-  console.log("uri:" + uri);
   return (
     <MHStack style={style}>
       <Image width={w} height={h} src={uri || source as string} alt={""} />
