@@ -1,48 +1,33 @@
-// import { useClipboard } from '@react-native-community/clipboard';
-import { useState } from 'react';
-import { Platform } from 'react-native';
+import { useState, useEffect, useCallback } from 'react';
 
-export function useMClipboard() {
-  if (Platform.OS === 'web') {
-    return useWebClipboard();
-  } else {
-    return useNativeClipboard();
-  }
-}
+import * as Clipboard from 'expo-clipboard';
+import React from 'react';
+import { atom } from 'nanostores';
+import { useStore } from '@nanostores/react';
 
-function useNativeClipboard(): [string, (content: string) => void] {
-  const [clipboardContent, setClipboardContent] = useState();
+const clipboardAtom = atom<string>('');
+export function useMClipboard(): [string, (text: string) => void] {
+  // const [copiedText, setCopiedText] = React.useState('');
+  const copiedText = useStore(clipboardAtom);
+  const copyToClipboard = (text: string) => {
+    (async () => {
+      await Clipboard.setStringAsync(text);
+      clipboardAtom.set(text);
+    })()
+  };
 
-  function setMClipboardContent(text) {
-    navigator.clipboard.writeText(text);
-    setClipboardContent(text);
-  }
+  // const fetchCopiedText = async () => {
+  //   const text = await Clipboard.getStringAsync();
+  //   setCopiedText(text);
+  // };
 
-  return [clipboardContent, setMClipboardContent];
-}
+  useEffect(() => {
+    (async () => {
+      const text = await Clipboard.getStringAsync();
+      clipboardAtom.set(text);
+    })()
+  }, [])
 
-function useWebClipboard(): [string, (content: string) => void] {
-  const [clipboardContent, setClipboardContent] = useState();
 
-  // useEffect(() => {
-  //   async function updateClipboard() {
-  //     setClipboardContent(await navigator.clipboard.readText());
-  //   }
-
-  //   navigator.clipboard.addEventListener('clipboardchange', updateClipboard);
-
-  //   return () => {
-  //     navigator.clipboard.removeEventListener(
-  //       'clipboardchange',
-  //       updateClipboard
-  //     );
-  //   };
-  // }, []);
-
-  function setMClipboardContent(text) {
-    navigator.clipboard.writeText(text);
-    setClipboardContent(text);
-  }
-
-  return [clipboardContent, setMClipboardContent];
+  return [copiedText, copyToClipboard];
 }

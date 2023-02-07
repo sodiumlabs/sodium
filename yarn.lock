@@ -7730,6 +7730,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-clipboard@npm:~4.0.1":
+  version: 4.0.2
+  resolution: "expo-clipboard@npm:4.0.2"
+  peerDependencies:
+    expo: "*"
+  checksum: 46cd2067278fcf310a59a30680bd09b3ceb3a14333e5884eecd2d8f10c1623c312fb08301ad475e5e32b6def96c13a07d9e456535249f0ade97bb61c695d2dff
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~14.0.0, expo-constants@npm:~14.0.2":
   version: 14.0.2
   resolution: "expo-constants@npm:14.0.2"
@@ -15010,6 +15019,7 @@ __metadata:
     expo-barcode-scanner: ~12.1.0
     expo-blur: ~12.0.1
     expo-camera: ~13.1.0
+    expo-clipboard: ~4.0.1
     expo-crypto: ~12.0.0
     expo-image-picker: ~14.0.2
     expo-random: ^13.0.0
