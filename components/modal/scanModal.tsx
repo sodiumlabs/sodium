@@ -108,8 +108,8 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
             >
               <MHStack stretchW stretchH style={{ alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                 <ScanFrameSvg />
-                <MHStack style={{ position: 'absolute' }}>
-                  <MText style={{ color: 'white', fontWeight: '700' }} fontSize={18}>Find a QR code to scan</MText>
+                <MHStack style={{ position: 'absolute', top: '50%', left: '50%', transform: [{ translateX: -150 }, { translateY: -20 }] }}>
+                  <MText style={{ color: 'white', fontWeight: '700', width: 300, height: 40, textAlign: 'center' }} fontSize={18}>Find a QR code to scan</MText>
                 </MHStack>
               </MHStack>
             </Camera>
