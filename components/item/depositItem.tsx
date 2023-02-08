@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { Linking, Pressable, StyleSheet } from 'react-native';
 import { DepositAtLeastAmount, useQueryDepositCurrencies, useQueryDepositUrl, useQueryPreDeposit } from '../../lib/api/deposit';
 import { useQueryNetwork } from '../../lib/api/network';
-import { IDepositItemData, IDepositToken, ISelectItemData } from '../../lib/define';
+import { btnScale, IDepositItemData, IDepositToken, ISelectItemData } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import MButton from '../baseUI/mButton';
 import { MButtonText } from '../baseUI/mButtonText';
@@ -125,7 +125,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
 
             </MVStack>
             <MVStack stretchW style={{ alignItems: 'center', marginBottom: 30 }}>
-              <MButton scale={1.01} style={{ 'width': '100%', height: 45, marginVertical: 20, backgroundColor: isCanDeposit ? eColor.Blue : eColor.Black }}
+              <MButton scale={btnScale} style={{ 'width': '100%', height: 45, marginVertical: 20, backgroundColor: isCanDeposit ? eColor.Blue : eColor.Black }}
                 isBanHover={!isCanDeposit}
                 onPress={onDepositClick}
                 isLoading={depositUrlQuery.isFetching}>

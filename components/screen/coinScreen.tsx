@@ -2,7 +2,7 @@ import { Linking, ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from "../../lib/api/history";
 import { formatWei2Price } from "../../lib/common/common";
 import { HistoryTime } from "../../lib/common/time";
-import { fixWidth, IUserTokenInfo, Screens } from '../../lib/define';
+import { btnScale, fixWidth, IUserTokenInfo, Screens } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useMClipboard } from "../../lib/hook/clipboard";
 import { useDimensionSize } from "../../lib/hook/dimension";
@@ -53,7 +53,7 @@ export function CoinScreen(props) {
 
             <MVStack stretchW style={{ marginVertical: 20 }}>
               <MButton
-                scale={1.01}
+                scale={btnScale}
                 style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send, tokenInfo)} >
                 <MButtonText title={`Send ${tokenInfo.token.symbol}`} />
               </MButton>

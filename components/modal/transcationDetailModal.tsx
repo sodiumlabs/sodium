@@ -6,7 +6,7 @@ import { useQueryNetwork } from '../../lib/api/network';
 import { getTranscationExplorer } from '../../lib/common/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/authAtom';
-import { IModalParam } from '../../lib/define';
+import { btnScale, IModalParam } from '../../lib/define';
 import { BaseModal } from '../base/baseModal';
 import CopyButton from '../baseUI/copyButton';
 import MButton from '../baseUI/mButton';
@@ -61,7 +61,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                   }
 
                   <MHStack stretchW style={{ height: 45, marginTop: 15 }}>
-                    <MButton scale={1.01} style={{ flex: 1, backgroundColor: eColor.Blue, height: 30 }} onPress={linkTxHash}  >
+                    <MButton scale={btnScale} style={{ flex: 1, backgroundColor: eColor.Blue, height: 30 }} onPress={linkTxHash}  >
                       <MButtonText title={`View On ${capitalize(network?.name)}`} />
                     </MButton>
                   </MHStack>

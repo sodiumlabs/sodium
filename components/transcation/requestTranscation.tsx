@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Pressable, StyleSheet } from "react-native";
 import { formatTime2Today } from '../../lib/common/time';
-import { ITranscation } from '../../lib/define';
+import { btnScale, ITranscation } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useRequestedTransactions } from "../../lib/transaction";
 import { showUpdateTranscationQueueModal } from "../../lib/data/modal";
@@ -28,7 +28,7 @@ export function RequestTranscation() {
 
   return (
     <MPressable
-      scale={1.01}
+      scale={btnScale}
       style={{ width: '100%' }}
       onPress={() => showUpdateTranscationQueueModal(true)}
       onHoverIn={() => setIsItemHovered(true)}

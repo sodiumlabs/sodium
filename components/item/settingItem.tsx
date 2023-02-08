@@ -10,13 +10,14 @@ import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MVStack from '../baseUI/mVStack';
 import MPressable from '../baseUI/mPressable';
+import { btnScale } from '../../lib/define';
 
 export default function SettingItem(props: ViewProps & { onPress: (event: GestureResponderEvent) => void, source: ImageSourcePropType }) {
   const { style, source, onPress, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
     <MPressable
-      scale={1.01}
+      scale={btnScale}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       style={[styles.container, globalStyle.whiteBorderWidth, style, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} onPress={onPress}  {...reset} >

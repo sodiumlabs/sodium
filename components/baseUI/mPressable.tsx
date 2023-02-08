@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Pressable, PressableProps } from 'react-native';
 
 export default function MPressable(props: PressableProps & { scale?: number }) {
-  const { scale = 1.05, style, ...reset } = props;
+  const { scale = 0.95, style, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   const [isPressIn, setIsPressIn] = useState(false);
   const pressStyle = {

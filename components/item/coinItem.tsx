@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Pressable, StyleSheet, TextInputProps } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
-import { IUserTokenInfo, Screens } from '../../lib/define';
+import { btnScale, IUserTokenInfo, Screens } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { IconTokenDefault } from '../../lib/imageDefine';
 import { navigationRef } from '../base/navigation';
@@ -17,7 +17,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
     <MPressable
-      scale={1.01}
+      scale={btnScale}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       onPress={() => navigationRef.navigate(Screens.Coin, tokenInfo)}>

@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet } from "react-native";
 import { loginIn } from "../../lib/data/auth";
-import { fixWidth } from "../../lib/define";
+import { btnScale, fixWidth } from "../../lib/define";
 import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconLogo } from "../../lib/imageDefine";
@@ -123,10 +123,10 @@ export function LoginScreen() {
             <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
             <ScreenTitle title="Sign into web3" />
             <MVStack stretchW>
-              <MButton scale={1.01} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
+              <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
                 <MButtonText title={"Steam login"} />
               </MButton>
-              <MButton scale={1.01} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
+              <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
                 <MButtonText title={"Twitter Login"} />
               </MButton>
             </MVStack>

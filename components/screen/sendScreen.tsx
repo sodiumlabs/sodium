@@ -8,7 +8,7 @@ import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
 import { formatPrice2Wei, formatWei2Price, isMatchEnsAddress, isMatchEthAddress } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
-import { fixWidth, IUserTokenInfo } from "../../lib/define";
+import { btnScale, fixWidth, IUserTokenInfo } from "../../lib/define";
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useMClipboard } from '../../lib/hook/clipboard';
 import { useDimensionSize } from '../../lib/hook/dimension';
@@ -152,7 +152,7 @@ export function SendScreen(props) {
             </MHStack>
 
             <MButton
-              scale={1.01}
+              scale={btnScale}
               stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]}
               isBanHover={!isCanSend}>
               <MButtonText title={"Continue"} />

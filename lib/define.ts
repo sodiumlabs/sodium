@@ -207,3 +207,5 @@ export enum eApproveType {
   RevokeAfter,
   KeepUnlimted
 }
+
+export const btnScale = 0.99;
