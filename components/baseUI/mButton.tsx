@@ -40,7 +40,7 @@ const localStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 4,
-    elevation: 3,
+    // elevation: 3,
     backgroundColor: eColor.Black,
     paddingVertical: 6,
     paddingHorizontal: 10

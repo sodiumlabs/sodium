@@ -122,7 +122,7 @@ export function CoinScreen(props) {
                 <MLoading />
               </>
             }
-            <MHStack style={{ marginBottom: 340 }} />
+            <MHStack style={{ marginBottom: 40 }} />
             <Spacer />
             <Information />
 

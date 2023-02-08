@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     height: 72,
     width: 80,
     borderRadius: 4,
-    elevation: 3,
+    // elevation: 3,
     position: 'relative'
   }
 })

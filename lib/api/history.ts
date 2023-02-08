@@ -19,7 +19,7 @@ const fetchHistory = async (pageParam: number, chainId?: ChainIdLike, tokenAddre
 
   const result = await authData.web3signer.getTransactionHistories(skip, first, chainId, tokenAddress, tokenId) as unknown as TransactionHistory[];
   console.log(`fetchHistory page:${pageParam} first:${first} skip:${skip}`);
-  console.log(result);
+  // console.log(result);
 
   let nextPage = null;
   if (result.length >= onePageCount) {

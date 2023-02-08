@@ -21,7 +21,7 @@ export function getScroller(scollEndCb: () => void) {
     // if (isContentFillPage && isEndReached && isDowning) {
     if (isDown && isEndReached && !isLastEndReached) {
       // lastScrollOffset = null;
-      console.log('load more');
+      // console.log('load more');
       scollEndCb();
     }
     lastScrollOffset = scrollOffset;
