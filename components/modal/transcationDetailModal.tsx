@@ -77,7 +77,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                     <MText style={styles.titleColor}>Transaction Hash</MText>
 
                     <MLineLR style={{ marginTop: 10 }}
-                      left={<MText style={styles.contentWeight}>{history.transactionHash}</MText>}
+                      left={<MText style={[styles.contentWeight, { marginRight: 10 }]}>{history.transactionHash}</MText>}
                       right={<CopyButton style={{ height: 24 }} copyText={history.transactionHash} />} />
                     <MDivider style={{ marginVertical: 10 }} />
 

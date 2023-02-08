@@ -7,6 +7,7 @@ import { useMClipboard } from '../../lib/hook/clipboard';
 import { IconCopy } from '../../lib/imageDefine';
 import MHStack from './mHStack';
 import MImage from './mImage';
+import MPressable from './mPressable';
 import MText from './mText';
 
 export default function CopyButton(props: PressableProps & { copyText: string }) {
@@ -24,20 +25,22 @@ export default function CopyButton(props: PressableProps & { copyText: string })
   }
 
   return (
-    <Pressable
+    <MPressable
+
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       style={[styles.button, style as unknown, { opacity: isItemHovered ? 1 : 0.8 }]} onPress={copyClick} {...rest}>
       <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
         <MImage h={10} w={10} style={{ marginRight: 5 }} source={IconCopy} />
-        <MText > {isCopied ? "Copied" : "  Copy"} </MText>
+        <MText > {isCopied ? "Copied" : "Copy"} </MText>
       </MHStack>
-    </Pressable>
+    </MPressable>
   )
 }
 
 const styles = StyleSheet.create({
   button: {
+    // width: 70,
     height: 26,
     justifyContent: 'center',
     alignItems: 'center',

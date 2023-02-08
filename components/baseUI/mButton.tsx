@@ -3,8 +3,9 @@ import { Pressable, PressableProps, StyleProp, StyleSheet, ViewStyle } from 'rea
 import { eColor } from '../../lib/globalStyles';
 import MHStack from './mHStack';
 import { MLoading } from './mLoading';
+import MPressable from './mPressable';
 
-export default function MButton(props: PressableProps & { stretchW?: boolean, isLoading?: boolean, hoverColor?: string, isBanHover?: boolean }) {
+export default function MButton(props: PressableProps & { stretchW?: boolean, isLoading?: boolean, hoverColor?: string, isBanHover?: boolean } & { scale?: number }) {
   const { style, isBanHover, hoverColor, stretchW, isLoading, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
 
@@ -15,7 +16,7 @@ export default function MButton(props: PressableProps & { stretchW?: boolean, is
   //   backgroundColor: style['backgroundColor'] || eColor.Black
   // }
   return (
-    <Pressable
+    <MPressable
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       style={[localStyles.button, stretchWidth, { backgroundColor: !isBanHover && isItemHovered ? hoverColor : eColor.Black, opacity: !isBanHover && isItemHovered ? 1 : 0.8 }, style as StyleProp<ViewStyle>]} {...reset}>
@@ -31,7 +32,7 @@ export default function MButton(props: PressableProps & { stretchW?: boolean, is
         )
       }
 
-    </Pressable>
+    </MPressable>
   )
 }
 

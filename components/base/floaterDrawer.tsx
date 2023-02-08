@@ -19,6 +19,7 @@ import { LogoutLoading } from '../full/logoutLoading';
 import { showUpdateFullScreenModal } from '../../lib/data/modal';
 import { navigate, navigationRef } from './navigation';
 import { useProfile } from '../../lib/data/profile';
+import MPressable from '../baseUI/mPressable';
 
 export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) {
 
@@ -146,9 +147,9 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
                 </MHStack>
               </MVStack>
               <MVStack style={{ marginLeft: 10 }}>
-                <Pressable onPress={() => foldAnim()}>
+                <MPressable onPress={() => foldAnim()}>
                   <MImage w={24} h={24} source={IconForkClose} />
-                </Pressable>
+                </MPressable>
               </MVStack>
             </MHStack>
 

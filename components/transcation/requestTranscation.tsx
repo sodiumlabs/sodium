@@ -8,6 +8,7 @@ import { showUpdateTranscationQueueModal } from "../../lib/data/modal";
 import { CircleTip } from '../baseUI/circleTip';
 import MHStack from "../baseUI/mHStack";
 import MText from "../baseUI/mText";
+import MPressable from '../baseUI/mPressable';
 
 
 export function RequestTranscation() {
@@ -26,7 +27,8 @@ export function RequestTranscation() {
 
 
   return (
-    <Pressable
+    <MPressable
+      scale={1.01}
       style={{ width: '100%' }}
       onPress={() => showUpdateTranscationQueueModal(true)}
       onHoverIn={() => setIsItemHovered(true)}
@@ -37,7 +39,7 @@ export function RequestTranscation() {
         <MText style={{ flex: 1, marginLeft: 5, fontWeight: '700' }}>Requested Transcations...</MText>
         <MText style={{ color: eColor.GrayText }}>{formatTime2Today(lastRequestTxn.timeStamp)}</MText>
       </MHStack>
-    </Pressable>
+    </MPressable>
   )
 }
 

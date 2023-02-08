@@ -52,13 +52,15 @@ export function CoinScreen(props) {
             </MVStack>
 
             <MVStack stretchW style={{ marginVertical: 20 }}>
-              <MButton style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send, tokenInfo)} >
+              <MButton
+                scale={1.01}
+                style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send, tokenInfo)} >
                 <MButtonText title={`Send ${tokenInfo.token.symbol}`} />
               </MButton>
 
             </MVStack>
 
-            <BaseFoldFrame header={"Detail"}>
+            <BaseFoldFrame header={"Detail"} defaultExpansion>
 
               <MText style={{ marginBottom: 10 }}>Description</MText>
               <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unkonw'}</MText>
@@ -72,7 +74,7 @@ export function CoinScreen(props) {
                   <MDivider style={{ marginVertical: 10 }} />
                   <MText  >Contract Address</MText>
                   <MLineLR
-                    left={<MText style={{ color: eColor.GrayContentText }} >{tokenInfo.token.address}</MText>}
+                    left={<MText style={{ color: eColor.GrayContentText, marginRight: 10 }} >{tokenInfo.token.address}</MText>}
                     right={
                       <MHStack>
                         <CopyButton copyText={tokenInfo.token.address} />

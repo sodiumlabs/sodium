@@ -4,12 +4,13 @@ import { globalStyle, eColor } from '../../lib/globalStyles';
 import MImage from './mImage';
 import MText from './mText';
 import MVStack from './mVStack';
+import MPressable from './mPressable';
 
 export default function WalletButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string, source: ImageSourcePropType }) {
   const { onPress, source, title } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
-    <Pressable style={[styles.container]}
+    <MPressable scale={1.05} style={[styles.container]}
       onPress={onPress}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
@@ -18,7 +19,7 @@ export default function WalletButton(props: { onPress?: (event: GestureResponder
         <MImage w={20} h={20} source={source} />
       </MVStack>
       <MText style={{ marginTop: 5, fontWeight: '700' }} > {title} </MText>
-    </Pressable>
+    </MPressable>
 
   )
 }

@@ -9,12 +9,14 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MVStack from '../baseUI/mVStack';
+import MPressable from '../baseUI/mPressable';
 
 export default function SettingItem(props: ViewProps & { onPress: (event: GestureResponderEvent) => void, source: ImageSourcePropType }) {
   const { style, source, onPress, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
-    <Pressable
+    <MPressable
+      scale={1.01}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       style={[styles.container, globalStyle.whiteBorderWidth, style, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} onPress={onPress}  {...reset} >
@@ -30,7 +32,7 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
           </MHStack>
         }
         right={<MImage style={{ opacity: 0.6 }} w={14} h={11} source={IconArrowR} />} />
-    </Pressable>
+    </MPressable>
   )
 }
 

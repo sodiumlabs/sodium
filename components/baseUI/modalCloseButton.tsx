@@ -2,19 +2,20 @@ import { useState } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { IconModalClose } from "../../lib/imageDefine";
 import MImage from "./mImage";
+import MPressable from './mPressable';
 
 
 export const ModalCloseButton = (props: { onClose: () => void }) => {
   const { onClose } = props;
   const [isHovered, setIsHovered] = useState(false);
   return (
-    <Pressable
+    <MPressable
       onHoverIn={() => setIsHovered(true)}
       onHoverOut={() => setIsHovered(false)}
       onPress={onClose}
       style={[styles.close, { opacity: isHovered ? 1 : 0.5 }]}>
       <MImage w={30} h={30} source={IconModalClose} />
-    </Pressable>
+    </MPressable>
   )
 }
 

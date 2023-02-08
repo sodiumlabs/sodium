@@ -8,6 +8,7 @@ import { navigationRef } from '../base/navigation';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
+import MPressable from '../baseUI/mPressable';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
@@ -15,7 +16,8 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
   const { tokenInfo, style, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
-    <Pressable
+    <MPressable
+      scale={1.01}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       onPress={() => navigationRef.navigate(Screens.Coin, tokenInfo)}>
@@ -40,7 +42,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
             right={<MText></MText>} />
         </MVStack>
       </MHStack>
-    </Pressable>
+    </MPressable>
   )
 }
 

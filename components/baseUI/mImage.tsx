@@ -6,7 +6,7 @@ import MHStack from './mHStack';
 export default function MImage(props: ImageProps & { w?: number, h?: number, uri?: string }) {
   let { uri, w = 12, h = 12, source, style } = props;
   if (!source && !uri) {
-    return <></>
+    return <MHStack style={{ width: w, height: h }}></MHStack>
   }
 
   return (

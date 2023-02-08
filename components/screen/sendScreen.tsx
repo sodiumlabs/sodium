@@ -152,6 +152,7 @@ export function SendScreen(props) {
             </MHStack>
 
             <MButton
+              scale={1.01}
               stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]}
               isBanHover={!isCanSend}>
               <MButtonText title={"Continue"} />

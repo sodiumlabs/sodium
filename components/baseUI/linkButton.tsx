@@ -7,6 +7,7 @@ import { getAddressExplorer } from '../../lib/common/network';
 import { IUserTokenInfo } from '../../lib/define';
 import MHStack from './mHStack';
 import MText from './mText';
+import MPressable from './mPressable';
 
 export default function LinkButton(props: PressableProps & { tokenInfo: IUserTokenInfo }) {
   const { tokenInfo, style, ...rest } = props;
@@ -16,7 +17,7 @@ export default function LinkButton(props: PressableProps & { tokenInfo: IUserTok
   }
 
   return (
-    <Pressable
+    <MPressable
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       style={[styles.button, style as unknown, { opacity: isItemHovered ? 1 : 0.8 }]} onPress={linkTxHash} {...rest}>
@@ -24,7 +25,7 @@ export default function LinkButton(props: PressableProps & { tokenInfo: IUserTok
         {/* <MImage h={10} w={10} style={{ marginRight: 5 }} source={IconCopy} /> */}
         <MText > Link </MText>
       </MHStack>
-    </Pressable>
+    </MPressable>
   )
 }
 

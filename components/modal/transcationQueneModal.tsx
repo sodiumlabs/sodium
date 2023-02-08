@@ -55,7 +55,7 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
           </ScrollView>
         </MVStack>
         <MVStack stretchW style={{ height: 45, paddingHorizontal: 15, marginBottom: 15 }}>
-          <MButton stretchW hoverColor={eColor.Red}
+          <MButton scale={1.01} stretchW hoverColor={eColor.Red}
             onPress={rejectAllClick} style={{ flex: 1 }}
           >
             <MButtonText title='Reject All' />

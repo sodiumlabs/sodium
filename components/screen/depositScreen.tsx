@@ -29,7 +29,7 @@ export function DepositScreen() {
     setCurDepositItem({ ...selectItem });
   }
   return (
-    <BaseScreen >
+    <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>

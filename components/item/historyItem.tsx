@@ -1,14 +1,15 @@
 import { TransactionHistory } from '@0xsodium/provider';
 import { useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
+import { showUpdateTranscationDetailModal } from '../../lib/data/modal';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { IconTokenDefault } from '../../lib/imageDefine';
-import { showUpdateTranscationDetailModal } from '../../lib/data/modal';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
+import MPressable from '../baseUI/mPressable';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
@@ -26,7 +27,8 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
   const transfer = history.erc20Transfers[0];
   const token = transfer.token;
   return (
-    <Pressable
+    <MPressable
+      scale={1.01}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       onPress={onClick}>
@@ -53,7 +55,7 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
           right={<MText style={{ color: eColor.GrayText }}>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />
 
       </MVStack>
-    </Pressable>
+    </MPressable>
   )
 }
 
