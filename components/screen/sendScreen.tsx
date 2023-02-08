@@ -136,7 +136,7 @@ export function SendScreen(props) {
             <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
               <TokenDropdown options={tokenInfos} defaultOption={defaultToken} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
               <MHStack style={{ position: 'relative' }} >
-                <MInput style={{ marginTop: 10 }} keyboardType='numeric' placeholder="Quantity"
+                <MInput style={{ marginTop: 10, paddingRight: 90 }} keyboardType='numeric' placeholder="Quantity"
                   placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}
                   value={inputTokenCount} errorTip={isShowCountInputError ? "Please enter the correct quantity" : ""} />
                 <InputEndButton style={{ position: 'absolute', right: 20, top: 30 }} onPress={onQuantityMaxClick} title='Max' />
@@ -145,7 +145,7 @@ export function SendScreen(props) {
             </MVStack>
             <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
             <MHStack stretchW style={{ position: 'relative' }}>
-              <MInput placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
+              <MInput style={{ paddingRight: 90 }} placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
                 onChangeText={onChangeAddressText} value={inputAddress}
                 errorTip={isShowAddressInputError ? "Please enter the correct address" : ""} />
               <InputEndButton style={{ position: 'absolute', right: 20, top: 20 }} onPress={onAddressPasteClick} title='Paste' />

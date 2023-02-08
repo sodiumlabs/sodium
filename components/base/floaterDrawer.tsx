@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
   },
   email: {
     // flex: 1,
-    height: 49,
+    height: 49, // Specify the height to avoid an onLayout trigger that causes the parent layout height to be calculated incorrectly. Because the parent layout needs to be animated
     backgroundColor: 'rgba(217, 217, 217, 0.2)',
     padding: 15,
     marginTop: 25,
