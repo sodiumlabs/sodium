@@ -12,6 +12,9 @@ import { ScreenTitle } from "../baseUI/screenTitle";
 import SettingItem from "../item/settingItem";
 import { eColor } from '../../lib/globalStyles';
 import { useQueryAllowances } from "../../lib/api/allowance";
+import ProfileSvg from "../svg/profileSvg";
+import GearSvg from '../svg/gearSvg';
+import PhoneSvg from '../svg/phoneSvg';
 
 export function SettingScreen() {
   const dimension = useDimensionSize();
@@ -23,21 +26,21 @@ export function SettingScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
             <ScreenTitle title="Setting" />
-            <SettingItem source={IconProfile} onPress={() => navigationRef.navigate(Screens.Profile)} >
+            <SettingItem source={<ProfileSvg />} onPress={() => navigationRef.navigate(Screens.Profile)} >
               <MText style={{ fontWeight: '700' }} >Profile</MText>
             </SettingItem>
 
-            <SettingItem source={IconSecurity} onPress={() => navigationRef.navigate(Screens.Security)} >
+            <SettingItem source={<GearSvg />} onPress={() => navigationRef.navigate(Screens.Security)} >
               <MText style={{ fontWeight: '700' }}>Security</MText>
             </SettingItem>
 
 
-            <SettingItem source={IconSessions} onPress={() => navigationRef.navigate(Screens.Session)} >
+            <SettingItem source={<PhoneSvg />} onPress={() => navigationRef.navigate(Screens.Session)} >
               <MText style={{ fontWeight: '700' }}>Active Sessions</MText>
               <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> 2 Active Sessions</MText>
             </SettingItem>
 
-            <SettingItem source={IconAllowance} onPress={() => navigationRef.navigate(Screens.Allowance)} >
+            <SettingItem source={<PhoneSvg />} onPress={() => navigationRef.navigate(Screens.Allowance)} >
               <MText style={{ fontWeight: '700' }}>Allowance</MText>
               <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> {allowances.length} Active Allowances</MText>
             </SettingItem>

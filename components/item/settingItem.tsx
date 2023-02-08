@@ -1,7 +1,7 @@
 
 
 
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { GestureResponderEvent, ImageSourcePropType, Pressable, StyleSheet, ViewProps } from 'react-native';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { IconArrowR } from '../../lib/imageDefine';
@@ -12,7 +12,7 @@ import MVStack from '../baseUI/mVStack';
 import MPressable from '../baseUI/mPressable';
 import { btnScale } from '../../lib/define';
 
-export default function SettingItem(props: ViewProps & { onPress: (event: GestureResponderEvent) => void, source: ImageSourcePropType }) {
+export default function SettingItem(props: ViewProps & { onPress: (event: GestureResponderEvent) => void, source: ReactNode }) {
   const { style, source, onPress, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
@@ -24,8 +24,9 @@ export default function SettingItem(props: ViewProps & { onPress: (event: Gestur
       <MLineLR
         left={
           <MHStack style={{ alignItems: 'center' }}>
-            <MImage w={15} h={15} style={{ marginRight: 9 }} source={source} />
-            <MVStack>
+            {/* <MImage w={15} h={15} style={{ marginRight: 9 }} source={source} /> */}
+            {source}
+            <MVStack style={{ marginLeft: 9 }}>
               {
                 props.children
               }
