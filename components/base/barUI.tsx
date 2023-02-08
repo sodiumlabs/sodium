@@ -2,7 +2,6 @@ import { useStore } from '@nanostores/react';
 import { atom } from "nanostores";
 import { IBarParam } from "../../lib/define";
 import { useAdapterWeb } from "../../lib/hook/adapter";
-import { useDimensionSize } from '../../lib/hook/dimension';
 import MHStack from "../baseUI/mHStack";
 import MVStack from "../baseUI/mVStack";
 import Floater from "./floater";
@@ -18,11 +17,10 @@ export function updateBarParam(param: IBarParam) {
 export function BarUI() {
   const barParam = useStore(barAtom);
   const isAdapterWeb = useAdapterWeb();
-  const dimension = useDimensionSize();
   return (
-    <MVStack stretchW style={{ position: 'absolute', zIndex: 1000, height: dimension[1] }} pointerEvents={'box-none'} >
+    <MVStack stretchW style={{ position: 'absolute', zIndex: 1000, height: '100%' }} pointerEvents={'box-none'} >
       <MHStack stretchW stretchH style={{ position: 'relative' }} pointerEvents={'box-none'}>
-        <MHStack stretchW pointerEvents={'box-none'} >
+        <MHStack stretchW pointerEvents={'box-none'}  >
           {barParam.hasNavigationBar && (!isAdapterWeb ? <Footer /> : <Header />)}
           {barParam.hasFloatingBar && <Floater hasNavigationBarBack={barParam.hasNavigationBarBack} />}
         </MHStack>

@@ -25,7 +25,7 @@ export function ProfileScreen() {
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
               <MText style={styles.title} >{profile.authorizedSource}</MText>
-              <MText style={{ color: eColor.GrayContentText }} >{profile.userName}</MText>
+              <MText style={{ color: eColor.GrayContentText }} >{profile.userName || 'unkonw'}</MText>
             </MVStack>
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>
