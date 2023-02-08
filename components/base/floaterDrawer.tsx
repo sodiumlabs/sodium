@@ -20,6 +20,8 @@ import { showUpdateFullScreenModal } from '../../lib/data/modal';
 import { navigate, navigationRef } from './navigation';
 import { useProfile } from '../../lib/data/profile';
 import MPressable from '../baseUI/mPressable';
+import SettingSvg from '../svg/settingSvg';
+import SignOutSvg from '../svg/signOutSvg';
 
 export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) {
 
@@ -167,11 +169,13 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
             <MHStack style={{ height: 60 }}>
               <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                <MImage w={14} h={14} style={{ marginRight: 6 }} source={IconSettings} />
+                {/* <MImage w={14} h={14} style={{ marginRight: 6 }} source={IconSettings} /> */}
+                <SettingSvg style={{ marginRight: 6 }} />
                 <MButtonText title={"Settings"} />
               </MButton>
               <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                <MImage w={12} h={10} style={{ marginRight: 6 }} source={IconSignout} />
+                {/* <MImage w={12} h={10} style={{ marginRight: 6 }} source={IconSignout} /> */}
+                <SignOutSvg style={{ marginRight: 6 }} />
                 <MButtonText title={"Sign out"} />
               </MButton>
             </MHStack>

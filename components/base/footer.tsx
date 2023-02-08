@@ -8,6 +8,8 @@ import { IconMenuHistory, IconMenuWallet } from '../../lib/imageDefine';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
+import HistorySvg from '../svg/historySvg';
+import WalletSvg from '../svg/walletSvg';
 import { navigationRef } from './navigation';
 
 export default function Footer() {
@@ -27,8 +29,8 @@ export default function Footer() {
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
       {/* <BlurView style={{ width: '100%' }}> */}
       <MHStack stretchW style={styles.list}>
-        <MenuButton isSelect={curScreenName == Screens.Wallet} w={17} h={15} source={IconMenuWallet} title={Screens.Wallet} onPress={onWalletClick} />
-        <MenuButton isSelect={curScreenName == Screens.History} w={17} h={17} source={IconMenuHistory} title={Screens.History} onPress={onHistoryClick} />
+        <MenuButton isSelect={curScreenName == Screens.Wallet} source={<WalletSvg />} title={Screens.Wallet} onPress={onWalletClick} />
+        <MenuButton isSelect={curScreenName == Screens.History} source={<HistorySvg />} title={Screens.History} onPress={onHistoryClick} />
       </MHStack>
       {/* </BlurView> */}
     </MVStack>

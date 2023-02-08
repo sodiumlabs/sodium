@@ -19,6 +19,9 @@ import CoinItem from "../item/coinItem";
 import { PendingTranscation } from '../transcation/pendingTranscation';
 import { RequestTranscation } from '../transcation/requestTranscation';
 import { showUpdateScanModal } from '../../lib/data/modal';
+import SendSvg from '../svg/sendSvg';
+import ScanSvg from '../svg/scanSvg';
+import DepositSvg from '../svg/depositSvg';
 
 
 
@@ -40,9 +43,9 @@ export function WalletScreen() {
             </MVStack>
 
             <MHStack style={styles.operate}>
-              <WalletButton source={IconMenuSend} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
-              <WalletButton source={IconMenuDeposit} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
-              <WalletButton source={IconMenuScan} title='Scan' onPress={() => showUpdateScanModal(true)} />
+              <WalletButton source={<SendSvg />} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
+              <WalletButton source={<DepositSvg />} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
+              <WalletButton source={<ScanSvg />} title='Scan' onPress={() => showUpdateScanModal(true)} />
             </MHStack>
 
             <RequestTranscation />

@@ -16,6 +16,7 @@ import MVStack from '../baseUI/mVStack';
 import { FailModalItem } from './modalItem/failModalItem';
 import { DecodeQR } from '../decode/decodeQR';
 import { useMClipboard } from '../../lib/hook/clipboard';
+import ScanFrameSvg from '../svg/scanFrameSvg';
 
 export const ScanModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -99,12 +100,18 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
 
           {hasPermission && (
             <Camera
-              style={{ flex: 1 }}
+              style={{ flex: 1, position: 'relative' }}
               onBarCodeScanned={onBarCodeScanned}
               barCodeScannerSettings={{
                 barCodeTypes: [BarCodeScanner.Constants.BarCodeType.qr],
               }}
             >
+              <MHStack stretchW stretchH style={{ alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                <ScanFrameSvg />
+                <MHStack style={{ position: 'absolute' }}>
+                  <MText style={{ color: 'white', fontWeight: '700' }} fontSize={18}>Find a QR code to scan</MText>
+                </MHStack>
+              </MHStack>
             </Camera>
           )}
 

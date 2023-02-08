@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { GestureResponderEvent, ImageSourcePropType, Pressable, StyleSheet } from 'react-native';
 import { globalStyle, eColor } from '../../lib/globalStyles';
 import MImage from './mImage';
@@ -6,7 +6,7 @@ import MText from './mText';
 import MVStack from './mVStack';
 import MPressable from './mPressable';
 
-export default function WalletButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string, source: ImageSourcePropType }) {
+export default function WalletButton(props: { onPress?: (event: GestureResponderEvent) => void; title?: string, source: ReactNode }) {
   const { onPress, source, title } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
@@ -16,7 +16,8 @@ export default function WalletButton(props: { onPress?: (event: GestureResponder
       onHoverOut={() => setIsItemHovered(false)}
     >
       <MVStack style={[globalStyle.whiteBorderWidth, styles.button, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}>
-        <MImage w={20} h={20} source={source} />
+        {/* <MImage w={20} h={20} source={source} /> */}
+        {source}
       </MVStack>
       <MText style={{ marginTop: 5, fontWeight: '700' }} > {title} </MText>
     </MPressable>
