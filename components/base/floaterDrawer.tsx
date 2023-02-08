@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet } from 'react-native';
+import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
 import { waitTime } from '../../lib/common/common';
 import { loginOut } from '../../lib/data/auth';
@@ -93,7 +93,6 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
   const onLayout = (event: LayoutChangeEvent) => {
     setViewHeight(event.nativeEvent.layout.height - minHeaderHeight);
-    // explance(event.nativeEvent.layout.height, 0);
   }
 
 
@@ -117,36 +116,35 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   return (
     <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
       <MVStack stretchW onLayout={onLayout}  >
-        {
-          <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >
-            <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >
-              <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
-                {
-                  props.hasNavigationBarBack && (
-                    <Pressable style={{ paddingLeft: 17, paddingRight: 17, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
-                      <MImage w={8} h={12} source={IconArrowL} />
-                    </Pressable>
-                  )
-                }
-                <MAvatar style={{ marginHorizontal: 10 }} name={auth.blockchainAddress} />
-                <MText style={{ flex: 1, fontWeight: '700' }} >{auth.blockchainAddress}</MText>
-                <MImage w={24} h={24} style={{ margin: 10 }} source={IconMore} />
-              </MHStack>
-            </Pressable>
-          </Animated.View>
-        }
+
+        <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >
+          <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >
+            <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
+              {
+                props.hasNavigationBarBack && (
+                  <Pressable style={{ paddingLeft: 17, paddingRight: 17, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
+                    <MImage w={8} h={12} source={IconArrowL} />
+                  </Pressable>
+                )
+              }
+              <MAvatar style={{ marginHorizontal: 10 }} name={auth.blockchainAddress} />
+              <MText style={{ flex: 1, fontWeight: '700' }} >{auth.blockchainAddress}</MText>
+              <MImage w={24} h={24} style={{ margin: 10 }} source={IconMore} />
+            </MHStack>
+          </Pressable>
+        </Animated.View>
+
         <Animated.View style={{ opacity: contentOpacityAnim }}>
           <MVStack style={{ padding: 10, transform: [{ translateY: -minHeaderHeight }] }} >
-            <MHStack style={{ flex: 1 }} >
+            <MHStack style={{ height: 48 }}>
               <MAvatar style={{ marginHorizontal: 10 }} size={48} name={auth.blockchainAddress} />
               <MVStack style={{ flex: 1 }}>
                 <MText style={{ fontWeight: '700' }} >{auth.blockchainAddress}</MText>
                 <MHStack >
                   <CopyButton style={{ marginHorizontal: 5, height: 24, marginTop: 10 }} copyText={auth.blockchainAddress} />
-
                 </MHStack>
               </MVStack>
-              <MVStack >
+              <MVStack style={{ marginLeft: 10 }}>
                 <Pressable onPress={() => foldAnim()}>
                   <MImage w={24} h={24} source={IconForkClose} />
                 </Pressable>
@@ -165,7 +163,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
               </MVStack>
             </MHStack>
 
-            <MHStack >
+            <MHStack style={{ height: 60 }}>
               <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
                 <MImage w={14} h={14} style={{ marginRight: 6 }} source={IconSettings} />
                 <MButtonText title={"Settings"} />
@@ -196,6 +194,7 @@ const styles = StyleSheet.create({
   },
   email: {
     // flex: 1,
+    height: 49,
     backgroundColor: 'rgba(217, 217, 217, 0.2)',
     padding: 15,
     marginTop: 25,
@@ -204,6 +203,7 @@ const styles = StyleSheet.create({
   },
   connected: {
     // flex: 1,
+    height: 63,
     backgroundColor: 'rgba(217, 217, 217, 0.2)',
     padding: 15,
     marginBottom: 15,
