@@ -25,6 +25,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#F7F7F7', paddingVertical: 15, alignItems: 'center', flex: 1, position: 'relative'
   },
   close: {
-    width: 30, height: 30, position: 'absolute', top: -40, right: 0, borderRadius: 99
+    width: 30, height: 30, position: 'absolute', top: -40, right: 10, borderRadius: 99
   }
 });

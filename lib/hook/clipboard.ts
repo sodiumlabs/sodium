@@ -27,7 +27,7 @@ export function useMClipboard(): [string, (text: string) => void] {
         const text = await Clipboard.getStringAsync();
         clipboardAtom.set(text);
       } catch (e) {
-        console.error(e);
+        // console.error(e);
       }
     })()
   }, [])

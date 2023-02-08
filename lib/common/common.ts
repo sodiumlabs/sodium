@@ -137,3 +137,8 @@ export const waitFinish = async (checkFunc: () => boolean, name: String) => {
     await waitTime(50);
   }
 }
+
+// The first letter is capitalized
+export const capitalize = (str: string): string => {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

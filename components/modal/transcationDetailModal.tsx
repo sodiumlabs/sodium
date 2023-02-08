@@ -19,6 +19,7 @@ import { MDivider } from '../baseUI/mDivider';
 import { ModalTitle } from './modalItem/modalTitle';
 import { eColor } from '../../lib/globalStyles';
 import { MButtonText } from '../baseUI/mButtonText';
+import { capitalize } from '../../lib/common/common';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -60,8 +61,8 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                   }
 
                   <MHStack stretchW style={{ height: 45, marginTop: 15 }}>
-                    <MButton style={{ flex: 1, backgroundColor: eColor.Blue, height: 30 }} onPress={linkTxHash}  >
-                      <MButtonText title='View On Polygon' />
+                    <MButton scale={1.01} style={{ flex: 1, backgroundColor: eColor.Blue, height: 30 }} onPress={linkTxHash}  >
+                      <MButtonText title={`View On ${capitalize(network?.name)}`} />
                     </MButton>
                   </MHStack>
 

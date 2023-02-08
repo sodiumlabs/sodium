@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Dimensions, Easing, Modal, Pressable, StyleSheet, TouchableWithoutFeedback, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fixWidth } from '../../lib/define';
@@ -13,6 +13,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
 
   let { visible, hideModal, isFullScreen, isAnim = true, contentHeight = screenHeight, contentStyle = {} } = props;
   let marginTop = Math.max(screenHeight - contentHeight, 100);
+  const [isStartHide, setIsStartHide] = useState(false);
 
   const backgroundFadeAnim = useRef(new Animated.Value(0)).current;
   const isAdapterWeb = useAdapterWeb();
@@ -21,11 +22,12 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
     // console.log(size[1]);
     if (!visible) {
       backgroundFadeAnim.setValue(0);
+      setIsStartHide(false);
     } else {
       Animated.timing(backgroundFadeAnim, {
         easing: Easing.quad,
         toValue: 0.15,
-        duration: 300,
+        duration: 200,
         delay: 150,
         useNativeDriver: false
       }).start();
@@ -50,6 +52,14 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
     }
   }, [isAdapterWeb, marginTop]);
 
+  const onBackClick = () => {
+    setIsStartHide(true);
+    // backgroundFadeAnim.setValue(0);
+    setTimeout(() => {
+      hideModal();
+    }, 20);
+  }
+
   return (
     <Modal
       transparent={true}
@@ -60,16 +70,18 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
 
       <MVStack stretchW stretchH style={{ justifyContent: 'center', alignItems: 'center' }} >
 
-        <TouchableWithoutFeedback onPress={() => hideModal()}>
-          <Animated.View style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, backgroundColor: 'rgb(0,0,0)', opacity: backgroundFadeAnim }}>
-          </Animated.View>
-        </TouchableWithoutFeedback>
+        {!isStartHide && (
+          <TouchableWithoutFeedback onPress={onBackClick}>
+            <Animated.View style={{ position: 'absolute', width: '100%', height: '100%', top: 0, left: 0, backgroundColor: 'rgb(0,0,0)', opacity: backgroundFadeAnim }}>
+            </Animated.View>
+          </TouchableWithoutFeedback>
+        )}
 
         <MVStack stretchW stretchH style={[styles.content, contentStyle, adapterStyle]}>
           {
             props.children
           }
-          <ModalCloseButton onClose={hideModal} />
+          <ModalCloseButton onClose={onBackClick} />
         </MVStack>
       </MVStack>
     </Modal>
