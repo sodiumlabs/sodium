@@ -35,6 +35,7 @@ import { asyncSession, initHandler } from '../lib/provider';
 import { useEffect } from 'react';
 import { initProjectSetting } from '../lib/data/project';
 import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
+import { StatusBar } from 'expo-status-bar';
 
 const queryClient = new QueryClient(
   {
@@ -74,7 +75,6 @@ export default function App() {
 
   useEffect(() => {
     initProjectSetting();
-
     const initPromises = [];
     const handler = initHandler();
     if (Platform.OS == "web") {
@@ -84,7 +84,7 @@ export default function App() {
       const regp2 = wmh.register(location.href);
       initPromises.push(regp1, regp2);
     } else {
-      initPromises.push(Promise.resolve())
+      initPromises.push(Promise.resolve());
     }
     Promise.all(initPromises).then(() => {
       return asyncSession()
@@ -97,6 +97,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
+      <StatusBar style="dark" backgroundColor='#F7F7F7' />
       <ApplicationProvider {...eva} theme={eva.light}>
         <QueryClientProvider client={queryClient}>
           <NavigationContainer ref={navigationRef} onReady={() => isNavigationReadyAtom.set(true)}>
