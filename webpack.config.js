@@ -8,5 +8,8 @@ module.exports = async function(env, argv) {
         }
     }, argv);
 
+    config.output.hashFunction = "xxhash64";
+    config.output.hashDigestLength = 16;
+
     return config;
 };
