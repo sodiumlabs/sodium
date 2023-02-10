@@ -1,5 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { atom, computed } from 'nanostores';
+import { Platform } from "react-native";
 import { loadTxnQueue, saveTxnQueue } from "../common/asyncStorage";
 import { hashcodeObj } from '../common/common';
 import { eStotageKey, ITranscation } from '../define';
@@ -45,7 +46,10 @@ const removeAll = () => {
 }
 
 const unbindListener = requestedTransactions.subscribe(value => {
-    saveTxnQueue(eStotageKey.requestedTxs, value);
+    // fix next.js ssr
+    if (Platform.OS == "web" && typeof window !== "undefined") {
+        saveTxnQueue(eStotageKey.requestedTxs, value);
+    }
 });
 
 const loadAsyncStorage = async () => {

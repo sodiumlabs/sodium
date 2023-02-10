@@ -1,9 +1,10 @@
 import { useStore } from "@nanostores/react";
 import { atom, computed, WritableAtom } from 'nanostores';
 import { loadTxnQueue, saveTxnQueue } from "../common/asyncStorage";
-import { hashcodeObj, waitTime } from '../common/common';
+import { waitTime } from '../common/common';
 import { eStotageKey, ITranscation } from '../define';
 import { getAuth } from '../data/authAtom';
+import { Platform } from "react-native";
 
 class PendingTxs {
   public transcations: WritableAtom<ITranscation[]>;
@@ -56,9 +57,11 @@ LocalPendingTxs.transcations.subscribe(value => {
 CurPendingTxs.transcations.subscribe(value => {
   TotalPendingTxs.set([...LocalPendingTxs.get(), ...CurPendingTxs.get()]);
 });
-
 TotalPendingTxs.transcations.subscribe(value => {
-  saveTxnQueue(eStotageKey.pendingTxs, value);
+  // Fix next.js ssr
+  if (Platform.OS == "web" && typeof window !== "undefined") {
+    saveTxnQueue(eStotageKey.pendingTxs, value);
+  }
 });
 
 function usePendingTransactions() {
