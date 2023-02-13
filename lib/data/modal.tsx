@@ -16,7 +16,6 @@ export const scanModalAtom = atom<IModalParam>({ visible: false });
 export const showUpdateComModal = (visible: boolean, param?: IComModalParam, closeUniqueKey?: unknown) => {
     // comModalAtom.set({ visible: visible, param: param });
     setModal(comModalAtom, visible, param, param, closeUniqueKey);
-
 }
 export const showUpdateDeployConfirmModal = (visible: boolean, param?: IDeployConfirmModalParam, closeUniqueKey?: unknown) => {
     // deployConfirmModalAtom.set({ visible: visible, param: param });

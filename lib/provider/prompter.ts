@@ -7,7 +7,7 @@ import { getNetwork } from '../common/network';
 import { OperateTimeStamp } from '../data/operateTime';
 import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation, Screens } from '../define';
 import { transactionQueue } from '../transaction';
-import { walletAtom, walletHandlerAtom } from './atom';
+import { walletAtom } from './atom';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
@@ -47,7 +47,6 @@ export class WalletPrompter implements WalletUserPrompter {
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
         console.log("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options));
-
         return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();

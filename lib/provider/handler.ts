@@ -14,7 +14,7 @@ const networks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
     return {
         ...n,
         rpcUrl: "https://polygon-mumbai.g.alchemy.com/v2/fIbA8DRSTQXPAhcHKiPFo19SPqhHNHam",
-        bundlerUrl: "http://localhost:3002",
+        bundlerUrl: "https://bundler-dev.melandworld.com/",
     }
 });
 
@@ -68,7 +68,7 @@ const signIn = async (account: Account, session: Session, connect: boolean) => {
     });
     const walletAddress = await walletHandler.getAddress();
     const provider = new Web3Provider(walletHandler, walletHandler.defaultNetworkId);
-    const web3signer = new Web3Signer(provider, parseInt(`${walletHandler.defaultNetworkId}`))
+    const web3signer = new Web3Signer(provider, parseInt(`${walletHandler.defaultNetworkId}`));
     walletAtom.set({
         address: walletAddress,
         handler: walletHandler,

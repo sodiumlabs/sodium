@@ -30,12 +30,19 @@ import {
 } from '../components/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
-import { WindowMessageHandler, IframeMessageHandler } from '@0xsodium/provider';
-import { asyncSession, initHandler } from '../lib/provider';
+import { 
+  WindowMessageHandler, 
+  IframeMessageHandler,
+  ProxyMessageHandler,
+} from '@0xsodium/provider';
+import { asyncSession, initHandler, proxyChannel } from '../lib/provider';
 import { useEffect } from 'react';
 import { initProjectSetting } from '../lib/data/project';
 import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
 import { StatusBar } from 'expo-status-bar';
+import { authAtom } from '../lib/data/authAtom';
+import { init as initWalletConnect } from '../lib/walletconnect';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const queryClient = new QueryClient(
   {
@@ -77,6 +84,8 @@ export default function App() {
     initProjectSetting();
     const initPromises = [];
     const handler = initHandler();
+    const proxymh = new ProxyMessageHandler(handler, proxyChannel.wallet)
+    initPromises.push(proxymh.register());
     if (Platform.OS == "web") {
       const wmh = new WindowMessageHandler(handler);
       const imh = new IframeMessageHandler(handler);
@@ -91,6 +100,16 @@ export default function App() {
     }).then(() => {
       if (Platform.OS != "web") {
         SplashScreen.hideAsync();
+        console.debug("close splash screen");
+      }
+
+      const auth = authAtom.get();
+      if (auth.isLogin) {
+        initWalletConnect();
+      } else {
+        // if no auth.
+        // clear old data.
+        AsyncStorage.clear();
       }
     })
   }, [1])

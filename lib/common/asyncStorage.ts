@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { eStotageKey, ITranscation } from "../define";
 import { Wallet } from 'ethers';
 import { Platform as SodiumPlatform } from '@0xsodium/config';
+import { WalletConnectSessionSerialized } from '../walletconnect';
 
 export const saveTxnQueue = (key: eStotageKey, queue: readonly ITranscation[]) => {
   AsyncStorage.setItem(key, JSON.stringify(queue));
@@ -38,4 +39,26 @@ export const loadSession = async (): Promise<{ sodiumUserId: string, platform: S
     })
   }
   return null;
+}
+
+export const saveWalletConnectSessions = async (walletConnectSessions: WalletConnectSessionSerialized[]) => {
+  try {
+    return AsyncStorage.setItem("@sodium.wcs", JSON.stringify(walletConnectSessions));
+  } catch(error) {
+    // TODO sentry
+  }
+  return;
+}
+
+export const loadWalletConnectSessions = async (): Promise<WalletConnectSessionSerialized[]> => {
+  try {
+    const wcs = await AsyncStorage.getItem("@sodium.wcs");
+    if (wcs) {
+      return JSON.parse(wcs);
+    }
+    return [];
+  } catch(error) {
+    // TODO sentry
+  }
+  return [];
 }
