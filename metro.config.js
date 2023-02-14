@@ -21,7 +21,6 @@ config.resolver = {
         http: require.resolve('@tradle/react-native-http'),
         https: require.resolve('https-browserify'),
         net: require.resolve('react-native-tcp'),
-        os: require.resolve('react-native-os'),
         stream: require.resolve('stream-browserify'),
         vm: require.resolve('vm-browserify'),
     }
