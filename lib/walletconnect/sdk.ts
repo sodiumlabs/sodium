@@ -62,7 +62,7 @@ export async function init(): Promise<void> {
                 console.warn("load wallet connect pair error", error)
             });
         } else {
-            (new WalletConnectV2(session.needsNamespaces)).startSession(session.meta, undefined, session.topic);
+            (new WalletConnectV2(session.id, session.needsNamespaces)).startSession(session.meta, undefined, session.topic);
         }
     })
 }
