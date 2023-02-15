@@ -32,7 +32,7 @@
     "@walletconnect/core": "^2.4.1",
     "@walletconnect/react-native-compat": "^2.4.2",
     "@walletconnect/utils": "^2.4.2",
-    "@walletconnect/web3wallet": "^1.1.1",
+    "@walletconnect/web3wallet": "^1.2.0",
     "browserify-zlib": "~0.1.4",
     "buffer": "^4.9.1",
     "dns.js": "^1.0.1",

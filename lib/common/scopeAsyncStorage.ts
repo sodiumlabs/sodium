@@ -11,6 +11,9 @@ export class ScopeAsyncStorage implements AsyncStorageStatic {
     }
     async getItem(key: string): Promise<string> {
         const result = await AsyncStorage.getItem(this.computeKey(key));
+
+        console.debug("getItem scope", this.computeKey(key), result);
+
         return result;
     }
     setItem(key: string, value: string): Promise<void> {

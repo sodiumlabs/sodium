@@ -22,9 +22,6 @@ export function newPairV1(url: string, existing: boolean = false, existingSessio
                     },
                 }
             );
-
-            console.debug("new pair", url);
-
             new WalletConnectV1(connector, existing, (w: WalletConnectV1) => {
                 resolve(w);
             });
@@ -50,10 +47,10 @@ export async function newPair(url: string): Promise<void> {
 export async function init(): Promise<void> {
     try {
         await v2Init();
-    } catch(error) {
+    } catch (error) {
         // TODO upsentry;
     }
-    
+
     const sessions = await loadWalletConnectSessions();
     sessions.forEach(session => {
         if (session.version == "1") {
@@ -61,8 +58,6 @@ export async function init(): Promise<void> {
                 // TODO up to sentry
                 console.warn("load wallet connect pair error", error)
             });
-        } else {
-            (new WalletConnectV2(session.id, session.needsNamespaces)).startSession(session.meta, undefined, session.topic);
         }
     })
 }

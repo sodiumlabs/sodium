@@ -11,7 +11,7 @@ export class WalletConnectV1 implements IWalletConnect {
     constructor(protected connector: RNWalletConnect, existing: boolean, waitSessionRequest: (w: WalletConnectV1) => void) {
         // Subscribe to session requests
         const defaultChainId = getDefaultChainId();
-        this.wallet = createWallet(defaultChainId, connector.key);
+        this.wallet = createWallet(defaultChainId);
 
         if (existing) {
             waitSessionRequest(this);
@@ -70,13 +70,11 @@ export class WalletConnectV1 implements IWalletConnect {
 
     async startSession(meta: WalletConnectPairMetadata, existing: boolean) {
         const defaultChainId = getDefaultChainId();
-        console.debug("start session", existing);
         const wallet = await this.wallet;
         await wallet.connect({
             networkId: defaultChainId,
             origin: meta.url
         });
-        console.debug("end start session");
         const address = await wallet.getAddress();
         if (existing) {
             this.connector.updateSession({
@@ -94,17 +92,19 @@ export class WalletConnectV1 implements IWalletConnect {
             });
         }
         pushSession({
+            id: this.connector.key,
             version: "1",
             meta: meta,
             connector: this,
-            id: this.connector.key,
             sessionV1: this.connector.session
         });
     }
 
     async kill(message: string) {
         const wallet = await this.wallet;
-        wallet.disconnect();
+        wallet.removeConnectedSite(
+            this.connector.peerMeta.url
+        );
         console.debug("wallet disconnect")
         if (this.connector.connected) {
             this.connector.killSession({

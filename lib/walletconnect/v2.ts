@@ -29,10 +29,11 @@ export class WalletConnectV2 implements IWalletConnect {
     protected wallet: Promise<Wallet>;
     protected topic: string;
     protected uri: string;
+    protected origin: string;
 
     constructor(protected sessionId: string, protected needsNamespaces: NeedsNamespaces) {
         const defaultChainId = getDefaultChainId();
-        this.wallet = createWallet(defaultChainId, `${sessionId}`);
+        this.wallet = createWallet(defaultChainId);
     }
 
     mapNamespaces(address: string): BaseNamespaces {
@@ -49,27 +50,24 @@ export class WalletConnectV2 implements IWalletConnect {
                 events: needsNamespaces[key].events
             }
         })
-        console.debug("bn", bn);
         return bn;
     }
 
     async startSession(meta: WalletConnectPairMetadata, id?: number, existingTopic: string | undefined = undefined) {
         const defaultChainId = getDefaultChainId();
-        console.debug("v2 start session", existingTopic);
         const wallet = await this.wallet;
         await wallet.connect({
             networkId: defaultChainId,
             origin: meta.url
         });
+        this.origin = meta.url;
         const address = await wallet.getAddress();
         const sdk = v2sdk.get();
         if (existingTopic) {
-            console.debug("update session start")
             await sdk.updateSession({
                 topic: existingTopic,
                 namespaces: this.mapNamespaces(address),
             });
-            console.debug("update session end")
         } else {
             const session = await sdk.approveSession({
                 id: id,
@@ -93,12 +91,16 @@ export class WalletConnectV2 implements IWalletConnect {
         return wallet.getProvider().send(method, params);
     }
 
-    kill(message: string): void {
+    async kill(message: string) {
         const sdk = v2sdk.get();
         sdk.disconnectSession({
             topic: this.topic,
             reason: getSdkError("USER_DISCONNECTED")
-        })
+        });
+        const wallet = await this.wallet;
+        wallet.removeConnectedSite(
+            this.origin
+        );
     }
 
     getURI(): string {
@@ -142,47 +144,34 @@ async function init(): Promise<void> {
 
     sdk.on("session_request", async (event) => {
         const { topic, params, id } = event;
-        const { request, chainId } = params;
-        const session = findSessionByTopic(topic);
-        if (session) {
-            await session
-                .connector
-                .callRequest(request.method, request.params, chainId)
-                .then(result => {
-                    const response = { id, result: result, jsonrpc: "2.0" };
-                    sdk.respondSessionRequest({
-                        topic,
-                        response
-                    });
-                })
-                .catch(error => {
-                    const response = {
-                        id,
-                        jsonrpc: "2.0",
-                        error: {
-                            code: 5000,
-                            message: error,
-                        },
-                    };
-                    sdk.respondSessionRequest({
-                        topic,
-                        response
-                    });
+        const { request, chainId: namespaceChainId } = params;
+        const defaultChainId = getDefaultChainId();
+        const wallet = await createWallet(defaultChainId);
+        const [namespace, chainIdStr] = namespaceChainId.split(":");
+        const chainId = parseInt(chainIdStr);
+        wallet.getProvider(chainId)
+            .send(request.method, request.params, chainId)
+            .then(result => {
+                const response = { id, result: result, jsonrpc: "2.0" };
+                sdk.respondSessionRequest({
+                    topic,
+                    response
                 });
-        } else {
-            const response = {
-                id,
-                jsonrpc: "2.0",
-                error: {
-                    code: 5000,
-                    message: "Not found session",
-                },
-            };
-            await sdk.respondSessionRequest({
-                topic,
-                response
+            })
+            .catch(error => {
+                const response = {
+                    id,
+                    jsonrpc: "2.0",
+                    error: {
+                        code: 5000,
+                        message: error,
+                    },
+                };
+                sdk.respondSessionRequest({
+                    topic,
+                    response
+                });
             });
-        }
     });
 
     // @ts-ignore
