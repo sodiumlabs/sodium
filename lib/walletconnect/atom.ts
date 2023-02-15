@@ -9,20 +9,26 @@ const maxSessionLimit = 5;
 
 function xsaveWalletConnectSessions(sessions: WalletConnectSession[]) {
     saveWalletConnectSessions(sessions.map(s => {
-        let connectURI = "";
+        let connectURI = s.connector.getURI();
         let sessionV1 = "";
-    
+        let needsNamespaces = {};
+        let topic = "";
+
         if (s.version == "1") {
-            connectURI = s.connectorV1.getURI();
             sessionV1 = s.sessionV1;
+        } else {
+            needsNamespaces = s.needsNamespaces;
+            topic = s.topic;
         }
-    
+
         return {
             id: s.id,
             meta: s.meta,
             connectURI: connectURI,
             version: s.version,
             sessionV1: sessionV1,
+            topic: topic,
+            needsNamespaces: needsNamespaces
         }
     }))
 }
@@ -31,11 +37,7 @@ export const pushSession = (session: WalletConnectSession) => {
     const sessions = walletConnectSessions.get();
     if (sessions.length >= maxSessionLimit) {
         const oldSession = sessions.shift();
-        if (oldSession.version === "1") {
-            oldSession.connectorV1.kill("Sessions are too old");
-        } else {
-            // TODO v2
-        }
+        oldSession.connector.kill("Sessions are too old");
     }
     sessions.push(session);
     walletConnectSessions.set(sessions);
@@ -49,11 +51,16 @@ export const removeSessionById = (id: string, message: string) => {
     const removeSession = sessions.find(s => s.id == id);
 
     if (removeSession !== undefined) {
-        if (removeSession.version == "1") {
-            removeSession.connectorV1.kill(message);
-        }
+        removeSession.connector.kill(message);
     }
     walletConnectSessions.set(newSessions);
     // store session
     xsaveWalletConnectSessions(newSessions);
+}
+
+export const findSessionByTopic = (topic: string): WalletConnectSession | undefined => {
+    const sessions = walletConnectSessions.get();
+    return sessions.find(s => {
+        return s.version == "2" && s.topic == topic;
+    });
 }

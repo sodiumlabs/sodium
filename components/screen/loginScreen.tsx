@@ -100,7 +100,7 @@ export function LoginScreen() {
       const twauth = new TwitterAuthService("//twitter-auth.melandworld.com", global.fetch);
       const { authURL } = await twauth.authURL({
         request: {
-          oauthCallback: "http://127.0.0.1:3000"
+          oauthCallback: "https://sodium-two.vercel.app/"
         }
       });
       openWindow({ url: authURL, name: "twteet login" });

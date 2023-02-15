@@ -1,11 +1,11 @@
 import RNWalletConnect from "@walletconnect/client";
 import { createWallet } from './wallet';
 import { getDefaultChainId } from '../network';
-import { IWalletConnectV1, WalletConnectPairMetadata } from './type';
+import { IWalletConnect, WalletConnectPairMetadata } from './type';
 import { Wallet } from "@0xsodium/provider";
 import { pushSession, removeSessionById } from './atom';
 
-export class WalletConnectV1 implements IWalletConnectV1 {
+export class WalletConnectV1 implements IWalletConnect {
     protected wallet: Promise<Wallet>;
 
     constructor(protected connector: RNWalletConnect, existing: boolean, waitSessionRequest: (w: WalletConnectV1) => void) {
@@ -35,8 +35,7 @@ export class WalletConnectV1 implements IWalletConnectV1 {
             if (error) {
                 throw error;
             }
-            const wallet = await this.wallet;
-            wallet.getProvider().send(payload.method, payload.params).then(result => {
+            this.callRequest(payload.method, payload.params).then(result => {
                 connector.approveRequest({
                     id: payload.id,
                     jsonrpc: payload.jsonrpc,
@@ -62,6 +61,11 @@ export class WalletConnectV1 implements IWalletConnectV1 {
             }
             removeSessionById(this.connector.key, message);
         });
+    }
+
+    async callRequest(method: string, params: any, chainId?: string | number): Promise<any> {
+        const wallet = await this.wallet;
+        return wallet.getProvider().send(method, params);
     }
 
     async startSession(meta: WalletConnectPairMetadata, existing: boolean) {
@@ -92,7 +96,7 @@ export class WalletConnectV1 implements IWalletConnectV1 {
         pushSession({
             version: "1",
             meta: meta,
-            connectorV1: this,
+            connector: this,
             id: this.connector.key,
             sessionV1: this.connector.session
         });

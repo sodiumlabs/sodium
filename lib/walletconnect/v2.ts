@@ -1,45 +1,199 @@
-import { Core } from "@walletconnect/core";
+import { Core, } from "@walletconnect/core";
+import { getSdkError, formatUri } from '@walletconnect/utils';
 import { Web3Wallet } from "@walletconnect/web3wallet";
+import Client from "@walletconnect/web3wallet";
+import { pushSession, findSessionByTopic } from "./atom";
 import { CLIENT_OPTIONS } from './utils';
+import {
+    IWalletConnect,
+    WalletConnectPairMetadata,
+    NeedsNamespaces,
+    BaseNamespaces
+} from './type';
+import { getDefaultChainId } from "../network";
+import { Wallet } from "@0xsodium/provider";
+import { createWallet } from "./wallet";
+import { atom } from 'nanostores';
 
-const core = new Core({
-    projectId: process.env.PROJECT_ID,
-});
+let v2sdk = atom<Client>();
 
-const walletconnectv2 = await Web3Wallet.init({
-    core,
-    metadata: CLIENT_OPTIONS.clientMeta,
-});
+function encodeId(id: number): string {
+    return `${id}`;
+}
 
-walletconnectv2.getActiveSessions()
+export function decodeId(id: string): number {
+    return parseInt(id);
+}
 
-walletconnectv2.on("session_proposal", async (proposal) => {
-    // proposal.params.proposer.publicKey
-    const session = await walletconnectv2.approveSession({
-        id: proposal.id,
-        namespaces: {},
+export class WalletConnectV2 implements IWalletConnect {
+    protected wallet: Promise<Wallet>;
+    protected topic: string;
+    protected uri: string;
+
+    constructor(protected sessionId: string, protected needsNamespaces: NeedsNamespaces) {
+        const defaultChainId = getDefaultChainId();
+        this.wallet = createWallet(defaultChainId, `${sessionId}`);
+    }
+
+    mapNamespaces(address: string): BaseNamespaces {
+        let bn = {};
+        const needsNamespaces = this.needsNamespaces;
+        Object.keys(needsNamespaces).forEach(key => {
+            const accounts: string[] = []
+            needsNamespaces[key].chains.map(chain => {
+                accounts.push(`${chain}:${address}`);
+            })
+            bn[key] = {
+                accounts,
+                methods: needsNamespaces[key].methods,
+                events: needsNamespaces[key].events
+            }
+        })
+        console.debug("bn", bn);
+        return bn;
+    }
+
+    async startSession(meta: WalletConnectPairMetadata, id?: number, existingTopic: string | undefined = undefined) {
+        const defaultChainId = getDefaultChainId();
+        console.debug("v2 start session", existingTopic);
+        const wallet = await this.wallet;
+        await wallet.connect({
+            networkId: defaultChainId,
+            origin: meta.url
+        });
+        const address = await wallet.getAddress();
+        const sdk = v2sdk.get();
+        if (existingTopic) {
+            console.debug("update session start")
+            await sdk.updateSession({
+                topic: existingTopic,
+                namespaces: this.mapNamespaces(address),
+            });
+            console.debug("update session end")
+        } else {
+            const session = await sdk.approveSession({
+                id: id,
+                namespaces: this.mapNamespaces(address),
+            });
+            existingTopic = session.topic;
+        }
+        this.topic = existingTopic;
+        pushSession({
+            id: this.sessionId,
+            version: "2",
+            meta: meta,
+            connector: this,
+            topic: existingTopic,
+            needsNamespaces: this.needsNamespaces
+        });
+    }
+
+    async callRequest(method: string, params: any, chainId?: string | number): Promise<any> {
+        const wallet = await this.wallet;
+        return wallet.getProvider().send(method, params);
+    }
+
+    kill(message: string): void {
+        const sdk = v2sdk.get();
+        sdk.disconnectSession({
+            topic: this.topic,
+            reason: getSdkError("USER_DISCONNECTED")
+        })
+    }
+
+    getURI(): string {
+        return this.uri;
+    }
+}
+
+async function init(): Promise<void> {
+    const core = new Core({
+        projectId: "3dea5e1f2e4c86222bd29888c46c4744",
+        logger: 'info',
     });
-});
+    const sdk = await Web3Wallet.init({
+        core,
+        metadata: CLIENT_OPTIONS.clientMeta,
+    });
 
-walletconnectv2.on("auth_request", async (authRequest) => {
-    // TODO
-});
+    sdk.on("session_proposal", async (proposal) => {
+        const w = new WalletConnectV2(
+            proposal.params.proposer.publicKey,
+            proposal.params.requiredNamespaces
+        );
+        try {
+            await w.startSession(
+                proposal.params.proposer.metadata,
+                proposal.id,
+                undefined
+            );
+        } catch (error) {
+            sdk.rejectSession({
+                id: proposal.id,
+                reason: getSdkError("SESSION_SETTLEMENT_FAILED")
+            });
+            // TODO upto sentry
+        }
+    });
 
-walletconnectv2.on("session_request", async (event) => {
-    const { topic, params, id } = event;
-    const { request, chainId } = params;
-    const requestParamsMessage = request.params[0];
-});
+    sdk.on("auth_request", async (authRequest) => {
+        // TODO
+    });
 
-// @ts-ignore
-walletconnectv2.on("session_delete", async (event) => {
+    sdk.on("session_request", async (event) => {
+        const { topic, params, id } = event;
+        const { request, chainId } = params;
+        const session = findSessionByTopic(topic);
+        if (session) {
+            await session
+                .connector
+                .callRequest(request.method, request.params, chainId)
+                .then(result => {
+                    const response = { id, result: result, jsonrpc: "2.0" };
+                    sdk.respondSessionRequest({
+                        topic,
+                        response
+                    });
+                })
+                .catch(error => {
+                    const response = {
+                        id,
+                        jsonrpc: "2.0",
+                        error: {
+                            code: 5000,
+                            message: error,
+                        },
+                    };
+                    sdk.respondSessionRequest({
+                        topic,
+                        response
+                    });
+                });
+        } else {
+            const response = {
+                id,
+                jsonrpc: "2.0",
+                error: {
+                    code: 5000,
+                    message: "Not found session",
+                },
+            };
+            await sdk.respondSessionRequest({
+                topic,
+                response
+            });
+        }
+    });
 
-});
+    // @ts-ignore
+    sdk.on("session_delete", async (event) => {
+        console.debug("wallet connect v2 session delete", event);
+    });
 
-function init() {
-
+    v2sdk.set(sdk);
 }
 
 export {
-    walletconnectv2
+    v2sdk,
+    init
 }

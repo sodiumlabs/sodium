@@ -30,8 +30,8 @@ import {
 } from '../components/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
-import { 
-  WindowMessageHandler, 
+import {
+  WindowMessageHandler,
   IframeMessageHandler,
   ProxyMessageHandler,
 } from '@0xsodium/provider';
@@ -98,18 +98,21 @@ export default function App() {
     Promise.all(initPromises).then(() => {
       return asyncSession()
     }).then(() => {
-      if (Platform.OS != "web") {
-        SplashScreen.hideAsync();
-        console.debug("close splash screen");
-      }
-
       const auth = authAtom.get();
       if (auth.isLogin) {
-        initWalletConnect();
+        return initWalletConnect().catch(error => {
+          // TODO sentry
+          console.error(error);
+        });
       } else {
         // if no auth.
         // clear old data.
-        AsyncStorage.clear();
+        return AsyncStorage.clear();
+      }
+    }).then(() => {
+      if (Platform.OS != "web") {
+        SplashScreen.hideAsync();
+        console.debug("close splash screen");
       }
     })
   }, [1])

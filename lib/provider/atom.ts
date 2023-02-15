@@ -6,3 +6,6 @@ export const walletAtom = atom<SodiumWallet | null>(null);
 export const walletHandlerAtom = atom<WalletRequestHandler>();
 
 export const proxyChannel = new ProxyMessageChannel();
+
+// ignore
+proxyChannel.app.handleMessage = () => {}

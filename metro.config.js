@@ -20,7 +20,6 @@ config.resolver = {
         fs: require.resolve('react-native-level-fs'),
         http: require.resolve('@tradle/react-native-http'),
         https: require.resolve('https-browserify'),
-        net: require.resolve('react-native-tcp'),
         stream: require.resolve('stream-browserify'),
         vm: require.resolve('vm-browserify'),
     }
