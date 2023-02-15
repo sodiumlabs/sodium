@@ -1,117 +1,66 @@
 import { ScrollView, StyleSheet } from "react-native";
-import { loginIn } from "../../lib/data/auth";
 import { btnScale, fixWidth } from "../../lib/define";
 import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconLogo } from "../../lib/imageDefine";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import { showUpdateFullScreenModal } from "../../lib/data/modal";
 import MButton from "../baseUI/mButton";
 import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from "../baseUI/mHStack";
 import MImage from "../baseUI/mImage";
 import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
-import { LoginLoading } from "../full/loginLoading";
 import * as React from 'react';
 import { TwitterAuthService } from '../../lib/mpc-auth/twitter';
-import { Platform } from 'react-native';
+import * as AuthSession from 'expo-auth-session';
+import { showUpdateComModal, showUpdateFullScreenModal } from "../../lib/data";
+import { LoginLoading } from "../full/loginLoading";
+import { FailModalItem } from "../modal/modalItem/failModalItem";
+import { loginIn } from '../../lib/data/auth';
 
-/// 临时实现的web twitter auth
-/// 为了demo day 临时，后续换成 expo auth 以支持react native
-interface OpenWindow {
-  url: string;
-  name?: string;
-}
+const projectNameForProxy = "@sodiumlabs/sodium";
+const path = "expo-auth-session"
 
-export const openWindow = ({ url, name }: OpenWindow) => {
-  const top = (window.innerHeight - 400) / 2 + window.screenY;
-  const left = (window.innerWidth - 400) / 2 + window.screenX;
-
-  return window.open(
-    url,
-    name,
-    `dialog=yes,top=${top}px,left=${left},width=${400}px,height=${500}px`
-  );
-};
-
-interface ObserveWindow {
-  popup: Window;
-  interval?: number;
-  onClose: () => void;
-}
-
-export const observeWindow = ({ popup, interval, onClose }: ObserveWindow) => {
-  const intervalId = setInterval(() => {
-    if (popup.closed) {
-      clearInterval(intervalId);
-      onClose();
-    }
-  }, interval || 100);
-};
-
-/// temp - end 
-
-
-
-// const useProxy = Platform.select({ web: true, default: false });
-// WebBrowser.maybeCompleteAuthSession();
-
-// Endpoint
-const discovery = {
-  authorizationEndpoint: "https://twitter.com/i/oauth2/authorize",
-  tokenEndpoint: "https://twitter.com/i/oauth2/token",
-  revocationEndpoint: "https://twitter.com/i/oauth2/revoke",
-};
+const redirect = AuthSession.makeRedirectUri({
+  projectNameForProxy: projectNameForProxy,
+  useProxy: true,
+  path: path
+});
 
 export function LoginScreen() {
   const dimension = useDimensionSize();
 
-  /// temp
-  if (Platform.OS == "web") {
-    const twauth = new TwitterAuthService("//twitter-auth.melandworld.com", global.fetch);
-    React.useEffect(() => {
-      const handle = async (event) => {
-        if (event.data.target === TWITTER_OAUTH_CALLBACK) {
-          const { oauthToken, oauthVerifier } = event.data;
-          const { response } = await twauth.auth({
-            request: {
-              token: oauthToken,
-              verifier: oauthVerifier,
-              messageHash: ""
-            }
-          });
-          await loginIn("r.albert.huang@gmail.com");
-          // await loginIn(response.email);
-        }
-      };
-      window.addEventListener('message', handle);
-
-      return () => {
-        window.removeEventListener('message', handle);
-      }
-    }, [window]);
-  }
-  /// temp - end
-
   const loginClick = async () => {
-    if (Platform.OS == "web") {
-      const twauth = new TwitterAuthService("//twitter-auth.melandworld.com", global.fetch);
-      const { authURL } = await twauth.authURL({
+    showUpdateFullScreenModal(true, <LoginLoading />);
+    const twauth = new TwitterAuthService("https://twitter-auth.melandworld.com", global.fetch);
+    const { authURL } = await twauth.authURL({
+      request: {
+        oauthCallback: redirect
+      }
+    });
+    const authResponse = await AuthSession.startAsync({
+      authUrl: authURL,
+      projectNameForProxy: projectNameForProxy
+    });
+    console.log('Auth response received!', authResponse);
+    if (authResponse.type == "error") {
+      let msg = "AuthSession failed, user did not authorize the app";
+      if (authResponse.error) {
+        msg = authResponse.error.message;
+      }
+      showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={msg} /> });
+    } else if (authResponse.type == "success") {
+      const result = await twauth.auth({
         request: {
-          oauthCallback: "https://sodium-two.vercel.app/"
+          token: authResponse.params["oauth_token"],
+          verifier: authResponse.params["oauth_verifier"],
+          messageHash: ""
         }
       });
-      openWindow({ url: authURL, name: "twteet login" });
-      // promptAsync({ 
-      // });
-      // showUpdateFullScreenModal(true, <TwoFactorAuth />);
-      showUpdateFullScreenModal(true, <LoginLoading />);
-      showUpdateFullScreenModal(false);
-    } else {
-      await loginIn("r.albert.huang@gmail.com");
+      loginIn("r.albert.huang@gmail.com")
     }
+    showUpdateFullScreenModal(false);
   }
 
   return (

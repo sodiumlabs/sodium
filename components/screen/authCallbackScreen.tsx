@@ -7,22 +7,26 @@ import MImage from "../baseUI/mImage";
 import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import * as React from 'react';
+import * as WebBrowser from 'expo-web-browser';
+
 export function AuthCallbackScreen() {
   const dimension = useDimensionSize();
+  const [result, setResult] = React.useState<WebBrowser.WebBrowserCompleteAuthSessionResult>();
 
   React.useEffect(() => {
-    const url = new URL(window.location.href);
-    const oauthToken = url.searchParams.get("oauth_token");
-    const oauthVerifier = url.searchParams.get("oauth_verifier");
-      if (oauthToken && oauthVerifier) {
-          window.opener.postMessage({
-              target: TWITTER_OAUTH_CALLBACK,
-              oauthToken,
-              oauthVerifier
-          }, window.origin);
-          window.close();
-      }
-  }, [window.location.href]);
+    const result = WebBrowser.maybeCompleteAuthSession();
+    setResult(result);
+  }, []);
+
+  const state = React.useMemo(() => {
+    if (!result) {
+      return "loading"
+    } else if (result.type == "failed") {
+      return "auth failed " + result.message
+    } else {
+      return "auth success"
+    }
+  }, [result])
 
   return (
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
@@ -30,7 +34,7 @@ export function AuthCallbackScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
             <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
-            <ScreenTitle title="Auth success" />
+            <ScreenTitle title={state} />
           </MVStack>
         </MVStack>
       </ScrollView>

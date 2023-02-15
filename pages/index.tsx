@@ -105,9 +105,7 @@ export default function App() {
           console.error(error);
         });
       } else {
-        // if no auth.
-        // clear old data.
-        return AsyncStorage.clear();
+        return Promise.resolve();
       }
     }).then(() => {
       if (Platform.OS != "web") {
