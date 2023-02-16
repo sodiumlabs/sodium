@@ -12,12 +12,12 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@0xsodium/config": "^0.16.0",
-    "@0xsodium/network": "^0.16.0",
-    "@0xsodium/provider": "^0.16.0",
-    "@0xsodium/transactions": "^0.16.0",
-    "@0xsodium/utils": "^0.16.0",
-    "@0xsodium/wallet": "^0.16.0",
+    "@0xsodium/config": "^0.21.0",
+    "@0xsodium/network": "^0.21.0",
+    "@0xsodium/provider": "^0.21.0",
+    "@0xsodium/transactions": "^0.21.0",
+    "@0xsodium/utils": "^0.21.0",
+    "@0xsodium/wallet": "^0.21.0",
     "@ethersproject/shims": "^5.7.0",
     "@eva-design/eva": "^2.1.1",
     "@nanostores/react": "^0.4.0",
@@ -34,7 +34,7 @@
     "@walletconnect/utils": "^2.4.2",
     "@walletconnect/web3wallet": "^1.2.0",
     "browserify-zlib": "~0.1.4",
-    "buffer": "^4.9.1",
+    "buffer": "^6.0.3",
     "dns.js": "^1.0.1",
     "eslint-config-next": "latest",
     "ethers": "^5.7.0",
@@ -98,7 +98,9 @@
   },
   "resolutions": {
     "react-native-svg": "13.4.0",
-    "@walletconnect/jsonrpc-ws-connection": "1.0.6"
+    "@walletconnect/jsonrpc-ws-connection": "1.0.6",
+    "buffer": "6.0.3",
+    "@0xsodium/wallet-contracts": "^0.0.5-beta"
   },
   "private": true
 }

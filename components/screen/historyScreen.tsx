@@ -12,9 +12,12 @@ import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
 import { RequestTranscation } from "../transcation/requestTranscation";
+import { useStore } from '@nanostores/react';
+import { currentChainIdAtom } from '../../lib/network';
 
 export function HistoryScreen() {
-  const [queryHistory, transHistoryMap, onScroll] = useQueryHistory();
+  const chainId = useStore(currentChainIdAtom);
+  const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(chainId);
   const dimension = useDimensionSize();
 
   return (

@@ -5,12 +5,12 @@ import { IUserTokenInfo } from "../define";
 import { fetchTokenRates } from "./tokenRate";
 
 
-const fetchTokens = async (): Promise<IUserTokenInfo[]> => {
+const fetchTokens = async (chainId: number): Promise<IUserTokenInfo[]> => {
   const authData = getAuth();
   if (!authData.isLogin) {
     return;
   }
-  const result = await authData.web3signer.getTokens(authData.blockchainAddress) as IUserTokenInfo[];
+  const result = await authData.web3signer.getTokens(authData.blockchainAddress, chainId) as IUserTokenInfo[];
   const rates = await fetchTokenRates(result);
 
   for (let i = 0; i < rates.length; i++) {
@@ -25,8 +25,8 @@ const fetchTokens = async (): Promise<IUserTokenInfo[]> => {
   return result;
 };
 
-export const useQueryTokens = (): [UseQueryResult, IUserTokenInfo[], number] => {
-  const tokensQuery = useQuery(['fetchTokens'], () => fetchTokens());
+export const useQueryTokens = (chainId: number): [UseQueryResult, IUserTokenInfo[], number] => {
+  const tokensQuery = useQuery(['fetchTokens'], () => fetchTokens(chainId));
   const tokenInfos = tokensQuery.data as IUserTokenInfo[];
   let usdBalance = 0;
   if (tokenInfos) {

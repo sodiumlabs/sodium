@@ -8,6 +8,7 @@ import { OperateTimeStamp } from '../data/operateTime';
 import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation, Screens } from '../define';
 import { transactionQueue } from '../transaction';
 import { walletAtom } from './atom';
+import { resolve } from 'styled-jsx/css';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
@@ -46,20 +47,24 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
-        console.log("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options));
-        return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
+        console.log("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options) + " type:"+ typeof message.message);
+        return new Promise(async (tResolve: (value: string) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
             if (wallet === null) {
                 return Promise.reject();
             }
             const continueClick = async () => {
-                const sign = await wallet.signer.signMessage(message.message, message.chainId);
-                tResolve(sign);
+                try {
+                    const sign = await wallet.signer.signMessage(message.message, message.chainId);
+                    tResolve(sign);
+                } catch(error) {
+                    tReject(error)
+                }
             }
             showUpdateSignMessageModal(true, {
                 continueClick: continueClick,
-                cancelClick: () => tReject(),
+                cancelClick: () => tReject("user cancel"),
                 options: options,
                 message: message
             } as ISignMessageModalParam);
@@ -68,12 +73,28 @@ export class WalletPrompter implements WalletUserPrompter {
 
     promptConfirmWalletDeploy(chainId: number, options?: ConnectOptions | undefined): Promise<boolean> {
         console.log("WalletPrompter promptConfirmWalletDeploy");
-        return new Promise(async (tResolve: (value: boolean) => void, tReject: () => void) => {
+        return new Promise(async (tResolve: (value: boolean) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
+            const wallet = walletAtom.get();
+            if (wallet === null) {
+                return Promise.reject();
+            }
             const network = getNetwork(chainId);
             showUpdateDeployConfirmModal(true, {
-                continueClick: () => tResolve(true),
-                cancelClick: () => tReject(),
+                continueClick: async () => {
+                    try {
+                        const tx = await wallet.signer.sendTransaction({
+                            value: "0",
+                            data: "0x",
+                            to: "0x0000000000000000000000000000000000000000"
+                        });
+                        await tx.wait();
+                    } catch(error) {
+                        tReject(error);
+                    }
+                    tResolve(true);
+                },
+                cancelClick: () => tReject("user cancel"),
                 options: options,
                 network: network,
             } as IDeployConfirmModalParam);
@@ -81,7 +102,7 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     handleSignOrSendTranscation(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions, handleName?: string): Promise<string> {
-        return new Promise(async (tResolve: (value: string) => void, tReject: () => void) => {
+        return new Promise(async (tResolve: (value: string) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
             if (wallet === null) {
@@ -117,7 +138,7 @@ export class WalletPrompter implements WalletUserPrompter {
                     tResolve(txnResponse.hash);
                     showUpdateSignTranscationModal(false, null, txnWithTime.timeStamp);
                 } catch (error) {
-                    tReject();
+                    tReject(error);
                     showErrorModal(error.message);
                     onError && onError();
                 }
@@ -127,7 +148,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 continueClick: continueClick,
                 cancelClick: () => {
                     transactionQueue.removeByTxn(txnWithTime);
-                    tReject();
+                    tReject("user cancel");
                 },
                 decodeDatas: decodes,
                 options: options,

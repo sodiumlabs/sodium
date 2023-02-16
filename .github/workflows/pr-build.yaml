@@ -1,0 +1,88 @@
+on:
+  push:
+    branches:
+      - main
+      - feat/*
+
+jobs:
+  build:
+    runs-on: [self-hosted, linux]
+    steps:
+      - uses: khan/pull-request-comment-trigger@v1.1.0
+        name: check triggered
+        id: check
+        with:
+          trigger: '@build'
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+
+      - run: 'echo Found it!'
+        if: steps.check.outputs.triggered == 'true'
+
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v3
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: yarn
+
+      - name: 🏗 Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Setup Android SDK
+        uses: amyu/setup-android@v2
+        with:
+          # default: false
+          # Whether to use the cache     
+          cache-disabled: true
+      
+          # default: '30'
+          # sdk version
+          # see https://developer.android.com/studio/releases/platforms
+          # It will always be installed.
+          sdk-version: '30'
+      
+          # default: '30.0.3'
+          # build tools version
+          # see https://developer.android.com/studio/releases/build-tools
+          # It will always be installed.
+          build-tools-version: '30.0.3'
+      
+          # default: ''
+          # cmake version
+          # see https://developer.android.com/studio/projects/install-ndk
+          # Installed when the version is specified
+          cmake-version: '3.10.2.4988404'
+
+          # default: ''
+          # cmake version
+          # see https://developer.android.com/studio/projects/install-ndk
+          # Installed when the version is specified
+          ndk-version: '21.4.7075529'
+
+      - name: 📦 Install dependencies
+        run: yarn install
+
+      - name: 🚀 Build app
+        run: eas build --platform android --non-interactive --profile preview --local --output=sodium-${{ github.event.pull_request.head.sha }}.apk
+      
+      - name: uploadartifacts
+        uses: gavv/pull-request-artifacts@v1.0.0
+        with:
+          commit: ${{ github.event.pull_request.head.sha }}
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts-branch: artifacts
+          artifacts: |
+            some/file.apk
+            another/file.ipa

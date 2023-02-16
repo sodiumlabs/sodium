@@ -3,6 +3,7 @@ import { loadWalletConnectSessions } from "../common";
 import { WalletConnectV1 } from './v1';
 import { v2sdk, WalletConnectV2, init as v2Init } from './v2';
 import { getWalletConnectLinkVersion } from './utils';
+import { authAtom } from "../data/auth";
 
 export function newPairV1(url: string, existing: boolean = false, existingSession: any = undefined): Promise<WalletConnectV1> {
     return new Promise((resolve, reject) => {
@@ -44,10 +45,11 @@ export async function newPair(url: string): Promise<void> {
     }
 }
 
-export async function init(): Promise<void> {
+async function init(): Promise<void> {
     try {
         await v2Init();
     } catch (error) {
+        console.warn(error)
         // TODO upsentry;
     }
 
@@ -61,3 +63,9 @@ export async function init(): Promise<void> {
         }
     })
 }
+
+authAtom.subscribe((auth) => {
+    if (auth.isLogin) {
+        init();
+    }
+})

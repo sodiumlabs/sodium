@@ -1,6 +1,6 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { eStotageKey, ITranscation } from "../define";
-import { Wallet } from 'ethers';
+import { Wallet } from '../fixedEthersWallet';
 import { Platform as SodiumPlatform } from '@0xsodium/config';
 import { WalletConnectSessionSerialized } from '../walletconnect';
 
@@ -20,8 +20,14 @@ export const loadTxnQueue = async (key: eStotageKey): Promise<ITranscation[]> =>
 }
 
 export const saveSession = async (s: { sodiumUserId: string, platform: string, w: Wallet }) => {
+  console.debug("save session");
   return AsyncStorage.setItem("@sodium.wallet.session", JSON.stringify({
     sodiumUserId: s.sodiumUserId,
+    platform: "web",
+
+    // TODO
+    // https://docs.expo.dev/versions/latest/sdk/securestore/#usage
+    pk: s.w.privateKey
   }));
 }
 
@@ -31,12 +37,18 @@ export const clearSession = async () => {
 
 export const loadSession = async (): Promise<{ sodiumUserId: string, platform: SodiumPlatform, w: Wallet } | null> => {
   const value = await AsyncStorage.getItem("@sodium.wallet.session");
-  if (value && value != "") {
-    return Promise.resolve({
-      sodiumUserId: "r.albert.huang@gmail.com",
-      platform: "web",
-      w: Wallet.createRandom()
-    })
+  try {
+    if (value && value != "") {
+      console.debug("sync session")
+      const sessionSerialized = JSON.parse(value);
+      return Promise.resolve({
+        sodiumUserId: sessionSerialized.sodiumUserId,
+        platform: sessionSerialized.platform,
+        w: new Wallet(sessionSerialized.pk)
+      })
+    }
+  } catch (error) {
+    console.warn(error);
   }
   return null;
 }
@@ -46,6 +58,7 @@ export const saveWalletConnectSessions = async (walletConnectSessions: WalletCon
     return AsyncStorage.setItem("@sodium.wcs", JSON.stringify(walletConnectSessions));
   } catch(error) {
     // TODO sentry
+    console.warn(error);
   }
   return;
 }

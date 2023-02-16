@@ -10,7 +10,7 @@ import {
     NeedsNamespaces,
     BaseNamespaces
 } from './type';
-import { getDefaultChainId } from "../network";
+import { getCurrentChainId } from "../network";
 import { Wallet } from "@0xsodium/provider";
 import { createWallet } from "./wallet";
 import { atom } from 'nanostores';
@@ -32,7 +32,7 @@ export class WalletConnectV2 implements IWalletConnect {
     protected origin: string;
 
     constructor(protected sessionId: string, protected needsNamespaces: NeedsNamespaces) {
-        const defaultChainId = getDefaultChainId();
+        const defaultChainId = getCurrentChainId();
         this.wallet = createWallet(defaultChainId);
     }
 
@@ -54,7 +54,7 @@ export class WalletConnectV2 implements IWalletConnect {
     }
 
     async startSession(meta: WalletConnectPairMetadata, id?: number, existingTopic: string | undefined = undefined) {
-        const defaultChainId = getDefaultChainId();
+        const defaultChainId = getCurrentChainId();
         const wallet = await this.wallet;
         await wallet.connect({
             networkId: defaultChainId,
@@ -86,9 +86,9 @@ export class WalletConnectV2 implements IWalletConnect {
         });
     }
 
-    async callRequest(method: string, params: any, chainId?: string | number): Promise<any> {
+    async callRequest(method: string, params: any, chainId?: number): Promise<any> {
         const wallet = await this.wallet;
-        return wallet.getProvider().send(method, params);
+        return wallet.getProvider(chainId).send(method, params);
     }
 
     async kill(message: string) {
@@ -145,15 +145,18 @@ async function init(): Promise<void> {
     sdk.on("session_request", async (event) => {
         const { topic, params, id } = event;
         const { request, chainId: namespaceChainId } = params;
-        const defaultChainId = getDefaultChainId();
+        const defaultChainId = getCurrentChainId();
         const wallet = await createWallet(defaultChainId);
         const [namespace, chainIdStr] = namespaceChainId.split(":");
         const chainId = parseInt(chainIdStr);
+
+        console.debug("networks", await wallet.getNetworks());
+
         wallet.getProvider(chainId)
             .send(request.method, request.params, chainId)
             .then(result => {
                 const response = { id, result: result, jsonrpc: "2.0" };
-                sdk.respondSessionRequest({
+                return sdk.respondSessionRequest({
                     topic,
                     response
                 });
@@ -167,6 +170,7 @@ async function init(): Promise<void> {
                         message: error,
                     },
                 };
+                console.debug("error", error);
                 sdk.respondSessionRequest({
                     topic,
                     response

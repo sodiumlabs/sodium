@@ -1,4 +1,4 @@
-import { initWalletByTest, logout, SodiumWallet, walletAtom } from '../provider';
+import { initWallet, logout, SodiumWallet, walletAtom } from '../provider';
 import { transactionQueue } from "../transaction";
 import { transactionPending } from '../transaction/pending';
 import { authAtom } from './authAtom';
@@ -24,6 +24,6 @@ export const loginOut = async () => {
   logout();
 }
 
-export const loginIn = async (email: string) => {
-  await initWalletByTest(email);
+export const loginIn = async (authId: string) => {
+  await initWallet(authId);
 }

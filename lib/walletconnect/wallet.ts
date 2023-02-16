@@ -1,6 +1,7 @@
 import { initWallet, Wallet } from '@0xsodium/provider';
 import { proxyChannel } from '../provider';
 import { ScopeAsyncStorage } from '../common';
+import { networks } from '../network';
 
 let wallet: Promise<Wallet>
 
@@ -11,6 +12,9 @@ export async function createWallet(
     if (wallet) {
         return wallet;
     }
+
+    console.debug("create wallet with networks", networks);
+
     wallet = initWallet(networkId, {
         localStorage: storage,
         transports: {
@@ -25,7 +29,8 @@ export async function createWallet(
                 appPort: proxyChannel.app
             }
         },
-        defaultNetworkId: networkId
+        defaultNetworkId: networkId,
+        networks: networks,
     })
     return wallet;
-} 
+}

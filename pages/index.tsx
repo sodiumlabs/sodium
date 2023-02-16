@@ -42,7 +42,6 @@ import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
 import { StatusBar } from 'expo-status-bar';
 import { authAtom } from '../lib/data/authAtom';
 import { init as initWalletConnect } from '../lib/walletconnect';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const queryClient = new QueryClient(
   {
@@ -98,15 +97,7 @@ export default function App() {
     Promise.all(initPromises).then(() => {
       return asyncSession()
     }).then(() => {
-      const auth = authAtom.get();
-      if (auth.isLogin) {
-        return initWalletConnect().catch(error => {
-          // TODO sentry
-          console.error(error);
-        });
-      } else {
-        return Promise.resolve();
-      }
+      
     }).then(() => {
       if (Platform.OS != "web") {
         SplashScreen.hideAsync();

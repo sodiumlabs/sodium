@@ -1,22 +1,15 @@
 import { WalletRequestHandler, WalletUserPrompter, Web3Signer, Web3Provider } from '@0xsodium/provider';
-import { testnetNetworks } from '@0xsodium/network';
 import { Account, AccountOptions } from '@0xsodium/wallet';
 import { Platform } from 'react-native';
 import { Platform as SodiumPlatform } from '@0xsodium/config';
-import { Wallet } from 'ethers';
+import { Wallet } from '../fixedEthersWallet';
 import { WalletPrompter } from './prompter';
 import { clearSession, loadSession, saveSession } from '../common/asyncStorage';
 import { walletAtom, walletHandlerAtom } from './atom';
 import { Session } from './types';
+import { testNetworks, mainNetworks, getCurrentChainId, currentChainIdAtom, networks } from '../network';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
-const networks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
-    return {
-        ...n,
-        rpcUrl: "https://polygon-mumbai.g.alchemy.com/v2/fIbA8DRSTQXPAhcHKiPFo19SPqhHNHam",
-        bundlerUrl: "https://bundler-dev.melandworld.com/",
-    }
-});
 
 export const logout = () => {
     clearSession().then(() => walletAtom.set(null));
@@ -30,15 +23,22 @@ walletAtom.subscribe(newValue => {
     }
 })
 
+currentChainIdAtom.subscribe(newChainId => {
+    const walletHandler = walletHandlerAtom.get();
+    if (walletHandler) {
+        walletHandler.setDefaultNetwork(newChainId);
+    }
+})
+
 export const initHandler = (): WalletRequestHandler => {
     const walletHandler = new WalletRequestHandler(
         null,
         prompter,
-        [],
-        networks
+        mainNetworks,
+        testNetworks
     );
     walletHandler.setDefaultNetwork(
-        networks[0].chainId,
+        getCurrentChainId(),
         false
     );
     walletHandlerAtom.set(walletHandler);
@@ -63,6 +63,7 @@ export const asyncSession = async () => {
 
 const signIn = async (account: Account, session: Session, connect: boolean) => {
     const walletHandler = walletHandlerAtom.get();
+    account.setNetworks(mainNetworks, testNetworks, getCurrentChainId());
     await walletHandler.signIn(account, {
         connect: connect,
     });
@@ -78,10 +79,10 @@ const signIn = async (account: Account, session: Session, connect: boolean) => {
     });
 }
 
-export const initWalletByTest = async (email: string) => {
+export const initWallet = async (authId: string) => {
     const session: Session = {
         platform: getCurrentSodiumPlatform(),
-        sodiumUserId: email,
+        sodiumUserId: authId,
         w: Wallet.createRandom()
     }
     const options: AccountOptions = {
@@ -92,7 +93,7 @@ export const initWalletByTest = async (email: string) => {
         }
     };
     const account = new Account(options, session.w);
-    signIn(account, session, true);
+    return signIn(account, session, true);
 }
 
 function getCurrentSodiumPlatform(): SodiumPlatform {

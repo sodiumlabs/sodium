@@ -1,6 +1,6 @@
 import RNWalletConnect from "@walletconnect/client";
 import { createWallet } from './wallet';
-import { getDefaultChainId } from '../network';
+import { getCurrentChainId } from '../network';
 import { IWalletConnect, WalletConnectPairMetadata } from './type';
 import { Wallet } from "@0xsodium/provider";
 import { pushSession, removeSessionById } from './atom';
@@ -10,7 +10,7 @@ export class WalletConnectV1 implements IWalletConnect {
 
     constructor(protected connector: RNWalletConnect, existing: boolean, waitSessionRequest: (w: WalletConnectV1) => void) {
         // Subscribe to session requests
-        const defaultChainId = getDefaultChainId();
+        const defaultChainId = getCurrentChainId();
         this.wallet = createWallet(defaultChainId);
 
         if (existing) {
@@ -69,7 +69,7 @@ export class WalletConnectV1 implements IWalletConnect {
     }
 
     async startSession(meta: WalletConnectPairMetadata, existing: boolean) {
-        const defaultChainId = getDefaultChainId();
+        const defaultChainId = getCurrentChainId();
         const wallet = await this.wallet;
         await wallet.connect({
             networkId: defaultChainId,

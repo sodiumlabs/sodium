@@ -24,12 +24,15 @@ import { MLoading } from "../baseUI/mLoading";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
+import { useStore } from '@nanostores/react';
+import { currentChainIdAtom } from '../../lib/network';
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
+  const chainId = useStore(currentChainIdAtom);
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [clipboardContent, setClipboardContent] = useMClipboard();
-  const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(null, tokenInfo.token.address);
+  const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(chainId, tokenInfo.token.address);
   // const copyTxHash = () => {
   //   setClipboardContent(tokenInfo.token.address)
   // }

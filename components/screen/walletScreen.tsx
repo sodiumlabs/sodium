@@ -22,11 +22,13 @@ import { showUpdateScanModal } from '../../lib/data/modal';
 import SendSvg from '../svg/sendSvg';
 import ScanSvg from '../svg/scanSvg';
 import DepositSvg from '../svg/depositSvg';
-
+import { useStore } from '@nanostores/react';
+import { currentChainIdAtom } from '../../lib/network';
 
 
 export function WalletScreen() {
-  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
+  const chainId = useStore(currentChainIdAtom);
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens(chainId);
   const [searchText, setSearchText] = useState<string>('');
   const dimension = useDimensionSize();
   const onChangeText = (text: string) => {

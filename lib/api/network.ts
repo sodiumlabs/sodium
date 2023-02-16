@@ -21,7 +21,6 @@ import { useQuery, UseQueryResult } from "react-query";
 import { getNetwork } from '../common/network';
 import { getAuth } from '../data/authAtom';
 
-
 export const fetchNetwork = async (): Promise<NetworkConfig> => {
   const authData = getAuth();
   if (!authData.isLogin) {
@@ -29,8 +28,6 @@ export const fetchNetwork = async (): Promise<NetworkConfig> => {
   }
   const chainId = await authData.signer.getChainId();
   const network = getNetwork(chainId);
-  console.log("fetchNetwork");
-  console.log(network);
   return network;
 };
 

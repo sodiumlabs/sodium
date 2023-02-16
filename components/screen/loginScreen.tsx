@@ -58,8 +58,9 @@ export function LoginScreen() {
           messageHash: ""
         }
       });
-      loginIn("r.albert.huang@gmail.com")
+      await loginIn(result.response.authId);
     }
+    console.debug("console update full");
     showUpdateFullScreenModal(false);
   }
 
