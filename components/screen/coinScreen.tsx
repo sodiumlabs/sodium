@@ -66,11 +66,11 @@ export function CoinScreen(props) {
             <BaseFoldFrame header={"Detail"} defaultExpansion>
 
               <MText style={{ marginBottom: 10 }}>Description</MText>
-              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unkonw'}</MText>
+              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unknown'}</MText>
 
               <MDivider style={{ marginVertical: 10 }} />
               <MText style={{ marginBottom: 10 }} >Website</MText>
-              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website || 'unkonw'}</MText>
+              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website || 'unknown'}</MText>
 
               {!tokenInfo.token.isNativeToken && (
                 <>

@@ -53,7 +53,7 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
               <MText style={{ marginLeft: 5, color: eColor.GrayContentText }}>{token.symbol}</MText>
             </MHStack>
           }
-          right={<MText style={{ color: eColor.GrayText }}>{formatWei2Price(transfer.amount, transfer.token.decimals)} {transfer.token.symbol}</MText>} />
+          right={<MText style={{ color: eColor.GrayText }}>{formatWei2Price(transfer.amount, transfer.token.decimals, 3)} {transfer.token.symbol}</MText>} />
 
       </MVStack>
     </MPressable>
