@@ -57,10 +57,10 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
         right={
           <>
             <MText style={{ color: eColor.GrayText }} >{formatTime2Today(data.timeStamp)}</MText>
-            <MButton style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, backgroundColor: eColor.GrayWhite }} onPress={linkTxHash}  >
+            <MButton style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, backgroundColor: eColor.GrayWhite, paddingHorizontal: 5 }} onPress={linkTxHash}  >
               <MImage style={{ opacity: 0.6 }} w={10} h={10} source={IconShare} />
             </MButton>
-            <MButton style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, backgroundColor: eColor.GrayWhite }} onPress={closePendingClick}  >
+            <MButton style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, backgroundColor: eColor.GrayWhite, paddingHorizontal: 5 }} onPress={closePendingClick}  >
               <MImage style={{ opacity: 0.6 }} w={10} h={10} source={IconForkClose} />
             </MButton>
           </>
@@ -91,9 +91,11 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
       <MDivider style={{ marginVertical: 10 }} />
 
       <MText style={{ marginBottom: 10 }} >To Recipient</MText>
-      <MHStack style={{ alignItems: 'center' }}>
-        <MAvatar name={'test'} />
-        <MText style={{ color: eColor.GrayContentText, marginLeft: 6 }}>{decodeTransferData.decodeTransferData.to}</MText>
+      <MHStack style={{ alignItems: 'center', flex: 1 }}>
+        <MAvatar name={decodeTransferData.decodeTransferData.to} />
+        <MHStack style={{ flex: 1 }} >
+          <MText style={{ color: eColor.GrayContentText, marginLeft: 6 }}>{decodeTransferData.decodeTransferData.to}</MText>
+        </MHStack>
       </MHStack>
 
     </MVStack >

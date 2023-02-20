@@ -105,7 +105,7 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
       {
         isSelected && (
           <MVStack stretchW >
-            <MText style={{ marginVertical: 10 }}>You bug</MText>
+            <MText style={{ marginVertical: 10 }}>You buy</MText>
             <DepositTokenDropdown style={{ zIndex: 2 }} selectedOption={curYouBuyToken} setSelectedOption={onYouBuyTokenClick} options={youBuyTokens} />
             <MText style={{ marginVertical: 10 }}>You pay</MText>
             <MInput
@@ -133,9 +133,9 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
               </MButton>
               <MText style={{ color: eColor.GrayText, marginTop: 10 }} numberOfLines={null}>You will be redirected to the third party page</MText>
               <MText style={{ color: eColor.GrayText }} numberOfLines={null}>The process would take approximately 10 - 15 min</MText>
-              <Pressable onPress={() => Linking.openURL('https://chaingas.shop/')}>
+              {/* <Pressable onPress={() => Linking.openURL('https://chaingas.shop/')}>
                 <MText numberOfLines={null} style={{ textDecorationLine: 'underline', color: eColor.GrayText, marginTop: 10 }} >from mainland china?</MText>
-              </Pressable>
+              </Pressable> */}
             </MVStack>
 
           </MVStack>

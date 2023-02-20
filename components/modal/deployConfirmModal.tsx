@@ -1,8 +1,11 @@
 import { StyleSheet } from 'react-native';
 import { IDeployConfirmModalParam, IModalParam } from '../../lib/define';
+import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseModal } from '../base/baseModal';
+import { Spacer } from '../base/spacer';
 import MButton from '../baseUI/mButton';
+import { MButtonText } from '../baseUI/mButtonText';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
@@ -28,14 +31,18 @@ export const DeployConfirmModal = (props: { hideModal: () => void, modalParam: I
       hideModal={hideModal}
       contentHeight={400}
     >
-      <MVStack stretchH stretchW style={{ 'alignItems': 'center', flex: 1 }}>
-        <MText>Your Sodium wallet needs to be deployed on {param?.network?.name?.toUpperCase()} to sign messages.</MText>
-        <MButton style={{ flex: 1 }} onPress={onCancelClick} >
-          <MText>Cancel</MText>
+      <MVStack stretchH stretchW style={{ 'alignItems': 'center', padding: 15 }}>
+        <MText style={{ fontWeight: '700' }} numberOfLines={null}>Your Sodium wallet needs to be deployed on {param?.network?.name?.toUpperCase()} to sign messages.</MText>
+
+        <Spacer />
+        <MButton stretchW style={{ height: 30 }} onPress={onCancelClick} >
+          <MButtonText title={"Cancel"} />
         </MButton>
-        <MButton style={{ flex: 1 }} onPress={onConfirmClick} isLoading={isLoading} >
-          <MText>Deploy</MText>
+
+        <MButton stretchW style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} onPress={onConfirmClick} isLoading={isLoading} >
+          <MButtonText title={"Deploy"} />
         </MButton>
+
       </MVStack>
     </BaseModal>
   );

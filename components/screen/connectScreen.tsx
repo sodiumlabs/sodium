@@ -5,6 +5,7 @@ import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import { navigationRef } from "../base/navigation";
 import MButton from "../baseUI/mButton";
+import { MButtonText } from "../baseUI/mButtonText";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 
@@ -29,11 +30,12 @@ export function ConnectScreen(props) {
               Do you want to allow {param?.options?.origin} to connect to your wallet?
             </MText>
 
-            <MButton style={{ backgroundColor: eColor.Blue, height: 30 }} stretchW onPress={onContinueClick} >
-              <MText style={{ fontWeight: '700', color: '#ffffff' }} >Continue</MText>
-            </MButton>
             <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onCancelClick} >
-              <MText style={{ fontWeight: '700', color: '#ffffff' }}>Cancel</MText>
+              <MButtonText title={"Cancel"} />
+            </MButton>
+
+            <MButton style={{ backgroundColor: eColor.Blue, height: 30 }} stretchW onPress={onContinueClick} >
+              <MButtonText title={"Continue"} />
             </MButton>
           </MVStack>
         </MVStack>

@@ -24,23 +24,16 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} stretchW>
         <MImage w={24} h={24} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
 
-        <MVStack style={{ flex: 1, marginLeft: 6 }}>
-          <MLineLR
-            left={
-              <MHStack >
-                <MText style={{ fontWeight: '700' }} fontSize={14} >{tokenInfo.token.symbol}</MText>
-                {/* <MImage size={12} /> */}
-                {/* <MText>{tokenInfo.token.name}</MText> */}
-              </MHStack>
-            }
-            right={<MText></MText>}
-          />
+        <MHStack style={{ flex: 1 }}>
+          <MVStack style={{ flex: 1, marginLeft: 6 }}>
+            <MText style={{ fontWeight: '700' }} fontSize={14} >{tokenInfo.token.symbol}</MText>
+            <MText style={{ color: eColor.GrayText }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString(), tokenInfo.token.decimals, 3)} {tokenInfo.token.symbol}</MText>
+          </MVStack>
+          <MVStack style={{ alignSelf: 'center' }} >
+            <MText style={{ color: eColor.GrayContentText }} fontSize={10}>${tokenInfo.usdBalance}</MText>
+          </MVStack>
+        </MHStack>
 
-          <MLineLR
-            style={{ marginTop: 2 }}
-            left={<MText style={{ color: eColor.GrayText }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString(), tokenInfo.token.decimals)} {tokenInfo.token.symbol} ${tokenInfo.usdBalance}</MText>}
-            right={<MText></MText>} />
-        </MVStack>
       </MHStack>
     </MPressable>
   )

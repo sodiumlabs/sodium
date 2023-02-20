@@ -1,10 +1,12 @@
+import { useStore } from '@nanostores/react';
 import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
+import { showUpdateScanModal } from '../../lib/data/modal';
 import { fixWidth, Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
-import { IconMenuDeposit, IconMenuScan, IconMenuSend } from '../../lib/imageDefine';
+import { currentChainIdAtom } from '../../lib/network';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
 import { navigationRef } from '../base/navigation';
@@ -16,14 +18,11 @@ import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
 import WalletButton from "../baseUI/walletButton";
 import CoinItem from "../item/coinItem";
+import DepositSvg from '../svg/depositSvg';
+import ScanSvg from '../svg/scanSvg';
+import SendSvg from '../svg/sendSvg';
 import { PendingTranscation } from '../transcation/pendingTranscation';
 import { RequestTranscation } from '../transcation/requestTranscation';
-import { showUpdateScanModal } from '../../lib/data/modal';
-import SendSvg from '../svg/sendSvg';
-import ScanSvg from '../svg/scanSvg';
-import DepositSvg from '../svg/depositSvg';
-import { useStore } from '@nanostores/react';
-import { currentChainIdAtom } from '../../lib/network';
 
 
 export function WalletScreen() {

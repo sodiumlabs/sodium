@@ -32,9 +32,10 @@ export function PendingTranscation() {
       }
 
       <MLineLR right={
-        <MButton onPress={removeAllClick} style={[{ marginRight: 2, borderRadius: 15, height: 20, backgroundColor: eColor.GrayWhite }]} >
+        <MButton onPress={removeAllClick} style={[{ marginRight: 2, height: 20, borderRadius: 15, backgroundColor: eColor.GrayWhite, paddingVertical: 0 }]} >
           <MText style={{ color: eColor.GrayContentText }} fontSize={10}  >Clear All</MText>
         </MButton>} />
+
     </MVStack>
   )
 }
