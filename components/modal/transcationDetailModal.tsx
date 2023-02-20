@@ -68,7 +68,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
 
                   <MVStack stretchW style={styles.marginV}>
                     <MText style={styles.titleColor}>Status</MText>
-                    <MText style={[{ marginTop: 10 }, styles.contentWeight]} fontSize={14}>{history.type}</MText>
+                    <MText style={[{ marginTop: 10 }, styles.contentWeight]} fontSize={14}>{capitalize(history.type)}</MText>
                     <MDivider style={{ marginVertical: 10 }} />
 
                     <MText style={styles.titleColor}>Date & Time</MText>

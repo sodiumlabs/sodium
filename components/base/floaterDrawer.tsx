@@ -32,6 +32,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   const contentOpacityAnim = useRef(new Animated.Value(0)).current;
   const [viewHeight, setViewHeight] = useState(-1);
   const [isFold, setIsFold] = useState(true);
+  const animRate = 0.5;
 
   const explanceAnim = () => {
     if (viewHeight <= 0) {
@@ -41,24 +42,24 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     Animated.timing(headerOffsetAnim, {
       easing: Easing.linear,
       toValue: -50,
-      duration: 100,
+      duration: 100 * animRate,
       useNativeDriver: false
     }).start();
 
     Animated.timing(backgroundHeightAnim, {
       easing: Easing.cubic,
       toValue: viewHeight,
-      duration: 250,
+      duration: 250 * animRate,
       useNativeDriver: false,
-      delay: 100
+      delay: 100 * animRate
     }).start();
 
     Animated.timing(contentOpacityAnim, {
       easing: Easing.cubic,
       toValue: 1,
-      duration: 200,
+      duration: 200 * animRate,
       useNativeDriver: false,
-      delay: 200
+      delay: 200 * animRate
     }).start();
 
 
@@ -68,23 +69,23 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     Animated.timing(contentOpacityAnim, {
       easing: Easing.cubic,
       toValue: 0,
-      duration: 200,
+      duration: 200 * animRate,
       useNativeDriver: false
     }).start();
     Animated.timing(backgroundHeightAnim, {
       easing: Easing.cubic,
       toValue: minHeaderHeight,
-      duration: 250,
+      duration: 250 * animRate,
       useNativeDriver: false,
-      delay: 200
+      delay: 200 * animRate
     }).start();
 
     Animated.timing(headerOffsetAnim, {
       easing: Easing.linear,
       toValue: 0,
-      duration: 100,
+      duration: 100 * animRate,
       useNativeDriver: false,
-      delay: 400
+      delay: 400 * animRate
     }).start()
   }
 

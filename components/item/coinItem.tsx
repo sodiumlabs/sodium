@@ -30,7 +30,7 @@ export default function CoinItem(props: TextInputProps & { tokenInfo: IUserToken
             <MText style={{ color: eColor.GrayText }} fontSize={10}>{formatWei2Price(tokenInfo.balance.toString(), tokenInfo.token.decimals, 3)} {tokenInfo.token.symbol}</MText>
           </MVStack>
           <MVStack style={{ alignSelf: 'center' }} >
-            <MText style={{ color: eColor.GrayText }} fontSize={10}>${tokenInfo.usdBalance}</MText>
+            <MText style={{ color: eColor.GrayContentText }} fontSize={10}>${tokenInfo.usdBalance}</MText>
           </MVStack>
         </MHStack>
 
