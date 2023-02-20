@@ -30,24 +30,29 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
     if (isTweening) return;
     setIsTweening(true);
     setUiVisible(true);
-    backgroundPosAnim.setValue(dimensionH);
-    // console.log("show");
 
-    Animated.timing(backgroundFadeAnim, {
-      easing: Easing.quad,
-      toValue: 0.15,
-      duration: 300,
-      useNativeDriver: false
-    }).start();
+    if (isAnim) {
+      backgroundPosAnim.setValue(dimensionH);
+      // console.log("show");
+      Animated.timing(backgroundFadeAnim, {
+        easing: Easing.quad,
+        toValue: 0.15,
+        duration: 300,
+        useNativeDriver: false
+      }).start();
 
-    Animated.timing(backgroundPosAnim, {
-      easing: Easing.quad,
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false
-    }).start(() => {
+      Animated.timing(backgroundPosAnim, {
+        easing: Easing.quad,
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false
+      }).start(() => {
+        setIsTweening(false);
+      });
+    } else {
       setIsTweening(false);
-    });
+    }
+
   }
 
   const hideAnim = () => {
@@ -55,25 +60,28 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
     if (isTweening) return;
     setIsTweening(true);
     // console.log("hide");
-    // debugger
-    // console.log("hidehidehidehidehide");
-    Animated.timing(backgroundFadeAnim, {
-      easing: Easing.quad,
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: false
-    }).start();
-
-    Animated.timing(backgroundPosAnim, {
-      easing: Easing.quad,
-      toValue: dimensionH,
-      duration: 300,
-      useNativeDriver: false
-    }).start(() => {
+    const finish = () => {
       hideModal();
       setUiVisible(false);
       setIsTweening(false);
-    });
+    }
+    if (isAnim) {
+      Animated.timing(backgroundFadeAnim, {
+        easing: Easing.quad,
+        toValue: 0,
+        duration: 300,
+        useNativeDriver: false
+      }).start();
+
+      Animated.timing(backgroundPosAnim, {
+        easing: Easing.quad,
+        toValue: dimensionH,
+        duration: 300,
+        useNativeDriver: false
+      }).start(finish);
+    } else {
+      finish();
+    }
   }
 
   useEffect(() => {
@@ -100,21 +108,21 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
       borderTopLeftRadius: isFullScreen ? 0 : 15,
       borderTopRightRadius: isFullScreen ? 0 : 15,
     }
-  }, [isAdapterWeb, marginTop]);
+  }, [isAdapterWeb, marginTop, isFullScreen]);
 
   const onBackClick = () => {
     hideAnim();
   }
 
-  useEffect(() => {
-    // if (!visible) return;
-    const hardwareBackPress = (): boolean => {
-      onBackClick();
-      return true;
-    }
-    BackHandler.addEventListener("hardwareBackPress", hardwareBackPress);
-    return BackHandler.removeEventListener("hardwareBackPress", hardwareBackPress);
-  }, [])
+  // useEffect(() => {
+  //   // if (!visible) return;
+  //   const hardwareBackPress = (): boolean => {
+  //     onBackClick();
+  //     return true;
+  //   }
+  //   BackHandler.addEventListener("hardwareBackPress", hardwareBackPress);
+  //   return BackHandler.removeEventListener("hardwareBackPress", hardwareBackPress);
+  // }, [])
 
   return (
     // <MVStack stretchH stretchW style={{ backgroundColor: 'transparent' }} >
@@ -123,6 +131,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
       transparent={true}
       // animationType={isAnim ? 'slide' : 'none'}
       visible={uiVisible}
+      onRequestClose={onBackClick}
     // presentationStyle='pageSheet'
     >
 
@@ -133,7 +142,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
           </Animated.View>
         </TouchableWithoutFeedback>
 
-        <Animated.View style={[styles.content, contentStyle, adapterStyle, { transform: [{ translateY: backgroundPosAnim }] }]} >
+        <Animated.View style={[styles.content, contentStyle, adapterStyle, { transform: [{ translateY: backgroundPosAnim }], width: '100%' }]} >
           {
             props.children
           }
