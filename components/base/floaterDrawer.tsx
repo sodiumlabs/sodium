@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View, Platform } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
 import { waitTime } from '../../lib/common/common';
 import { loginOut } from '../../lib/data/auth';
@@ -37,6 +37,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     if (viewHeight <= 0) {
       return;
     }
+    setIsFold(false)
     Animated.timing(headerOffsetAnim, {
       easing: Easing.linear,
       toValue: -50,
@@ -50,7 +51,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
       duration: 250,
       useNativeDriver: false,
       delay: 100
-    }).start(() => setIsFold(false));
+    }).start();
 
     Animated.timing(contentOpacityAnim, {
       easing: Easing.cubic,
@@ -63,6 +64,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
 
   }
   const foldAnim = () => {
+    setIsFold(true)
     Animated.timing(contentOpacityAnim, {
       easing: Easing.cubic,
       toValue: 0,
@@ -83,7 +85,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
       duration: 100,
       useNativeDriver: false,
       delay: 400
-    }).start(() => setIsFold(true))
+    }).start()
   }
 
   const onFoldBtnClick = () => {
