@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View, Platform } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
 import { waitTime } from '../../lib/common/common';
@@ -118,70 +118,81 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     showUpdateFullScreenModal(false);
   }
 
+  const foldView = useMemo(() => {
+    return (
+      <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >
+        <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
+          {
+            props.hasNavigationBarBack && (
+              <Pressable style={{ paddingLeft: 17, paddingRight: 17, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
+                <MImage w={8} h={12} source={IconArrowL} />
+              </Pressable>
+            )
+          }
+          <MAvatar style={{ marginHorizontal: 10 }} name={auth.blockchainAddress} />
+          <MText style={{ flex: 1, fontWeight: '700' }} >{auth.blockchainAddress}</MText>
+          <MImage w={24} h={24} style={{ margin: 10 }} source={IconMore} />
+        </MHStack>
+      </Pressable>
+    )
+  }, [onFoldBtnClick, props.hasNavigationBarBack, auth.blockchainAddress]);
+
+  const unFoldView = useMemo(() => {
+    return (
+      <MVStack style={{ padding: 10, transform: [{ translateY: -minHeaderHeight }] }} >
+        <MHStack style={{ height: 48 }}>
+          <MAvatar style={{ marginHorizontal: 10 }} size={48} name={auth.blockchainAddress} />
+          <MVStack style={{ flex: 1 }}>
+            <MText style={{ fontWeight: '700' }} >{auth.blockchainAddress}</MText>
+            <MHStack >
+              <CopyButton style={{ marginHorizontal: 5, height: 24, marginTop: 10 }} copyText={auth.blockchainAddress} />
+            </MHStack>
+          </MVStack>
+          <MVStack style={{ marginLeft: 10 }}>
+            <MPressable onPress={() => foldAnim()}>
+              <MImage w={24} h={24} source={IconForkClose} />
+            </MPressable>
+          </MVStack>
+        </MHStack>
+
+        <MVStack style={[styles.email]}>
+          <MText  >{profile.authorizedSource}</MText>
+          <MText style={{ marginTop: 5, color: "#6B6B6B" }} >{profile.userName}</MText>
+        </MVStack>
+
+        <MHStack style={[styles.connected]}>
+          <MVStack style={{ flex: 1 }}>
+            <MText>Connected</MText>
+            <MText style={{ marginTop: 5, color: "#6B6B6B" }}>{network?.name}</MText>
+          </MVStack>
+        </MHStack>
+
+        <MHStack style={{ height: 60 }}>
+          <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
+            {/* <MImage w={14} h={14} style={{ marginRight: 6 }} source={IconSettings} /> */}
+            <SettingSvg style={{ marginRight: 6 }} />
+            <MButtonText title={"Settings"} />
+          </MButton>
+          <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
+            {/* <MImage w={12} h={10} style={{ marginRight: 6 }} source={IconSignout} /> */}
+            <SignOutSvg style={{ marginRight: 6 }} />
+            <MButtonText title={"Sign out"} />
+          </MButton>
+        </MHStack>
+      </MVStack>
+    )
+  }, [auth.blockchainAddress, profile.authorizedSource, profile.userName, network?.name])
 
   return (
     <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
       <MVStack stretchW onLayout={onLayout}  >
 
         <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >
-          <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >
-            <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
-              {
-                props.hasNavigationBarBack && (
-                  <Pressable style={{ paddingLeft: 17, paddingRight: 17, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
-                    <MImage w={8} h={12} source={IconArrowL} />
-                  </Pressable>
-                )
-              }
-              <MAvatar style={{ marginHorizontal: 10 }} name={auth.blockchainAddress} />
-              <MText style={{ flex: 1, fontWeight: '700' }} >{auth.blockchainAddress}</MText>
-              <MImage w={24} h={24} style={{ margin: 10 }} source={IconMore} />
-            </MHStack>
-          </Pressable>
+          {foldView}
         </Animated.View>
 
         <Animated.View style={{ opacity: contentOpacityAnim }}>
-          <MVStack style={{ padding: 10, transform: [{ translateY: -minHeaderHeight }] }} >
-            <MHStack style={{ height: 48 }}>
-              <MAvatar style={{ marginHorizontal: 10 }} size={48} name={auth.blockchainAddress} />
-              <MVStack style={{ flex: 1 }}>
-                <MText style={{ fontWeight: '700' }} >{auth.blockchainAddress}</MText>
-                <MHStack >
-                  <CopyButton style={{ marginHorizontal: 5, height: 24, marginTop: 10 }} copyText={auth.blockchainAddress} />
-                </MHStack>
-              </MVStack>
-              <MVStack style={{ marginLeft: 10 }}>
-                <MPressable onPress={() => foldAnim()}>
-                  <MImage w={24} h={24} source={IconForkClose} />
-                </MPressable>
-              </MVStack>
-            </MHStack>
-
-            <MVStack style={[styles.email]}>
-              <MText  >{profile.authorizedSource}</MText>
-              <MText style={{ marginTop: 5, color: "#6B6B6B" }} >{profile.userName}</MText>
-            </MVStack>
-
-            <MHStack style={[styles.connected]}>
-              <MVStack style={{ flex: 1 }}>
-                <MText>Connected</MText>
-                <MText style={{ marginTop: 5, color: "#6B6B6B" }}>{network?.name}</MText>
-              </MVStack>
-            </MHStack>
-
-            <MHStack style={{ height: 60 }}>
-              <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                {/* <MImage w={14} h={14} style={{ marginRight: 6 }} source={IconSettings} /> */}
-                <SettingSvg style={{ marginRight: 6 }} />
-                <MButtonText title={"Settings"} />
-              </MButton>
-              <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-                {/* <MImage w={12} h={10} style={{ marginRight: 6 }} source={IconSignout} /> */}
-                <SignOutSvg style={{ marginRight: 6 }} />
-                <MButtonText title={"Sign out"} />
-              </MButton>
-            </MHStack>
-          </MVStack>
+          {unFoldView}
         </Animated.View>
 
       </MVStack>
