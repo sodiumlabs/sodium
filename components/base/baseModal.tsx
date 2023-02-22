@@ -7,10 +7,10 @@ import { useDimensionSize } from '../../lib/hook/dimension';
 import { ModalCloseButton } from '../baseUI/modalCloseButton';
 import MVStack from '../baseUI/mVStack';
 
-export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: () => void, contentHeight?: number, contentStyle?: any }) => {
+export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: (immediately?: boolean) => void, contentHeight?: number, contentStyle?: any, hideImmediately?: boolean }) => {
   const screenHeight = Dimensions.get('screen').height;
 
-  let { visible, hideModal, isFullScreen, isAnim = true, contentHeight = screenHeight, contentStyle = {} } = props;
+  let { visible, hideModal, hideImmediately, isFullScreen, isAnim = true, contentHeight = screenHeight, contentStyle = {} } = props;
   let marginTop = Math.max(screenHeight - contentHeight, 100);
   // const [isStartHide, setIsStartHide] = useState(false);
   const [dimensionW, dimensionH] = useDimensionSize();
@@ -129,8 +129,8 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
 
     <Modal
       transparent={true}
-      // animationType={isAnim ? 'slide' : 'none'}
-      visible={uiVisible}
+      animationType={'none'}
+      visible={hideImmediately ? visible : uiVisible}
       onRequestClose={onBackClick}
     // presentationStyle='pageSheet'
     >

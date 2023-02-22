@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Platform, Pressable, StyleSheet } from 'react-native';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/authAtom';
 import { OperateTimeStamp } from '../../lib/data/operateTime';
@@ -12,8 +12,9 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
+import { waitTime } from '../../lib/common/common';
 
-export default function TranscationQueueItem(props: { transcation: ITranscation, hideModal: () => void }) {
+export default function TranscationQueueItem(props: { transcation: ITranscation, hideModal: (immediately?: boolean) => void }) {
   const { transcation, hideModal } = props;
   // const [decodeDatas, setDecodeDatas] = useState<IDecodeTranscation[]>();
   const [decodeData, setDecodeData] = useState<IDecodeTranscation>();
@@ -56,7 +57,13 @@ export default function TranscationQueueItem(props: { transcation: ITranscation,
   }
   const itemClick = useCallback(async () => {
     if (auth.isLogin) {
-      hideModal();
+
+      if (Platform.OS == 'ios') {
+        hideModal(true);
+        await waitTime(1);
+      } else {
+        hideModal(false);
+      }
       showUpdateSignTranscationModal(true, null);
 
       OperateTimeStamp.set(transcation.timeStamp);

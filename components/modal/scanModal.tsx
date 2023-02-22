@@ -17,8 +17,9 @@ import { DecodeQR } from '../decode/decodeQR';
 import { useMClipboard } from '../../lib/hook/clipboard';
 import ScanFrameSvg from '../svg/scanFrameSvg';
 import { newPair } from '../../lib/walletconnect';
+import { Platform } from 'react-native';
 
-export const ScanModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
+export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
   const param = modalParam.param;
   const projectSetting = useProjectSetting();
@@ -47,11 +48,10 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
     connect(qrData.data);
   }
 
-  const connect = (url: string) => {
+  const connect = async (url: string) => {
     setConnecting(true)
-    newPair(url).then(meta => {
-      hideModal();
-    });
+    const meta = await newPair(url);
+    hideModal(Platform.OS == 'ios');
   }
 
   const pickImage = async () => {
@@ -91,7 +91,7 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
     } else {
       return (
         <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
-          <DecodeQR imageAsset={imageAsset} />
+          <DecodeQR imageAsset={imageAsset} hideScanModal={hideModal} connect={connect} />
           <MVStack stretchW style={{ flex: 1, overflow: 'hidden', borderRadius: 15 }}>
             {
               hasPermission === null && (
@@ -137,12 +137,13 @@ export const ScanModal = (props: { hideModal: () => void, modalParam: IModalPara
         </MVStack>
       )
     }
-  }, [connecting, hasPermission])
+  }, [connecting, hasPermission, imageAsset])
 
   return (
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
+      hideImmediately={modalParam.hideImmediately}
       isFullScreen={projectSetting.isBeOpenedByThirdParty}
       isAnim={!projectSetting.isBeOpenedByThirdParty}
       contentStyle={{ paddingVertical: 0 }}

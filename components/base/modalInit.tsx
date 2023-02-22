@@ -45,15 +45,15 @@ export default function ModalInit() {
   const connectModal = useStore(connectModalAtom);
   return (
     <>
-      <TranscationDetailModal modalParam={transcationDetailModal} hideModal={() => showUpdateTranscationDetailModal(false, null, transcationDetailModal.uniqueKey)} />
-      <TranscationQueueModal modalParam={transcationQueueModal} hideModal={() => showUpdateTranscationQueueModal(false, null, transcationQueueModal.uniqueKey)} />
-      <SignTranscationModal modalParam={signTranscationModal} hideModal={() => showUpdateSignTranscationModal(false, null, signTranscationModal.uniqueKey)} />
-      <SignMessageModal modalParam={signMessageModal} hideModal={() => showUpdateSignMessageModal(false, null, signMessageModal.uniqueKey)} />
-      <DeployConfirmModal modalParam={deployConfirmModal} hideModal={() => showUpdateDeployConfirmModal(false, null, deployConfirmModal.uniqueKey)} />
-      <ScanModal modalParam={scanModal} hideModal={() => showUpdateScanModal(false, null, scanModal.uniqueKey)} />
-      <FullScreenModal modalParam={fullScreenModal} hideModal={() => showUpdateFullScreenModal(false, null, fullScreenModal.uniqueKey)} />
-      <ComModal modalParam={comModal} hideModal={() => showUpdateComModal(false, null, comModal.uniqueKey)} />
-      <ConnectModal modalParam={connectModal} hideModal={() => showUpdateConnectModal(false, null, connectModal.uniqueKey)} />
+      <TranscationDetailModal modalParam={transcationDetailModal} hideModal={(immediately?: boolean) => showUpdateTranscationDetailModal(false, null, transcationDetailModal.uniqueKey, immediately)} />
+      <TranscationQueueModal modalParam={transcationQueueModal} hideModal={(immediately?: boolean) => showUpdateTranscationQueueModal(false, null, transcationQueueModal.uniqueKey, immediately)} />
+      <SignTranscationModal modalParam={signTranscationModal} hideModal={(immediately?: boolean) => showUpdateSignTranscationModal(false, null, signTranscationModal.uniqueKey, immediately)} />
+      <SignMessageModal modalParam={signMessageModal} hideModal={(immediately?: boolean) => showUpdateSignMessageModal(false, null, signMessageModal.uniqueKey, immediately)} />
+      <DeployConfirmModal modalParam={deployConfirmModal} hideModal={(immediately?: boolean) => showUpdateDeployConfirmModal(false, null, deployConfirmModal.uniqueKey, immediately)} />
+      <ScanModal modalParam={scanModal} hideModal={(immediately?: boolean) => showUpdateScanModal(false, null, scanModal.uniqueKey, immediately)} />
+      <FullScreenModal modalParam={fullScreenModal} hideModal={(immediately?: boolean) => showUpdateFullScreenModal(false, null, fullScreenModal.uniqueKey, immediately)} />
+      <ComModal modalParam={comModal} hideModal={(immediately?: boolean) => showUpdateComModal(false, null, comModal.uniqueKey, immediately)} />
+      <ConnectModal modalParam={connectModal} hideModal={(immediately?: boolean) => showUpdateConnectModal(false, null, connectModal.uniqueKey, immediately)} />
     </>
   );
 }

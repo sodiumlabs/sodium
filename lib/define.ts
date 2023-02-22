@@ -30,6 +30,7 @@ export interface ProfileData {
 
 export interface IModalParam<T = unknown> {
   visible?: boolean,
+  hideImmediately?: boolean,
   param?: T,
   uniqueKey?: unknown
 }

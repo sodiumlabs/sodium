@@ -30,6 +30,7 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
     <BaseModal
       visible={modalParam.visible}
       hideModal={onCancelClick}
+      hideImmediately={modalParam.hideImmediately}
       isFullScreen={projectSetting.isBeOpenedByThirdParty}
       isAnim={!projectSetting.isBeOpenedByThirdParty}
     >

@@ -45,6 +45,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
+      hideImmediately={modalParam.hideImmediately}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>

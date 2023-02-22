@@ -5,8 +5,8 @@ import { FailModalItem } from "../modal/modalItem/failModalItem";
 const jsQR = require("./../../lib/third/jsQR.min");
 const decode = require('image-decode');
 
-export const DecodeQR = (props: { imageAsset: ImagePickerAsset }) => {
-  const { imageAsset } = props;
+export const DecodeQR = (props: { imageAsset: ImagePickerAsset, hideScanModal: (hideImmediately?: boolean) => void, connect: (url: string) => void }) => {
+  const { imageAsset, hideScanModal, connect } = props;
   useEffect(() => {
     if (!imageAsset) return;
     // const canvas = document.createElement('canvas');
@@ -29,8 +29,7 @@ export const DecodeQR = (props: { imageAsset: ImagePickerAsset }) => {
     const decodeImage = decode(imageAsset.uri); // uri to buffer
     const qrResult = decodeImage ? jsQR(decodeImage.data, decodeImage.width, decodeImage.height) : null;
     if (qrResult) {
-      // todo goto connect
-      showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={qrResult.data} /> });
+      connect(qrResult.data);
     } else {
       showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={"Unable to recognize QR code"} /> });
     }

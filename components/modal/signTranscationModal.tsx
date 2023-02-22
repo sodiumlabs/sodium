@@ -168,6 +168,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       hideModal={hideModal}
       isFullScreen={projectSetting.isBeOpenedByThirdParty}
       isAnim={!projectSetting.isBeOpenedByThirdParty}
+      hideImmediately={modalParam.hideImmediately}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>

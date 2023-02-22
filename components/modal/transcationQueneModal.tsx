@@ -26,6 +26,7 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
+      hideImmediately={modalParam.hideImmediately}
     >
       <MVStack stretchW style={{ alignItems: 'center', flex: 1 }}>
         <MVStack stretchW style={[styles.marginV, { flex: 1 }]}>

@@ -29,6 +29,7 @@ export const DeployConfirmModal = (props: { hideModal: () => void, modalParam: I
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
+      hideImmediately={modalParam.hideImmediately}
       contentHeight={400}
     >
       <MVStack stretchH stretchW style={{ 'alignItems': 'center', padding: 15 }}>

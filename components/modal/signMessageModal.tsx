@@ -35,6 +35,7 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
     <BaseModal
       visible={modalParam.visible}
       hideModal={hideModal}
+      hideImmediately={modalParam.hideImmediately}
       isFullScreen={projectSetting.isBeOpenedByThirdParty}
       isAnim={!projectSetting.isBeOpenedByThirdParty}
     >
