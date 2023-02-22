@@ -1,4 +1,5 @@
 import { testnetNetworks, mainnetNetworks } from '@0xsodium/network';
+import { useStore } from '@nanostores/react';
 import { atom } from 'nanostores';
 
 export const xtestNetworks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
@@ -30,6 +31,10 @@ export const currentChainIdAtom = atom<number>(networks.find(n => n.isDefaultCha
 
 export function getCurrentChainId(): number {
     return currentChainIdAtom.get();
+}
+
+export function useCurrentChainId() {
+    return useStore(currentChainIdAtom);
 }
 
 export function switchNetwork(chainId: number) {

@@ -1,5 +1,5 @@
 import { Atom, computed } from "nanostores";
-import { initWalletByTest, logout, SodiumWallet, walletAtom } from '../provider';
+import { SodiumWallet, walletAtom } from '../provider';
 import { AuthData } from "../define";
 import { useStore } from "@nanostores/react";
 

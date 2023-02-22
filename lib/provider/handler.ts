@@ -4,15 +4,17 @@ import { Platform } from 'react-native';
 import { Platform as SodiumPlatform } from '@0xsodium/config';
 import { Wallet } from '../fixedEthersWallet';
 import { WalletPrompter } from './prompter';
-import { clearSession, loadSession, saveSession } from '../common/asyncStorage';
+import { loadSession, saveSession } from '../common/asyncStorage';
 import { walletAtom, walletHandlerAtom } from './atom';
 import { Session } from './types';
 import { testNetworks, mainNetworks, getCurrentChainId, currentChainIdAtom, networks } from '../network';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
 
 export const logout = () => {
-    clearSession().then(() => walletAtom.set(null));
+    AsyncStorage.clear().then(() => walletAtom.set(null))
+    // clearSession().then(() => walletAtom.set(null));
 }
 
 walletAtom.subscribe(newValue => {

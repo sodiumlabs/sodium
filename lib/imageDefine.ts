@@ -1,5 +1,3 @@
-
-
 export const IconLogoAll = require('./../assets/logoIcon-all.png');
 export const IconLogo = require('./../assets/logoIcon.png');
 export const IconMenuWallet = require('./../assets/wallet.png');
@@ -13,11 +11,9 @@ export const IconInfoTerm = require('./../assets/logoIcon.png');
 export const IconInfoPolicy = require('./../assets/logoIcon.png');
 export const IconInfoSupport = require('./../assets/logoIcon.png');
 
-
 export const IconMenuSend = require('./../assets/send.png');
 export const IconMenuDeposit = require('./../assets/deposit.png');
 export const IconMenuScan = require('./../assets/scan.png');
-
 
 export const IconArrowR = require('./../assets/arrowR.png');
 export const IconArrowL = require('./../assets/arrowL.png');

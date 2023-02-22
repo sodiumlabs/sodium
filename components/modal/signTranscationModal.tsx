@@ -26,16 +26,15 @@ import { ModalTitle } from './modalItem/modalTitle';
 import { OperateBtnItem } from './modalItem/operateBtnItem';
 import { TransferItem } from './modalItem/transferItem';
 import { navigate } from '../base/navigation';
-
-// sign transcation - send transcation - deploy transcation
+import { useCurrentChainId } from '../../lib/network';
 
 export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
-
+  const currentChainId = useCurrentChainId();
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
   const projectSetting = useProjectSetting();
   const [isTxHandling, setTxHandling] = useModalLoading(modalParam);
-  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens(currentChainId);
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
 
   // Mainly used for UI display

@@ -1,37 +1,56 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
-import { TransactionRequest, TransactionResponse } from '@0xsodium/transactions';
-import { showErrorModal, showUpdateDeployConfirmModal, showUpdateSignMessageModal, showUpdateSignTranscationModal } from '../data/modal';
+import { TransactionRequest } from '@0xsodium/transactions';
+import { 
+    showErrorModal, 
+    showUpdateDeployConfirmModal, 
+    showUpdateSignMessageModal, 
+    showUpdateSignTranscationModal,
+    showUpdateConnectModal
+} from '../data/modal';
 import { navigate, waitNavigateInit } from '../../components/base/navigation';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
 import { OperateTimeStamp } from '../data/operateTime';
-import { IConnectScreenParam, IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation, Screens } from '../define';
+import { IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation, Screens } from '../define';
 import { transactionQueue } from '../transaction';
 import { walletAtom } from './atom';
-import { resolve } from 'styled-jsx/css';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
         console.log("WalletPrompter promptConnect options:" + JSON.stringify(options));
-        return new Promise(async (tResolve: (value: PromptConnectDetails) => void, tReject: () => void) => {
+        return new Promise(async (tResolve: (value: PromptConnectDetails) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
             if (wallet === null) {
                 console.log("WalletPrompter promptConnect auth is no Login,reject");
-                return Promise.reject();
+                return Promise.reject("WalletPrompter promptConnect auth no auth");
             }
-            const continueClick = async () => {
-                const result = await wallet.handler.connect(options) as PromptConnectDetails;
-                tResolve(result);
-            }
-            navigate(Screens.Connect,
-                {
-                    continueClick: continueClick,
-                    cancelClick: tReject,
-                    options: options
-                } as IConnectScreenParam
-            );
 
+            // // TODO
+            // // 临时代码
+            // // 后续增加协议判断是否是在系统内app打开. 
+            // if (options.app == "uniswap") {
+            //     const result = await wallet.handler.connect(options) as PromptConnectDetails;
+
+            //     console.debug("connect success", result);
+
+            //     tResolve(result);
+            //     return;
+            // }
+
+            const continueClick = async () => {
+                try {
+                    const result = await wallet.handler.connect(options) as PromptConnectDetails;
+                    tResolve(result);
+                } catch(error) {
+                    tReject(error);
+                }
+            }
+            showUpdateConnectModal(true, {
+                continueClick: continueClick,
+                cancelClick: async () => tReject("user"),
+                options: options
+            });
         });
     }
 

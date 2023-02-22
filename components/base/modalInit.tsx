@@ -1,15 +1,16 @@
-import { TransactionHistory } from '@0xsodium/provider';
 import { useStore } from '@nanostores/react';
-import { atom, WritableAtom } from "nanostores";
-import { ReactNode } from 'react';
-import { IComModalParam, IDeployConfirmModalParam, IModalParam, ISignMessageModalParam, ISignTranscationModalParam } from "../../lib/define";
-import { ComModal } from "../modal/comModal";
-import { DeployConfirmModal } from "../modal/deployConfirmModal";
-import { FullScreenModal } from "../modal/fullScreenModal";
-import { SignMessageModal } from '../modal/signMessageModal';
-import { SignTranscationModal } from '../modal/signTranscationModal';
-import { TranscationDetailModal } from "../modal/transcationDetailModal";
-import { TranscationQueueModal } from "../modal/transcationQueneModal";
+import {
+  ConnectModal,
+  ScanModal,
+  TranscationQueueModal,
+  TranscationDetailModal,
+  SignTranscationModal,
+  SignMessageModal,
+  FullScreenModal,
+  DeployConfirmModal,
+  ComModal,
+} from '../modal';
+
 import {
   showUpdateTranscationDetailModal,
   showUpdateTranscationQueueModal,
@@ -18,6 +19,9 @@ import {
   showUpdateComModal,
   showUpdateFullScreenModal,
   showUpdateDeployConfirmModal,
+  showUpdateScanModal,
+  showUpdateConnectModal,
+
   transcationDetailModalAtom,
   transcationQueueModalAtom,
   comModalAtom,
@@ -26,12 +30,10 @@ import {
   signMessageModalAtom,
   fullScreenModalAtom,
   scanModalAtom,
-  showUpdateScanModal
+  connectModalAtom,
 } from '../../lib/data/modal';
-import { ScanModal } from '../modal/scanModal';
 
 export default function ModalInit() {
-  // debugger
   const transcationDetailModal = useStore(transcationDetailModalAtom);
   const transcationQueueModal = useStore(transcationQueueModalAtom);
   const signTranscationModal = useStore(signTranscationModalAtom);
@@ -40,6 +42,7 @@ export default function ModalInit() {
   const fullScreenModal = useStore(fullScreenModalAtom);
   const deployConfirmModal = useStore(deployConfirmModalAtom);
   const scanModal = useStore(scanModalAtom);
+  const connectModal = useStore(connectModalAtom);
   return (
     <>
       <TranscationDetailModal modalParam={transcationDetailModal} hideModal={() => showUpdateTranscationDetailModal(false, null, transcationDetailModal.uniqueKey)} />
@@ -50,6 +53,7 @@ export default function ModalInit() {
       <ScanModal modalParam={scanModal} hideModal={() => showUpdateScanModal(false, null, scanModal.uniqueKey)} />
       <FullScreenModal modalParam={fullScreenModal} hideModal={() => showUpdateFullScreenModal(false, null, fullScreenModal.uniqueKey)} />
       <ComModal modalParam={comModal} hideModal={() => showUpdateComModal(false, null, comModal.uniqueKey)} />
+      <ConnectModal modalParam={connectModal} hideModal={() => showUpdateConnectModal(false, null, connectModal.uniqueKey)} />
     </>
   );
 }

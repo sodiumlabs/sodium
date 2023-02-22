@@ -1,15 +1,14 @@
 
-import { BlurView } from 'expo-blur';
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCurScreenTab, updateCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
-import { IconMenuHistory, IconMenuWallet } from '../../lib/imageDefine';
 import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
 import HistorySvg from '../svg/historySvg';
 import WalletSvg from '../svg/walletSvg';
+import AppsSvg from '../svg/appsSvg';
 import { navigationRef } from './navigation';
 
 export default function Footer() {
@@ -24,12 +23,18 @@ export default function Footer() {
     navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })
     updateCurScreenTab(Screens.History);
   }
+  const onAppsClick = () => {
+    navigationRef.reset({ index: 0, routes: [{ name: Screens.Apps }], })
+    updateCurScreenTab(Screens.Apps);
+  }
   return (
-
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
       {/* <BlurView style={{ width: '100%' }}> */}
       <MHStack stretchW style={styles.list}>
         <MenuButton isSelect={curScreenName == Screens.Wallet} source={<WalletSvg />} title={Screens.Wallet} onPress={onWalletClick} />
+        {
+          Platform.OS != "web" && (<MenuButton isSelect={curScreenName == Screens.Apps} source={<AppsSvg />} title={Screens.Apps} onPress={onAppsClick} />)
+        }
         <MenuButton isSelect={curScreenName == Screens.History} source={<HistorySvg />} title={Screens.History} onPress={onHistoryClick} />
       </MHStack>
       {/* </BlurView> */}

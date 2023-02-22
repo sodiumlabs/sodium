@@ -25,13 +25,15 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
+import { useCurrentChainId } from '../../lib/network';
 
 
 export function SendScreen(props) {
+  const currentChainId = useCurrentChainId();
   const authData = useAuth();
   const dimension = useDimensionSize();
   const defaultToken = props.route.params as IUserTokenInfo;
-  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens();
+  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens(currentChainId);
   const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
   const [inputAddress, setInputAddress] = useState('');
   const [inputTokenCount, setInputTokenCount] = useState('');

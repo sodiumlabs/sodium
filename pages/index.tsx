@@ -15,7 +15,6 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import {
   CoinScreen,
-  ConnectScreen,
   DepositScreen,
   HistoryScreen,
   LoginScreen,
@@ -43,6 +42,7 @@ import { initProjectSetting } from '../lib/data/project';
 import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
 import { StatusBar } from 'expo-status-bar';
 import { authAtom } from '../lib/data/authAtom';
+import { AppsScreen } from '../components/screen/appsScreen';
 
 const queryClient = new QueryClient(
   {
@@ -129,9 +129,9 @@ export default function App() {
               <Stack.Screen name={Screens.Session} component={SessionScreen} />
               <Stack.Screen name={Screens.History} component={HistoryScreen} />
               <Stack.Screen name={Screens.Coin} component={CoinScreen} />
+              <Stack.Screen name={Screens.Apps} component={AppsScreen} />
               <Stack.Screen name={Screens.Send} component={SendScreen} />
               <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
-              <Stack.Screen name={Screens.Connect} component={ConnectScreen} />
               <Stack.Screen name={Screens.Security} component={SecurityScreen} />
               <Stack.Screen name={Screens.SetupAuth} component={SetupAuthScreen} />
               <Stack.Screen name={Screens.RecoveryCode} component={RecoveryCodeScreen} />
@@ -141,7 +141,7 @@ export default function App() {
 
 
             <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarStyle: { display: 'none' } }}   >
-              <Tab.Screen name="Wallet" >
+              <Tab.Screen name="Home" >
                 {() => (
                   <SettingsStack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
                     <SettingsStack.Screen name={Screens.Opening} component={OpeningScreen} />
@@ -149,12 +149,12 @@ export default function App() {
                     <SettingsStack.Screen name={Screens.Wallet} component={WalletScreen} />
                     <SettingsStack.Screen name={Screens.Setting} component={SettingScreen} />
                     <SettingsStack.Screen name={Screens.Profile} component={ProfileScreen} />
+                    <SettingsStack.Screen name={Screens.Apps} component={AppsScreen} />
                     <SettingsStack.Screen name={Screens.Session} component={SessionScreen} />
                     <SettingsStack.Screen name={Screens.History} component={HistoryScreen} />
                     <SettingsStack.Screen name={Screens.Coin} component={CoinScreen} />
                     <SettingsStack.Screen name={Screens.Send} component={SendScreen} />
                     <SettingsStack.Screen name={Screens.Deposit} component={DepositScreen} />
-                    <SettingsStack.Screen name={Screens.Connect} component={ConnectScreen} />
                     <SettingsStack.Screen name={Screens.Security} component={SecurityScreen} />
                     <SettingsStack.Screen name={Screens.SetupAuth} component={SetupAuthScreen} />
                     <SettingsStack.Screen name={Screens.RecoveryCode} component={RecoveryCodeScreen} />

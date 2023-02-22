@@ -6,6 +6,7 @@ import { Account } from '@0xsodium/wallet';
 import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
 import { ERC20Approve } from '../abi/erc20';
+import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { Session } from './provider/types';
 
 export const fixWidth = 720;
@@ -27,9 +28,9 @@ export interface ProfileData {
   userName: string
 }
 
-export interface IModalParam {
+export interface IModalParam<T = unknown> {
   visible?: boolean,
-  param?: unknown,
+  param?: T,
   uniqueKey?: unknown
 }
 
@@ -45,13 +46,13 @@ export enum Screens {
   Wallet = 'Wallet',
   Setting = 'Setting',
   Profile = 'Profile',
+  Apps = 'Apps',
   Session = 'Session',
   History = 'History',
   Coin = 'Coin',
   Send = 'Send',
   Deposit = 'Deposit',
   Login = 'Login',
-  Connect = 'Connect',
   Security = 'Security',
   SetupAuth = 'SetupAuth',
   RecoveryCode = 'RecoveryCode',
@@ -65,12 +66,12 @@ export type ScreenParamList = {
   Setting: undefined,
   Profile: undefined,
   Session: undefined,
+  Apps: undefined,
   History: undefined,
   Coin: IUserTokenInfo,
   Send: IUserTokenInfo,
   Deposit: undefined,
   Login: undefined,
-  Connect: IConnectScreenParam,
   Security: undefined,
   SetupAuth: undefined,
   RecoveryCode: undefined,
@@ -79,28 +80,30 @@ export type ScreenParamList = {
   AuthCallbackScreen: undefined
 }
 
-export interface IConnectScreenParam {
-  continueClick: () => void,
-  cancelClick: () => void,
-  options: ConnectOptions,
-}
-
 
 // ---------------------modal-------------------------
-export interface IModalParam {
+export interface IModalParam<T = unknown> {
   visible?: boolean,
-  param?: unknown,
+  param?: T,
 }
 
 export interface ISignMessageModalParam {
-  // signeeIcon: string,
-  // signeeName: string,
-  // signeeAddress: string,
-  // signMessage: string,
   continueClick: () => Promise<void>,
   cancelClick: () => void,
   options: ConnectOptions,
   message: MessageToSign
+}
+
+export interface IConnectModalParam {
+  continueClick: () => Promise<void>,
+  cancelClick: () => Promise<void>,
+  options: ConnectOptions,
+}
+
+export interface IWebViewModalParam {
+  options: {
+    source: WebViewSource
+  },
 }
 
 export interface IDeployConfirmModalParam {
@@ -206,6 +209,15 @@ export enum eApproveType {
   SetAllowance,
   RevokeAfter,
   KeepUnlimted
+}
+
+export interface IApp {
+  name: string
+  description: string
+  icon: string
+  uri: string
+  supportChainIds: number[]
+  supportedMobile: boolean
 }
 
 export const btnScale = 0.99;

@@ -1,5 +1,4 @@
 export * from './coinScreen';
-export * from './connectScreen';
 export * from './depositScreen';
 export * from './historyScreen';
 export * from './loginScreen';
