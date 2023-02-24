@@ -9,7 +9,6 @@ import { WebView, WebViewMessageEvent } from 'react-native-webview';
 import { getApps } from "../../lib/data/apps";
 import { useCurrentChainId } from "../../lib/network";
 import { Button, Icon, Layout, Spinner } from '@ui-kitten/components';
-import { showUpdateWebViewModal } from "../../lib/data";
 import { useWalletHandler } from "../../lib/provider";
 import { AppMessageHandler } from "@0xsodium/provider";
 
