@@ -1,12 +1,14 @@
+import { Spinner } from '@ui-kitten/components';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { BarCodeScanningResult, Camera } from 'expo-camera';
 import * as ImagePicker from 'expo-image-picker';
 import { useEffect, useMemo, useState } from 'react';
-import { Spinner } from '@ui-kitten/components';
+import { Platform } from 'react-native';
 import { useProjectSetting } from '../../lib/data/project';
 import { IModalParam } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
+import { newPair } from '../../lib/walletconnect';
 import { BaseModal } from '../base/baseModal';
 import MButton from '../baseUI/mButton';
 import { MButtonText } from '../baseUI/mButtonText';
@@ -14,10 +16,9 @@ import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { DecodeQR } from '../decode/decodeQR';
-import { useMClipboard } from '../../lib/hook/clipboard';
 import ScanFrameSvg from '../svg/scanFrameSvg';
-import { newPair } from '../../lib/walletconnect';
-import { Platform } from 'react-native';
+
+import * as Clipboard from 'expo-clipboard';
 
 export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -28,7 +29,6 @@ export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => voi
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [imageAsset, setImageAsset] = useState<ImagePicker.ImagePickerAsset>(null);
-  const [clipboardContent, setClipboardContent] = useMClipboard();
 
   useEffect(() => {
     if (modalParam.visible) {
@@ -73,7 +73,9 @@ export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => voi
   };
 
   const onPasteCodeClick = () => {
-    connect(clipboardContent);
+    Clipboard.getStringAsync().then((content) => {
+      connect(content);
+    })
   }
 
   const modalContent = useMemo(() => {

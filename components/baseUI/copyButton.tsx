@@ -1,9 +1,9 @@
 
 
+import * as Clipboard from 'expo-clipboard';
 import { useState } from 'react';
-import { Pressable, PressableProps, StyleSheet } from 'react-native';
+import { PressableProps, StyleSheet } from 'react-native';
 import { waitTime } from '../../lib/common/common';
-import { useMClipboard } from '../../lib/hook/clipboard';
 import { IconCopy } from '../../lib/imageDefine';
 import MHStack from './mHStack';
 import MImage from './mImage';
@@ -12,14 +12,14 @@ import MText from './mText';
 
 export default function CopyButton(props: PressableProps & { copyText: string }) {
   const { copyText, style, ...rest } = props;
-  const [clipboardContent, setClipboardContent] = useMClipboard();
   const [isCopied, setIsCopied] = useState(false);
   const [isItemHovered, setIsItemHovered] = useState(false);
 
   const copyClick = async () => {
     if (isCopied) return;
     setIsCopied(true);
-    setClipboardContent(copyText);
+    Clipboard.setStringAsync(copyText);
+
     await waitTime(5000);
     setIsCopied(false);
   }

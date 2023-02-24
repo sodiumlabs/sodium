@@ -8,13 +8,13 @@ import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
 import { formatPrice2Wei, formatWei2Price, isMatchEnsAddress, isMatchEthAddress } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
+import { showUpdateSignTranscationModal } from '../../lib/data/modal';
 import { btnScale, fixWidth, IUserTokenInfo } from "../../lib/define";
 import { eColor, globalStyle } from '../../lib/globalStyles';
-import { useMClipboard } from '../../lib/hook/clipboard';
 import { useDimensionSize } from '../../lib/hook/dimension';
+import { useCurrentChainId } from '../../lib/network';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
-import { showUpdateSignTranscationModal } from '../../lib/data/modal';
 import { Spacer } from '../base/spacer';
 import { InputEndButton } from '../baseUI/inputEndButton';
 import MButton from "../baseUI/mButton";
@@ -25,7 +25,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
-import { useCurrentChainId } from '../../lib/network';
+import * as Clipboard from 'expo-clipboard';
 
 
 export function SendScreen(props) {
@@ -38,7 +38,6 @@ export function SendScreen(props) {
   const [inputAddress, setInputAddress] = useState('');
   const [inputTokenCount, setInputTokenCount] = useState('');
   const [isCanSend, setIsCanSend] = useState(false);
-  const [clipboardContent, setClipboardContent] = useMClipboard();
 
   const onChangeAddressText = (text: string) => {
     setInputAddress(text.trim());
@@ -113,12 +112,9 @@ export function SendScreen(props) {
   }
 
   const onAddressPasteClick = async () => {
-    if (Platform.OS === 'web') {
-      const text = await navigator.clipboard.readText();
-      setInputAddress(text || "");
-    } else {
-      setInputAddress(clipboardContent || "");
-    }
+    Clipboard.getStringAsync().then((content) => {
+      setInputAddress(content || "");
+    })
 
   }
 
