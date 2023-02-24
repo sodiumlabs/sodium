@@ -70,11 +70,13 @@ export const ApproveItem = (props: {
   // The confused slider must be used this way, not directly mounted to the view (slider offset will occur).
   const sliderBox = useMemo(() => {
     return <Slider
+      style={{ width: '100%', height: '100%' }}
       minimumValue={0}
       maximumValue={1}
       onValueChange={onSliderValueChange}
       minimumTrackTintColor="#4AB0FF"
       maximumTrackTintColor="#FF7B4A"
+
     />
   }, []);
   return (
@@ -103,23 +105,21 @@ export const ApproveItem = (props: {
               selectedIndex={approveSelectedIndex}
               onChange={index => setApproveSelectedIndex(index)}>
               <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'} disabled={disabled}>
-                <>
-                  <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-                  <MHStack style={{ width: "60%", height: 20, position: 'absolute', bottom: -25, left: 32, zIndex: 1 }}>
-                    {sliderBox}
-                  </MHStack>
-                </>
+                <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
               </Radio>
               <Radio status={'success'} disabled={disabled}>
-                <>
-                  <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
-                </>
+                <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
               </Radio>
               <Radio status={'success'} disabled={disabled}>
-                <><MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText></>
+                <MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText>
               </Radio>
             </RadioGroup>
 
+            <MHStack style={{ width: "80%", height: 30, position: 'absolute', left: 30, top: 30, zIndex: 1 }}>
+              <MHStack stretchW>
+                {sliderBox}
+              </MHStack>
+            </MHStack>
 
           </MVStack>
         </>
