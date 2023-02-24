@@ -1,17 +1,15 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
 import { TransactionRequest } from '@0xsodium/transactions';
-import { 
-    showErrorModal, 
-    showUpdateDeployConfirmModal, 
-    showUpdateSignMessageModal, 
-    showUpdateSignTranscationModal,
-    showUpdateConnectModal
-} from '../data/modal';
-import { navigate, waitNavigateInit } from '../../components/base/navigation';
+import { waitNavigateInit } from '../../components/base/navigation';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
+import {
+    showErrorModal, showUpdateConnectModal, showUpdateDeployConfirmModal,
+    showUpdateSignMessageModal,
+    showUpdateSignTranscationModal
+} from '../data/modal';
 import { OperateTimeStamp } from '../data/operateTime';
-import { IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation, Screens } from '../define';
+import { IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation } from '../define';
 import { transactionQueue } from '../transaction';
 import { walletAtom } from './atom';
 
@@ -42,7 +40,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 try {
                     const result = await wallet.handler.connect(options) as PromptConnectDetails;
                     tResolve(result);
-                } catch(error) {
+                } catch (error) {
                     tReject(error);
                 }
             }
@@ -66,7 +64,7 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
-        console.log("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options) + " type:"+ typeof message.message);
+        console.log("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options) + " type:" + typeof message.message);
         return new Promise(async (tResolve: (value: string) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
@@ -75,9 +73,16 @@ export class WalletPrompter implements WalletUserPrompter {
             }
             const continueClick = async () => {
                 try {
-                    const sign = await wallet.signer.signMessage(message.message, message.chainId);
-                    tResolve(sign);
-                } catch(error) {
+                    if (message.typedData) {
+                        const chaindId = await wallet.signer.getChainId();
+                        const sign = await wallet.signer.signTypedData(message.typedData.domain, message.typedData.types, message.typedData.message, chaindId);
+                        tResolve(sign);
+                    } else {
+                        const sign = await wallet.signer.signMessage(message.message, message.chainId);
+                        tResolve(sign);
+                    }
+
+                } catch (error) {
                     tReject(error)
                 }
             }
@@ -108,7 +113,7 @@ export class WalletPrompter implements WalletUserPrompter {
                             to: "0x0000000000000000000000000000000000000000"
                         });
                         await tx.wait();
-                    } catch(error) {
+                    } catch (error) {
                         tReject(error);
                     }
                     tResolve(true);
