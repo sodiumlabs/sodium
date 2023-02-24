@@ -40,7 +40,7 @@ export function WalletScreen() {
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]} >
             <MVStack style={styles.balance}>
               <MText style={{ fontWeight: '700' }} >Balance</MText>
-              <MText style={{ marginTop: 10, fontWeight: '700' }} fontSize={30} >${usdBalance}</MText>
+              <MText style={{ marginTop: 10, fontWeight: '700' }} fontSize={30} >${usdBalance.toFixed(2)}</MText>
             </MVStack>
 
             <MHStack style={styles.operate}>
