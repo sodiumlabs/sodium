@@ -28,8 +28,8 @@ export default function Header(props) {
 
 
         <MHStack pointerEvents='auto'>
-          <HeaderItem isSelect={curScreenName == Screens.Wallet} source={IconMenuWallet} screen={Screens.Wallet} />
-          <HeaderItem isSelect={curScreenName == Screens.History} source={IconMenuHistory} screen={Screens.History} />
+          <HeaderItem isShowReqTip isSelect={curScreenName == Screens.Wallet} source={IconMenuWallet} screen={Screens.Wallet} />
+          <HeaderItem isShowReqTip={false} isSelect={curScreenName == Screens.History} source={IconMenuHistory} screen={Screens.History} />
         </MHStack>
 
       </MHStack>
@@ -39,8 +39,8 @@ export default function Header(props) {
 }
 
 
-const HeaderItem = (props: { screen: Screens, source: ImageSourcePropType, isSelect: boolean }) => {
-  const { screen, source, isSelect } = props;
+const HeaderItem = (props: { screen: Screens, source: ImageSourcePropType, isSelect: boolean, isShowReqTip: boolean }) => {
+  const { screen, source, isSelect, isShowReqTip } = props;
   const requestTranscations = useRequestedTransactions();
   const onItemClick = () => {
     navigationRef.reset({ index: 0, routes: [{ name: screen }], })
@@ -52,7 +52,11 @@ const HeaderItem = (props: { screen: Screens, source: ImageSourcePropType, isSel
         left={<MImage w={14} h={14} source={source} />}
         right={<MText style={{ fontWeight: '700', marginLeft: 4 }} fontSize={12}>{screen}</MText>}
       />
-      <CircleTip num={requestTranscations.length + ''} style={{ position: 'absolute', right: -10, top: -20, width: 15, height: 15 }} fontSize={8} />
+      {
+        isShowReqTip && (
+          <CircleTip num={requestTranscations.length + ''} style={{ position: 'absolute', right: -10, top: -20, width: 15, height: 15 }} fontSize={8} />
+        )
+      }
 
     </Pressable>
   )

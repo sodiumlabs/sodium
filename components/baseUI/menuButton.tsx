@@ -6,8 +6,8 @@ import MText from './mText';
 import MPressable from './mPressable';
 import { ReactNode } from 'react';
 
-export default function MenuButton(props: PressableProps & { title?: string, source: ReactNode, isSelect: boolean, w?: number, h?: number }) {
-  const { title, isSelect, source, style, w, h, ...reset } = props;
+export default function MenuButton(props: PressableProps & { title?: string, isShowReqTip: boolean, source: ReactNode, isSelect: boolean, w?: number, h?: number }) {
+  const { title, isShowReqTip, isSelect, source, style, w, h, ...reset } = props;
   const requestTranscations = useRequestedTransactions();
   return (
     <MPressable
@@ -15,7 +15,11 @@ export default function MenuButton(props: PressableProps & { title?: string, sou
       {/* <MImage w={w || 20} h={h || 20} source={source} /> */}
       {source}
       <MText style={{ fontWeight: '700', marginTop: 8 }}> {title} </MText>
-      <CircleTip num={requestTranscations.length + ''} style={{ position: 'absolute', right: 8, top: 10, width: 15, height: 15 }} fontSize={8} />
+      {
+        isShowReqTip && (
+          <CircleTip num={requestTranscations.length + ''} style={{ position: 'absolute', right: 8, top: 10, width: 15, height: 15 }} fontSize={8} />
+        )
+      }
     </MPressable>
   )
 }

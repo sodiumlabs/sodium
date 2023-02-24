@@ -31,11 +31,11 @@ export default function Footer() {
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
       {/* <BlurView style={{ width: '100%' }}> */}
       <MHStack stretchW style={styles.list}>
-        <MenuButton isSelect={curScreenName == Screens.Wallet} source={<WalletSvg />} title={Screens.Wallet} onPress={onWalletClick} />
+        <MenuButton isShowReqTip isSelect={curScreenName == Screens.Wallet} source={<WalletSvg />} title={Screens.Wallet} onPress={onWalletClick} />
         {
-          Platform.OS != "web" && (<MenuButton isSelect={curScreenName == Screens.Apps} source={<AppsSvg />} title={Screens.Apps} onPress={onAppsClick} />)
+          Platform.OS != "web" && (<MenuButton isShowReqTip={false} isSelect={curScreenName == Screens.Apps} source={<AppsSvg />} title={Screens.Apps} onPress={onAppsClick} />)
         }
-        <MenuButton isSelect={curScreenName == Screens.History} source={<HistorySvg />} title={Screens.History} onPress={onHistoryClick} />
+        <MenuButton isShowReqTip={false} isSelect={curScreenName == Screens.History} source={<HistorySvg />} title={Screens.History} onPress={onHistoryClick} />
       </MHStack>
       {/* </BlurView> */}
     </MVStack>

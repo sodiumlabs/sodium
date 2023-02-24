@@ -27,7 +27,7 @@ export function HistoryScreen() {
           <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}>
             {/* <MText style={{ marginTop: 20, marginBottom: 30, fontWeight: '700' }}>Transaction History </MText> */}
             <ScreenTitle title="Transaction History" />
-            <RequestTranscation />
+            {/* <RequestTranscation /> */}
             <MHStack style={{ marginTop: 10 }} />
             <ClassifyHistoryItem title={HistoryTime.ToDay} historyMap={transHistoryMap} />
             <ClassifyHistoryItem title={HistoryTime["This Week"]} historyMap={transHistoryMap} />
