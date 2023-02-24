@@ -3,7 +3,6 @@ import { TransactionRequest } from '@0xsodium/transactions';
 import { waitNavigateInit } from '../../components/base/navigation';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
-import { sanitizeMessage } from '../common/utils';
 import {
     showErrorModal, showUpdateConnectModal, showUpdateDeployConfirmModal,
     showUpdateSignMessageModal,
@@ -55,13 +54,11 @@ export class WalletPrompter implements WalletUserPrompter {
 
     //signTransactions
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        debugger
         console.log("WalletPrompter promptSignTransaction");
         return this.handleSignOrSendTranscation(txn, chaindId, options, "sign");
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        debugger
         console.log("WalletPrompter promptSendTransaction");
         return this.handleSignOrSendTranscation(txn, chaindId, options, "send");
     }
