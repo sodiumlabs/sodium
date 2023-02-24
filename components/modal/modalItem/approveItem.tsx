@@ -161,7 +161,7 @@ function RadioWeb(props: { approveSelectedIndex, setApproveSelectedIndex, disabl
 
           <>
             <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-            <MHStack style={{ width: "80%", height: 30, position: 'absolute', left: 30, top: 30, zIndex: 1 }}>
+            <MHStack style={{ width: "80%", height: 30, position: 'absolute', left: 30, top: 24, zIndex: 1 }}>
               <MHStack stretchW>
                 {sliderBox}
               </MHStack>

@@ -1,4 +1,5 @@
 import { ScrollView, StyleSheet } from 'react-native';
+import { sanitizeMessage } from '../../lib/common/utils';
 import { useAuth } from '../../lib/data/authAtom';
 import { useProjectSetting } from '../../lib/data/project';
 import { IModalParam, ISignMessageModalParam } from '../../lib/define';
@@ -19,6 +20,36 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
   const projectSetting = useProjectSetting();
   const auth = useAuth();
   const [isLoading, setIsLoading] = useModalLoading(modalParam);
+
+  const infoMap: { title: string, content: string }[] = [];
+  const message = param?.message?.message;
+  const typeData = param?.message?.typedData;
+
+  if (auth?.blockchainAddress) {
+    infoMap.push({ title: "Signee", content: auth.blockchainAddress });
+  }
+
+  if (typeData) {
+    const parseData = sanitizeMessage(typeData.message, typeData.primaryType, typeData.types);
+    // debugger
+
+    if (parseData.from) {
+      infoMap.push({ title: "From", content: parseData.from.wallet });
+    }
+
+    if (parseData.to) {
+      infoMap.push({ title: "To", content: parseData.to.wallet });
+    }
+
+    if (parseData.contents) {
+      infoMap.push({ title: "Message", content: parseData.contents });
+    }
+
+  }
+  else if (message) {
+    infoMap.push({ title: "Message", content: message as unknown as string });
+  }
+
 
   const onConfirmClick = async () => {
     if (isLoading) return;
@@ -48,20 +79,29 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
             <BaseFoldFrame defaultExpansion
               header={'Detail'}>
 
-              <MText  >Signee</MText>
-              <MHStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)', flex: 1 }}>
-                {/* <MImage size={20} url={auth.} /> */}
-                <MVStack style={{ flex: 1 }}>
-                  <MText style={{ color: eColor.GrayContentText }}>Me</MText>
-                  <MText style={{ color: eColor.GrayContentText, marginTop: 10 }} >{auth.blockchainAddress}</MText>
-                </MVStack>
-              </MHStack>
+              {
+                infoMap.map((item, index) => {
+                  return (
+                    <MVStack key={index + item.title} stretchW style={{ marginBottom: 10 }}>
+                      <MText  >{item.title}</MText>
+                      <MHStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)', flex: 1 }}>
+                        {/* <MImage size={20} url={auth.} /> */}
+                        <MVStack style={{ flex: 1 }}>
+                          {/* <MText style={{ color: eColor.GrayContentText }}>Me</MText> */}
+                          <MText style={{ color: eColor.GrayContentText, marginTop: 10 }} >{item.content}</MText>
+                        </MVStack>
+                      </MHStack>
+                    </MVStack>
+                  )
+                })
+              }
 
-              <MText style={{ marginTop: 15, }}>Message</MText>
+
+              {/* <MText style={{ marginTop: 15, }}>Message</MText>
               <MVStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)' }}>
                 <MText style={{ color: eColor.GrayContentText }}>Signed Message:</MText>
                 <MText style={{ color: eColor.GrayContentText, marginTop: 10 }} >{param?.message?.message}</MText>
-              </MVStack>
+              </MVStack> */}
             </BaseFoldFrame>
           </ScrollView>
 

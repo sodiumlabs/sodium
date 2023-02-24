@@ -3,6 +3,7 @@ import { TransactionRequest } from '@0xsodium/transactions';
 import { waitNavigateInit } from '../../components/base/navigation';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../common/network';
+import { sanitizeMessage } from '../common/utils';
 import {
     showErrorModal, showUpdateConnectModal, showUpdateDeployConfirmModal,
     showUpdateSignMessageModal,
@@ -54,11 +55,13 @@ export class WalletPrompter implements WalletUserPrompter {
 
     //signTransactions
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
+        debugger
         console.log("WalletPrompter promptSignTransaction");
         return this.handleSignOrSendTranscation(txn, chaindId, options, "sign");
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
+        debugger
         console.log("WalletPrompter promptSendTransaction");
         return this.handleSignOrSendTranscation(txn, chaindId, options, "send");
     }
@@ -71,11 +74,12 @@ export class WalletPrompter implements WalletUserPrompter {
             if (wallet === null) {
                 return Promise.reject();
             }
+            const typeData = message.typedData;
             const continueClick = async () => {
                 try {
-                    if (message.typedData) {
+                    if (typeData) {
                         const chaindId = await wallet.signer.getChainId();
-                        const sign = await wallet.signer.signTypedData(message.typedData.domain, message.typedData.types, message.typedData.message, chaindId);
+                        const sign = await wallet.signer.signTypedData(typeData.domain, typeData.types, typeData.message, chaindId);
                         tResolve(sign);
                     } else {
                         const sign = await wallet.signer.signMessage(message.message, message.chainId);
