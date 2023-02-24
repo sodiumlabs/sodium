@@ -21,16 +21,16 @@ export function useMClipboard(): [string, (text: string) => void] {
   //   setCopiedText(text);
   // };
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const text = await Clipboard.getStringAsync();
-        clipboardAtom.set(text);
-      } catch (e) {
-        // console.error(e);
-      }
-    })()
-  }, [])
+  // useEffect(() => {
+  //   (async () => {
+  //     try {
+  //       const text = await Clipboard.getStringAsync();
+  //       clipboardAtom.set(text);
+  //     } catch (e) {
+  //       // console.error(e);
+  //     }
+  //   })()
+  // }, [])
 
 
   return [copiedText, copyToClipboard];

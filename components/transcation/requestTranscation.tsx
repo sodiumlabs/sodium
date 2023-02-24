@@ -36,7 +36,7 @@ export function RequestTranscation() {
       <MHStack stretchW style={[styles.transcationQueue, globalStyle.whiteBorderWidth, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]}>
 
         <CircleTip num={requestTranscations.length + ''} fontSize={8} />
-        <MText style={{ flex: 1, marginLeft: 5, fontWeight: '700' }}>Requested Transcations...</MText>
+        <MText style={{ flex: 1, marginLeft: 5, fontWeight: '700' }}>Requested Transactions...</MText>
         <MText style={{ color: eColor.GrayText }}>{formatTime2Today(lastRequestTxn.timeStamp)}</MText>
       </MHStack>
     </MPressable>

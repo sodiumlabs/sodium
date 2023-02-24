@@ -230,7 +230,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                     )
                   } else if (decodeTxn.decodeStr) {
                     // unknow decode str
-                    return <BaseFoldFrame defaultExpansion key={key} header={`Transcation(${transcationIndex}/${transcationMaxIndex})`} style={{ marginTop: 20 }}>
+                    return <BaseFoldFrame defaultExpansion key={key} header={`Transaction(${transcationIndex}/${transcationMaxIndex})`} style={{ marginTop: 20 }}>
                       <MText style={{ color: eColor.GrayContentText }}>{decodeTxn.decodeStr}</MText>
                     </BaseFoldFrame>
                   } else {
