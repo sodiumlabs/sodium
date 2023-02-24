@@ -17,14 +17,14 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
   const onConfirmClick = async () => {
     if (isLoading) return;
     setIsLoading(true);
-    await param.continueClick();
+    await param?.continueClick();
     setIsLoading(false);
     hideModal();
   }
 
   const onCancelClick = async () => {
-    await param.cancelClick()
-      .then(() => hideModal());
+    await param?.cancelClick();
+    hideModal();
   }
   return (
     <BaseModal
