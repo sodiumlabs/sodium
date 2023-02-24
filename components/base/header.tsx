@@ -21,7 +21,8 @@ export default function Header(props) {
     <MHStack stretchW style={[styles.container, { top: insets.top }]}>
       <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
         <MHStack style={{ position: 'absolute', left: 20, top: -15, alignItems: 'center', }}>
-          <MImage w={126} h={30} source={IconLogoAll} style={{ marginRight: 8 }} />
+          {/* <MImage w={126} h={30} source={IconLogoAll} style={{ marginRight: 8 }} /> */}
+          <MImage w={60} h={60} source={IconLogoAll} style={{ marginRight: 8 }} />
           {/* <MText fontSize={20} style={{ fontWeight: '700' }}>Sodium</MText> */}
         </MHStack>
 

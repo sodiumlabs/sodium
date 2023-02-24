@@ -1,4 +1,4 @@
-export const IconLogoAll = require('./../assets/logoIcon-all.png');
+export const IconLogoAll = require('./../assets/logoIcon.png');
 export const IconLogo = require('./../assets/logoIcon.png');
 export const IconMenuWallet = require('./../assets/wallet.png');
 export const IconMenuHistory = require('./../assets/history.png');
