@@ -76,6 +76,7 @@ export class WalletPrompter implements WalletUserPrompter {
                 try {
                     if (typeData) {
                         const chaindId = await wallet.signer.getChainId();
+                        console.debug("sign typeData", chaindId, typeData.domain, typeData.types, typeData.message);
                         const sign = await wallet.signer.signTypedData(typeData.domain, typeData.types, typeData.message, chaindId);
                         tResolve(sign);
                     } else {

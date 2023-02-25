@@ -4,6 +4,7 @@ import { WalletConnectV1 } from './v1';
 import { v2sdk, WalletConnectV2, init as v2Init } from './v2';
 import { getWalletConnectLinkVersion } from './utils';
 import { authAtom } from "../data/auth";
+import { WalletConnectSessionSerialized } from "./type";
 
 export function newPairV1(url: string, existing: boolean = false, existingSession: any = undefined): Promise<WalletConnectV1> {
     return new Promise((resolve, reject) => {
@@ -53,13 +54,21 @@ async function init(): Promise<void> {
         // TODO upsentry;
     }
 
+    const connectV1WithRetry = async (session: WalletConnectSessionSerialized) => {
+        newPairV1(session.connectURI, true, session.sessionV1).then(w => w.startSession(session.meta, true)).catch((error) => {
+            if (!error.toString().includes("connect first")) {
+                // TODO up to sentry
+                console.warn("load wallet connect pair error", error.toString());
+                connectV1WithRetry(session);
+            }
+        });
+    }
+
     const sessions = await loadWalletConnectSessions();
     sessions.forEach(session => {
         if (session.version == "1") {
-            newPairV1(session.connectURI, true, session.sessionV1).then(w => w.startSession(session.meta, true)).catch((error) => {
-                // TODO up to sentry
-                console.warn("load wallet connect pair error", error)
-            });
+            console.debug("load wallet connect pair", session);
+            connectV1WithRetry(session);
         }
     })
 }

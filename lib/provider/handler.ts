@@ -8,6 +8,7 @@ import { loadSession, saveSession } from '../common/asyncStorage';
 import { walletAtom, walletHandlerAtom } from './atom';
 import { Session } from './types';
 import { testNetworks, mainNetworks, getCurrentChainId, currentChainIdAtom, networks } from '../network';
+import { Sodium__factory } from '@0xsodium/wallet-contracts';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
@@ -22,6 +23,10 @@ walletAtom.subscribe(newValue => {
 
     } else {
         saveSession(newValue.session);
+
+        // temp fix
+        // const sodium = Sodium__factory.connect(newValue.address, newValue.signer);
+        // sodium.setFallbackHandler("0xb961f9F277386e449f324A9B8A0b3FDE837BbF08");
     }
 })
 

@@ -8,14 +8,12 @@ export const waitTime = (tTime: number): Promise<number> => {
   });
 }
 
-export const token2Usd = (tokenWei: string, usdRate: string, orgin?: boolean) => {
+export const token2Usd = (tokenWei: string, decimals: number, usdRate: string, orgin?: boolean) => {
   if (!tokenWei) return null;
   if (!usdRate) return null;
-  const usddecimals = 30;
+  const usddecimals = decimals;
   const t1 = FixedNumber.fromString(tokenWei).mulUnsafe(FixedNumber.from(usdRate));
   const t2 = t1.divUnsafe(FixedNumber.fromString(BigNumber.from("10").pow(usddecimals).toString())).toString();
-  // console.debug('token2Usd', tokenWei, usdRate, t2.toString());
-  // return `${parseInt(`${parseFloat(t2) * 100}`) / 100}`;
   if (orgin) {
     return parseFloat(t2) + '';
   }

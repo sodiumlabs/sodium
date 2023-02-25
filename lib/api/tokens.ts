@@ -16,7 +16,7 @@ const fetchTokens = async (chainId: number): Promise<IUserTokenInfo[]> => {
   for (let i = 0; i < rates.length; i++) {
     const tokenInfo = result[i];
     tokenInfo.rate = rates[i];
-    tokenInfo.usdBalance = token2Usd(tokenInfo.balance.toString(), tokenInfo.rate + '');
+    tokenInfo.usdBalance = token2Usd(tokenInfo.balance.toString(), tokenInfo.token.decimals, tokenInfo.rate + '');
   }
 
   console.log("fetchTokens");

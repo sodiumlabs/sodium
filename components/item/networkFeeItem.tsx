@@ -15,7 +15,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
   const { style, gasInfo, ownToken, ...reset } = props;
 
   const balance = !ownToken ? '0' : `${formatWei2Price(ownToken.balance.toString(), ownToken.token.decimals)} ${ownToken.token.symbol}`
-  const gasUsd = !ownToken ? '0' : token2Usd(gasInfo.amount.toString(), ownToken.rate + '', true);
+  const gasUsd = !ownToken ? '0' : token2Usd(gasInfo.amount.toString(), gasInfo.token.decimals, ownToken.rate + '', true);
   return (
     <Pressable onPress={undefined}>
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
