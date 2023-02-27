@@ -18,6 +18,7 @@ import { showUpdateComModal, showUpdateFullScreenModal } from "../../lib/data";
 import { LoginLoading } from "../full/loginLoading";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
 import { loginIn } from '../../lib/data/auth';
+import { useProjectSetting } from '../../lib/data/project';
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"
@@ -30,8 +31,16 @@ const redirect = AuthSession.makeRedirectUri({
 
 export function LoginScreen() {
   const dimension = useDimensionSize();
+  const projectSetting = useProjectSetting();
 
   const loginClick = async () => {
+    // 临时给到unity那边使用.
+    // unity无法打开twitter
+    // https://linear.app/project-linco/issue/LNCO-2904/unity-增加open-window协议
+    if (projectSetting.isBeOpenedByThirdParty) {
+      return loginIn("r.albert.huang@gmail.com");
+    }
+
     showUpdateFullScreenModal(true, <LoginLoading />);
     const twauth = new TwitterAuthService("https://twitter-auth.melandworld.com", global.fetch);
     const { authURL } = await twauth.authURL({
