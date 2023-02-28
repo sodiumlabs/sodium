@@ -5,7 +5,7 @@ import { encodeERC20Approve, ERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
-import { getNetwork } from '../../lib/common/network';
+import { getNetwork } from '../../lib/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useProjectSetting } from '../../lib/data/project';
 import { eApproveType, IDecodeTranscation, IModalParam, ISignTranscationModalParam, MaxFixedNumber, Screens } from '../../lib/define';
@@ -26,22 +26,21 @@ import { ModalTitle } from './modalItem/modalTitle';
 import { OperateBtnItem } from './modalItem/operateBtnItem';
 import { TransferItem } from './modalItem/transferItem';
 import { navigate } from '../base/navigation';
-import { useCurrentChainId } from '../../lib/network';
+import { useMabyeCurrentChainId } from '../../lib/network';
 import { ABITransaction } from './transactionDecodes';
 
 export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
-  const currentChainId = useCurrentChainId();
   const { modalParam, hideModal } = props;
   const param = modalParam.param as ISignTranscationModalParam;
+  const currentChainId = useMabyeCurrentChainId(param?.chaindId);
+  const currentNetwork = getNetwork(currentChainId);
   const projectSetting = useProjectSetting();
   const [isTxHandling, setTxHandling] = useModalLoading(modalParam);
-  const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens(currentChainId);
+  const [tokensQuery, tokenInfos] = useQueryTokens(currentChainId);
   const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
 
   // Mainly used for UI display
   const [uiDecodeDatas, setUiDecodeDatas] = useState<IDecodeTranscation[]>(null);
-  // const auth = useAuth();
-
   const [approveSelectedIndex, setApproveSelectedIndex] = useState(eApproveType.KeepUnlimted);
   const [approveSliderValue, setApproveSliderValue] = useState(1);
 
@@ -65,9 +64,6 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     }
     return BigNumber.from(0);
   }, [param?.decodeDatas]);
-
-  const curNetwork = getNetwork(param?.chaindId);
-  // 
 
   useEffect(() => {
     (async () => {
@@ -140,12 +136,10 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
     if (isPending) {
       const onPendingStart = (txHash: string) => {
-        console.log("onPendingStart");
         setTxHandling(false);
         hideModal();
         param.txn.txHash = txHash;
         param.txn.txGas = paymasterInfos[0]; // todo 
-
         transactionPending.addCurPending(param.txn);
         navigate(Screens.Wallet);
       }
@@ -191,7 +185,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                     left={<MText >Network</MText>}
                     right={<MHStack>
                       {/* <MImage w={12} h={12} uri={curNetwork?.bundlerUrl} /> */}
-                      <MText style={{ color: '#8247E5', fontWeight: '700' }} >{curNetwork?.name?.toUpperCase()}</MText>
+                      <MText style={{ color: '#8247E5', fontWeight: '700' }} >{currentNetwork?.name?.toUpperCase()}</MText>
                     </MHStack>} />
                   <MLineLR style={{ marginTop: 16 }}
                     left={<MText  >Requested at</MText>}
@@ -244,6 +238,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                         transcationIndex={transcationIndex}
                         transcationMaxIndex={transcationMaxIndex}
                         decodeTxn={decodeTxn}
+                        chainId={param.chaindId}
                       ></ABITransaction>
                     )
                   }

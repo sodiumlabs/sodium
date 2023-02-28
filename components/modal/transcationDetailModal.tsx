@@ -1,9 +1,8 @@
 import { Linking, ScrollView, StyleSheet } from 'react-native';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { TransactionHistory } from '@0xsodium/provider';
-import { Divider } from '@ui-kitten/components';
 import { useQueryNetwork } from '../../lib/api/network';
-import { getTranscationExplorer } from '../../lib/common/network';
+import { getTranscationExplorer } from '../../lib/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/authAtom';
 import { btnScale, IModalParam } from '../../lib/define';

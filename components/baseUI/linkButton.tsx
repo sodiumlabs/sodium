@@ -2,8 +2,8 @@
 
 
 import { useState } from 'react';
-import { Linking, Pressable, PressableProps, StyleSheet } from 'react-native';
-import { getAddressExplorer } from '../../lib/common/network';
+import { Linking, PressableProps, StyleSheet } from 'react-native';
+import { getAddressExplorer } from '../../lib/network';
 import { IUserTokenInfo } from '../../lib/define';
 import MHStack from './mHStack';
 import MText from './mText';

@@ -1,4 +1,4 @@
-import { testnetNetworks, mainnetNetworks } from '@0xsodium/network';
+import { testnetNetworks, mainnetNetworks, NetworkConfig } from '@0xsodium/network';
 import { useStore } from '@nanostores/react';
 import { atom } from 'nanostores';
 
@@ -37,6 +37,41 @@ export function useCurrentChainId() {
     return useStore(currentChainIdAtom);
 }
 
+export function useMabyeCurrentChainId(mabyeChainId: number | undefined) {
+    const currentChainId = useStore(currentChainIdAtom, undefined);
+    if (mabyeChainId) {
+        return mabyeChainId;
+    }
+    return currentChainId;
+}
+
+export function useCurrentNetwork() {
+    const chainId = useCurrentChainId();
+    return networks.find(n => n.chainId == chainId);
+}
+
 export function switchNetwork(chainId: number) {
     currentChainIdAtom.set(chainId);
+}
+
+export function getNetwork(chainId: number): NetworkConfig | undefined {
+    return networks.find(n => n.chainId == chainId);
+}
+
+export function getAddressExplorer(chainId: number, address: string): string | undefined {
+    const network = getNetwork(chainId);
+    if (network) {
+        const link = network.blockExplorer.rootUrl + 'address/' + address;
+        return link;
+    }
+    return undefined;
+}
+
+export function getTranscationExplorer(chainId: number, txn: string): string | undefined {
+    const network = getNetwork(chainId);
+    if (network) {
+        const link = network.blockExplorer.rootUrl + 'tx/' + txn;
+        return link;
+    }
+    return undefined;
 }

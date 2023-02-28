@@ -1,11 +1,7 @@
-
-
-
-
 import { BigNumber } from "@ethersproject/bignumber";
 import { Linking, StyleSheet, TextInputProps } from 'react-native';
 import { formatWei2Price } from '../../lib/common/common';
-import { getTranscationExplorer } from "../../lib/common/network";
+import { getTranscationExplorer } from "../../lib/network";
 import { formatTime2Today } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/auth';
 import { ITranscation } from '../../lib/define';

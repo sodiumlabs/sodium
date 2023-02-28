@@ -1,24 +1,6 @@
 import { NetworkConfig } from "@0xsodium/network";
-
-
-
-// export const networkAtom = computed<NetworkConfig, Atom<AuthData | null>>(authAtom, (auth) => {
-//   if (auth) {
-
-//   }
-//   return {
-//   } as NetworkConfig
-// });
-
-// const networkAtom = atom<NetworkConfig>();
-
-// export const useNetwork = () => {
-//   return useStore(networkAtom);
-// }
-
-
 import { useQuery, UseQueryResult } from "react-query";
-import { getNetwork } from '../common/network';
+import { getNetwork } from '../network';
 import { getAuth } from '../data/authAtom';
 
 export const fetchNetwork = async (): Promise<NetworkConfig> => {

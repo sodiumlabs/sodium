@@ -2,7 +2,7 @@ import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter
 import { TransactionRequest } from '@0xsodium/transactions';
 import { waitNavigateInit } from '../../components/base/navigation';
 import { decodeTransactionRequest } from '../common/decode';
-import { getNetwork } from '../common/network';
+import { getNetwork } from '../network';
 import {
     showErrorModal, showUpdateConnectModal, showUpdateDeployConfirmModal,
     showUpdateSignMessageModal,

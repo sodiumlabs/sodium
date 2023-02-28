@@ -5,14 +5,17 @@ import { Interface } from '@ethersproject/abi';
 import MText from '../../baseUI/mText';
 import { eColor } from '../../../lib/globalStyles';
 import { keccak256 } from "ethers/lib/utils";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { toUtf8Bytes } from "@ethersproject/strings";
+import * as WebBrowser from 'expo-web-browser';
+import { getAddressExplorer } from '../../../lib/network';
 
 type Props = {
     decodeTxn: IDecodeTranscation;
     key: number;
     transcationIndex: number;
     transcationMaxIndex: number;
+    chainId: number
 }
 
 export function ABITransaction(props: Props) {
@@ -26,6 +29,9 @@ export function ABITransaction(props: Props) {
     }[] = [];
     let functionFragment: ethers.utils.FunctionFragment;
     let result: ethers.utils.Result = [];
+    const contractAddress = decodeTxn.originTxReq.to;
+    const contractAddressExplorer = getAddressExplorer(props.chainId, contractAddress)
+
     if (decodeTxn.contractInfo) {
         opensource = true;
         contractName = decodeTxn.contractInfo.contractName;
@@ -106,10 +112,14 @@ export function ABITransaction(props: Props) {
         }
     }, [childrenTransactions])
 
+    const gotoContractAddressExplorer = useCallback(() => {
+        WebBrowser.openBrowserAsync(contractAddressExplorer);
+    }, [contractAddressExplorer])
+
     const opensourceDom = useMemo(() => {
         if (opensource) {
             return (
-                <MText style={{ color: eColor.Green }}>Opensource</MText>
+                <MText onPress={gotoContractAddressExplorer} style={{ color: eColor.Green }}>Opensource</MText>
             )
         } else {
             return (
