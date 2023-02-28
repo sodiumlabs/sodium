@@ -12,12 +12,12 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@0xsodium/config": "^1.4.0",
-    "@0xsodium/network": "^1.4.0",
-    "@0xsodium/provider": "^1.4.0",
-    "@0xsodium/transactions": "^1.4.0",
-    "@0xsodium/utils": "^1.4.0",
-    "@0xsodium/wallet": "^1.4.0",
+    "@0xsodium/config": "^1.5.0",
+    "@0xsodium/network": "^1.5.0",
+    "@0xsodium/provider": "^1.5.0",
+    "@0xsodium/transactions": "^1.5.0",
+    "@0xsodium/utils": "^1.5.0",
+    "@0xsodium/wallet": "^1.5.0",
     "@ethersproject/shims": "^5.7.0",
     "@eva-design/eva": "^2.1.1",
     "@nanostores/react": "^0.4.0",
@@ -103,7 +103,12 @@
     "@walletconnect/jsonrpc-ws-connection": "1.0.6",
     "buffer": "6.0.3",
     "@0xsodium/wallet-contracts": "^0.0.5-beta",
-    "@0xsodium/graphquery": "1.2.0"
+    "@0xsodium/config": "portal:/Users/alberthuang/code/sodium.js/packages/config",
+    "@0xsodium/wallet": "portal:/Users/alberthuang/code/sodium.js/packages/wallet",
+    "@0xsodium/network": "portal:/Users/alberthuang/code/sodium.js/packages/network",
+    "@0xsodium/provider": "portal:/Users/alberthuang/code/sodium.js/packages/provider",
+    "@0xsodium/transactions": "portal:/Users/alberthuang/code/sodium.js/packages/transactions",
+    "@0xsodium/utils": "portal:/Users/alberthuang/code/sodium.js/packages/utils"
   },
   "private": true
 }

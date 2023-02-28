@@ -138,13 +138,11 @@ export class WalletPrompter implements WalletUserPrompter {
                 chaindId = await wallet.signer.getChainId();
             }
             const decodes = await decodeTransactionRequest(txn, wallet.web3signer, chaindId);
-
             const txnWithTime = {
                 'txReq': txn,
                 'timeStamp': OperateTimeStamp.getAndReset(),
                 'decodeDatas': decodes,
             } as ITranscation;
-
             transactionQueue.add(txnWithTime);
             const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => {
                 try {

@@ -6,7 +6,7 @@ import { getScroller } from "../common/scroller";
 import { getPageDatas } from "../common/common";
 
 const onePageCount = 20;
-const fetchAllowance = async (pageParam: number, chainId?: ChainIdLike): Promise<{ data: Allowance[], nexePage: number }|null> => {
+const fetchAllowance = async (pageParam: number, chainId: ChainIdLike): Promise<{ data: Allowance[], nexePage: number } | null> => {
   const authData = getAuth();
   if (!authData.isLogin) {
     return null;
@@ -26,21 +26,20 @@ const fetchAllowance = async (pageParam: number, chainId?: ChainIdLike): Promise
   };
 };
 
-export const useQueryAllowances = (chainId?: ChainIdLike): [UseInfiniteQueryResult, Allowance[], (event) => void] => {
-    // return useQuery(['fetchHistory'], () => fetchHistory());
-    const queryAllowance = useInfiniteQuery(
-      [
-        "fetchAllowance",
-        chainId,
-      ],
-      ({ pageParam = 1 }) => fetchAllowance(pageParam, chainId),
-      { getNextPageParam: (lastPage, pages) => lastPage['nexePage'] }
-    );
-    let allowances: Allowance[] = [];
-    if (queryAllowance.data) {
-        allowances = getPageDatas(queryAllowance.data);
-    }
-    const onScroll = getScroller(() => !queryAllowance.isLoading && queryAllowance.hasNextPage && queryAllowance.fetchNextPage());
-    // group
-    return [queryAllowance, allowances, onScroll];
-  };
+export const useQueryAllowances = (chainId: ChainIdLike): [UseInfiniteQueryResult, Allowance[], (event) => void] => {
+  const queryAllowance = useInfiniteQuery(
+    [
+      "fetchAllowance",
+      chainId,
+    ],
+    ({ pageParam = 1 }) => fetchAllowance(pageParam, chainId),
+    { getNextPageParam: (lastPage, pages) => lastPage['nexePage'] }
+  );
+  let allowances: Allowance[] = [];
+  if (queryAllowance.data) {
+    allowances = getPageDatas(queryAllowance.data);
+  }
+  const onScroll = getScroller(() => !queryAllowance.isLoading && queryAllowance.hasNextPage && queryAllowance.fetchNextPage());
+  // group
+  return [queryAllowance, allowances, onScroll];
+};

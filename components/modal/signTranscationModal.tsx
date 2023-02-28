@@ -1,5 +1,5 @@
 import { BigNumber, FixedNumber } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { encodeERC20Approve, ERC20Approve } from '../../abi/erc20';
 import { useQueryGas } from '../../lib/api/gas';
@@ -27,6 +27,7 @@ import { OperateBtnItem } from './modalItem/operateBtnItem';
 import { TransferItem } from './modalItem/transferItem';
 import { navigate } from '../base/navigation';
 import { useCurrentChainId } from '../../lib/network';
+import { ABITransaction } from './transactionDecodes';
 
 export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const currentChainId = useCurrentChainId();
@@ -54,6 +55,16 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     }
 
   }, [modalParam.visible, param?.decodeDatas])
+
+  // 所有交易总共花费了多少钱.
+  const totalValue: BigNumber = useMemo(() => {
+    if (param && param.decodeDatas) {
+      return param.decodeDatas.reduce((total, decodeTxn) => {
+        return total.add(BigNumber.from(decodeTxn.originTxReq.value ?? 0));
+      }, BigNumber.from(0))
+    }
+    return BigNumber.from(0);
+  }, [param?.decodeDatas]);
 
   const curNetwork = getNetwork(param?.chaindId);
   // 
@@ -108,7 +119,6 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
         const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
-
         const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
         const transaction = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, approveNum, decodeApproveData.decodeApproveData.token.address);
         txs.splice(approveIndex, 1, transaction);
@@ -117,8 +127,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         console.log("eApproveType.RevokeAfter");
         const revokeTx = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, BigNumber.from(0), decodeApproveData.decodeApproveData.token.address);
         txs.push(revokeTx);
-      }
-      else {
+      } else {
         console.log("Let's keep our original tx the same");
       }
     }
@@ -228,15 +237,16 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                         approveData={decodeTxn.decodeApproveData}
                       />
                     )
-                  } else if (decodeTxn.decodeStr) {
-                    // unknow decode str
-                    return <BaseFoldFrame defaultExpansion key={key} header={`Transaction(${transcationIndex}/${transcationMaxIndex})`} style={{ marginTop: 20 }}>
-                      <MText style={{ color: eColor.GrayContentText }}>{decodeTxn.decodeStr}</MText>
-                    </BaseFoldFrame>
                   } else {
-                    return <></>
+                    return (
+                      <ABITransaction
+                        key={key}
+                        transcationIndex={transcationIndex}
+                        transcationMaxIndex={transcationMaxIndex}
+                        decodeTxn={decodeTxn}
+                      ></ABITransaction>
+                    )
                   }
-
                 })
               )
             }

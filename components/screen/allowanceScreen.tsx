@@ -3,6 +3,7 @@ import { useQueryAllowances } from "../../lib/api/allowance";
 import { fixWidth } from "../../lib/define";
 import { eColor } from "../../lib/globalStyles";
 import { useDimensionSize } from "../../lib/hook/dimension";
+import { useCurrentChainId } from "../../lib/network";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
@@ -14,7 +15,8 @@ import { ScreenTitle } from "../baseUI/screenTitle";
 import { AllowanceItem } from "../item/allowanceItem";
 
 export function AllowanceScreen() {
-  const [queryAllowance, allowances, onScroll] = useQueryAllowances();
+  const currentChainId = useCurrentChainId();
+  const [queryAllowance, allowances, onScroll] = useQueryAllowances(currentChainId);
   const dimension = useDimensionSize();
   return (
     <BaseScreen isNavigationBarBack>

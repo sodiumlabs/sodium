@@ -8,6 +8,7 @@ import { ERC20Transfer } from '../abi';
 import { ERC20Approve } from '../abi/erc20';
 import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { Session } from './provider/types';
+import { JsonFragment } from '@ethersproject/abi';
 
 export const fixWidth = 720;
 export const designWidth = 1280;
@@ -135,11 +136,18 @@ export interface IDropdownOption {
   data: unknown
 }
 
+export type ContractABI = JsonFragment
+
+export type Contract = {
+  contractName: string;
+  abi: ContractABI[];
+}
+
 export interface IDecodeTranscation {
   originTxReq: Transaction,
-  decodeTransferData: ERC20Transfer,
-  decodeApproveData: ERC20Approve,
-  decodeStr: string
+  decodeTransferData?: ERC20Transfer,
+  decodeApproveData?: ERC20Approve,
+  contractInfo?: Contract
 }
 
 //---- from sdk define
@@ -179,7 +187,6 @@ export interface ITranscation {
 export enum eStotageKey {
   requestedTxs = '@sodium.requestedTxs',
   pendingTxs = '@sodium.pendingTxs',
-
   session = '@sodium.session.security'
 }
 

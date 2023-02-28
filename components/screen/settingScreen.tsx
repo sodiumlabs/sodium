@@ -15,10 +15,13 @@ import { useQueryAllowances } from "../../lib/api/allowance";
 import ProfileSvg from "../svg/profileSvg";
 import GearSvg from '../svg/gearSvg';
 import PhoneSvg from '../svg/phoneSvg';
+import { useCurrentChainId } from "../../lib/network";
+
 
 export function SettingScreen() {
   const dimension = useDimensionSize();
-  const [queryAllowance, allowances, onScroll] = useQueryAllowances();
+  const currentChainId = useCurrentChainId();
+  const [queryAllowance, allowances, onScroll] = useQueryAllowances(currentChainId);
 
   return (
     <BaseScreen >
