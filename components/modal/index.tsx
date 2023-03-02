@@ -7,3 +7,4 @@ export * from './signMessageModal';
 export * from './signTranscationModal';
 export * from './transcationDetailModal';
 export * from './transcationQueneModal';
+export * from './updateConfirmModal';

@@ -15,7 +15,8 @@ export const authAtom = computed<AuthData, Atom<SodiumWallet | null>>(walletAtom
         blockchainAddress: w.address,
         wallet: w.handler,
         signer: w.signer,
-        web3signer: w.web3signer
+        web3signer: w.web3signer,
+        session: w.session
     } as AuthData
 });
 

@@ -231,15 +231,19 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                         approveData={decodeTxn.decodeApproveData}
                       />
                     )
-                  } else {
+                  } else if (param) {
                     return (
                       <ABITransaction
-                        key={key}
+                        key={key+1}
                         transcationIndex={transcationIndex}
                         transcationMaxIndex={transcationMaxIndex}
                         decodeTxn={decodeTxn}
                         chainId={param.chaindId}
                       ></ABITransaction>
+                    )
+                  } else {
+                    return (
+                      <></>
                     )
                   }
                 })

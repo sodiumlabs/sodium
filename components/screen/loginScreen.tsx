@@ -67,6 +67,7 @@ export function LoginScreen() {
           messageHash: ""
         }
       });
+      // result.response.
       await loginIn(result.response.authId);
     }
     console.debug("console update full");

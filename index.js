@@ -2,7 +2,7 @@
 import "@walletconnect/react-native-compat";
 // Import the the ethers shims (**BEFORE** ethers)
 import "@ethersproject/shims"
-import 'react-native-gesture-handler';
+// import 'react-native-gesture-handler';
 import 'react-native-url-polyfill/auto';
 require('react-native-browser-polyfill');
 import "./shim.js";

@@ -9,6 +9,7 @@ import {
   FullScreenModal,
   DeployConfirmModal,
   ComModal,
+  UpdateConfirmModal,
 } from '../modal';
 
 import {
@@ -33,6 +34,8 @@ import {
   connectModalAtom,
 } from '../../lib/data/modal';
 
+import { Platform } from 'react-native';
+
 export default function ModalInit() {
   const transcationDetailModal = useStore(transcationDetailModalAtom);
   const transcationQueueModal = useStore(transcationQueueModalAtom);
@@ -42,7 +45,8 @@ export default function ModalInit() {
   const fullScreenModal = useStore(fullScreenModalAtom);
   const deployConfirmModal = useStore(deployConfirmModalAtom);
   const scanModal = useStore(scanModalAtom);
-  const connectModal = useStore(connectModalAtom);
+  const connectModal = useStore(connectModalAtom)
+
   return (
     <>
       <TranscationDetailModal modalParam={transcationDetailModal} hideModal={(immediately?: boolean) => showUpdateTranscationDetailModal(false, null, transcationDetailModal.uniqueKey, immediately)} />
@@ -54,6 +58,8 @@ export default function ModalInit() {
       <FullScreenModal modalParam={fullScreenModal} hideModal={(immediately?: boolean) => showUpdateFullScreenModal(false, null, fullScreenModal.uniqueKey, immediately)} />
       <ComModal modalParam={comModal} hideModal={(immediately?: boolean) => showUpdateComModal(false, null, comModal.uniqueKey, immediately)} />
       <ConnectModal modalParam={connectModal} hideModal={(immediately?: boolean) => showUpdateConnectModal(false, null, connectModal.uniqueKey, immediately)} />
+
+      { Platform.OS !="web" && !__DEV__ && <UpdateConfirmModal></UpdateConfirmModal> }
     </>
   );
 }

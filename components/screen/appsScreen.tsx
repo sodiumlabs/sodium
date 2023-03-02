@@ -8,9 +8,14 @@ import * as React from 'react';
 import { WebView, WebViewMessageEvent } from 'react-native-webview';
 import { getApps } from "../../lib/data/apps";
 import { useCurrentChainId } from "../../lib/network";
-import { Button, Icon, Layout, Spinner } from '@ui-kitten/components';
+import { Button } from '@ui-kitten/components';
 import { useWalletHandler } from "../../lib/provider";
 import { AppMessageHandler } from "@0xsodium/provider";
+import { LocalStorage } from '@0xsodium/provider';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View } from 'react-native';
+
+LocalStorage.use(AsyncStorage);
 
 export function AppsScreen() {
     const dimension = useDimensionSize();
@@ -22,7 +27,7 @@ export function AppsScreen() {
     const webViewRef = React.useCallback<(w: WebView) => void>(newWebView => {
         if (newWebView) {
             appMessageHandler.register((message: string) => {
-                console.debug("send app message", message);
+                // console.debug("send app message", message);
                 newWebView.injectJavaScript(`
                 (function() {
                     // window.addEventListener("message", (event) => {
@@ -52,9 +57,7 @@ export function AppsScreen() {
         return () => {
             console.debug("clear up")
         }
-    }, [
-        1
-    ]);
+    });
 
     React.useEffect(() => {
         getApps()
@@ -78,6 +81,9 @@ export function AppsScreen() {
                 data: event.nativeEvent.data,
                 origin: event.nativeEvent.url,
             }
+
+            console.debug("receive app message", newEvent)
+
             appMessageHandler.onWebviewMessage(newEvent);
         }
         return (
@@ -86,6 +92,7 @@ export function AppsScreen() {
                 originWhitelist={['*']}
                 style={styles.webview}
                 onMessage={onMessage}
+                automaticallyAdjustContentInsets={false}
                 injectedJavaScriptBeforeContentLoaded='window.__SODIUM__="0.1.1";'
                 source={{
                     uri: currentApp.uri
@@ -95,6 +102,12 @@ export function AppsScreen() {
     }, [currentApp])
 
     const appsDom = React.useMemo(() => {
+        if (currentApp) {
+            return (
+                <></>
+            )
+        }
+
         return apps.map((app, key) => {
             const icon = (props) => (<MImage source={{
                 uri: app.icon
@@ -103,18 +116,16 @@ export function AppsScreen() {
                 <Button onPress={() => openApp(app)} key={key} style={styles.button} appearance='ghost' status='danger' accessoryLeft={icon} />
             )
         })
-    }, [apps])
+    }, [apps, currentApp])
 
     return (
         <BaseScreen hasNavigationBar={true} hasFloatingBar={false}>
-            <ScrollView style={{ width: '100%', height: '100%', flex: 1 }}>
-                <MVStack stretchH stretchW style={{ flex: 1 }}>
-                    <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
-                        {appsDom}
-                        {webViewDom}
-                    </MVStack>
-                </MVStack>
-            </ScrollView>
+            {/* <ScrollView style={{ width: '100%' }}> */}
+            <View style={{ height: "90%" }}>
+                {appsDom}
+
+                {webViewDom}
+            </View>
         </BaseScreen>
     );
 }

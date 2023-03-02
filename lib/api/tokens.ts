@@ -11,7 +11,7 @@ const fetchTokens = async (chainId: number): Promise<IUserTokenInfo[]> => {
     return;
   }
   const result = await authData.web3signer.getTokens(authData.blockchainAddress, chainId) as IUserTokenInfo[];
-  const rates = await fetchTokenRates(result);
+  const rates = await fetchTokenRates(result, chainId);
 
   for (let i = 0; i < rates.length; i++) {
     const tokenInfo = result[i];

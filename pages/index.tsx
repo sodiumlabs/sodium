@@ -139,7 +139,6 @@ export default function App() {
               <Stack.Screen name={Screens.AuthCallbackScreen} component={AuthCallbackScreen} />
             </Stack.Navigator> */}
 
-
             <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarStyle: { display: 'none' } }}   >
               <Tab.Screen name="Home" >
                 {() => (

@@ -64,24 +64,7 @@ TotalPendingTxs.transcations.subscribe(value => {
   }
 });
 
-function usePendingTransactions() {
-  return useStore(TotalPendingTxs.transcations);
-}
-
-function removeAll() {
-  LocalPendingTxs.set([]);
-  CurPendingTxs.set([]);
-}
-
-const loadAsyncStorage = async () => {
-  const pendingTxs = await loadTxnQueue(eStotageKey.pendingTxs);
-  // Check whether it is complete. If yes, remove it
-  // ...
-  LocalPendingTxs.set(pendingTxs);
-  checkTxState();
-}
-
-const checkTxState = async () => {
+async function checkTxState() {
   const localPendingTxs = LocalPendingTxs.get();
   console.log("checkTxState");
   if (localPendingTxs == null || localPendingTxs.length <= 0) {
@@ -104,11 +87,17 @@ const checkTxState = async () => {
     }
 
     const pendingResult = await Promise.all(promises);
-    console.log("localPendingTxsResult:");
-    console.log(pendingResult);
+    // console.log("localPendingTxsResult:");
+    // console.log(pendingResult);
     for (let i = localPendingTxs.length - 1; i >= 0; i--) {
       if (!!pendingResult[i].transactionReceipt) {
-        const index = localPendingTxs.findIndex(localTx => localTx.txHash == pendingResult[i].localTx.txHash)
+        let index = -1;
+        for (let j = 0; j < localPendingTxs.length; j++) {
+          if (localPendingTxs[j].txHash == pendingResult[i].localTx.txHash) {
+            index = j;
+            break;
+          }
+        }
         if (index != -1) {
           localPendingTxs.splice(index, 1);
         }
@@ -119,6 +108,23 @@ const checkTxState = async () => {
   }
   LocalPendingTxs.set([...localPendingTxs]);
   await waitTime(2000);
+  checkTxState();
+}
+
+function usePendingTransactions() {
+  return useStore(TotalPendingTxs.transcations);
+}
+
+function removeAll() {
+  LocalPendingTxs.set([]);
+  CurPendingTxs.set([]);
+}
+
+const loadAsyncStorage = async () => {
+  const pendingTxs = await loadTxnQueue(eStotageKey.pendingTxs);
+  // Check whether it is complete. If yes, remove it
+  // ...
+  LocalPendingTxs.set(pendingTxs);
   checkTxState();
 }
 

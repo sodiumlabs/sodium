@@ -24,17 +24,17 @@ export class WalletPrompter implements WalletUserPrompter {
                 return Promise.reject("WalletPrompter promptConnect auth no auth");
             }
 
-            // // TODO
-            // // 临时代码
-            // // 后续增加协议判断是否是在系统内app打开. 
-            // if (options.app == "uniswap") {
-            //     const result = await wallet.handler.connect(options) as PromptConnectDetails;
+            // TODO
+            // 临时代码
+            // 后续增加协议判断是否是在系统内app打开. 
+            if (options.app == "uniswap") {
+                const result = await wallet.handler.connect(options) as PromptConnectDetails;
 
-            //     console.debug("connect success", result);
+                console.debug("connect success", result);
 
-            //     tResolve(result);
-            //     return;
-            // }
+                tResolve(result);
+                return;
+            }
 
             const continueClick = async () => {
                 try {

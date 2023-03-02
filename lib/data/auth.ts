@@ -11,12 +11,10 @@ authAtom.subscribe((value) => {
     transactionQueue.loadAsyncStorage();
     transactionPending.loadAsyncStorage();
   }
-  console.log("auth");
-  console.log(value);
-  // todo 
+
   setProfile({
     'authorizedSource': 'Twitter',
-    'userName': value?.session?.sodiumUserId
+    'userName': "",
   } as ProfileData);
 });
 
