@@ -104,7 +104,13 @@
     "react-native-svg": "13.4.0",
     "@walletconnect/jsonrpc-ws-connection": "1.0.6",
     "buffer": "6.0.3",
-    "@0xsodium/wallet-contracts": "^0.0.5-beta"
+    "@0xsodium/wallet-contracts": "^0.0.5-beta",
+    "@0xsodium/config": "portal:/Users/alberthuang/code/sodium.js/packages/config",
+    "@0xsodium/wallet": "portal:/Users/alberthuang/code/sodium.js/packages/wallet",
+    "@0xsodium/network": "portal:/Users/alberthuang/code/sodium.js/packages/network",
+    "@0xsodium/provider": "portal:/Users/alberthuang/code/sodium.js/packages/provider",
+    "@0xsodium/transactions": "portal:/Users/alberthuang/code/sodium.js/packages/transactions",
+    "@0xsodium/utils": "portal:/Users/alberthuang/code/sodium.js/packages/utils"
   },
   "private": true
 }

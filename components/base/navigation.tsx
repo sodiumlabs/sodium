@@ -1,7 +1,6 @@
 
 import { createNavigationContainerRef } from '@react-navigation/native';
 import { atom } from "nanostores";
-import { useEffect } from 'react';
 import { waitFinish, waitTime } from "../../lib/common/common";
 export const navigateInitAtom = atom(false);
 export const lastAtom = atom(null);

@@ -38,9 +38,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/config@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@0xsodium/config@npm:1.9.0"
+"@0xsodium/config@portal:/Users/alberthuang/code/sodium.js/packages/config::locator=sodium%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@0xsodium/config@portal:/Users/alberthuang/code/sodium.js/packages/config::locator=sodium%40workspace%3A."
   dependencies:
     "@0xsodium/abi": ^1.9.0
     "@0xsodium/multicall": ^1.9.0
@@ -48,9 +48,8 @@ __metadata:
     "@0xsodium/utils": ^1.9.0
     "@0xsodium/wallet-contracts": ^0.0.5-beta
     ethers: ^5.7.0
-  checksum: 01df44d90a582b7e39f3ec1104015e55874432b8764d95949b99afbe5d52c20d0689870bc6b0cd7b7dcf7e57259719b953bc3b47fc897996201d41a4c3746b83
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@0xsodium/estimator@npm:^1.9.0":
   version: 1.9.0
@@ -102,20 +101,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/network@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@0xsodium/network@npm:1.9.0"
+"@0xsodium/network@portal:/Users/alberthuang/code/sodium.js/packages/network::locator=sodium%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@0xsodium/network@portal:/Users/alberthuang/code/sodium.js/packages/network::locator=sodium%40workspace%3A."
   dependencies:
     "@0xsodium/utils": ^1.9.0
     "@ethersproject/providers": ^5.7.0
     ethers: ^5.7.0
-  checksum: eda712210dead729c067dfdd1f258fc52497dca778a39740cf9f4412e1a6dfef5422fff6c2d9f43c71f77375df1983b04588c2a0ecf7a64b1060bca6d289701e
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@0xsodium/provider@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@0xsodium/provider@npm:1.9.0"
+"@0xsodium/provider@portal:/Users/alberthuang/code/sodium.js/packages/provider::locator=sodium%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@0xsodium/provider@portal:/Users/alberthuang/code/sodium.js/packages/provider::locator=sodium%40workspace%3A."
   dependencies:
     "@0xsodium/abi": ^1.9.0
     "@0xsodium/auth": ^1.9.0
@@ -134,9 +132,8 @@ __metadata:
     eventemitter2: ^6.4.5
     moize: ^6.1.5
     webextension-polyfill-ts: ^0.26.0
-  checksum: eeca9d4f43c84092699f34ef4d2b67a7446715315cd89f1e1281cf8785549c2a4289ad6adf65d2a673e0a1b31a3d3c43bcc2116d645a5f2fab62e21c68940826
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@0xsodium/sdk4337@npm:^1.9.0":
   version: 1.9.0
@@ -161,9 +158,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/transactions@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@0xsodium/transactions@npm:1.9.0"
+"@0xsodium/transactions@portal:/Users/alberthuang/code/sodium.js/packages/transactions::locator=sodium%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@0xsodium/transactions@portal:/Users/alberthuang/code/sodium.js/packages/transactions::locator=sodium%40workspace%3A."
   dependencies:
     "@0xsodium/abi": ^1.9.0
     "@0xsodium/network": ^1.9.0
@@ -171,13 +168,12 @@ __metadata:
     "@0xsodium/wallet-contracts": ^0.0.5-beta
     "@ethersproject/abi": ^5.7.0
     ethers: ^5.7.0
-  checksum: e46d13d563d6b8423fd75ea99948f6665835ea33d4be759a9c8a71e2ff7f95e59650fcc10f6550a7ddf25a7b3b53e885da8f9cb6722205b29bf0d7523ae5b3ba
   languageName: node
-  linkType: hard
+  linkType: soft
 
-"@0xsodium/utils@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@0xsodium/utils@npm:1.9.0"
+"@0xsodium/utils@portal:/Users/alberthuang/code/sodium.js/packages/utils::locator=sodium%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@0xsodium/utils@portal:/Users/alberthuang/code/sodium.js/packages/utils::locator=sodium%40workspace%3A."
   dependencies:
     "@0xsodium/wallet-contracts": ^0.0.5-beta
     "@ethersproject/abstract-signer": ^5.7.0
@@ -185,9 +181,8 @@ __metadata:
     buffer: ^6.0.3
     ethers: ^5.7.0
     js-base64: ^3.7.2
-  checksum: 2876c888820267f3f9f392b987c112754259ac21dbd55074773259e088f579b681677a4b554fdcf222ac8654c6c0361645d35c47280ef2c07950bfc0540e11e4
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@0xsodium/wallet-contracts@npm:^0.0.5-beta":
   version: 0.0.5-beta
@@ -196,9 +191,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/wallet@npm:^1.9.0":
-  version: 1.9.0
-  resolution: "@0xsodium/wallet@npm:1.9.0"
+"@0xsodium/wallet@portal:/Users/alberthuang/code/sodium.js/packages/wallet::locator=sodium%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@0xsodium/wallet@portal:/Users/alberthuang/code/sodium.js/packages/wallet::locator=sodium%40workspace%3A."
   dependencies:
     "@0xsodium/abi": ^1.9.0
     "@0xsodium/config": ^1.9.0
@@ -213,9 +208,8 @@ __metadata:
     "@ethersproject/providers": ^5.7.0
     ethers: ^5.7.0
     fetch-ponyfill: ^7.1.0
-  checksum: b47a49854035f6e47aef0e1e1a4786c234484237c148b3da726f217b6f9e3719534f7199c43219124606c7f94b05328debd1dcfd9bc6b8716aa65e433151da69
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "@ampproject/remapping@npm:^2.1.0, @ampproject/remapping@npm:^2.2.0":
   version: 2.2.0
