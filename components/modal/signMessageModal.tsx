@@ -1,3 +1,4 @@
+import { toUtf8String } from 'ethers/lib/utils';
 import { ScrollView, StyleSheet } from 'react-native';
 import { sanitizeMessage } from '../../lib/common/utils';
 import { useAuth } from '../../lib/data/authAtom';
@@ -47,7 +48,7 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
 
   }
   else if (message) {
-    infoMap.push({ title: "Message", content: message as unknown as string });
+    infoMap.push({ title: "Message", content: toUtf8String(message) });
   }
 
 
