@@ -1,4 +1,3 @@
-import * as WebBrowser from 'expo-web-browser';
 import { useEffect } from 'react';
 
 // 兼容nextjs的 expo session auth

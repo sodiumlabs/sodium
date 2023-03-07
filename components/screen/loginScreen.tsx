@@ -34,13 +34,7 @@ export function LoginScreen() {
   const projectSetting = useProjectSetting();
 
   const loginClick = async () => {
-    // 临时给到unity那边使用.
-    // unity无法打开twitter
-    // https://linear.app/project-linco/issue/LNCO-2904/unity-增加open-window协议
-    if (projectSetting.isBeOpenedByThirdParty) {
-      return loginIn("r.albert.huang@gmail.com");
-    }
-
+    // return loginIn("r.albert.huang@gmail.com3");
     showUpdateFullScreenModal(true, <LoginLoading />);
     const twauth = new TwitterAuthService("https://twitter-auth.melandworld.com", global.fetch);
     const { authURL } = await twauth.authURL({

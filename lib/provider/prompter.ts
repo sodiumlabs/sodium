@@ -109,11 +109,15 @@ export class WalletPrompter implements WalletUserPrompter {
             showUpdateDeployConfirmModal(true, {
                 continueClick: async () => {
                     try {
-                        const tx = await wallet.signer.sendTransaction({
-                            value: "0",
-                            data: "0x",
-                            to: "0x0000000000000000000000000000000000000000"
-                        });
+                        const transactions = await wallet.signer.getWalletUpgradeTransactions(chainId);
+                        if (transactions.length === 0) {
+                            transactions.push({
+                                value: "0",
+                                data: "0x",
+                                to: "0x0000000000000000000000000000000000000000"
+                            });
+                        }
+                        const tx = await wallet.signer.sendTransaction(transactions);
                         await tx.wait();
                     } catch (error) {
                         tReject(error);
