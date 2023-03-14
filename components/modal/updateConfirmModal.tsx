@@ -31,7 +31,7 @@ export const UpdateConfirmModal = () => {
   const checkUpdate = useCallback(async () => {
     const response = await fetch("https://subgraph-fallback.vercel.app/api/checkForUpdate")
     const lastestVersion = await response.text()
-    if (Constants.manifest.version !== lastestVersion) {
+    if (parseInt(Constants.manifest.version.replace(/\./g,"")) < parseInt(lastestVersion.replace(/\./g,""))) {
       showModal({ visible: true, hideImmediately: false })
     }
   }, []);

@@ -1,13 +1,15 @@
-import { ScrollView, StyleSheet } from "react-native";
+import { Button, ScrollView, StyleSheet } from "react-native";
 import { fixWidth } from "../lib/define";
 import { useDimensionSize } from "../lib/hook/dimension";
 import { IconLogo } from "../lib/imageDefine";
-import { BaseScreen } from "../components/base/baseScreen";
+import { eColor } from '../components/../lib/globalStyles';
 import MImage from "../components/baseUI/mImage";
 import MVStack from '../components/baseUI/mVStack';
 import { ScreenTitle } from "../components/baseUI/screenTitle";
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
+import MButton from '../components/baseUI/mButton';
+import { MButtonText } from '../components/baseUI/mButtonText';
 
 export default function AuthCallbackScreen() {
     const dimension = useDimensionSize();
@@ -17,6 +19,10 @@ export default function AuthCallbackScreen() {
         const result = WebBrowser.maybeCompleteAuthSession();
         setResult(result);
     }, []);
+
+    const retry = () => {
+        window.close();
+    }
 
     const state = React.useMemo(() => {
         if (!result) {
@@ -34,6 +40,9 @@ export default function AuthCallbackScreen() {
                 <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
                     <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
                     <ScreenTitle title={state} />
+                    <MButton stretchW style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} onPress={retry} >
+                        <MButtonText title={"Retry"} />
+                    </MButton>
                 </MVStack>
             </MVStack>
         </ScrollView>

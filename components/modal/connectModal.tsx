@@ -9,6 +9,11 @@ import MButton from '../baseUI/mButton';
 import { MButtonText } from '../baseUI/mButtonText';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
+import { loginOut } from '../../lib/data/auth';
+import { navigate } from '../base/navigation';
+import { showUpdateFullScreenModal } from '../../lib/data';
+import { LogoutLoading } from '../full/logoutLoading';
+import { waitTime } from '../../lib/common';
 
 export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalParam<IConnectModalParam> }) => {
   const { modalParam, hideModal } = props;
@@ -22,6 +27,14 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
     await param?.continueClick();
     setIsLoading(false);
     hideModal();
+  }
+
+  const onUseOtherWallet = async () => {
+    hideModal();
+    showUpdateFullScreenModal(true, <LogoutLoading />);
+    await loginOut();
+    await waitTime(1000); // Call next frame to avoid flash screen
+    showUpdateFullScreenModal(false);
   }
 
   const onCancelClick = async () => {
@@ -53,6 +66,13 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
 
         {
           projectSetting.isBeOpenedByThirdParty && <Spacer />
+        }
+
+        {
+          projectSetting.isBeOpenedByThirdParty &&
+          <MButton stretchW style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} onPress={onUseOtherWallet} >
+            <MButtonText title={"Use other wallet"} />
+          </MButton>
         }
 
 

@@ -20,6 +20,7 @@ export const isNavigationReadyAtom = atom<boolean>(false);
 
 export const navigate = <RouteName extends keyof ParamList>(...args: RouteName extends unknown ? undefined extends ParamList[RouteName] ? [screen: RouteName] | [screen: RouteName, params: ParamList[RouteName]] : [screen: RouteName, params: ParamList[RouteName]] : never) => {
   if (navigationRef.isReady()) {
+    console.debug("navigate", ...args)
     return navigationRef.navigate(...args);
   }
   lastAtom.set(args);

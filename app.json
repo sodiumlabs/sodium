@@ -3,7 +3,7 @@
     "scheme": "sodium",
     "name": "sodium",
     "slug": "sodium",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/logoIcon.png",
     "userInterfaceStyle": "light",
@@ -29,6 +29,7 @@
           "sodium"
         ]
       },
+      "buildNumber": "1.0.0",
       "supportsTablet": true,
       "bundleIdentifier": "com.sodiumlabs.sodium"
     },
@@ -38,8 +39,9 @@
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.sodiumlabs.sodium",
+      "versionCode": 2,
       "permissions": [
-        "android.permission.RECORD_AUDIO"
+        "android.permission.CAMERA"
       ]
     },
     "web": {

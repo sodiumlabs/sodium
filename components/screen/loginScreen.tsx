@@ -108,9 +108,3 @@ const styles = StyleSheet.create({
     maxWidth: fixWidth
   }
 });
-
-
-
-/// 临时实现的web twitter auth
-/// 为了demo day 临时，后续换成 expo auth 以支持react native
-const TWITTER_OAUTH_CALLBACK = 'TWITTER_OAUTH_CALLBACK';

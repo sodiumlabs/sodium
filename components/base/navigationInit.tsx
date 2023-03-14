@@ -57,8 +57,10 @@ export default function NavigationInit() {
         updateCurScreenTab(Screens.Login);
       }
     }
-    navigateInitAtom.set(true);
-  }, [auth.isLogin, isNavigationReady, projectSetting.isBeOpenedByThirdParty, locationURL]);
+    if (!navigateInitAtom.get()) {
+      navigateInitAtom.set(true);
+    }
+  }, [auth.isLogin, isNavigationReady, projectSetting.isBeOpenedByThirdParty, locationURL, navigateInitAtom]);
 
   return (
     <></>
