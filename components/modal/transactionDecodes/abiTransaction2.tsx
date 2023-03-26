@@ -73,11 +73,11 @@ export function ABITransaction(props: Props) {
                     </BaseFoldFrame>
                 )
             })
-        } else {
+        } else if (functionFragment) {
             return functionFragment.inputs.map((input, index) => {
                 if (input.type == "address") {
                     return (
-                        <MText style={{ color: eColor.GrayContentText }} key={index}>{input.name}: {result[index]}</MText>
+                        <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {result[index]}</MText>
                     )
                 } else if (input.type == "uint256") {
                     if (input.name.includes("amount")
@@ -85,23 +85,23 @@ export function ABITransaction(props: Props) {
                         || input.name.includes("price")
                     ) {
                         return (
-                            <MText style={{ color: eColor.GrayContentText }} key={index}>{input.name}: {ethers.utils.formatEther(result[index])}</MText>
+                            <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {ethers.utils.formatEther(result[index])}</MText>
                         )
                     } else if (input.name.includes("time")
                         || input.name.includes("deadline")
                     ) {
                         const time = new Date(result[index].toNumber() * 1000);
                         return (
-                            <MText style={{ color: eColor.GrayContentText }} key={index}>{input.name}: {time.toLocaleString()}</MText>
+                            <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {time.toLocaleString()}</MText>
                         )
                     }
                 } else if (input.type == "bool") {
                     return (
-                        <MText style={{ color: eColor.GrayContentText }} key={index}>{input.name}: {result[index] ? "true" : "false"}</MText>
+                        <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {result[index] ? "true" : "false"}</MText>
                     )
                 } else if (input.type == "string") {
                     return (
-                        <MText style={{ color: eColor.GrayContentText }} key={index}>{input.name}: {result[index]}</MText>
+                        <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {result[index]}</MText>
                     )
                 } else {
                     return (

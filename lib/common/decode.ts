@@ -44,7 +44,7 @@ async function decodeTx(decodes: IDecodeTranscation[], tran: Transaction, web3si
     const contractInfo = await getContractInfo(tran.to, chainId);
     if (contractInfo != null) {
       decodeData.contractInfo = contractInfo;
-      decodes.push(decodeData);
     }
+    decodes.push(decodeData);
   }
 }

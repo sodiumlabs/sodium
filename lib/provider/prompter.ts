@@ -138,7 +138,7 @@ export class WalletPrompter implements WalletUserPrompter {
             if (wallet === null) {
                 return Promise.reject();
             }
-            if (chaindId == null) {
+            if (chaindId == null) { 
                 chaindId = await wallet.signer.getChainId();
             }
             const decodes = await decodeTransactionRequest(txn, wallet.web3signer, chaindId);
@@ -160,7 +160,7 @@ export class WalletPrompter implements WalletUserPrompter {
                     console.log("txnResponse:" + JSON.stringify(txnResponse));
                     onPendingStart && onPendingStart(txnResponse.hash);
                     console.log("txnResponse.wait start");
-                    await txnResponse.wait();
+                    // await txnResponse.wait();
                     console.log("txnResponse.wait end");
                     onPendingEnd && onPendingEnd();
                     tResolve(txnResponse.hash);
