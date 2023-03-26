@@ -21,7 +21,7 @@ xtestNetworks.push({
     subgraphHost: "https://graphql-graph-node-sodiumt.melandworld.com",
     isDefaultChain: true,
     isAuthChain: true,
-    rpcUrl: "http://18.141.11.82:26651",
+    rpcUrl: "https://sodiumnode.melandworld.com",
     bundlerUrl: "https://bundler-sodiumt.melandworld.com/",
     blockExplorer: {
         name: 'SodiumtScan (Sodium TestNet)',
