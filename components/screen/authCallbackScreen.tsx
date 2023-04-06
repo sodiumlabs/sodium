@@ -8,9 +8,11 @@ import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import * as React from 'react';
 import * as WebBrowser from 'expo-web-browser';
+import { useAdapterScale } from "../../lib/hook";
 
 export function AuthCallbackScreen() {
   const dimension = useDimensionSize();
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
   const [result, setResult] = React.useState<WebBrowser.WebBrowserCompleteAuthSessionResult>();
 
   React.useEffect(() => {
@@ -32,9 +34,13 @@ export function AuthCallbackScreen() {
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
       <ScrollView style={{ width: '100%', height: '100%', paddingHorizontal: 15 }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
-            <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
-            <ScreenTitle title={state} />
+          <MVStack onLayout={handleLayout} stretchW stretchH style={[styles.container, { minHeight: dimension[1] }, scaleStyle]}  >
+            {isInited && (
+              <>
+                <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
+                <ScreenTitle title={state} />
+              </>
+            )}
           </MVStack>
         </MVStack>
       </ScrollView>

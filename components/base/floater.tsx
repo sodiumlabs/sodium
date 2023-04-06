@@ -5,7 +5,7 @@ import { StyleSheet } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { mapRange } from '../../lib/common/common';
 import { designWidth, fixWidth } from '../../lib/define';
-import { useAdapterWeb } from '../../lib/hook/adapter';
+import { useAdapterScale, useAdapterWeb } from '../../lib/hook/adapter';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import MHStack from '../baseUI/mHStack';
 import FloaterDrawer from './floaterDrawer';
@@ -45,13 +45,14 @@ export default function Floater(props: { hasNavigationBarBack?: boolean }) {
     position: isAdapterWeb ? 'absolute' : 'relative',
     right: 0
   }
+  const { isInited, handleLayout, scaleStyleRight } = useAdapterScale();
 
   return (
     // { top: insets.top }
     <MHStack stretchW style={[styles.container, { top: insets.top }]} pointerEvents={'box-none'}>
       {/* <BlurView intensity={100} style={{ 'width': '100%', borderRadius: 15 }}> */}
       <MHStack stretchH stretchW >
-        <MHStack style={[adapterStyle as unknown]}>
+        <MHStack onLayout={handleLayout} style={[adapterStyle as unknown, scaleStyleRight]}>
           <FloaterDrawer hasNavigationBarBack={props.hasNavigationBarBack} />
         </MHStack>
       </MHStack>

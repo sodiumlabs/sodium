@@ -25,9 +25,11 @@ import { MLoading } from "../baseUI/mLoading";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
+import { useAdapterScale } from '../../lib/hook';
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
   const chainId = useStore(currentChainIdAtom);
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(chainId, tokenInfo.token.address);
@@ -36,95 +38,94 @@ export function CoinScreen(props) {
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={{ alignItems: 'center', marginTop: 20 }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <MImage w={60} h={60} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
-            <MText style={{ marginTop: 20, marginBottom: 12, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
-            {/* <MHStack stretchW style={{ justifyContent: 'center' }}>
-              <MImage size={16} />
-              <MText  >{tokenInfo.token.name}</MText>
-            </MHStack> */}
-            <MVStack stretchW style={[{ alignItems: 'center', paddingVertical: 15 }, globalStyle.whiteBorderWidth]}>
-              <MText  >Balance</MText>
-              <MText style={{ marginVertical: 10, color: eColor.GrayContentText }} >${tokenInfo.usdBalance}</MText>
-              <MText style={{ fontWeight: '700' }} >{formatWei2Price(tokenInfo.balance.toString(), tokenInfo.token.decimals, 3)} {tokenInfo.token.symbol}</MText>
-            </MVStack>
+          <MVStack onLayout={handleLayout} stretchW style={[styles.container, { minHeight: dimension[1] }, scaleStyle]}>
+            {isInited && (<>
+              <MImage w={60} h={60} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
+              <MText style={{ marginTop: 20, marginBottom: 12, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
 
-            <MVStack stretchW style={{ marginVertical: 20 }}>
-              <MButton
-                scale={btnScale}
-                style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send, tokenInfo)} >
-                <MButtonText title={`Send ${tokenInfo.token.symbol}`} />
-              </MButton>
+              <MVStack stretchW style={[{ alignItems: 'center', paddingVertical: 15 }, globalStyle.whiteBorderWidth]}>
+                <MText  >Balance</MText>
+                <MText style={{ marginVertical: 10, color: eColor.GrayContentText }} >${tokenInfo.usdBalance}</MText>
+                <MText style={{ fontWeight: '700' }} >{formatWei2Price(tokenInfo.balance.toString(), tokenInfo.token.decimals, 3)} {tokenInfo.token.symbol}</MText>
+              </MVStack>
 
-            </MVStack>
+              <MVStack stretchW style={{ marginVertical: 20 }}>
+                <MButton
+                  scale={btnScale}
+                  style={{ 'width': '100%', height: 50, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.Send, tokenInfo)} >
+                  <MButtonText title={`Send ${tokenInfo.token.symbol}`} />
+                </MButton>
 
-            <BaseFoldFrame header={"Detail"} defaultExpansion>
+              </MVStack>
 
-              <MText style={{ marginBottom: 10 }}>Description</MText>
-              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unknown'}</MText>
+              <BaseFoldFrame header={"Detail"} defaultExpansion>
 
-              <MDivider style={{ marginVertical: 10 }} />
-              <MText style={{ marginBottom: 10 }} >Website</MText>
-              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website || 'unknown'}</MText>
+                <MText style={{ marginBottom: 10 }}>Description</MText>
+                <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unknown'}</MText>
 
-              {!tokenInfo.token.isNativeToken && (
-                <>
-                  <MDivider style={{ marginVertical: 10 }} />
-                  <MText  >Contract Address</MText>
-                  <MLineLR
-                    left={<MText style={{ color: eColor.GrayContentText, marginRight: 10 }} >{tokenInfo.token.address}</MText>}
-                    right={
-                      <MHStack>
-                        <CopyButton copyText={tokenInfo.token.address} />
-                        <LinkButton tokenInfo={tokenInfo} style={{ marginHorizontal: 5 }} />
-                      </MHStack>
-                    } />
+                <MDivider style={{ marginVertical: 10 }} />
+                <MText style={{ marginBottom: 10 }} >Website</MText>
+                <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website || 'unknown'}</MText>
+
+                {!tokenInfo.token.isNativeToken && (
+                  <>
+                    <MDivider style={{ marginVertical: 10 }} />
+                    <MText  >Contract Address</MText>
+                    <MLineLR
+                      left={<MText style={{ color: eColor.GrayContentText, marginRight: 10 }} >{tokenInfo.token.address}</MText>}
+                      right={
+                        <MHStack>
+                          <CopyButton copyText={tokenInfo.token.address} />
+                          <LinkButton tokenInfo={tokenInfo} style={{ marginHorizontal: 5 }} />
+                        </MHStack>
+                      } />
+                  </>
+                )}
+
+                <MDivider style={{ marginVertical: 10 }} />
+                <MHStack >
+                  <MText style={{ flex: 1 }}>Token Standard</MText>
+                  <MText style={{ color: eColor.GrayContentText }}>{!tokenInfo.token.isNativeToken ? "ERC20" : `${tokenInfo.token.name} Native Token`}</MText>
+                </MHStack>
+
+                <MDivider style={{ marginVertical: 10 }} />
+                <MHStack>
+                  <MText style={{ flex: 1 }}>Network</MText>
+                  {/* <MImage w={16} h={16} /> */}
+                  <MText style={{ color: eColor.GrayContentText }}>{tokenInfo.token.name}</MText>
+                </MHStack>
+              </BaseFoldFrame>
+              {
+                tokenInfo.token.isNativeToken && (
+                  <MHStack stretchW style={{ justifyContent: 'center', marginTop: 30, marginBottom: 30 }}>
+                    <MText style={{ textAlign: 'center', color: eColor.GrayText }} numberOfLines={null}>Transaction History for Native tokens is not available at this time.</MText>
+                  </MHStack>)
+              }
+
+              {
+                !tokenInfo.token.isNativeToken && (
+                  <MVStack stretchW>
+                    <ClassifyHistoryItem title={HistoryTime.ToDay} historyMap={transHistoryMap} />
+                    <ClassifyHistoryItem title={HistoryTime["This Week"]} historyMap={transHistoryMap} />
+                    <ClassifyHistoryItem title={HistoryTime["Last Week"]} historyMap={transHistoryMap} />
+                    <ClassifyHistoryItem title={HistoryTime["This Month"]} historyMap={transHistoryMap} />
+                    <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
+                    <ClassifyHistoryItem title={HistoryTime["Last Year"]} historyMap={transHistoryMap} />
+                    <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
+                  </MVStack>
+                )
+              }
+
+              {
+                queryHistory.isFetching && <>
+                  <MHStack style={{ marginBottom: 20 }} />
+                  <MLoading />
                 </>
-              )}
-
-              <MDivider style={{ marginVertical: 10 }} />
-              <MHStack >
-                <MText style={{ flex: 1 }}>Token Standard</MText>
-                <MText style={{ color: eColor.GrayContentText }}>{!tokenInfo.token.isNativeToken ? "ERC20" : `${tokenInfo.token.name} Native Token`}</MText>
-              </MHStack>
-
-              <MDivider style={{ marginVertical: 10 }} />
-              <MHStack>
-                <MText style={{ flex: 1 }}>Network</MText>
-                {/* <MImage w={16} h={16} /> */}
-                <MText style={{ color: eColor.GrayContentText }}>{tokenInfo.token.name}</MText>
-              </MHStack>
-            </BaseFoldFrame>
-            {
-              tokenInfo.token.isNativeToken && (
-                <MHStack stretchW style={{ justifyContent: 'center', marginTop: 30, marginBottom: 30 }}>
-                  <MText style={{ textAlign: 'center', color: eColor.GrayText }} numberOfLines={null}>Transaction History for Native tokens is not available at this time.</MText>
-                </MHStack>)
-            }
-
-            {
-              !tokenInfo.token.isNativeToken && (
-                <MVStack stretchW>
-                  <ClassifyHistoryItem title={HistoryTime.ToDay} historyMap={transHistoryMap} />
-                  <ClassifyHistoryItem title={HistoryTime["This Week"]} historyMap={transHistoryMap} />
-                  <ClassifyHistoryItem title={HistoryTime["Last Week"]} historyMap={transHistoryMap} />
-                  <ClassifyHistoryItem title={HistoryTime["This Month"]} historyMap={transHistoryMap} />
-                  <ClassifyHistoryItem title={HistoryTime["This Year"]} historyMap={transHistoryMap} />
-                  <ClassifyHistoryItem title={HistoryTime["Last Year"]} historyMap={transHistoryMap} />
-                  <ClassifyHistoryItem title={HistoryTime.Other} historyMap={transHistoryMap} />
-                </MVStack>
-              )
-            }
-
-            {
-              queryHistory.isFetching && <>
-                <MHStack style={{ marginBottom: 20 }} />
-                <MLoading />
-              </>
-            }
-            <MHStack style={{ marginBottom: 40 }} />
-            <Spacer />
-            <Information />
+              }
+              <MHStack style={{ marginBottom: 40 }} />
+              <Spacer />
+              <Information />
+            </>)}
 
           </MVStack>
         </MVStack>

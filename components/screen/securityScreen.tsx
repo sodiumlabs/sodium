@@ -1,71 +1,70 @@
-import { Divider } from "@ui-kitten/components";
 import { ScrollView, StyleSheet } from "react-native";
-import { fixWidth, Screens } from "../../lib/define";
+import { Screens, fixWidth } from "../../lib/define";
+import { eColor, globalStyle } from '../../lib/globalStyles';
+import { useAdapterScale } from "../../lib/hook";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { navigationRef } from "../base/navigation";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
-import { MDivider } from "../baseUI/mDivider";
+import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
-import { globalStyle, eColor } from '../../lib/globalStyles';
-import { MButtonText } from "../baseUI/mButtonText";
 
 export function SecurityScreen() {
   // const auth = useAuth();
   const dimension = useDimensionSize();
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <ScreenTitle title="Security" />
-            <MVStack>
-              {/* <MDivider style={{ marginVertical: 10 }} /> */}
-              <MHStack style={[{ marginBottom: 20 }]}>
-                <MText numberOfLines={null}>Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. Learn more about two-factor authentication.</MText>
-              </MHStack>
+          <MVStack onLayout={handleLayout} stretchW style={[styles.container, { minHeight: dimension[1] }, scaleStyle]}>
+            {isInited && (<>
+              <ScreenTitle title="Security" />
+              <MVStack>
+                <MHStack style={[{ marginBottom: 20 }]}>
+                  <MText numberOfLines={null}>Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. Learn more about two-factor authentication.</MText>
+                </MHStack>
 
+                <MText style={{ marginBottom: 10, color: eColor.GrayContentText }}>Two-factor authentication</MText>
+                <MVStack style={[globalStyle.whiteBorderWidth, { padding: 15, marginTop: 2 }]}>
+                  <MText>Two-factor methods</MText>
+                  <MLineLR
+                    left={<MText style={{ color: eColor.GrayContentText }} >Primary two-factor method</MText>}
+                    right={
+                      <MHStack>
 
-              <MText style={{ marginBottom: 10, color: eColor.GrayContentText }}>Two-factor authentication</MText>
-              {/* <MDivider style={{ marginBottom: 10 }} /> */}
-              <MVStack style={[globalStyle.whiteBorderWidth, { padding: 15, marginTop: 2 }]}>
-                <MText>Two-factor methods</MText>
-                <MLineLR
-                  left={<MText style={{ color: eColor.GrayContentText }} >Primary two-factor method</MText>}
-                  right={
-                    <MHStack>
+                        <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
+                          <MButtonText title={"Set"} />
+                        </MButton>
+                      </MHStack>
+                    }
+                  />
 
-                      <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
-                        <MButtonText title={"Set"} />
-                      </MButton>
-                    </MHStack>
-                  }
-                />
+                  <MText style={{ marginTop: 20 }}  >Recovery options</MText>
+                  <MLineLR
+                    left={<MText style={{ color: eColor.GrayContentText }}>Recovery codes</MText>}
+                    right={
+                      <MHStack>
+                        <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
+                          <MButtonText title={"Show"} />
+                        </MButton>
+                      </MHStack>
+                    }
+                  />
+                </MVStack>
 
-                <MText style={{ marginTop: 20 }}  >Recovery options</MText>
-                <MLineLR
-                  left={<MText style={{ color: eColor.GrayContentText }}>Recovery codes</MText>}
-                  right={
-                    <MHStack>
-                      <MButton style={{ width: 60, backgroundColor: eColor.Blue }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
-                        <MButtonText title={"Show"} />
-                      </MButton>
-                    </MHStack>
-                  }
-                />
+                {/* <MDivider style={{ marginVertical: 10 }} /> */}
+
               </MVStack>
-
-              {/* <MDivider style={{ marginVertical: 10 }} /> */}
-
-            </MVStack>
-            <Spacer />
-            <Information />
+              <Spacer />
+              <Information />
+            </>)}
           </MVStack>
         </MVStack>
       </ScrollView>

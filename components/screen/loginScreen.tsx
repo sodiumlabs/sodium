@@ -19,6 +19,7 @@ import { LoginLoading } from "../full/loginLoading";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
 import { loginIn } from '../../lib/data/auth';
 import { useProjectSetting } from '../../lib/data/project';
+import { useAdapterScale } from "../../lib/hook";
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"
@@ -31,6 +32,7 @@ const redirect = AuthSession.makeRedirectUri({
 
 export function LoginScreen() {
   const dimension = useDimensionSize();
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
   const projectSetting = useProjectSetting();
 
   const loginClick = async () => {
@@ -72,23 +74,25 @@ export function LoginScreen() {
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
       <ScrollView style={{ width: '100%', height: '100%', paddingHorizontal: 15 }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
-            {/* <MText>Sign into web3</MText> */}
-            <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
-            <ScreenTitle title="Sign into web3" />
-            <MVStack stretchW>
-              <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
-                <MButtonText title={"Steam login"} />
-              </MButton>
-              <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
-                <MButtonText title={"Twitter Login"} />
-              </MButton>
-            </MVStack>
-            {/* <Spacer /> */}
-            <MVStack stretchW style={{ position: 'absolute', bottom: 0 }}>
-              <Information style={{ marginBottom: 0 }} />
-              <MHStack style={{ marginBottom: 30 }} />
-            </MVStack>
+          <MVStack onLayout={handleLayout} stretchW stretchH style={[styles.container, { minHeight: dimension[1] }, scaleStyle]}  >
+            {isInited && (
+              <>
+                <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
+                <ScreenTitle title="Sign into web3" />
+                <MVStack stretchW>
+                  <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
+                    <MButtonText title={"Steam login"} />
+                  </MButton>
+                  <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
+                    <MButtonText title={"Twitter Login"} />
+                  </MButton>
+                </MVStack>
+                {/* <Spacer /> */}
+                <MVStack stretchW style={{ position: 'absolute', bottom: 0 }}>
+                  <Information style={{ marginBottom: 0 }} />
+                  <MHStack style={{ marginBottom: 30 }} />
+                </MVStack>
+              </>)}
           </MVStack>
         </MVStack>
       </ScrollView>

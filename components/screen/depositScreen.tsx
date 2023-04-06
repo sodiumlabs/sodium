@@ -10,9 +10,11 @@ import { MLoading } from "../baseUI/mLoading";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import DepositItem from "../item/depositItem";
+import { useAdapterScale } from "../../lib/hook";
 
 export function DepositScreen() {
   const dimension = useDimensionSize();
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
   const [depositQuery, depositItems] = useQueryDeposit();
   const [curDepositItem, setCurDepositItem] = useState<IDepositItemData>(null);
   useEffect(() => {
@@ -32,21 +34,23 @@ export function DepositScreen() {
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <ScreenTitle title="Deposit" />
-            {
-              depositItems && depositItems.length > 0 && depositItems.map((data, index) => {
-                return (
-                  <DepositItem isSelected={curDepositItem && data.name == curDepositItem.name} depositItemData={data} key={data.name} onDeposiItemClick={onDeposiItemClick} />
-                )
-              })
-            }
-            {
-              depositQuery.isFetching && <MLoading />
-            }
+          <MVStack onLayout={handleLayout} stretchW style={[styles.container, { minHeight: dimension[1] }, scaleStyle]}>
+            {isInited && (<>
+              <ScreenTitle title="Deposit" />
+              {
+                depositItems && depositItems.length > 0 && depositItems.map((data, index) => {
+                  return (
+                    <DepositItem isSelected={curDepositItem && data.name == curDepositItem.name} depositItemData={data} key={data.name} onDeposiItemClick={onDeposiItemClick} />
+                  )
+                })
+              }
+              {
+                depositQuery.isFetching && <MLoading />
+              }
 
-            <Spacer />
-            <Information />
+              <Spacer />
+              <Information />
+            </>)}
           </MVStack>
         </MVStack>
       </ScrollView>

@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { showUpdateScanModal } from '../../lib/data/modal';
-import { fixWidth, Screens } from '../../lib/define';
+import { Screens, fixWidth } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
+import { useAdapterScale } from '../../lib/hook';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { currentChainIdAtom } from '../../lib/network';
 import { BaseScreen } from "../base/baseScreen";
@@ -33,52 +34,60 @@ export function WalletScreen() {
   const onChangeText = (text: string) => {
     setSearchText(text);
   }
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
+
+
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }}>
-        <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]} >
-            <MVStack style={styles.balance}>
-              <MText style={{ fontWeight: '700' }} >Balance</MText>
-              <MText style={{ marginTop: 10, fontWeight: '700' }} fontSize={30} >${usdBalance.toFixed(2)}</MText>
-            </MVStack>
+        <MVStack style={{ alignItems: 'center' }}>
+          <MVStack onLayout={handleLayout} stretchW style={[styles.container, { minHeight: dimension[1] }, scaleStyle]} >
+            {isInited && (
+              <>
+                <MVStack style={styles.balance}>
+                  <MText style={{ fontWeight: '700' }} >Balance</MText>
+                  <MText style={{ marginTop: 10, fontWeight: '700' }} fontSize={30} >${usdBalance.toFixed(2)}</MText>
+                </MVStack>
 
-            <MHStack style={styles.operate}>
-              <WalletButton source={<SendSvg />} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
-              <WalletButton source={<DepositSvg />} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
-              <WalletButton source={<ScanSvg />} title='Scan' onPress={() => showUpdateScanModal(true)} />
-            </MHStack>
+                <MHStack style={styles.operate}>
+                  <WalletButton source={<SendSvg />} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
+                  <WalletButton source={<DepositSvg />} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
+                  <WalletButton source={<ScanSvg />} title='Scan' onPress={() => showUpdateScanModal(true)} />
+                </MHStack>
 
-            <RequestTranscation />
+                <RequestTranscation />
 
-            <PendingTranscation />
+                <PendingTranscation />
 
-            <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor={eColor.GrayText} />
+                <MInput value={searchText} onChangeText={onChangeText} style={{ marginVertical: 20 }} placeholder="Search coins" placeholderTextColor={eColor.GrayText} />
 
-            <MVStack stretchW style={styles.coins}>
-              <MText style={{ marginBottom: 15, color: eColor.GrayContentText }}>Coins</MText>
-              {
-                tokenInfos && tokenInfos.map((tokenInfo, index) => {
-                  if ((tokenInfo.token.name + tokenInfo.token.symbol).toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) != -1) {
-                    return <CoinItem key={tokenInfo.token.address} tokenInfo={tokenInfo} />
+                <MVStack stretchW style={styles.coins}>
+                  <MText style={{ marginBottom: 15, color: eColor.GrayContentText }}>Coins</MText>
+                  {
+                    tokenInfos && tokenInfos.map((tokenInfo, index) => {
+                      if ((tokenInfo.token.name + tokenInfo.token.symbol).toLocaleLowerCase().indexOf(searchText.toLocaleLowerCase()) != -1) {
+                        return <CoinItem key={tokenInfo.token.address} tokenInfo={tokenInfo} />
+                      }
+                    })
                   }
-                })
-              }
 
-              {
-                tokensQuery.isFetching && <MLoading />
-              }
+                  {
+                    tokensQuery.isFetching && <MLoading />
+                  }
 
-              {
-                !tokensQuery.isFetching && !tokenInfos && (
-                  <MHStack stretchW style={{ justifyContent: 'center', marginTop: 30, marginBottom: 30 }}>
-                    <MText style={{ textAlign: 'center', color: eColor.GrayText }} numberOfLines={null}>No coins in your wallet</MText>
-                  </MHStack>)
-              }
+                  {
+                    !tokensQuery.isFetching && !tokenInfos && (
+                      <MHStack stretchW style={{ justifyContent: 'center', marginTop: 30, marginBottom: 30 }}>
+                        <MText style={{ textAlign: 'center', color: eColor.GrayText }} numberOfLines={null}>No coins in your wallet</MText>
+                      </MHStack>)
+                  }
 
-            </MVStack >
-            <Spacer />
-            <Information />
+                </MVStack >
+                <Spacer />
+                <Information />
+              </>
+            )}
+
           </MVStack>
         </MVStack>
 

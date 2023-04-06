@@ -2,15 +2,17 @@ import { Transaction } from '@0xsodium/transactions';
 import { Signer } from "@0xsodium/wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { BigNumberish } from 'ethers';
+import * as Clipboard from 'expo-clipboard';
 import { useCallback, useEffect, useState } from 'react';
-import { Platform, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
 import { formatPrice2Wei, formatWei2Price, isMatchEnsAddress, isMatchEthAddress } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { showUpdateSignTranscationModal } from '../../lib/data/modal';
-import { btnScale, fixWidth, IUserTokenInfo } from "../../lib/define";
+import { IUserTokenInfo, btnScale, fixWidth } from "../../lib/define";
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { useAdapterScale } from '../../lib/hook';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { useCurrentChainId } from '../../lib/network';
 import { BaseScreen } from "../base/baseScreen";
@@ -25,13 +27,14 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
-import * as Clipboard from 'expo-clipboard';
 
 
 export function SendScreen(props) {
   const currentChainId = useCurrentChainId();
   const authData = useAuth();
   const dimension = useDimensionSize();
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
+
   const defaultToken = props.route.params as IUserTokenInfo;
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens(currentChainId);
   const [selectedOption, setSelectedOption] = useState<IUserTokenInfo>(null);
@@ -128,35 +131,39 @@ export function SendScreen(props) {
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
-        <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <ScreenTitle title="Send" />
-            <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
-              <TokenDropdown options={tokenInfos} defaultOption={defaultToken} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-              <MHStack style={{ position: 'relative' }} >
-                <MInput style={{ marginTop: 10, paddingRight: 90 }} keyboardType='numeric' placeholder="Quantity"
-                  placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}
-                  value={inputTokenCount} errorTip={isShowCountInputError ? "Please enter the correct quantity" : ""} />
-                <InputEndButton style={{ position: 'absolute', right: 20, top: 30 }} onPress={onQuantityMaxClick} title='Max' />
-              </MHStack>
+        <MVStack stretchW style={{ alignItems: 'center' }} >
+          <MVStack onLayout={handleLayout} stretchW style={[styles.container, { minHeight: dimension[1] }, scaleStyle]}>
+            {isInited && (
+              <>
+                <ScreenTitle title="Send" />
+                <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
+                  <TokenDropdown options={tokenInfos} defaultOption={defaultToken} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+                  <MHStack style={{ position: 'relative' }} >
+                    <MInput style={{ marginTop: 10, paddingRight: 90 }} keyboardType='numeric' placeholder="Quantity"
+                      placeholderTextColor={eColor.GrayText} onChangeText={onChangeTokenCountText}
+                      value={inputTokenCount} errorTip={isShowCountInputError ? "Please enter the correct quantity" : ""} />
+                    <InputEndButton style={{ position: 'absolute', right: 20, top: 30 }} onPress={onQuantityMaxClick} title='Max' />
+                  </MHStack>
 
-            </MVStack>
-            <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
-            <MHStack stretchW style={{ position: 'relative' }}>
-              <MInput style={{ paddingRight: 90 }} placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
-                onChangeText={onChangeAddressText} value={inputAddress}
-                errorTip={isShowAddressInputError ? "Please enter the correct address" : ""} />
-              <InputEndButton style={{ position: 'absolute', right: 20, top: 20 }} onPress={onAddressPasteClick} title='Paste' />
-            </MHStack>
+                </MVStack>
+                <MText style={{ marginVertical: 20, fontWeight: '700' }}>To</MText>
+                <MHStack stretchW style={{ position: 'relative' }}>
+                  <MInput style={{ paddingRight: 90 }} placeholder="Address (0x…) or ENS name" placeholderTextColor={eColor.GrayText}
+                    onChangeText={onChangeAddressText} value={inputAddress}
+                    errorTip={isShowAddressInputError ? "Please enter the correct address" : ""} />
+                  <InputEndButton style={{ position: 'absolute', right: 20, top: 20 }} onPress={onAddressPasteClick} title='Paste' />
+                </MHStack>
 
-            <MButton
-              scale={btnScale}
-              stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]}
-              isBanHover={!isCanSend}>
-              <MButtonText title={"Continue"} />
-            </MButton>
-            <Spacer />
-            <Information />
+                <MButton
+                  scale={btnScale}
+                  stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]}
+                  isBanHover={!isCanSend}>
+                  <MButtonText title={"Continue"} />
+                </MButton>
+                <Spacer />
+                <Information />
+              </>
+            )}
           </MVStack>
         </MVStack>
       </ScrollView>

@@ -13,32 +13,41 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { AllowanceItem } from "../item/allowanceItem";
+import { useAdapterScale } from "../../lib/hook";
 
 export function AllowanceScreen() {
   const currentChainId = useCurrentChainId();
   const [queryAllowance, allowances, onScroll] = useQueryAllowances(currentChainId);
   const dimension = useDimensionSize();
+  const { isInited, handleLayout, scaleStyleCenter: scaleStyle } = useAdapterScale();
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
-            <ScreenTitle title="Allowance Sessions" />
-            <MText numberOfLines={null}>You're currently signed in to your sodium wallet on these sessions.Pay close attention and make sure to remove sessions you are no longer using for better security.</MText>
-            <MHStack stretchW style={{ marginTop: 20 }}>
-              <MText style={{ color: eColor.GrayContentText }} >Allowance Keys({allowances.length})</MText>
-            </MHStack>
-
+          <MVStack onLayout={handleLayout} stretchW style={[styles.container, { minHeight: dimension[1] }, scaleStyle]}>
             {
-              allowances.map((a, i) => <AllowanceItem key={i} allowance={a} />)
+              isInited && (
+                <>
+                  <ScreenTitle title="Allowance Sessions" />
+                  <MText numberOfLines={null}>You're currently signed in to your sodium wallet on these sessions.Pay close attention and make sure to remove sessions you are no longer using for better security.</MText>
+                  <MHStack stretchW style={{ marginTop: 20 }}>
+                    <MText style={{ color: eColor.GrayContentText }} >Allowance Keys({allowances.length})</MText>
+                  </MHStack>
+
+                  {
+                    allowances.map((a, i) => <AllowanceItem key={i} allowance={a} />)
+                  }
+
+                  {
+                    queryAllowance.isFetching && <MLoading />
+                  }
+                  <MHStack style={{ marginBottom: 50 }} />
+                  <Spacer />
+                  <Information />
+                </>
+              )
             }
 
-            {
-              queryAllowance.isFetching && <MLoading />
-            }
-            <MHStack style={{ marginBottom: 50 }} />
-            <Spacer />
-            <Information />
           </MVStack>
         </MVStack>
       </ScrollView>
