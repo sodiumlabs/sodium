@@ -1,5 +1,5 @@
 
-import { ImageSourcePropType, Pressable, StyleSheet } from 'react-native';
+import { ImageSourcePropType, Pressable, StyleSheet, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { updateCurScreenTab, useCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
@@ -13,12 +13,13 @@ import MText from '../baseUI/mText';
 import { navigationRef } from './navigation';
 
 
-export default function Header(props) {
+export default function Header(props: ViewProps) {
+  const { style, ...rest } = props;
   const insets = useSafeAreaInsets();
   const curScreenName = useCurScreenTab();
 
   return (
-    <MHStack stretchW style={[styles.container, { top: insets.top }]}>
+    <MHStack stretchW style={[styles.container, { top: insets.top }]} {...rest}>
       <MHStack stretchH stretchW style={{ position: 'relative', justifyContent: 'center' }}>
         <MHStack style={{ position: 'absolute', left: 20, top: -15, alignItems: 'center', }}>
           {/* <MImage w={126} h={30} source={IconLogoAll} style={{ marginRight: 8 }} /> */}

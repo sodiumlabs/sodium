@@ -1,5 +1,5 @@
 
-import { Platform, StyleSheet } from 'react-native';
+import { Platform, StyleSheet, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useCurScreenTab, updateCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
@@ -11,7 +11,8 @@ import WalletSvg from '../svg/walletSvg';
 import AppsSvg from '../svg/appsSvg';
 import { navigationRef } from './navigation';
 
-export default function Footer() {
+export default function Footer(props: ViewProps) {
+  const { style, ...rest } = props;
   const insets = useSafeAreaInsets();
   const curScreenName = useCurScreenTab();
 
@@ -28,7 +29,7 @@ export default function Footer() {
     updateCurScreenTab(Screens.Apps);
   }
   return (
-    <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]}>
+    <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]} {...rest}>
       {/* <BlurView style={{ width: '100%' }}> */}
       <MHStack stretchW style={styles.list}>
         <MenuButton isShowReqTip isSelect={curScreenName == Screens.Wallet} source={<WalletSvg />} title={Screens.Wallet} onPress={onWalletClick} />

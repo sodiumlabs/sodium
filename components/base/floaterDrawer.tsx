@@ -1,4 +1,4 @@
-import { useRef, useState, useMemo } from 'react';
+import { useRef, useState, useMemo, useEffect } from 'react';
 import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View, Platform } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
 import { waitTime } from '../../lib/common/common';
@@ -22,7 +22,21 @@ import { useProfile } from '../../lib/data/profile';
 import MPressable from '../baseUI/mPressable';
 import SettingSvg from '../svg/settingSvg';
 import SignOutSvg from '../svg/signOutSvg';
+import { atom } from 'nanostores';
+import { useStore } from '@nanostores/react';
 
+const floaterDrawerFold = atom(true);
+const setIsFold = (isFold) => {
+  floaterDrawerFold.set(isFold);
+}
+export const useFloaterDrawerFold = () => {
+  return useStore(floaterDrawerFold);
+}
+
+const tryFoldFloaterDrawerAtom = atom(false);
+export const tryFoldFloaterDrawer = () => {
+  tryFoldFloaterDrawerAtom.set(!tryFoldFloaterDrawerAtom.get());
+}
 export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) {
 
   // ------ ------ ------ ------ anim  ------ ------ ------ ------ ------
@@ -31,8 +45,9 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   const headerOffsetAnim = useRef(new Animated.Value(0)).current;
   const contentOpacityAnim = useRef(new Animated.Value(0)).current;
   const [viewHeight, setViewHeight] = useState(-1);
-  const [isFold, setIsFold] = useState(true);
   const animRate = 0.5;
+  const isFold = useFloaterDrawerFold();
+  const tryFoldFloaterDrawer = useStore(tryFoldFloaterDrawerAtom);
 
   const explanceAnim = () => {
     if (viewHeight <= 0) {
@@ -96,6 +111,12 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
       foldAnim();
     }
   }
+
+  useEffect(() => {
+    if (!isFold) {
+      foldAnim();
+    }
+  }, [tryFoldFloaterDrawer])
 
   const onLayout = (event: LayoutChangeEvent) => {
     // console.log("onLayout floater drawer");

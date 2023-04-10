@@ -1,7 +1,7 @@
 
 import { BlurView } from 'expo-blur';
 import { useEffect, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { mapRange } from '../../lib/common/common';
 import { designWidth, fixWidth } from '../../lib/define';
@@ -12,7 +12,8 @@ import FloaterDrawer from './floaterDrawer';
 
 
 
-export default function Floater(props: { hasNavigationBarBack?: boolean }) {
+export default function Floater(props: ViewProps & { hasNavigationBarBack?: boolean }) {
+  const { style, hasNavigationBarBack, ...rest } = props;
   const insets = useSafeAreaInsets();
   const dimensionsize = useDimensionSize();
   const [webAdapterWidth, setWebAdapterWidth] = useState(200);
@@ -48,7 +49,7 @@ export default function Floater(props: { hasNavigationBarBack?: boolean }) {
 
   return (
     // { top: insets.top }
-    <MHStack stretchW style={[styles.container, { top: insets.top }]} pointerEvents={'box-none'}>
+    <MHStack stretchW style={[styles.container, { top: insets.top }]} pointerEvents={'box-none'} {...rest}>
       {/* <BlurView intensity={100} style={{ 'width': '100%', borderRadius: 15 }}> */}
       <MHStack stretchH stretchW >
         <MHStack style={[adapterStyle as unknown]}>
