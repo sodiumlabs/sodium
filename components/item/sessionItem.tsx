@@ -32,7 +32,7 @@ export function SessionItem(props: { isSelected: boolean }) {
       <MText>Networks</MText>
       <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>Polygon</MText>
 
-      <MButton style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} >
+      <MButton style={{ marginTop: 10, height: 30 }} >
         <MButtonText title={"Sign out"} />
       </MButton>
     </MVStack>

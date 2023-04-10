@@ -1,7 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { waitTime } from '../../lib/common';
+import { showUpdateFullScreenModal } from '../../lib/data';
+import { loginOut } from '../../lib/data/auth';
 import { useProjectSetting } from '../../lib/data/project';
 import { IConnectModalParam, IModalParam } from '../../lib/define';
-import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { BaseModal } from '../base/baseModal';
 import { Spacer } from '../base/spacer';
@@ -9,11 +11,7 @@ import MButton from '../baseUI/mButton';
 import { MButtonText } from '../baseUI/mButtonText';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { loginOut } from '../../lib/data/auth';
-import { navigate } from '../base/navigation';
-import { showUpdateFullScreenModal } from '../../lib/data';
 import { LogoutLoading } from '../full/logoutLoading';
-import { waitTime } from '../../lib/common';
 
 export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalParam<IConnectModalParam> }) => {
   const { modalParam, hideModal } = props;
@@ -59,7 +57,7 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
             <MButtonText title={"Cancel"} />
           </MButton>
 
-          <MButton stretchW style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} onPress={onConfirmClick} isLoading={isLoading} >
+          <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onConfirmClick} isLoading={isLoading} >
             <MButtonText title={"Confirm"} />
           </MButton>
         </MVStack>
@@ -70,7 +68,7 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
 
         {
           projectSetting.isBeOpenedByThirdParty &&
-          <MButton stretchW style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} onPress={onUseOtherWallet} >
+          <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onUseOtherWallet} >
             <MButtonText title={"Use other wallet"} />
           </MButton>
         }

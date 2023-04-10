@@ -1,7 +1,7 @@
 import { hashcodeObj } from '../../lib/common/common';
 import { eColor } from '../../lib/globalStyles';
 import { transactionPending } from '../../lib/transaction/pending';
-import MButton from '../baseUI/mButton';
+import MButton, { MButtomTheme } from '../baseUI/mButton';
 import MLineLR from '../baseUI/mLineLR';
 import MText from "../baseUI/mText";
 import MVStack from '../baseUI/mVStack';
@@ -32,7 +32,7 @@ export function PendingTranscation() {
       }
 
       <MLineLR right={
-        <MButton onPress={removeAllClick} style={[{ marginRight: 2, height: 20, borderRadius: 15, backgroundColor: eColor.GrayWhite, paddingVertical: 0 }]} >
+        <MButton theme={MButtomTheme.Grey} onPress={removeAllClick} style={[{ marginRight: 2, height: 20, borderRadius: 15, paddingVertical: 0 }]} >
           <MText style={{ color: eColor.GrayContentText }} fontSize={10}  >Clear All</MText>
         </MButton>} />
 

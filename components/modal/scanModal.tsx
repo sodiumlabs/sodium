@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Platform } from 'react-native';
 import { useProjectSetting } from '../../lib/data/project';
 import { IModalParam } from '../../lib/define';
-import { eColor, globalStyle } from '../../lib/globalStyles';
+import { globalStyle } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { newPair } from '../../lib/walletconnect';
 import { BaseModal } from '../base/baseModal';
@@ -127,11 +127,11 @@ export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => voi
             )}
 
             <MVStack style={[globalStyle.whiteBorderWidth, { padding: 25, borderRadius: 0 }]}>
-              <MButton style={{ backgroundColor: eColor.Blue, height: 65, borderRadius: 15 }} onPress={pickImage}>
+              <MButton style={{ height: 65, borderRadius: 15 }} onPress={pickImage}>
                 <MButtonText title={'Upload QR Code image'} fontSize={16} />
               </MButton>
               <MHStack style={{ height: 15 }}></MHStack>
-              <MButton onPress={onPasteCodeClick} style={{ backgroundColor: eColor.Blue, height: 65, borderRadius: 15 }}>
+              <MButton onPress={onPasteCodeClick} style={{ height: 65, borderRadius: 15 }}>
                 <MButtonText title={'Paste code'} fontSize={16} />
               </MButton>
             </MVStack>

@@ -10,7 +10,7 @@ export default function WalletButton(props: { onPress?: (event: GestureResponder
   const { onPress, source, title } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
   return (
-    <MPressable scale={1.05} style={[styles.container]}
+    <MPressable style={[styles.container]}
       onPress={onPress}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}

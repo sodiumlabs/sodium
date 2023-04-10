@@ -1,8 +1,12 @@
+import * as AuthSession from 'expo-auth-session';
 import { ScrollView, StyleSheet } from "react-native";
-import { btnScale, fixWidth } from "../../lib/define";
-import { eColor } from '../../lib/globalStyles';
+import { showUpdateComModal, showUpdateFullScreenModal } from "../../lib/data";
+import { loginIn } from '../../lib/data/auth';
+import { useProjectSetting } from '../../lib/data/project';
+import { fixWidth } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconLogo } from "../../lib/imageDefine";
+import { TwitterAuthService } from '../../lib/mpc-auth/twitter';
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import MButton from "../baseUI/mButton";
@@ -11,14 +15,8 @@ import MHStack from "../baseUI/mHStack";
 import MImage from "../baseUI/mImage";
 import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
-import * as React from 'react';
-import { TwitterAuthService } from '../../lib/mpc-auth/twitter';
-import * as AuthSession from 'expo-auth-session';
-import { showUpdateComModal, showUpdateFullScreenModal } from "../../lib/data";
 import { LoginLoading } from "../full/loginLoading";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
-import { loginIn } from '../../lib/data/auth';
-import { useProjectSetting } from '../../lib/data/project';
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"
@@ -76,11 +74,11 @@ export function LoginScreen() {
             {/* <MText>Sign into web3</MText> */}
             <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
             <ScreenTitle title="Sign into web3" />
-            <MVStack stretchW>
-              <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
-                <MButtonText title={"Steam login"} />
+            <MVStack stretchW style={{ maxWidth: 300 }} >
+              <MButton style={{ marginBottom: 10, height: 30 }} onPress={loginClick} >
+                <MButtonText title={"Steam Login"} />
               </MButton>
-              <MButton scale={btnScale} style={{ marginBottom: 10, height: 30, backgroundColor: eColor.Blue }} onPress={loginClick} >
+              <MButton style={{ marginBottom: 10, height: 30 }} onPress={loginClick} >
                 <MButtonText title={"Twitter Login"} />
               </MButton>
             </MVStack>
@@ -92,7 +90,7 @@ export function LoginScreen() {
           </MVStack>
         </MVStack>
       </ScrollView>
-    </BaseScreen>
+    </BaseScreen >
   );
 }
 

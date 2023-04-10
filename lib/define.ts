@@ -227,5 +227,3 @@ export interface IApp {
   supportChainIds: number[]
   supportedMobile: boolean
 }
-
-export const btnScale = 0.99;

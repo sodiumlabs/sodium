@@ -43,7 +43,7 @@ export function AllowanceItem(props: { allowance: Allowance }) {
       <TextItem title={"Approve Date"} value={formatTimeYMDHMS(allowance.blockTimestamp * 1000)} />
       <TextItem title={"TX"} value={allowance.transactionHash} />
 
-      <MButton onPress={revokeAllowance} style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} >
+      <MButton onPress={revokeAllowance} style={{ marginTop: 10, height: 30 }} >
         <MButtonText title={"Revoke"} />
       </MButton>
     </MVStack>

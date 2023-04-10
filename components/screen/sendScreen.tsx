@@ -2,14 +2,15 @@ import { Transaction } from '@0xsodium/transactions';
 import { Signer } from "@0xsodium/wallet";
 import { BigNumber } from "@ethersproject/bignumber";
 import { BigNumberish } from 'ethers';
+import * as Clipboard from 'expo-clipboard';
 import { useCallback, useEffect, useState } from 'react';
-import { Platform, ScrollView, StyleSheet } from "react-native";
+import { ScrollView, StyleSheet } from "react-native";
 import { ERC20__factory } from '../../gen';
 import { useQueryTokens } from "../../lib/api/tokens";
 import { formatPrice2Wei, formatWei2Price, isMatchEnsAddress, isMatchEthAddress } from '../../lib/common/common';
 import { useAuth } from '../../lib/data/auth';
 import { showUpdateSignTranscationModal } from '../../lib/data/modal';
-import { btnScale, fixWidth, IUserTokenInfo } from "../../lib/define";
+import { IUserTokenInfo, fixWidth } from "../../lib/define";
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { useCurrentChainId } from '../../lib/network';
@@ -25,7 +26,6 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
-import * as Clipboard from 'expo-clipboard';
 
 
 export function SendScreen(props) {
@@ -118,10 +118,6 @@ export function SendScreen(props) {
 
   }
 
-  const sendStyle = {
-    backgroundColor: isCanSend ? eColor.Blue : eColor.Black
-  }
-
   const isShowCountInputError = inputTokenCount != "" && !/^\d+(\.\d+)?$/.test(inputTokenCount);
   const isShowAddressInputError = inputAddress != "" && !isMatchEthAddress(inputAddress) && !isMatchEnsAddress(inputAddress);
 
@@ -150,9 +146,8 @@ export function SendScreen(props) {
             </MHStack>
 
             <MButton
-              scale={btnScale}
-              stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }, sendStyle]}
-              isBanHover={!isCanSend}>
+              stretchW onPress={sendClick} style={[{ marginVertical: 20, height: 45 }]}
+              isDisable={!isCanSend}>
               <MButtonText title={"Continue"} />
             </MButton>
             <Spacer />

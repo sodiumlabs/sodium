@@ -4,7 +4,6 @@ import { StyleSheet } from 'react-native';
 import { capitalize, formatWei2Price } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { showUpdateTranscationDetailModal } from '../../lib/data/modal';
-import { btnScale } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { IconTokenDefault } from '../../lib/imageDefine';
 import MHStack from '../baseUI/mHStack';
@@ -29,7 +28,6 @@ export default function HistoryItem(props: { history: TransactionHistory }) {
   const token = transfer.token;
   return (
     <MPressable
-      scale={btnScale}
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       onPress={onClick}>

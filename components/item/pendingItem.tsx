@@ -9,7 +9,7 @@ import { eColor, globalStyle } from '../../lib/globalStyles';
 import { IconForkClose, IconShare, IconTokenDefault } from '../../lib/imageDefine';
 import { transactionPending } from '../../lib/transaction/pending';
 import MAvatar from '../baseUI/mAvatar';
-import MButton from "../baseUI/mButton";
+import MButton, { MButtomTheme } from "../baseUI/mButton";
 import { MDivider } from '../baseUI/mDivider';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -53,10 +53,10 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
         right={
           <>
             <MText style={{ color: eColor.GrayText }} >{formatTime2Today(data.timeStamp)}</MText>
-            <MButton style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, backgroundColor: eColor.GrayWhite, paddingHorizontal: 5 }} onPress={linkTxHash}  >
+            <MButton theme={MButtomTheme.Grey} style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, paddingHorizontal: 5 }} onPress={linkTxHash}  >
               <MImage style={{ opacity: 0.6 }} w={10} h={10} source={IconShare} />
             </MButton>
-            <MButton style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, backgroundColor: eColor.GrayWhite, paddingHorizontal: 5 }} onPress={closePendingClick}  >
+            <MButton theme={MButtomTheme.Grey} style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, paddingHorizontal: 5 }} onPress={closePendingClick}  >
               <MImage style={{ opacity: 0.6 }} w={10} h={10} source={IconForkClose} />
             </MButton>
           </>

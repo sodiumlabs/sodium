@@ -2,23 +2,23 @@ import { Linking, ScrollView, StyleSheet } from 'react-native';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { TransactionHistory } from '@0xsodium/provider';
 import { useQueryNetwork } from '../../lib/api/network';
-import { getTranscationExplorer } from '../../lib/network';
+import { capitalize } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/authAtom';
-import { btnScale, IModalParam } from '../../lib/define';
+import { IModalParam } from '../../lib/define';
+import { eColor } from '../../lib/globalStyles';
+import { getTranscationExplorer } from '../../lib/network';
 import { BaseModal } from '../base/baseModal';
 import CopyButton from '../baseUI/copyButton';
 import MButton from '../baseUI/mButton';
+import { MButtonText } from '../baseUI/mButtonText';
+import { MDivider } from '../baseUI/mDivider';
+import MHStack from '../baseUI/mHStack';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { TranscationDetailItem } from '../item/transcationDetailItem';
-import MHStack from '../baseUI/mHStack';
-import { MDivider } from '../baseUI/mDivider';
 import { ModalTitle } from './modalItem/modalTitle';
-import { eColor } from '../../lib/globalStyles';
-import { MButtonText } from '../baseUI/mButtonText';
-import { capitalize } from '../../lib/common/common';
 
 export const TranscationDetailModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -61,7 +61,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                   }
 
                   <MHStack stretchW style={{ height: 45, marginTop: 15 }}>
-                    <MButton scale={btnScale} style={{ flex: 1, backgroundColor: eColor.Blue, height: 30 }} onPress={linkTxHash}  >
+                    <MButton style={{ flex: 1, height: 30 }} onPress={linkTxHash}  >
                       <MButtonText title={`View On ${capitalize(network?.name)}`} />
                     </MButton>
                   </MHStack>

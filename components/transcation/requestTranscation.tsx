@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Pressable, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
 import { formatTime2Today } from '../../lib/common/time';
-import { btnScale, ITranscation } from '../../lib/define';
+import { showUpdateTranscationQueueModal } from "../../lib/data/modal";
+import { ITranscation } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useRequestedTransactions } from "../../lib/transaction";
-import { showUpdateTranscationQueueModal } from "../../lib/data/modal";
 import { CircleTip } from '../baseUI/circleTip';
 import MHStack from "../baseUI/mHStack";
-import MText from "../baseUI/mText";
 import MPressable from '../baseUI/mPressable';
+import MText from "../baseUI/mText";
 
 
 export function RequestTranscation() {
@@ -28,7 +28,6 @@ export function RequestTranscation() {
 
   return (
     <MPressable
-      scale={btnScale}
       style={{ width: '100%' }}
       onPress={() => showUpdateTranscationQueueModal(true)}
       onHoverIn={() => setIsItemHovered(true)}

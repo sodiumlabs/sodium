@@ -12,8 +12,8 @@ export const OperateBtnItem = (props: { onCancelClick: () => void, onConfirmClic
       <MButton style={{ flex: 1, marginRight: 10 }} onPress={onCancelClick} >
         <MButtonText title={"Reject"} />
       </MButton>
-      <MButton style={{ flex: 1, backgroundColor: isConfirmEnable ? eColor.Blue : eColor.Black, marginLeft: 10 }}
-        onPress={onConfirmClick} isLoading={isConfirmLoading} isBanHover={!isConfirmEnable} >
+      <MButton style={{ flex: 1, marginLeft: 10 }}
+        onPress={onConfirmClick} isLoading={isConfirmLoading} isDisable={!isConfirmEnable} >
         <MButtonText title={"Confirm"} />
       </MButton>
     </MHStack>

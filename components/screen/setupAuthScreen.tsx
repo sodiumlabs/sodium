@@ -60,7 +60,7 @@ export function SetupAuthScreen() {
                     style={{ marginTop: 10 }}
                     right={
                       <MHStack>
-                        <MButton onPress={() => setStep(2)} isBanHover={!authCode} style={{ backgroundColor: !!authCode ? eColor.Blue : eColor.Black }} >
+                        <MButton onPress={() => setStep(2)} isDisable={!authCode}  >
                           <MButtonText title="Continue" />
                         </MButton>
                       </MHStack>
@@ -92,7 +92,7 @@ export function SetupAuthScreen() {
                     style={{ marginTop: 20 }}
                     right={
                       <MHStack>
-                        <MButton style={{ backgroundColor: eColor.Blue }} onPress={onDownCodeClick} >
+                        <MButton onPress={onDownCodeClick} >
                           <MButtonText title="Download" />
                         </MButton>
                       </MHStack>
@@ -100,7 +100,7 @@ export function SetupAuthScreen() {
                   <MDivider style={{ marginVertical: 15 }} />
                   <MLineLR right={
                     <MHStack>
-                      <MButton onPress={() => setStep(3)} style={{ backgroundColor: eColor.Blue }}>
+                      <MButton onPress={() => setStep(3)}>
                         <MButtonText title="I have saved my recovery codes" />
                       </MButton>
                     </MHStack>

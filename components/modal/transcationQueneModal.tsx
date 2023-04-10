@@ -1,7 +1,7 @@
 
 import { ScrollView, StyleSheet } from 'react-native';
 import { hashcodeObj } from '../../lib/common/common';
-import { btnScale, IModalParam } from '../../lib/define';
+import { IModalParam } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { transactionQueue, useRequestedTransactions } from '../../lib/transaction';
 import { BaseModal } from '../base/baseModal';
@@ -56,7 +56,7 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
           </ScrollView>
         </MVStack>
         <MVStack stretchW style={{ height: 45, paddingHorizontal: 15, marginBottom: 15 }}>
-          <MButton scale={btnScale} stretchW hoverColor={eColor.Red}
+          <MButton stretchW
             onPress={rejectAllClick} style={{ flex: 1 }}
           >
             <MButtonText title='Reject All' />

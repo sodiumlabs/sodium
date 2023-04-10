@@ -44,7 +44,7 @@ export const DeployConfirmModal = (props: { hideModal: () => void, modalParam: I
             <MButtonText title={"Cancel"} />
           </MButton>
 
-          <MButton stretchW style={{ backgroundColor: eColor.Blue, marginTop: 10, height: 30 }} onPress={onConfirmClick} isLoading={isLoading} >
+          <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onConfirmClick} isLoading={isLoading} >
             <MButtonText title={"Deploy"} />
           </MButton>
         </MVStack>

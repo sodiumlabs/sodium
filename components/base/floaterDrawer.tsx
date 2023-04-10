@@ -9,7 +9,7 @@ import { eColor } from '../../lib/globalStyles';
 import { IconArrowL, IconForkClose, IconMore, IconSettings, IconSignout } from '../../lib/imageDefine';
 import CopyButton from '../baseUI/copyButton';
 import MAvatar from '../baseUI/mAvatar';
-import MButton from '../baseUI/mButton';
+import MButton, { MButtomTheme } from '../baseUI/mButton';
 import { MButtonText } from '../baseUI/mButtonText';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
@@ -169,13 +169,11 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         </MHStack>
 
         <MHStack style={{ height: 60 }}>
-          <MButton onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-            {/* <MImage w={14} h={14} style={{ marginRight: 6 }} source={IconSettings} /> */}
+          <MButton theme={MButtomTheme.Grey} onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
             <SettingSvg style={{ marginRight: 6 }} />
             <MButtonText title={"Settings"} />
           </MButton>
-          <MButton onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
-            {/* <MImage w={12} h={10} style={{ marginRight: 6 }} source={IconSignout} /> */}
+          <MButton theme={MButtomTheme.Grey} onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
             <SignOutSvg style={{ marginRight: 6 }} />
             <MButtonText title={"Sign out"} />
           </MButton>
