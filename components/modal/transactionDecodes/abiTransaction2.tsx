@@ -131,7 +131,7 @@ export function ABITransaction(props: Props) {
     return (
         <BaseFoldFrame defaultExpansion key={key} header={`Transaction(${transcationIndex}/${transcationMaxIndex})`} style={{ marginTop: 20 }}>
             {opensourceDom}
-            <MText style={{ color: eColor.GrayContentText }}>Call {contractName}: {method.slice(0, 1).toUpperCase()}{method.slice(1)}</MText>
+            <MText numberOfLines={null} style={{ color: eColor.GrayContentText, paddingTop: 10 }}>Call {contractName}: {method.slice(0, 1).toUpperCase()}{method.slice(1)}</MText>
             {resultOrChildren}
         </BaseFoldFrame>
     )

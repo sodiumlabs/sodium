@@ -105,9 +105,9 @@ export default function DepositItem(props: { depositItemData: IDepositItemData, 
       {
         isSelected && (
           <MVStack stretchW >
-            <MText style={{ marginVertical: 10 }}>You buy</MText>
+            <MText style={{ marginVertical: 10 }}>You Buy</MText>
             <DepositTokenDropdown style={{ zIndex: 2 }} selectedOption={curYouBuyToken} setSelectedOption={onYouBuyTokenClick} options={youBuyTokens} />
-            <MText style={{ marginVertical: 10 }}>You pay</MText>
+            <MText style={{ marginVertical: 10 }}>You Pay</MText>
             <MInput
               placeholder='Enter the amount' placeholderTextColor={eColor.GrayText}
               onChangeText={onInputYouPayTokenCount} value={youPayTokenCount} errorTip={isShowErrorTip ? `The value must be at least ${DepositAtLeastAmount}` : null} />
