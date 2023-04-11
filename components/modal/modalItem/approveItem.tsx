@@ -75,9 +75,9 @@ export const ApproveItem = (props: {
       minimumValue={0}
       maximumValue={1}
       onValueChange={onSliderValueChange}
-      minimumTrackTintColor="#4AB0FF"
-      maximumTrackTintColor="#FF7B4A"
-
+      minimumTrackTintColor={eColor.Blue}
+      maximumTrackTintColor={eColor.Black}
+      thumbTintColor={eColor.Blue}
     />
   }, []);
   return (
@@ -115,21 +115,22 @@ export const ApproveItem = (props: {
 
 function RadioNative(props: { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox }) {
   const { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox } = props;
+  const status = "info";
   return (
     <MVStack>
       <RadioGroup
         selectedIndex={approveSelectedIndex}
         onChange={index => setApproveSelectedIndex(index)}>
-        <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'} disabled={disabled}>
+        <Radio style={{ marginBottom: 30, position: 'relative' }} status={status} disabled={disabled}>
 
           <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
 
 
         </Radio>
-        <Radio status={'success'} disabled={disabled}>
+        <Radio status={status} disabled={disabled}>
           <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
         </Radio>
-        <Radio status={'success'} disabled={disabled}>
+        <Radio status={status} disabled={disabled}>
           <MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText>
         </Radio>
       </RadioGroup>
@@ -152,12 +153,13 @@ function RadioNative(props: { approveSelectedIndex, setApproveSelectedIndex, dis
 
 function RadioWeb(props: { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox }) {
   const { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox } = props;
+  const status = "info";
   return (
     <MVStack>
       <RadioGroup
         selectedIndex={approveSelectedIndex}
         onChange={index => setApproveSelectedIndex(index)}>
-        <Radio style={{ marginBottom: 30, position: 'relative' }} status={'success'} disabled={disabled}>
+        <Radio style={{ marginBottom: 30, position: 'relative' }} status={status} disabled={disabled}>
 
           <>
             <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
@@ -170,12 +172,12 @@ function RadioWeb(props: { approveSelectedIndex, setApproveSelectedIndex, disabl
 
 
         </Radio>
-        <Radio status={'success'} disabled={disabled}>
+        <Radio status={status} disabled={disabled}>
           <>
             <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
           </>
         </Radio>
-        <Radio status={'success'} disabled={disabled}>
+        <Radio status={status} disabled={disabled}>
           <>
             <MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText>
           </>

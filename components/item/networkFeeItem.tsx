@@ -21,7 +21,7 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth]} stretchW>
         <MImage w={32} h={32} uri={gasInfo.token.centerData.logoURI} source={IconTokenDefault} />
 
-        <MVStack style={{ flex: 1 }}>
+        <MVStack style={{ flex: 1, marginLeft: 8 }}>
           <MLineLR
             left={<MText style={{ fontWeight: '700' }} fontSize={14}>{`${gasInfo.token.symbol}`}</MText>}
             right={<MText style={{ color: eColor.GrayText, textDecorationLine: 'line-through' }} >
@@ -30,10 +30,12 @@ export default function NetworkFeeItem(props: TextInputProps & { gasInfo: Paymas
           <MLineLR
             left={<MText fontSize={10} style={{ color: eColor.GrayText }}>Balance : {balance}</MText>}
             right={<MText style={{ color: eColor.GrayText }}>${gasUsd}</MText>} />
-          <MHStack stretchW style={{ justifyContent: 'center', alignItems: 'center' }} >
+
+          {/* <MHStack stretchW style={{ justifyContent: 'center', alignItems: 'center' }} >
             <MText fontSize={10}>Paid by Linco</MText>
             <MImage style={{ marginLeft: 5 }} source={IconLogo} />
-          </MHStack>
+          </MHStack> */}
+
         </MVStack>
       </MHStack>
     </Pressable>
