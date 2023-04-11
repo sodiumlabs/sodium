@@ -1,14 +1,14 @@
 
 import { Platform, StyleSheet, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { useCurScreenTab, updateCurScreenTab } from '../../lib/data/screen';
+import { useCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
-import MenuButton from '../baseUI/menuButton';
 import MHStack from '../baseUI/mHStack';
 import MVStack from '../baseUI/mVStack';
+import MenuButton from '../baseUI/menuButton';
+import AppsSvg from '../svg/appsSvg';
 import HistorySvg from '../svg/historySvg';
 import WalletSvg from '../svg/walletSvg';
-import AppsSvg from '../svg/appsSvg';
 import { navigationRef } from './navigation';
 
 export default function Footer(props: ViewProps) {
@@ -18,15 +18,12 @@ export default function Footer(props: ViewProps) {
 
   const onWalletClick = () => {
     navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], })
-    updateCurScreenTab(Screens.Wallet);
   }
   const onHistoryClick = () => {
     navigationRef.reset({ index: 0, routes: [{ name: Screens.History }], })
-    updateCurScreenTab(Screens.History);
   }
   const onAppsClick = () => {
     navigationRef.reset({ index: 0, routes: [{ name: Screens.Apps }], })
-    updateCurScreenTab(Screens.Apps);
   }
   return (
     <MVStack stretchW style={[styles.container, { bottom: insets.bottom }]} {...rest}>

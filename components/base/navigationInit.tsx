@@ -4,9 +4,8 @@ import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { useAuth } from '../../lib/data/authAtom';
 import { useProjectSetting } from '../../lib/data/project';
-import { updateCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
-import { isNavigationReadyAtom, navigationRef, lastAtom, navigateInitAtom } from './navigation';
+import { isNavigationReadyAtom, lastAtom, navigateInitAtom, navigationRef } from './navigation';
 
 export default function NavigationInit() {
   const auth = useAuth();
@@ -34,7 +33,6 @@ export default function NavigationInit() {
       const url = new URL(locationURL);
       if (url.searchParams.get("oauth_token")) {
         navigationRef.reset({ index: 0, routes: [{ name: Screens.AuthCallbackScreen }], });
-        updateCurScreenTab(Screens.AuthCallbackScreen);
         return;
       }
     }
@@ -51,10 +49,8 @@ export default function NavigationInit() {
     else {
       if (auth.isLogin) {
         navigationRef.reset({ index: 0, routes: [{ name: Screens.Wallet }], });
-        updateCurScreenTab(Screens.Wallet);
       } else {
         navigationRef.reset({ index: 0, routes: [{ name: Screens.Login }], });
-        updateCurScreenTab(Screens.Login);
       }
     }
     if (!navigateInitAtom.get()) {

@@ -1,7 +1,7 @@
 
 import { ImageSourcePropType, Pressable, StyleSheet, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { updateCurScreenTab, useCurScreenTab } from '../../lib/data/screen';
+import { useCurScreenTab } from '../../lib/data/screen';
 import { Screens } from '../../lib/define';
 import { IconLogoAll, IconMenuHistory, IconMenuWallet } from '../../lib/imageDefine';
 import { useRequestedTransactions } from '../../lib/transaction';
@@ -45,7 +45,6 @@ const HeaderItem = (props: { screen: Screens, source: ImageSourcePropType, isSel
   const requestTranscations = useRequestedTransactions();
   const onItemClick = () => {
     navigationRef.reset({ index: 0, routes: [{ name: screen }], })
-    updateCurScreenTab(screen);
   }
   return (
     <Pressable style={[{ marginHorizontal: 20, position: 'relative' }, { opacity: isSelect ? 1 : 0.5 }]} onPress={onItemClick}>

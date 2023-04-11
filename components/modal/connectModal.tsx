@@ -69,7 +69,7 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
         {
           projectSetting.isBeOpenedByThirdParty &&
           <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onUseOtherWallet} >
-            <MButtonText title={"Use other wallet"} />
+            <MButtonText title={"Use Other Wallet"} />
           </MButton>
         }
 

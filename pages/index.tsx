@@ -1,48 +1,49 @@
 import * as eva from '@eva-design/eva';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ApplicationProvider } from '@ui-kitten/components';
+import * as SplashScreen from 'expo-splash-screen';
 import { Platform, UIManager } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { QueryCache, QueryClient, QueryClientProvider } from 'react-query';
 import { BarUI } from '../components/base/barUI';
 import ModalInit from '../components/base/modalInit';
-import { showErrorModal } from '../lib/data/modal';
 import { isNavigationReadyAtom, navigationRef } from '../components/base/navigation';
 import NavigationInit from '../components/base/navigationInit';
-import * as SplashScreen from 'expo-splash-screen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { showErrorModal } from '../lib/data/modal';
 
 import {
+  IframeMessageHandler,
+  ProxyMessageHandler,
+  WindowMessageHandler,
+} from '@0xsodium/provider';
+import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
+import { BaseUIInit } from '../components/base/baseUIInit';
+import {
+  AllowanceScreen,
   CoinScreen,
   DepositScreen,
   HistoryScreen,
   LoginScreen,
+  OpeningScreen,
   ProfileScreen,
+  RecoveryCodeScreen,
+  SecurityScreen,
   SendScreen,
   SessionScreen,
   SettingScreen,
-  WalletScreen,
-  AllowanceScreen,
-  RecoveryCodeScreen,
-  SecurityScreen,
   SetupAuthScreen,
-  OpeningScreen
+  WalletScreen
 } from '../components/screen';
+import { AppsScreen } from '../components/screen/appsScreen';
+import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
+import { initProjectSetting } from '../lib/data/project';
+import { updateCurScreenTab } from '../lib/data/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
-import {
-  WindowMessageHandler,
-  IframeMessageHandler,
-  ProxyMessageHandler,
-} from '@0xsodium/provider';
 import { asyncSession, initHandler, proxyChannel } from '../lib/provider';
-import { useEffect } from 'react';
-import { initProjectSetting } from '../lib/data/project';
-import { AuthCallbackScreen } from '../components/screen/authCallbackScreen';
-import { StatusBar } from 'expo-status-bar';
-import { authAtom } from '../lib/data/authAtom';
-import { AppsScreen } from '../components/screen/appsScreen';
 
 const queryClient = new QueryClient(
   {
@@ -110,15 +111,27 @@ export default function App() {
     })
   }, [1])
 
+  function handleStateChange(state: Readonly<{ key: string; index: number; routeNames: string[]; history?: unknown[]; routes: NavigationRoute<ParamListBase, string>[]; type: string; stale: false; }>): void {
+    console.log("handleStateChange");
+    console.log(state);
+
+    const routeState = state.routes[0].state;
+    const routes = routeState.routes;
+    const index = routeState.index;
+    updateCurScreenTab(routes[index].name);
+  }
+
   return (
     <SafeAreaProvider>
+      <BaseUIInit />
       <StatusBar style="dark" backgroundColor='#F7F7F7' />
       <ApplicationProvider {...eva} theme={eva.light}>
         <QueryClientProvider client={queryClient}>
-          <NavigationContainer ref={navigationRef} onReady={() => isNavigationReadyAtom.set(true)}>
+          <NavigationContainer ref={navigationRef} onReady={() => isNavigationReadyAtom.set(true)} onStateChange={handleStateChange}>
             <ModalInit />
             <NavigationInit />
             <BarUI />
+
             {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
             {/* <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
               <Stack.Screen name={Screens.Opening} component={OpeningScreen} />
