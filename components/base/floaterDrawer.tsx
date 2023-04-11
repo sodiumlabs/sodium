@@ -25,14 +25,6 @@ import SignOutSvg from '../svg/signOutSvg';
 import { atom } from 'nanostores';
 import { useStore } from '@nanostores/react';
 
-const floaterDrawerFold = atom(true);
-const setIsFold = (isFold) => {
-  floaterDrawerFold.set(isFold);
-}
-export const useFloaterDrawerFold = () => {
-  return useStore(floaterDrawerFold);
-}
-
 const tryFoldFloaterDrawerAtom = atom(false);
 export const tryFoldFloaterDrawer = () => {
   tryFoldFloaterDrawerAtom.set(!tryFoldFloaterDrawerAtom.get());
@@ -46,7 +38,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   const contentOpacityAnim = useRef(new Animated.Value(0)).current;
   const [viewHeight, setViewHeight] = useState(-1);
   const animRate = 0.5;
-  const isFold = useFloaterDrawerFold();
+  const [isFold, setIsFold] = useState(true);
   const tryFoldFloaterDrawer = useStore(tryFoldFloaterDrawerAtom);
 
   const explanceAnim = () => {

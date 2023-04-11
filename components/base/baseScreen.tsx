@@ -1,11 +1,11 @@
 
 import { useFocusEffect } from '@react-navigation/native';
-import React from 'react';
-import { ReactNode, useEffect, useCallback } from 'react';
+import { ReactNode, useCallback } from 'react';
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MVStack from '../baseUI/mVStack';
 import { updateBarParam } from './barUI';
+import { tryFoldFloaterDrawer } from './floaterDrawer';
 
 
 export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boolean, hasFloatingBar?: boolean, isNavigationBarBack?: boolean }) {
@@ -25,10 +25,14 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
     updateFloater();
   });
 
-  // const isAdapterWeb = useAdapterWeb();
+  function handleCapture(event): boolean {
+    // console.log('handleCapture');
+    tryFoldFloaterDrawer();
+    return true; // Return true to continue firing subsequent event handlers, false to stop firing subsequent event handlers
+  }
   return (
-    <SafeAreaView style={styles.container}>
-      <MVStack stretchW style={styles.content}>
+    <SafeAreaView style={styles.container}  >
+      <MVStack onStartShouldSetResponderCapture={handleCapture} stretchW style={styles.content} >
         <MVStack stretchW stretchH style={{ alignSelf: 'center' }}>
           {
             props.children
