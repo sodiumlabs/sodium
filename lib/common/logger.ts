@@ -1,6 +1,6 @@
 
 
-let debug = true;
+let debug = false;
 
 export const Logger = {
   debug: (msg: string | object) => {
