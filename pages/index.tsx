@@ -111,7 +111,7 @@ export default function App() {
     })
   }, [1])
 
-  function handleStateChange(state: Readonly<{ key: string; index: number; routeNames: string[]; history?: unknown[]; routes: NavigationRoute<ParamListBase, string>[]; type: string; stale: false; }>): void {
+  function handleStateChange(state): void {
     console.log("handleStateChange");
     console.log(state);
 
