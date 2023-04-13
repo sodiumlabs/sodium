@@ -6,6 +6,7 @@ import { getPageDatas } from "../common/common";
 import { classifyHistory } from "../common/history";
 import { getScroller } from "../common/scroller";
 import { getAuth } from '../data/auth';
+import { Logger } from "../common/Logger";
 
 const onePageCount = 20;
 const fetchHistory = async (pageParam: number, chainId?: ChainIdLike, tokenAddress?: string, tokenId?: string): Promise<{ data: TransactionHistory[], nexePage: number }> => {
@@ -18,8 +19,8 @@ const fetchHistory = async (pageParam: number, chainId?: ChainIdLike, tokenAddre
   const skip = (pageParam - 1) * onePageCount;
 
   const result = await authData.web3signer.getTransactionHistories(skip, first, chainId, tokenAddress, tokenId) as unknown as TransactionHistory[];
-  console.log(`fetchHistory page:${pageParam} first:${first} skip:${skip}`);
-  console.log(result);
+  Logger.debug(`fetchHistory page:${pageParam} first:${first} skip:${skip}`);
+  Logger.debug(result);
 
   let nextPage = null;
   if (result.length >= onePageCount) {

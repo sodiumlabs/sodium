@@ -111,7 +111,6 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   }, [tryFoldFloaterDrawer])
 
   const onLayout = (event: LayoutChangeEvent) => {
-    // console.log("onLayout floater drawer");
     setViewHeight(event.nativeEvent.layout.height - minHeaderHeight);
   }
 

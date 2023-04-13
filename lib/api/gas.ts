@@ -5,20 +5,21 @@ import { useEffect } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { useAuth } from '../data/authAtom';
 import { AuthData, PaymasterInfo } from "../define";
+import { Logger } from "../common/Logger";
 
 
 
 const fetchGas = async (txn: TransactionRequest, authData: AuthData): Promise<PaymasterInfo[]> => {
-  console.log("fetchGas");
+  Logger.debug("fetchGas");
   // const gasSuggest = await authData.web3signer.getGasSuggest() as GasSuggest;
-  // console.log("fetchGas GasSuggest");
-  // console.log(gasSuggest);
+  // Logger.debug("fetchGas GasSuggest");
+  // Logger.debug(gasSuggest);
   // txn.maxPriorityFeePerGas = gasSuggest.fast.maxPriorityFeePerGas;
   // txn.maxFeePerGas = gasSuggest.fast.maxFeePerGas;
 
   const paymasterInfo = await authData.web3signer.getPaymasterInfos(txn) as PaymasterInfo[];
-  console.log("fetchGas result");
-  console.log(paymasterInfo);
+  Logger.debug("fetchGas result");
+  Logger.debug(paymasterInfo);
   return paymasterInfo;
 };
 

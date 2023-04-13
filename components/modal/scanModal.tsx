@@ -19,6 +19,7 @@ import { DecodeQR } from '../decode/decodeQR';
 import ScanFrameSvg from '../svg/scanFrameSvg';
 
 import * as Clipboard from 'expo-clipboard';
+import { Logger } from '../../lib/common/Logger';
 
 export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -63,8 +64,8 @@ export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => voi
       // base64: true
     });
 
-    console.log("pickImage:");
-    console.log(result);
+    Logger.debug("pickImage:");
+    Logger.debug(result);
 
     if (!result.canceled) {
       setImageAsset(result.assets[0]);

@@ -3,13 +3,14 @@ import { eStotageKey, ITranscation } from "../define";
 import { Wallet } from '../fixedEthersWallet';
 import { Platform as SodiumPlatform } from '@0xsodium/config';
 import { WalletConnectSessionSerialized } from '../walletconnect';
+import { Logger } from "./Logger";
 
 export const saveTxnQueue = (key: eStotageKey, queue: readonly ITranscation[]) => {
   AsyncStorage.setItem(key, JSON.stringify(queue));
 }
 
 export const loadTxnQueue = async (key: eStotageKey): Promise<ITranscation[]> => {
-  console.log('load AsyncStorage:' + key);
+  Logger.debug('load AsyncStorage:' + key);
   const reqs = await AsyncStorage.getItem(key);
   try {
     const txs = JSON.parse(reqs);
@@ -56,7 +57,7 @@ export const loadSession = async (): Promise<{ sodiumUserId: string, platform: S
 export const saveWalletConnectSessions = async (walletConnectSessions: WalletConnectSessionSerialized[]) => {
   try {
     return AsyncStorage.setItem("@sodium.wcs", JSON.stringify(walletConnectSessions));
-  } catch(error) {
+  } catch (error) {
     // TODO sentry
     console.warn(error);
   }
@@ -70,7 +71,7 @@ export const loadWalletConnectSessions = async (): Promise<WalletConnectSessionS
       return JSON.parse(wcs);
     }
     return [];
-  } catch(error) {
+  } catch (error) {
     // TODO sentry
   }
   return [];

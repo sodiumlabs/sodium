@@ -44,6 +44,7 @@ import { updateCurScreenTab } from '../lib/data/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
 import { asyncSession, initHandler, proxyChannel } from '../lib/provider';
+import { Logger } from '../lib/common/Logger';
 
 const queryClient = new QueryClient(
   {
@@ -112,8 +113,8 @@ export default function App() {
   }, [1])
 
   function handleStateChange(state): void {
-    console.log("handleStateChange");
-    console.log(state);
+    Logger.debug("handleStateChange");
+    Logger.debug(state);
 
     const routeState = state.routes[0].state;
     const routes = routeState.routes;

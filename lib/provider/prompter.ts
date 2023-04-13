@@ -12,15 +12,16 @@ import { OperateTimeStamp } from '../data/operateTime';
 import { IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation } from '../define';
 import { transactionQueue } from '../transaction';
 import { walletAtom } from './atom';
+import { Logger } from '../common/Logger';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
-        console.log("WalletPrompter promptConnect options:" + JSON.stringify(options));
+        Logger.debug("WalletPrompter promptConnect options:" + JSON.stringify(options));
         return new Promise(async (tResolve: (value: PromptConnectDetails) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
             if (wallet === null) {
-                console.log("WalletPrompter promptConnect auth is no Login,reject");
+                Logger.debug("WalletPrompter promptConnect auth is no Login,reject");
                 return Promise.reject("WalletPrompter promptConnect auth no auth");
             }
 
@@ -54,17 +55,17 @@ export class WalletPrompter implements WalletUserPrompter {
 
     //signTransactions
     promptSignTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        console.log("WalletPrompter promptSignTransaction");
+        Logger.debug("WalletPrompter promptSignTransaction");
         return this.handleSignOrSendTranscation(txn, chaindId, options, "sign");
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        console.log("WalletPrompter promptSendTransaction");
+        Logger.debug("WalletPrompter promptSendTransaction");
         return this.handleSignOrSendTranscation(txn, chaindId, options, "send");
     }
 
     promptSignMessage(message: MessageToSign, options?: ConnectOptions | undefined): Promise<string> {
-        console.log("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options) + " type:" + typeof message.message);
+        Logger.debug("WalletPrompter promptSignMessage message:" + JSON.stringify(message) + ' options :' + JSON.stringify(options) + " type:" + typeof message.message);
         return new Promise(async (tResolve: (value: string) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
@@ -98,7 +99,7 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptConfirmWalletDeploy(chainId: number, options?: ConnectOptions | undefined): Promise<boolean> {
-        console.log("WalletPrompter promptConfirmWalletDeploy");
+        Logger.debug("WalletPrompter promptConfirmWalletDeploy");
         return new Promise(async (tResolve: (value: boolean) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
@@ -138,7 +139,7 @@ export class WalletPrompter implements WalletUserPrompter {
             if (wallet === null) {
                 return Promise.reject();
             }
-            if (chaindId == null) { 
+            if (chaindId == null) {
                 chaindId = await wallet.signer.getChainId();
             }
             const decodes = await decodeTransactionRequest(txn, wallet.web3signer, chaindId);
@@ -157,11 +158,11 @@ export class WalletPrompter implements WalletUserPrompter {
                         txnResponse = await wallet.signer.signTransaction(continueTxn);
                     }
                     transactionQueue.removeByTxn(txnWithTime);
-                    console.log("txnResponse:" + JSON.stringify(txnResponse));
+                    Logger.debug("txnResponse:" + JSON.stringify(txnResponse));
                     onPendingStart && onPendingStart(txnResponse.hash);
-                    console.log("txnResponse.wait start");
+                    Logger.debug("txnResponse.wait start");
                     // await txnResponse.wait();
-                    console.log("txnResponse.wait end");
+                    Logger.debug("txnResponse.wait end");
                     onPendingEnd && onPendingEnd();
                     tResolve(txnResponse.hash);
                     showUpdateSignTranscationModal(false, null, txnWithTime.timeStamp);

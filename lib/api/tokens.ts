@@ -3,6 +3,7 @@ import { token2Usd } from "../common/common";
 import { getAuth } from '../data/authAtom';
 import { IUserTokenInfo } from "../define";
 import { fetchTokenRates } from "./tokenRate";
+import { Logger } from "../common/Logger";
 
 
 const fetchTokens = async (chainId: number): Promise<IUserTokenInfo[]> => {
@@ -19,14 +20,14 @@ const fetchTokens = async (chainId: number): Promise<IUserTokenInfo[]> => {
     tokenInfo.usdBalance = token2Usd(tokenInfo.balance.toString(), tokenInfo.token.decimals, tokenInfo.rate + '');
   }
 
-  console.log("fetchTokens");
-  console.log(result);
+  Logger.debug("fetchTokens");
+  Logger.debug(result);
 
   return result;
 };
 
 export const useQueryTokens = (chainId: number): [UseQueryResult, IUserTokenInfo[], number] => {
-  const tokensQuery = useQuery(['fetchTokens'], () => fetchTokens(chainId));
+  const tokensQuery = useQuery(['fetchTokens'], () => fetchTokens(chainId), { refetchInterval: 2000 });
   const tokenInfos = tokensQuery.data as IUserTokenInfo[];
   let usdBalance = 0;
   if (tokenInfos) {

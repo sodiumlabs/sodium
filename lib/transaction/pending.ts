@@ -5,6 +5,7 @@ import { waitTime } from '../common/common';
 import { eStotageKey, ITranscation } from '../define';
 import { getAuth } from '../data/authAtom';
 import { Platform } from "react-native";
+import { Logger } from "../common/Logger";
 
 class PendingTxs {
   public transcations: WritableAtom<ITranscation[]>;
@@ -66,14 +67,14 @@ TotalPendingTxs.transcations.subscribe(value => {
 
 async function checkTxState() {
   const localPendingTxs = LocalPendingTxs.get();
-  console.log("checkTxState");
+  Logger.debug("checkTxState");
   if (localPendingTxs == null || localPendingTxs.length <= 0) {
     return;
   }
   const auth = getAuth();
   if (localPendingTxs) {
-    console.log("localPendingTxs before remove:");
-    console.log(localPendingTxs);
+    Logger.debug("localPendingTxs before remove:");
+    Logger.debug(localPendingTxs);
     const promises = [];
     for (let i = localPendingTxs.length - 1; i >= 0; i--) {
       const localTx = localPendingTxs[i];
@@ -87,8 +88,8 @@ async function checkTxState() {
     }
 
     const pendingResult = await Promise.all(promises);
-    // console.log("localPendingTxsResult:");
-    // console.log(pendingResult);
+    // Logger.debug("localPendingTxsResult:");
+    // Logger.debug(pendingResult);
     for (let i = localPendingTxs.length - 1; i >= 0; i--) {
       if (!!pendingResult[i].transactionReceipt) {
         let index = -1;
@@ -103,8 +104,8 @@ async function checkTxState() {
         }
       }
     }
-    console.log("localPendingTxs after remove:");
-    console.log(localPendingTxs);
+    Logger.debug("localPendingTxs after remove:");
+    Logger.debug(localPendingTxs);
   }
   LocalPendingTxs.set([...localPendingTxs]);
   await waitTime(2000);

@@ -28,6 +28,7 @@ import { TransferItem } from './modalItem/transferItem';
 import { navigate } from '../base/navigation';
 import { useMabyeCurrentChainId } from '../../lib/network';
 import { ABITransaction } from './transactionDecodes';
+import { Logger } from '../../lib/common/Logger';
 
 export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -111,7 +112,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     setTxHandling(true);
     if (decodeApproveData) {
       if (approveSelectedIndex == eApproveType.SetAllowance) {
-        console.log("eApproveType.SetAllowance");
+        Logger.debug("eApproveType.SetAllowance");
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
         const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
@@ -120,16 +121,16 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         txs.splice(approveIndex, 1, transaction);
       }
       else if (approveSelectedIndex == eApproveType.RevokeAfter) {
-        console.log("eApproveType.RevokeAfter");
+        Logger.debug("eApproveType.RevokeAfter");
         const revokeTx = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, BigNumber.from(0), decodeApproveData.decodeApproveData.token.address);
         txs.push(revokeTx);
       } else {
-        console.log("Let's keep our original tx the same");
+        Logger.debug("Let's keep our original tx the same");
       }
     }
 
-    console.log("txs:");
-    console.log(txs);
+    Logger.debug("txs:");
+    Logger.debug(txs);
 
     const decodeTransferData = param?.decodeDatas?.find((decodeTxn) => !!decodeTxn.decodeTransferData);
     const isPending = !!decodeTransferData;
@@ -144,7 +145,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         navigate(Screens.Wallet);
       }
       const onPendingEnd = () => {
-        console.log("onPendingEnd");
+        Logger.debug("onPendingEnd");
         transactionPending.removeCurPending(param.txn);
       }
       const onError = () => {
@@ -234,7 +235,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   } else if (param) {
                     return (
                       <ABITransaction
-                        key={key+1}
+                        key={key + 1}
                         transcationIndex={transcationIndex}
                         transcationMaxIndex={transcationMaxIndex}
                         decodeTxn={decodeTxn}

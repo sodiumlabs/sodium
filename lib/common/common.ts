@@ -1,4 +1,5 @@
 import { BigNumber, FixedNumber, formatFixed, parseFixed } from "@ethersproject/bignumber";
+import { Logger } from "./Logger";
 
 export const waitTime = (tTime: number): Promise<number> => {
   return new Promise((tResolve: (value: number | PromiseLike<number>) => void, tReject: (reason?: unknown) => void) => {
@@ -131,7 +132,7 @@ export function downText(text: string) {
 
 export const waitFinish = async (checkFunc: () => boolean, name: String) => {
   while (!checkFunc()) {
-    console.log("waitFinish" + name);
+    Logger.debug("waitFinish" + name);
     await waitTime(50);
   }
 }

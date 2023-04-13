@@ -26,6 +26,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
+import { Logger } from '../../lib/common/Logger';
 
 
 export function SendScreen(props) {
@@ -75,11 +76,11 @@ export function SendScreen(props) {
     if (!inputAddress) return;
 
     if (!/^\d+(\.\d+)?$/.test(inputTokenCount) || +inputTokenCount <= 0) {
-      console.log('The quantity format is incorrect');
+      Logger.debug('The quantity format is incorrect');
       return false;
     }
     if (!isMatchEthAddress(inputAddress) && !isMatchEnsAddress(inputAddress)) {
-      console.log('The address format is incorrect');
+      Logger.debug('The address format is incorrect');
       return false;
     }
     return true;

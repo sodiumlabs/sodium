@@ -13,7 +13,6 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
   const hasFloatingBar = props.hasFloatingBar === undefined ? true : props.hasFloatingBar;
 
   const updateFloater = useCallback(() => {
-    // console.log("useFocusEffect");
     updateBarParam({
       'hasFloatingBar': hasFloatingBar,
       'hasNavigationBar': hasNavigationBar,
@@ -26,7 +25,6 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
   });
 
   function handleCapture(event): boolean {
-    // console.log('handleCapture');
     tryFoldFloaterDrawer();
     return true; // Return true to continue firing subsequent event handlers, false to stop firing subsequent event handlers
   }

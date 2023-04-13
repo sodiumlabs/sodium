@@ -17,6 +17,7 @@ import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
 import { Platform } from 'react-native';
+import { Logger } from '../../../lib/common/Logger';
 
 
 export const ApproveItem = (props: {
@@ -36,10 +37,10 @@ export const ApproveItem = (props: {
   //   if (projectSetting.isBeOpenedByThirdParty) {
   //     if (projectSetting.isBeOpenByWindow) {
   //       window.resizeTo(window.outerWidth + 1, window.outerHeight);
-  //       console.log(`window resizeTo window.outerWidth: ${window.outerWidth}  window.outerHeight: ${window.outerHeight}`);
+  //       Logger.debug(`window resizeTo window.outerWidth: ${window.outerWidth}  window.outerHeight: ${window.outerHeight}`);
   //     } else if (projectSetting.isBeOpenByIframe) {
   //       window.resizeTo(window.outerWidth + 1, window.outerHeight);
-  //       console.log(`iframe resizeTo window.outerWidth: ${window.outerWidth}  window.outerHeight: ${window.outerHeight}`);
+  //       Logger.debug(`iframe resizeTo window.outerWidth: ${window.outerWidth}  window.outerHeight: ${window.outerHeight}`);
   //     }
   //   }
   // }, [projectSetting.isBeOpenedByThirdParty])
@@ -57,8 +58,8 @@ export const ApproveItem = (props: {
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
         const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
-        console.log("bigSlider:" + bigSlider + "  approveData.token.decimals:" + approveData.token.decimals);
-        console.log("approveNum:" + approveNum);
+        Logger.debug("bigSlider:" + bigSlider + "  approveData.token.decimals:" + approveData.token.decimals);
+        Logger.debug("approveNum:" + approveNum);
         setApproveValue(formatWei2Price(approveNum.toString(), approveData.token.decimals, 2));
       }
     }

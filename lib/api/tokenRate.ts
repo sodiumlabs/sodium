@@ -2,6 +2,7 @@
 import { useQuery } from "react-query";
 import { getAuth } from '../data/auth';
 import { IUserTokenInfo } from "../define";
+import { Logger } from "../common/Logger";
 
 export const fetchTokenRates = async (tokens: IUserTokenInfo[], chaindId: number): Promise<number[]> => {
   const authData = getAuth();
@@ -10,8 +11,8 @@ export const fetchTokenRates = async (tokens: IUserTokenInfo[], chaindId: number
   }
 
   const rates = await authData.web3signer.getTokenRates(tokens.map(t => t.token.address), chaindId) as number[];
-  console.log("fetchTokenRates");
-  console.log(rates);
+  Logger.debug("fetchTokenRates");
+  Logger.debug(rates);
   return rates;
 };
 

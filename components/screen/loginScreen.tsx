@@ -19,6 +19,7 @@ import { LoginLoading } from "../full/loginLoading";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
 import SteamSvg from '../svg/steamSvg';
 import TwitterSvg from '../svg/twitterSvg';
+import { Logger } from '../../lib/common/Logger';
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"
@@ -46,7 +47,8 @@ export function LoginScreen() {
       authUrl: authURL,
       projectNameForProxy: projectNameForProxy
     });
-    console.log('Auth response received!', authResponse);
+    Logger.debug('Auth response received!');
+    Logger.debug(authResponse);
     if (authResponse.type == "error") {
       let msg = "AuthSession failed, user did not authorize the app";
       if (authResponse.error) {

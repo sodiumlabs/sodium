@@ -12,13 +12,14 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import TranscationQueueItem from '../item/transcationQueueItem';
 import { ModalTitle } from './modalItem/modalTitle';
+import { Logger } from '../../lib/common/Logger';
 
 export const TranscationQueueModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
   const requestTranscations = useRequestedTransactions();
   const param = modalParam.param;
   const rejectAllClick = () => {
-    console.log("rejectAllClick");
+    Logger.debug("rejectAllClick");
     transactionQueue.removeAll();
   }
 

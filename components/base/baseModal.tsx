@@ -33,7 +33,6 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
 
     if (isAnim) {
       backgroundPosAnim.setValue(dimensionH);
-      // console.log("show");
       Animated.timing(backgroundFadeAnim, {
         easing: Easing.quad,
         toValue: 0.15,
@@ -59,7 +58,6 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
     if (!uiVisible) return;
     if (isTweening) return;
     setIsTweening(true);
-    // console.log("hide");
     const finish = () => {
       hideModal();
       setUiVisible(false);

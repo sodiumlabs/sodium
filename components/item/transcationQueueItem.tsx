@@ -13,6 +13,7 @@ import MImage from '../baseUI/mImage';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import { waitTime } from '../../lib/common/common';
+import { Logger } from '../../lib/common/Logger';
 
 export default function TranscationQueueItem(props: { transcation: ITranscation, hideModal: (immediately?: boolean) => void }) {
   const { transcation, hideModal } = props;
@@ -35,7 +36,7 @@ export default function TranscationQueueItem(props: { transcation: ITranscation,
 
       const decodeApproveData = decodeDatas.find(decode => !!decode.decodeApproveData);
       if (decodeApproveData) {
-        console.log(decodeApproveData.decodeApproveData)
+        Logger.debug(decodeApproveData.decodeApproveData)
         const amount = decodeApproveData.decodeApproveData.amount;
         // Possible recovery from localstore,the data structure may be different
         if (parseInt(amount['hex'] || amount['_hex']) == 0) {
