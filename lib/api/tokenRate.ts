@@ -2,7 +2,7 @@
 import { useQuery } from "react-query";
 import { getAuth } from '../data/auth';
 import { IUserTokenInfo } from "../define";
-import { Logger } from "../common/Logger";
+import { Logger } from "../common/utils";
 
 export const fetchTokenRates = async (tokens: IUserTokenInfo[], chaindId: number): Promise<number[]> => {
   const authData = getAuth();

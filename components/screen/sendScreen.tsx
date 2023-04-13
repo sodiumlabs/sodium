@@ -26,7 +26,7 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
-import { Logger } from '../../lib/common/Logger';
+import { Logger } from '../../lib/common/utils';
 
 
 export function SendScreen(props) {

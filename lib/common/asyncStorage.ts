@@ -3,7 +3,7 @@ import { eStotageKey, ITranscation } from "../define";
 import { Wallet } from '../fixedEthersWallet';
 import { Platform as SodiumPlatform } from '@0xsodium/config';
 import { WalletConnectSessionSerialized } from '../walletconnect';
-import { Logger } from "./Logger";
+import { Logger } from "./utils";
 
 export const saveTxnQueue = (key: eStotageKey, queue: readonly ITranscation[]) => {
   AsyncStorage.setItem(key, JSON.stringify(queue));

@@ -5,7 +5,7 @@ import { waitTime } from '../common/common';
 import { eStotageKey, ITranscation } from '../define';
 import { getAuth } from '../data/authAtom';
 import { Platform } from "react-native";
-import { Logger } from "../common/Logger";
+import { Logger } from "../common/utils";
 
 class PendingTxs {
   public transcations: WritableAtom<ITranscation[]>;

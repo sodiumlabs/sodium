@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import { useQuery, UseQueryResult } from "react-query";
 import { useAuth } from '../data/authAtom';
 import { AuthData, PaymasterInfo } from "../define";
-import { Logger } from "../common/Logger";
+import { Logger } from "../common/utils";
 
 
 

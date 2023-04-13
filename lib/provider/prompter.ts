@@ -12,7 +12,7 @@ import { OperateTimeStamp } from '../data/operateTime';
 import { IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation } from '../define';
 import { transactionQueue } from '../transaction';
 import { walletAtom } from './atom';
-import { Logger } from '../common/Logger';
+import { Logger } from '../common/utils';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {

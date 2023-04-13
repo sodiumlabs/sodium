@@ -4,7 +4,7 @@ import { useAuth } from "../data/auth";
 import { IDepositItemData, IDepositToken, ISelectItemData } from "../define";
 import { GetWyreDepositCurrenciesReturn, RequestWyreDepositArgs, RequestWyreDepositReturn, RequestWyrePreDepositArgs, RequestWyrePreDepositReturn, WyreService } from "../wyre";
 import { useQueryNetwork } from "./network";
-import { Logger } from "../common/Logger";
+import { Logger } from "../common/utils";
 
 export const DepositAtLeastAmount = 10;
 // ***************************************Deposit***********************************************

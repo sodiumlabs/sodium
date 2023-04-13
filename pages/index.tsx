@@ -44,7 +44,7 @@ import { updateCurScreenTab } from '../lib/data/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
 import { asyncSession, initHandler, proxyChannel } from '../lib/provider';
-import { Logger } from '../lib/common/Logger';
+import { Logger } from '../lib/common/utils';
 
 const queryClient = new QueryClient(
   {

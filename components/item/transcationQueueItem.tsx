@@ -13,7 +13,7 @@ import MImage from '../baseUI/mImage';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import { waitTime } from '../../lib/common/common';
-import { Logger } from '../../lib/common/Logger';
+import { Logger } from '../../lib/common/utils';
 
 export default function TranscationQueueItem(props: { transcation: ITranscation, hideModal: (immediately?: boolean) => void }) {
   const { transcation, hideModal } = props;

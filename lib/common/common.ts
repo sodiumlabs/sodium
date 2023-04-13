@@ -1,5 +1,5 @@
 import { BigNumber, FixedNumber, formatFixed, parseFixed } from "@ethersproject/bignumber";
-import { Logger } from "./Logger";
+import { Logger } from "./utils";
 
 export const waitTime = (tTime: number): Promise<number> => {
   return new Promise((tResolve: (value: number | PromiseLike<number>) => void, tReject: (reason?: unknown) => void) => {

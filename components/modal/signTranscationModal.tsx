@@ -28,7 +28,7 @@ import { TransferItem } from './modalItem/transferItem';
 import { navigate } from '../base/navigation';
 import { useMabyeCurrentChainId } from '../../lib/network';
 import { ABITransaction } from './transactionDecodes';
-import { Logger } from '../../lib/common/Logger';
+import { Logger } from '../../lib/common/utils';
 
 export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;

@@ -19,7 +19,7 @@ import { DecodeQR } from '../decode/decodeQR';
 import ScanFrameSvg from '../svg/scanFrameSvg';
 
 import * as Clipboard from 'expo-clipboard';
-import { Logger } from '../../lib/common/Logger';
+import { Logger } from '../../lib/common/utils';
 
 export const ScanModal = (props: { hideModal: (hideImmediately?: boolean) => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;

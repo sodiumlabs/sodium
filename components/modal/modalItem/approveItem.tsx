@@ -17,7 +17,7 @@ import MImage from "../../baseUI/mImage";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
 import { Platform } from 'react-native';
-import { Logger } from '../../../lib/common/Logger';
+import { Logger } from '../../../lib/common/utils';
 
 
 export const ApproveItem = (props: {

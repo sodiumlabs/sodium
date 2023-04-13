@@ -19,7 +19,7 @@ import { LoginLoading } from "../full/loginLoading";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
 import SteamSvg from '../svg/steamSvg';
 import TwitterSvg from '../svg/twitterSvg';
-import { Logger } from '../../lib/common/Logger';
+import { Logger } from '../../lib/common/utils';
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"

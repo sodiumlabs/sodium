@@ -6,7 +6,7 @@ import { getPageDatas } from "../common/common";
 import { classifyHistory } from "../common/history";
 import { getScroller } from "../common/scroller";
 import { getAuth } from '../data/auth';
-import { Logger } from "../common/Logger";
+import { Logger } from "../common/utils";
 
 const onePageCount = 20;
 const fetchHistory = async (pageParam: number, chainId?: ChainIdLike, tokenAddress?: string, tokenId?: string): Promise<{ data: TransactionHistory[], nexePage: number }> => {

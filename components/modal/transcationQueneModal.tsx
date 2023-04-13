@@ -12,7 +12,7 @@ import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import TranscationQueueItem from '../item/transcationQueueItem';
 import { ModalTitle } from './modalItem/modalTitle';
-import { Logger } from '../../lib/common/Logger';
+import { Logger } from '../../lib/common/utils';
 
 export const TranscationQueueModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;

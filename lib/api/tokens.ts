@@ -3,7 +3,7 @@ import { token2Usd } from "../common/common";
 import { getAuth } from '../data/authAtom';
 import { IUserTokenInfo } from "../define";
 import { fetchTokenRates } from "./tokenRate";
-import { Logger } from "../common/Logger";
+import { Logger } from "../common/utils";
 
 
 const fetchTokens = async (chainId: number): Promise<IUserTokenInfo[]> => {
