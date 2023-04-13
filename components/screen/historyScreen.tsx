@@ -1,8 +1,10 @@
+import { useStore } from '@nanostores/react';
 import { ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from '../../lib/api/history';
 import { HistoryTime } from "../../lib/common/time";
 import { fixWidth } from "../../lib/define";
 import { useDimensionSize } from '../../lib/hook/dimension';
+import { currentChainIdAtom } from '../../lib/network';
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
@@ -11,9 +13,6 @@ import { MLoading } from "../baseUI/mLoading";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
-import { RequestTranscation } from "../transcation/requestTranscation";
-import { useStore } from '@nanostores/react';
-import { currentChainIdAtom } from '../../lib/network';
 
 export function HistoryScreen() {
   const chainId = useStore(currentChainIdAtom);

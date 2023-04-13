@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { showUpdateScanModal } from '../../lib/data/modal';
-import { fixWidth, Screens } from '../../lib/define';
+import { Screens, fixWidth } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
 import { currentChainIdAtom } from '../../lib/network';
@@ -33,6 +33,7 @@ export function WalletScreen() {
   const onChangeText = (text: string) => {
     setSearchText(text);
   }
+
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }}>
@@ -66,7 +67,7 @@ export function WalletScreen() {
               }
 
               {
-                tokensQuery.isFetching && <MLoading />
+                tokensQuery.isFetching && !tokensQuery.data && <MLoading />
               }
 
               {
