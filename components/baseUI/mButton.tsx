@@ -68,7 +68,7 @@ const localStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 6,
-    paddingVertical: 10,
+    paddingVertical: 8,
     paddingHorizontal: 10,
 
   }
