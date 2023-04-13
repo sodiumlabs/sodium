@@ -182,11 +182,11 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         </MHStack>
 
         <MHStack style={{ height: 60 }}>
-          <MButton theme={MButtomTheme.Grey} onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
+          <MButton imageIcon={null} theme={MButtomTheme.Grey} onPress={onSettingsClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
             <SettingSvg style={{ marginRight: 6 }} />
             <MButtonText title={"Settings"} />
           </MButton>
-          <MButton theme={MButtomTheme.Grey} onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
+          <MButton imageIcon={null} theme={MButtomTheme.Grey} onPress={onLogoutClick} style={{ 'margin': 5, 'flex': 1, 'height': 50 }}>
             <SignOutSvg style={{ marginRight: 6 }} />
             <MButtonText title={"Sign out"} />
           </MButton>

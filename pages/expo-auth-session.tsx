@@ -40,7 +40,7 @@ export default function AuthCallbackScreen() {
                 <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
                     <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
                     <ScreenTitle title={state} />
-                    <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={retry} >
+                    <MButton stretchW style={{ marginTop: 10 }} onPress={retry} >
                         <MButtonText title={"Retry"} />
                     </MButton>
                 </MVStack>

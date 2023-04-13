@@ -53,10 +53,10 @@ export default function PendingItem(props: TextInputProps & { data: ITranscation
         right={
           <>
             <MText style={{ color: eColor.GrayText }} >{formatTime2Today(data.timeStamp)}</MText>
-            <MButton theme={MButtomTheme.Grey} style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, paddingHorizontal: 5 }} onPress={linkTxHash}  >
+            <MButton imageIcon={null} theme={MButtomTheme.Grey} style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, paddingHorizontal: 5 }} onPress={linkTxHash}  >
               <MImage style={{ opacity: 0.6 }} w={10} h={10} source={IconShare} />
             </MButton>
-            <MButton theme={MButtomTheme.Grey} style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, paddingHorizontal: 5 }} onPress={closePendingClick}  >
+            <MButton imageIcon={null} theme={MButtomTheme.Grey} style={{ marginLeft: 5, height: 20, width: 20, borderRadius: 20, paddingHorizontal: 5 }} onPress={closePendingClick}  >
               <MImage style={{ opacity: 0.6 }} w={10} h={10} source={IconForkClose} />
             </MButton>
           </>

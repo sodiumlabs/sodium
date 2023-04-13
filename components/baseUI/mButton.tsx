@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Pressable, PressableProps, StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { eColor } from '../../lib/globalStyles';
 import MHStack from './mHStack';
 import { MLoading } from './mLoading';
 import MPressable from './mPressable';
+import BtnTipSvg from '../svg/btnTipSvg';
+import MVStack from './mVStack';
 
 
 export const MButtomTheme = {
@@ -19,8 +21,8 @@ export const MButtomTheme = {
   }
 }
 
-export default function MButton(props: PressableProps & { theme?: typeof MButtomTheme.Blue, stretchW?: boolean, isLoading?: boolean, isDisable?: boolean } & { scale?: number }) {
-  const { theme = MButtomTheme.Blue, style, isDisable, stretchW, isLoading, ...reset } = props;
+export default function MButton(props: PressableProps & { theme?: typeof MButtomTheme.Blue, stretchW?: boolean, isLoading?: boolean, isDisable?: boolean, imageIcon?: ReactNode }) {
+  const { theme = MButtomTheme.Blue, style, isDisable, stretchW, isLoading, imageIcon, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
 
   const stretchWidth = {
@@ -41,6 +43,15 @@ export default function MButton(props: PressableProps & { theme?: typeof MButtom
           <MLoading />
         ) : (
           <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
+            <MVStack style={{ marginRight: 6, justifyContent: 'center', alignItems: 'center' }}>
+              {
+                imageIcon
+              }
+              {
+                imageIcon === undefined && <BtnTipSvg />
+              }
+
+            </MVStack>
             {
               props.children as React.ReactNode
             }
@@ -57,7 +68,7 @@ const localStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 6,
-    paddingVertical: 6,
+    paddingVertical: 10,
     paddingHorizontal: 10,
 
   }

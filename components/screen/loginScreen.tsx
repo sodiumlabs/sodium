@@ -17,6 +17,8 @@ import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { LoginLoading } from "../full/loginLoading";
 import { FailModalItem } from "../modal/modalItem/failModalItem";
+import SteamSvg from '../svg/steamSvg';
+import TwitterSvg from '../svg/twitterSvg';
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"
@@ -72,13 +74,13 @@ export function LoginScreen() {
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
             {/* <MText>Sign into web3</MText> */}
-            <MImage source={IconLogo} w={30} h={30} style={{ marginBottom: 10 }} />
+            <MImage source={IconLogo} w={60} h={60} style={{ marginBottom: 10 }} />
             <ScreenTitle title="Sign into web3" />
             <MVStack stretchW style={{ maxWidth: 300 }} >
-              <MButton style={{ marginBottom: 10, height: 30 }} onPress={loginClick} >
+              <MButton imageIcon={<SteamSvg height={18} width={18} />} style={{ marginBottom: 10 }} onPress={loginClick} >
                 <MButtonText title={"Steam Login"} />
               </MButton>
-              <MButton style={{ marginBottom: 10, height: 30 }} onPress={loginClick} >
+              <MButton imageIcon={<TwitterSvg height={18} width={18} />} onPress={loginClick} >
                 <MButtonText title={"Twitter Login"} />
               </MButton>
             </MVStack>

@@ -53,7 +53,7 @@ export const UpdateConfirmModal = () => {
         <MText style={{ fontWeight: '700', textAlign: 'center' }} numberOfLines={null}>The version of Sodium Wallet you’re using is out of date and is missing critical upgrades.</MText>
         <Spacer />
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onConfirmClick} >
+          <MButton stretchW style={{ marginTop: 10 }} onPress={onConfirmClick} >
             {/* <MButtonText title={"Download latest"} /> */}
           </MButton>
         </MVStack>

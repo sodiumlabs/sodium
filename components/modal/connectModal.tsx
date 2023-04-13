@@ -53,11 +53,11 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
         <MText style={{ fontWeight: '700', textAlign: 'center' }} numberOfLines={null}>Do you want to allow {param?.options?.origin} to connect to your wallet?</MText>
         <Spacer />
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MButton stretchW style={{ height: 30 }} onPress={onCancelClick} >
+          <MButton stretchW onPress={onCancelClick} >
             <MButtonText title={"Cancel"} />
           </MButton>
 
-          <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onConfirmClick} isLoading={isLoading} >
+          <MButton stretchW style={{ marginTop: 10 }} onPress={onConfirmClick} isLoading={isLoading} >
             <MButtonText title={"Confirm"} />
           </MButton>
         </MVStack>
@@ -68,7 +68,7 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
 
         {
           projectSetting.isBeOpenedByThirdParty &&
-          <MButton stretchW style={{ marginTop: 10, height: 30 }} onPress={onUseOtherWallet} >
+          <MButton stretchW style={{ marginTop: 10 }} onPress={onUseOtherWallet} >
             <MButtonText title={"Use Other Wallet"} />
           </MButton>
         }

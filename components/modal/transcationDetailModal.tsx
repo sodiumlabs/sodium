@@ -61,7 +61,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
                   }
 
                   <MHStack stretchW style={{ height: 45, marginTop: 15 }}>
-                    <MButton style={{ flex: 1, height: 30 }} onPress={linkTxHash}  >
+                    <MButton style={{ flex: 1 }} onPress={linkTxHash}  >
                       <MButtonText title={`View On ${capitalize(network?.name)}`} />
                     </MButton>
                   </MHStack>

@@ -7,6 +7,7 @@ import { MButtonText } from "./mButtonText"
 export const InputEndButton = (props: PressableProps & { title: string }) => {
   const { title, style, ...reset } = props;
   return <MButton
+    imageIcon={null}
     // onPress={onAddressPasteClick}
     style={[styles.button, style as unknown]} {...reset}>
     <MButtonText style={{ color: eColor.Black, fontWeight: '700' }} title={title} />

@@ -41,7 +41,7 @@ export function SecurityScreen() {
                   right={
                     <MHStack>
 
-                      <MButton style={{ width: 60 }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
+                      <MButton style={{ width: 80 }} onPress={() => navigationRef.navigate(Screens.SetupAuth)} >
                         <MButtonText title={"Set"} />
                       </MButton>
                     </MHStack>
@@ -53,7 +53,7 @@ export function SecurityScreen() {
                   left={<MText style={{ color: eColor.GrayContentText }}>Recovery codes</MText>}
                   right={
                     <MHStack>
-                      <MButton style={{ width: 60 }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
+                      <MButton style={{ width: 80 }} onPress={() => navigationRef.navigate(Screens.RecoveryCode)} >
                         <MButtonText title={"Show"} />
                       </MButton>
                     </MHStack>
