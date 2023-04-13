@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { IconLogo } from "../../lib/imageDefine";
 import { Platform } from "react-native";
 import { useCurScreenTab } from "../../lib/data/screen";
-
+const TitleName = "Sodium Wallet";
 export function BaseUIInit() {
 
   const curScreenName = useCurScreenTab();
@@ -29,14 +29,14 @@ export function BaseUIInit() {
   useEffect(() => {
     if (Platform.OS == "web") {
       addFavicon();
-      setTitle("Sodium");
+      setTitle(TitleName);
     }
   }, []);
 
   useEffect(() => {
     if (Platform.OS == "web") {
       setTimeout(() => {
-        setTitle("Sodium");
+        setTitle(TitleName);
       }, 100);
     }
   }, [curScreenName])
