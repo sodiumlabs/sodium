@@ -1,7 +1,7 @@
 
 import { useFocusEffect } from '@react-navigation/native';
 import { ReactNode, useCallback } from 'react';
-import { StyleSheet } from "react-native";
+import { Platform, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import MVStack from '../baseUI/mVStack';
 import { updateBarParam } from './barUI';
@@ -26,7 +26,7 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
 
   function handleCapture(event): boolean {
     tryFoldFloaterDrawer();
-    return true; // Return true to continue firing subsequent event handlers, false to stop firing subsequent event handlers
+    return Platform.OS == "web" ? true : false; // Return true to continue firing subsequent event handlers, false to stop firing subsequent event handlers
   }
   return (
     <SafeAreaView style={styles.container}  >
