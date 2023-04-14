@@ -88,8 +88,8 @@ export const SignMessageModal = (props: { hideModal: () => void, modalParam: IMo
                       <MHStack stretchW style={{ padding: 15, borderRadius: 10, marginTop: 15, backgroundColor: 'rgba(1,1,1,0.05)', flex: 1 }}>
                         <MVStack style={{ flex: 1 }}>
                           {
-                            item.contents.map((content) => {
-                              return (<MText style={{ color: eColor.GrayContentText, marginTop: 10 }} >{content}</MText>)
+                            item.contents.map((content, index) => {
+                              return (<MText key={content + index} style={{ color: eColor.GrayContentText, marginTop: 10 }} >{content}</MText>)
                             })
                           }
                         </MVStack>

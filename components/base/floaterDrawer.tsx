@@ -115,6 +115,28 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   }
 
 
+  // ------ ------ ------ ------back btn aim ------ ------ ------ ------ ------ ------
+
+  const backBtnWidthAnim = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    if (props.hasNavigationBarBack) {
+      Animated.timing(backBtnWidthAnim, {
+        easing: Easing.linear,
+        toValue: 45,
+        duration: 200 * animRate,
+        useNativeDriver: false
+      }).start();
+    } else {
+      Animated.timing(backBtnWidthAnim, {
+        easing: Easing.linear,
+        toValue: 0,
+        duration: 200 * animRate,
+        useNativeDriver: false
+      }).start();
+    }
+
+  }, [props.hasNavigationBarBack])
+
   // ------ ------ ------ ------service logic ------ ------ ------ ------ ------ ------
   const auth = useAuth();
   const profile = useProfile();
@@ -135,20 +157,19 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
     return (
       <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >
         <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
-          {
-            props.hasNavigationBarBack && (
-              <Pressable style={{ paddingLeft: 17, paddingRight: 17, backgroundColor: 'rgba(1,1,1,0.05)', height: '100%', justifyContent: 'center' }} onPress={() => navigationRef.goBack()}>
-                <MImage w={8} h={12} source={IconArrowL} />
-              </Pressable>
-            )
-          }
+          <Animated.View style={{ height: '100%', width: backBtnWidthAnim, overflow: 'hidden' }}  >
+            <Pressable style={{ paddingHorizontal: 17, backgroundColor: '#e9ebec', height: '100%', justifyContent: 'center', alignItems: 'center' }} onPress={() => navigationRef.goBack()}>
+              <MImage w={8} h={12} source={IconArrowL} />
+            </Pressable>
+          </Animated.View>
+
           <MAvatar style={{ marginHorizontal: 10 }} name={auth.blockchainAddress} />
           <MText style={{ flex: 1, fontWeight: '700' }} >{auth.blockchainAddress}</MText>
           <MImage w={24} h={24} style={{ margin: 10 }} source={IconMore} />
         </MHStack>
       </Pressable>
     )
-  }, [onFoldBtnClick, props.hasNavigationBarBack, auth.blockchainAddress]);
+  }, [onFoldBtnClick, auth.blockchainAddress]);
 
   const unFoldView = useMemo(() => {
     return (
