@@ -1,5 +1,4 @@
 import { FixedNumber } from '@ethersproject/bignumber';
-import Slider from '@react-native-community/slider';
 import { Radio, RadioGroup } from '@ui-kitten/components';
 import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
@@ -18,6 +17,7 @@ import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
 import { Platform } from 'react-native';
 import { Logger } from '../../../lib/common/utils';
+import MSlider from '../../baseUI/mSlider';
 
 
 export const ApproveItem = (props: {
@@ -71,15 +71,7 @@ export const ApproveItem = (props: {
 
   // The confused slider must be used this way, not directly mounted to the view (slider offset will occur).
   const sliderBox = useMemo(() => {
-    return <Slider
-      style={{ width: '100%', height: '100%' }}
-      minimumValue={0}
-      maximumValue={1}
-      onValueChange={onSliderValueChange}
-      minimumTrackTintColor={eColor.Blue}
-      maximumTrackTintColor={eColor.Black}
-      thumbTintColor={eColor.Blue}
-    />
+    return <MSlider onSliderValueChange={onSliderValueChange} />
   }, []);
   return (
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }} header={`Approve(${index}/${maxIndex})`}>
@@ -164,7 +156,7 @@ function RadioWeb(props: { approveSelectedIndex, setApproveSelectedIndex, disabl
 
           <>
             <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-            <MHStack style={{ width: "80%", height: 30, position: 'absolute', left: 30, top: 24, zIndex: 1 }}>
+            <MHStack style={{ width: "80%", height: 30, position: 'absolute', left: 30, top: 32, zIndex: 1 }}>
               <MHStack stretchW>
                 {sliderBox}
               </MHStack>
