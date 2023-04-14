@@ -124,6 +124,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         easing: Easing.linear,
         toValue: 45,
         duration: 200 * animRate,
+        delay: 50,
         useNativeDriver: false
       }).start();
     } else {
@@ -131,6 +132,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         easing: Easing.linear,
         toValue: 0,
         duration: 200 * animRate,
+        delay: 50,
         useNativeDriver: false
       }).start();
     }
@@ -158,7 +160,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
       <Pressable onPress={onFoldBtnClick} style={{ height: minHeaderHeight, }} >
         <MHStack stretchW stretchH style={{ alignItems: 'center', flex: 1 }} >
           <Animated.View style={{ height: '100%', width: backBtnWidthAnim, overflow: 'hidden' }}  >
-            <Pressable style={{ paddingHorizontal: 17, backgroundColor: '#e9ebec', height: '100%', justifyContent: 'center', alignItems: 'center' }} onPress={() => navigationRef.goBack()}>
+            <Pressable style={{ backgroundColor: '#e9ebec', height: '100%', justifyContent: 'center', alignItems: 'center' }} onPress={() => navigationRef.goBack()}>
               <MImage w={8} h={12} source={IconArrowL} />
             </Pressable>
           </Animated.View>
