@@ -47,9 +47,9 @@ export default function MButton(props: PressableProps & { theme?: typeof MButtom
               {
                 imageIcon
               }
-              {
+              {/* {
                 imageIcon === undefined && <BtnTipSvg />
-              }
+              } */}
 
             </MVStack>
             {
