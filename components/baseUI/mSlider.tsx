@@ -2,11 +2,12 @@ import { eColor } from "../../lib/globalStyles";
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-export default function MSlider(props: { onSliderValueChange: (progress: number) => void }) {
-  const { onSliderValueChange } = props;
+export default function MSlider(props: { onSliderValueChange: (progress: number) => void, value: number }) {
+  const { onSliderValueChange, value } = props;
   return (
     <Slider
       // onFocus={() => { }}
+      value={value}
       min={0}
       max={1}
       step={0.01}

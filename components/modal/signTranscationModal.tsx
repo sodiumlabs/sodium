@@ -235,7 +235,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   } else if (param) {
                     return (
                       <ABITransaction
-                        key={key + 1}
+                        key={key}
                         transcationIndex={transcationIndex}
                         transcationMaxIndex={transcationMaxIndex}
                         decodeTxn={decodeTxn}

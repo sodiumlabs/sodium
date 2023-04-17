@@ -18,6 +18,7 @@ import MVStack from "../../baseUI/mVStack";
 import { Platform } from 'react-native';
 import { Logger } from '../../../lib/common/utils';
 import MSlider from '../../baseUI/mSlider';
+import { useQueryToken } from '../../../lib/api/tokens';
 
 
 export const ApproveItem = (props: {
@@ -30,6 +31,7 @@ export const ApproveItem = (props: {
   const { approveSelectedIndex, setApproveSelectedIndex } = props;
   const { approveSliderValue, setApproveSliderValue } = props;
   const auth = useAuth();
+  const [tokensQuery, approveTokenData] = useQueryToken(approveData.token.address, approveData.token.chainId);
   // const projectSetting = useProjectSetting();
 
   // slider dislocation problem can be temporarily resolved by resizeTo resizing the browser, but it is limited to Windows and cannot be used for iframe
@@ -51,28 +53,33 @@ export const ApproveItem = (props: {
   }
 
   useEffect(() => {
+    if (approveTokenData == null) {
+      return;
+    }
+    const balancePrice = formatWei2Price(approveTokenData.balance.toString(), approveTokenData.token.decimals, 2);
     if (approveSelectedIndex == eApproveType.SetAllowance) { // 
       if (approveSliderValue >= 1) {
-        setApproveValue('Unlimted');
+        setApproveValue(balancePrice);
       } else {
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
-        const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
+        const approveNum = BigNumber.from(removeAllDecimalPoint(FixedNumber.from(approveTokenData.balance.toString()).mulUnsafe(bigSlider).toString()));
         Logger.debug("bigSlider:" + bigSlider + "  approveData.token.decimals:" + approveData.token.decimals);
         Logger.debug("approveNum:" + approveNum);
         setApproveValue(formatWei2Price(approveNum.toString(), approveData.token.decimals, 2));
       }
     }
-    else {
-      setApproveValue('Unlimted');
+    else if (approveSelectedIndex == eApproveType.RevokeAfter) {
+      setApproveValue("Unlimted");
     }
 
-  }, [approveSelectedIndex, approveSliderValue]);
+
+  }, [approveSelectedIndex, approveSliderValue, approveTokenData]);
 
   // The confused slider must be used this way, not directly mounted to the view (slider offset will occur).
   const sliderBox = useMemo(() => {
-    return <MSlider onSliderValueChange={onSliderValueChange} />
-  }, []);
+    return <MSlider onSliderValueChange={onSliderValueChange} value={approveSliderValue} />
+  }, [approveSliderValue]);
   return (
     <BaseFoldFrame defaultExpansion style={{ marginTop: 20 }} header={`Approve(${index}/${maxIndex})`}>
 
@@ -115,16 +122,13 @@ function RadioNative(props: { approveSelectedIndex, setApproveSelectedIndex, dis
         selectedIndex={approveSelectedIndex}
         onChange={index => setApproveSelectedIndex(index)}>
         <Radio style={{ marginBottom: 30, position: 'relative' }} status={status} disabled={disabled}>
-
           <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-
-
         </Radio>
         <Radio status={status} disabled={disabled}>
           <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
         </Radio>
         <Radio status={status} disabled={disabled}>
-          <MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText>
+          <MText style={{ marginLeft: 10 }}>Set the Unlimted Allowance</MText>
         </Radio>
       </RadioGroup>
 
@@ -172,7 +176,7 @@ function RadioWeb(props: { approveSelectedIndex, setApproveSelectedIndex, disabl
         </Radio>
         <Radio status={status} disabled={disabled}>
           <>
-            <MText style={{ marginLeft: 10 }}>Keep the Unlimted Allowance</MText>
+            <MText style={{ marginLeft: 10 }}>Set the Unlimted Allowance</MText>
           </>
 
         </Radio>

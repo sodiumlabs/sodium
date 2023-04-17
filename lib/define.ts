@@ -9,6 +9,7 @@ import { ERC20Approve } from '../abi/erc20';
 import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { Session } from './provider/types';
 import { JsonFragment } from '@ethersproject/abi';
+import { ERC20OrNativeTokenMetadata } from '@0xsodium/utils/dist/declarations/src/erc20';
 
 export const fixWidth = 720;
 export const designWidth = 1280;
@@ -153,21 +154,6 @@ export interface IDecodeTranscation {
 //---- from sdk define
 
 export type IUserTokenInfo = UserTokenInfo & { rate: number, usdBalance: string };
-
-export declare type ERC20OrNativeTokenMetadata = {
-  address: string;
-  chainId: number;
-  isNativeToken?: true;
-  name: string;
-  symbol: string;
-  decimals: number;
-  centerData: {
-    logoURI?: string;
-    website?: string;
-    description?: string;
-  };
-};
-
 
 export type PaymasterInfo = {
   token: ERC20OrNativeTokenMetadata

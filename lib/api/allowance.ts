@@ -33,7 +33,7 @@ export const useQueryAllowances = (chainId: ChainIdLike): [UseInfiniteQueryResul
       chainId,
     ],
     ({ pageParam = 1 }) => fetchAllowance(pageParam, chainId),
-    { getNextPageParam: (lastPage, pages) => lastPage['nexePage'] }
+    { getNextPageParam: (lastPage, pages) => lastPage['nexePage'], refetchInterval: 2000 }
   );
   let allowances: Allowance[] = [];
   if (queryAllowance.data) {

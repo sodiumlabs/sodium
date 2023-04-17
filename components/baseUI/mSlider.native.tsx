@@ -2,10 +2,11 @@
 import Slider from '@react-native-community/slider';
 import { eColor } from '../../lib/globalStyles';
 
-export default function MSlider(props: { onSliderValueChange: (progress: number) => void }) {
-  const { onSliderValueChange } = props;
+export default function MSlider(props: { onSliderValueChange: (progress: number) => void, value: number }) {
+  const { onSliderValueChange, value } = props;
   return (
     <Slider
+      value={value}
       style={{ width: '100%', height: '100%' }}
       minimumValue={0}
       maximumValue={1}

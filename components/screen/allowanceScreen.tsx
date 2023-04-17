@@ -34,7 +34,7 @@ export function AllowanceScreen() {
             }
 
             {
-              queryAllowance.isFetching && <MLoading />
+              queryAllowance.isFetching && queryAllowance.data == null && <MVStack style={{ marginVertical: 20 }}><MLoading /></MVStack>
             }
             <MHStack style={{ marginBottom: 50 }} />
             <Spacer />

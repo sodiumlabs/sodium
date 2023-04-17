@@ -9,17 +9,17 @@ import { useCallback, useMemo } from "react";
 import { toUtf8Bytes } from "@ethersproject/strings";
 import * as WebBrowser from 'expo-web-browser';
 import { getAddressExplorer } from '../../../lib/network';
+import { hashcodeObj } from "../../../lib/common";
 
 type Props = {
     decodeTxn: IDecodeTranscation;
-    key: number;
     transcationIndex: number;
     transcationMaxIndex: number;
     chainId: number
 }
 
 export function ABITransaction(props: Props) {
-    const { decodeTxn, key, transcationIndex, transcationMaxIndex } = props;
+    const { decodeTxn, transcationIndex, transcationMaxIndex } = props;
     let contractName = decodeTxn.originTxReq.to;
     let opensource = false;
     let method = decodeTxn.originTxReq.data.toString().slice(0, 10);
@@ -68,7 +68,7 @@ export function ABITransaction(props: Props) {
         if (childrenTransactions.length > 0) {
             return childrenTransactions.map((child, index) => {
                 return (
-                    <BaseFoldFrame defaultExpansion key={index} header={`Transaction(${index + 1}/${childrenTransactions.length})`} style={{ marginTop: 20 }}>
+                    <BaseFoldFrame defaultExpansion key={hashcodeObj(child) + index} header={`Transaction(${index + 1}/${childrenTransactions.length})`} style={{ marginTop: 20 }}>
                         <MText style={{ color: eColor.GrayContentText }}>{contractName}: {child.functionFragment.name}</MText>
                     </BaseFoldFrame>
                 )
@@ -77,7 +77,7 @@ export function ABITransaction(props: Props) {
             return functionFragment.inputs.map((input, index) => {
                 if (input.type == "address") {
                     return (
-                        <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {result[index]}</MText>
+                        <MText style={{ color: eColor.GrayContentText }} key={hashcodeObj(input) + index.toString()}>{input.name}: {result[index]}</MText>
                     )
                 } else if (input.type == "uint256") {
                     if (input.name.includes("amount")
@@ -85,23 +85,23 @@ export function ABITransaction(props: Props) {
                         || input.name.includes("price")
                     ) {
                         return (
-                            <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {ethers.utils.formatEther(result[index])}</MText>
+                            <MText style={{ color: eColor.GrayContentText }} key={hashcodeObj(input) + index.toString()}>{input.name}: {ethers.utils.formatEther(result[index])}</MText>
                         )
                     } else if (input.name.includes("time")
                         || input.name.includes("deadline")
                     ) {
                         const time = new Date(result[index].toNumber() * 1000);
                         return (
-                            <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {time.toLocaleString()}</MText>
+                            <MText style={{ color: eColor.GrayContentText }} key={hashcodeObj(input) + index.toString()}>{input.name}: {time.toLocaleString()}</MText>
                         )
                     }
                 } else if (input.type == "bool") {
                     return (
-                        <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {result[index] ? "true" : "false"}</MText>
+                        <MText style={{ color: eColor.GrayContentText }} key={hashcodeObj(input) + index.toString()}>{input.name}: {result[index] ? "true" : "false"}</MText>
                     )
                 } else if (input.type == "string") {
                     return (
-                        <MText style={{ color: eColor.GrayContentText }} key={index.toString()}>{input.name}: {result[index]}</MText>
+                        <MText style={{ color: eColor.GrayContentText }} key={hashcodeObj(input) + index.toString()}>{input.name}: {result[index]}</MText>
                     )
                 } else {
                     return (
@@ -129,7 +129,7 @@ export function ABITransaction(props: Props) {
     }, [opensource]);
 
     return (
-        <BaseFoldFrame defaultExpansion key={key} header={`Transaction(${transcationIndex}/${transcationMaxIndex})`} style={{ marginTop: 20 }}>
+        <BaseFoldFrame defaultExpansion header={`Transaction(${transcationIndex}/${transcationMaxIndex})`} style={{ marginTop: 20 }}>
             {opensourceDom}
             <MText numberOfLines={null} style={{ color: eColor.GrayContentText, paddingTop: 10 }}>Call {contractName}: {method.slice(0, 1).toUpperCase()}{method.slice(1)}</MText>
             {resultOrChildren}
