@@ -13,10 +13,10 @@ import { IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModal
 import { transactionQueue } from '../transaction';
 import { walletAtom } from './atom';
 import { Logger } from '../common/utils';
+import { isOpenedAppByUri } from "../../lib/data/apps";
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
-        Logger.debug("WalletPrompter promptConnect options:" + JSON.stringify(options));
         return new Promise(async (tResolve: (value: PromptConnectDetails) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();
@@ -25,14 +25,8 @@ export class WalletPrompter implements WalletUserPrompter {
                 return Promise.reject("WalletPrompter promptConnect auth no auth");
             }
 
-            // TODO
-            // 临时代码
-            // 后续增加协议判断是否是在系统内app打开. 
-            if (options.app == "uniswap") {
+            if (isOpenedAppByUri(options.origin)) {
                 const result = await wallet.handler.connect(options) as PromptConnectDetails;
-
-                console.debug("connect success", result);
-
                 tResolve(result);
                 return;
             }

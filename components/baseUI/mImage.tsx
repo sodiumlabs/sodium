@@ -12,5 +12,4 @@ export default function MImage(props: Omit<ImageProps, 'source'> & { w?: number,
       <Image width={w} height={h} src={uri || source as string} alt={""} />
     </MHStack>
   )
-
 }

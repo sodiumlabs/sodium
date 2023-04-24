@@ -1,6 +1,3 @@
-
-
-
 let operateTimeStamp = -1;
 
 const get = (): number => {

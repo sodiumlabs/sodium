@@ -10,6 +10,7 @@ import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
+import AppsSvg from '../svg/appsSvg';
 import { navigationRef } from './navigation';
 
 
@@ -30,6 +31,7 @@ export default function Header(props: ViewProps) {
 
         <MHStack pointerEvents='auto'>
           <HeaderItem isShowReqTip isSelect={curScreenName == Screens.Wallet} source={IconMenuWallet} screen={Screens.Wallet} />
+          <HeaderItem isShowReqTip isSelect={curScreenName == Screens.Apps} source={IconMenuWallet} screen={Screens.Apps} />
           <HeaderItem isShowReqTip={false} isSelect={curScreenName == Screens.History} source={IconMenuHistory} screen={Screens.History} />
         </MHStack>
 

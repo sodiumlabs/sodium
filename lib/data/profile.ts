@@ -2,7 +2,6 @@ import { atom } from "nanostores";
 import { ProfileData } from "../define";
 import { useStore } from '@nanostores/react';
 
-
 const profileAtom = atom<ProfileData>({} as ProfileData);
 
 export const useProfile = () => {

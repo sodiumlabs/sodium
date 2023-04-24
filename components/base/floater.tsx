@@ -1,4 +1,3 @@
-
 import { BlurView } from 'expo-blur';
 import { useEffect, useState } from 'react';
 import { StyleSheet, ViewProps } from 'react-native';
@@ -18,24 +17,10 @@ export default function Floater(props: ViewProps & { hasNavigationBarBack?: bool
   const dimensionsize = useDimensionSize();
   const [webAdapterWidth, setWebAdapterWidth] = useState(200);
   const isAdapterWeb = useAdapterWeb();
-  // debugger
-
-  // useFocusEffect(
-  //   useCallback(() => {
-  //     // Do something when the screen is focused
-  //     return () => {
-  //       // Do something when the screen is unfocused
-  //       // Useful for cleanup functions
-  //       setIsFold(true);
-  //     };
-  //   }, [])
-  // );
 
   useEffect(() => {
     if (isAdapterWeb) {
       const offsetWidth = Math.max(Math.min(dimensionsize[0] - fixWidth, designWidth - fixWidth), 0);
-      // 0   ~ 560
-      // 200 ~ 420
       const width = mapRange(offsetWidth, 0, 560, 200, 420);
       setWebAdapterWidth(width);
     }

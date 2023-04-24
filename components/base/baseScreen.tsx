@@ -36,7 +36,6 @@ export function BaseScreen(props: { children?: ReactNode, hasNavigationBar?: boo
             props.children
           }
         </MVStack>
-
       </MVStack >
     </SafeAreaView >
   );
@@ -57,5 +56,4 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     backgroundColor: '#F7F7F7',
   }
-
 });

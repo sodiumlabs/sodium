@@ -30,21 +30,17 @@ export default function Footer(props: ViewProps) {
       {/* <BlurView style={{ width: '100%' }}> */}
       <MHStack stretchW style={styles.list}>
         <MenuButton isShowReqTip isSelect={curScreenName == Screens.Wallet} source={<WalletSvg />} title={Screens.Wallet} onPress={onWalletClick} />
-        {
-          Platform.OS != "web" && (<MenuButton isShowReqTip={false} isSelect={curScreenName == Screens.Apps} source={<AppsSvg />} title={Screens.Apps} onPress={onAppsClick} />)
-        }
+        <MenuButton isShowReqTip={false} isSelect={curScreenName == Screens.Apps} source={<AppsSvg />} title={Screens.Apps} onPress={onAppsClick} />
         <MenuButton isShowReqTip={false} isSelect={curScreenName == Screens.History} source={<HistorySvg />} title={Screens.History} onPress={onHistoryClick} />
       </MHStack>
       {/* </BlurView> */}
     </MVStack>
-
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     zIndex: 10,
-    // bottom: 0,
     backgroundColor: '#F7F7F7',
     alignItems: 'center',
     justifyContent: 'center',

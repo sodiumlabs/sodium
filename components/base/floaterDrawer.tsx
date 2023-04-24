@@ -1,12 +1,12 @@
 import { useRef, useState, useMemo, useEffect } from 'react';
-import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, View, Platform } from 'react-native';
+import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet } from 'react-native';
 import { useQueryNetwork } from '../../lib/api/network';
 import { waitTime } from '../../lib/common/common';
 import { loginOut } from '../../lib/data/auth';
 import { useAuth } from '../../lib/data/authAtom';
 import { Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
-import { IconArrowL, IconForkClose, IconMore, IconSettings, IconSignout } from '../../lib/imageDefine';
+import { IconArrowL, IconForkClose, IconMore } from '../../lib/imageDefine';
 import CopyButton from '../baseUI/copyButton';
 import MAvatar from '../baseUI/mAvatar';
 import MButton, { MButtomTheme } from '../baseUI/mButton';
