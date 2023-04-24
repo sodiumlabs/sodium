@@ -108,12 +108,12 @@ export const sanitizeMessage = (msg, primaryType, types) => {
   return sanitizedMessage;
 };
 
-let debug = false;
+let debug = true;
 
 export const Logger = {
   debug: (msg: string | object) => {
     if (debug) {
-      console.log(`[DEBUG] ${JSON.stringify(msg)}`);
+      console.debug(`[DEBUG] ${JSON.stringify(msg)}`);
     }
   }
 }

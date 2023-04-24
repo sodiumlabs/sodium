@@ -56,17 +56,18 @@ export function LoginScreen() {
       }
       showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={msg} /> });
     } else if (authResponse.type == "success") {
-      const result = await twauth.auth({
-        request: {
-          token: authResponse.params["oauth_token"],
-          verifier: authResponse.params["oauth_verifier"],
-          messageHash: ""
-        }
-      });
-      // result.response.
-      await loginIn(result.response.authId);
+      if (authResponse.params["oauth_token"]) {
+        const result = await twauth.auth({
+          request: {
+            token: authResponse.params["oauth_token"],
+            verifier: authResponse.params["oauth_verifier"],
+            messageHash: ""
+          }
+        });
+        await loginIn(result.response.authId);
+      }
     }
-    console.debug("console update full");
+
     showUpdateFullScreenModal(false);
   }
 
