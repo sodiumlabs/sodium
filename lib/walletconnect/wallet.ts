@@ -13,8 +13,6 @@ export async function createWallet(
         return wallet;
     }
 
-    console.debug("create wallet with networks", networks);
-
     wallet = initWallet(networkId, {
         localStorage: storage,
         transports: {

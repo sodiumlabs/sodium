@@ -91,6 +91,10 @@ export class WalletConnectV2 implements IWalletConnect {
         return wallet.getProvider(chainId).send(method, params);
     }
 
+    async switchChain(chainId: number): Promise<void> {
+        // TODO: implement
+    }
+
     async kill(message: string) {
         const sdk = v2sdk.get();
         sdk.disconnectSession({

@@ -4,6 +4,7 @@ export interface IWalletConnect {
     kill(message: string): void
     getURI(): string
     callRequest(method: string, params: any, chainId?: number | string): Promise<any>
+    switchChain(chainId: number): Promise<void>
 }
 
 export type WalletConnectPairMetadata = {

@@ -36,10 +36,12 @@ export class WalletConnectV1 implements IWalletConnect {
                 throw error;
             }
             this.callRequest(payload.method, payload.params).then(result => {
+                result = result ?? null;
+                console.debug("approve request", payload.method, payload.params, result);
                 connector.approveRequest({
                     id: payload.id,
                     jsonrpc: payload.jsonrpc,
-                    result,
+                    result: result
                 });
             }).catch(err => {
                 console.debug("reject request", err);
@@ -100,12 +102,22 @@ export class WalletConnectV1 implements IWalletConnect {
         });
     }
 
+    async switchChain(chainId: number): Promise<void> {
+        const wallet = await this.wallet;
+        const address = await wallet.getAddress();
+        this.connector.updateSession({
+            chainId: chainId,
+            accounts: [
+                address
+            ]
+        });
+    }
+
     async kill(message: string) {
         const wallet = await this.wallet;
         wallet.removeConnectedSite(
             this.connector.peerMeta.url
         );
-        console.debug("wallet disconnect")
         if (this.connector.connected) {
             this.connector.killSession({
                 message

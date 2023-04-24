@@ -38,9 +38,11 @@ walletAtom.subscribe(newValue => {
 currentChainIdAtom.subscribe(newChainId => {
     const walletHandler = walletHandlerAtom.get();
     if (walletHandler) {
-        walletHandler.setDefaultNetwork(newChainId);
+        if (walletHandler.defaultNetworkId != newChainId) {
+            walletHandler.setDefaultNetwork(newChainId);
+        }
     }
-})
+});
 
 export const initHandler = (): WalletRequestHandler => {
     const walletHandler = new WalletRequestHandler(

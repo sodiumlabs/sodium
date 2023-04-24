@@ -54,12 +54,13 @@ async function init(): Promise<void> {
         // TODO upsentry;
     }
 
-    const connectV1WithRetry = async (session: WalletConnectSessionSerialized) => {
+    const connectV1WithRetry = async (session: WalletConnectSessionSerialized, count = 0) => {
         newPairV1(session.connectURI, true, session.sessionV1).then(w => w.startSession(session.meta, true)).catch((error) => {
             if (!error.toString().includes("connect first")) {
-                // TODO up to sentry
-                console.warn("load wallet connect pair error", error.toString());
-                connectV1WithRetry(session);
+                // TODO upsentry;
+                if (count < 10) {
+                    connectV1WithRetry(session, count ++);
+                }
             }
         });
     }

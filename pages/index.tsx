@@ -12,6 +12,7 @@ import ModalInit from '../components/base/modalInit';
 import { isNavigationReadyAtom, navigationRef } from '../components/base/navigation';
 import NavigationInit from '../components/base/navigationInit';
 import { showErrorModal } from '../lib/data/modal';
+import { listen } from '../lib/subscriber';
 
 import {
   IframeMessageHandler,
@@ -77,6 +78,8 @@ if (
 }
 
 
+listen();
+
 export default function App() {
   useListenerDimensionSize();
 
@@ -113,9 +116,6 @@ export default function App() {
   }, [1])
 
   function handleStateChange(state): void {
-    Logger.debug("handleStateChange");
-    Logger.debug(state);
-
     const routeState = state.routes[0].state;
     const routes = routeState.routes;
     const index = routeState.index;

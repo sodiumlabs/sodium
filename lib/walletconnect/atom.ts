@@ -45,6 +45,15 @@ export const pushSession = (session: WalletConnectSession) => {
     xsaveWalletConnectSessions(sessions);
 }
 
+export const updateV1SessionChainId = async (chainId: number) => {
+    const sessions = walletConnectSessions.get();
+    for (const session of sessions) {
+        if (session.version == "1") {
+            session.connector.switchChain(chainId);
+        }
+    }
+}
+
 export const removeSessionById = (id: string, message: string) => {
     const sessions = walletConnectSessions.get();
     const newSessions = sessions.filter(s => s.id != id);
