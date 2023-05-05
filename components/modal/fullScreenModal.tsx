@@ -1,7 +1,6 @@
 import { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import { IModalParam } from '../../lib/define';
-// import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { BaseModal } from '../base/baseModal';
 import MVStack from '../baseUI/mVStack';
 

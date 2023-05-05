@@ -1,4 +1,3 @@
-import { Divider } from "@ui-kitten/components";
 import { MDivider } from "../../baseUI/mDivider";
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";

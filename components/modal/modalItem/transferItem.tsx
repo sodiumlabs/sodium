@@ -1,4 +1,3 @@
-import { Divider } from '@ui-kitten/components';
 import { ERC20Transfer } from "../../../abi/index";
 import { formatWei2Price } from "../../../lib/common/common";
 import { eColor } from '../../../lib/globalStyles';

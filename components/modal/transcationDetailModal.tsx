@@ -1,5 +1,4 @@
 import { Linking, ScrollView, StyleSheet } from 'react-native';
-// import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { TransactionHistory } from '@0xsodium/provider';
 import { capitalize } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';

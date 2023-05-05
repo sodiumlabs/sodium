@@ -1,20 +1,18 @@
-import { Divider } from "@ui-kitten/components";
 import { ScrollView, StyleSheet } from "react-native";
-import { fixWidth, Screens } from "../../lib/define";
+import { Screens, fixWidth } from "../../lib/define";
+import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { navigationRef } from "../base/navigation";
 import { Spacer } from "../base/spacer";
 import MButton from "../baseUI/mButton";
-import { MDivider } from "../baseUI/mDivider";
+import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from '../baseUI/mHStack';
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
-import { globalStyle, eColor } from '../../lib/globalStyles';
-import { MButtonText } from "../baseUI/mButtonText";
 
 export function SecurityScreen() {
   // const auth = useAuth();
