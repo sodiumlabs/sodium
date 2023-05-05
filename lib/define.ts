@@ -157,10 +157,16 @@ export interface IDecodeTranscation {
 export type IUserTokenInfo = UserTokenInfo & { rate: number, usdBalance: string };
 
 export type PaymasterInfo = {
-  token: ERC20OrNativeTokenMetadata
-  // wei
-  amount: BigNumber
-  expiry: number
+  id: string;
+  token: ERC20OrNativeTokenMetadata;
+  sponsorship?: {
+    sponsor: {
+      name: string;
+      icon: string;
+    };
+  };
+  amount: BigNumber;
+  expiry: number;
 }
 
 export interface ITranscation {

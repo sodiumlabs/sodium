@@ -8,7 +8,7 @@ import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
 import { getNetwork } from '../../lib/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useProjectSetting } from '../../lib/data/project';
-import { eApproveType, IDecodeTranscation, IModalParam, ISignTranscationModalParam, MaxFixedNumber, Screens } from '../../lib/define';
+import { eApproveType, IDecodeTranscation, IModalParam, ISignTranscationModalParam, MaxFixedNumber, PaymasterInfo, Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { transactionPending } from '../../lib/transaction/pending';
@@ -29,6 +29,8 @@ import { navigate } from '../base/navigation';
 import { useMabyeCurrentChainId } from '../../lib/network';
 import { ABITransaction } from './transactionDecodes';
 import { Logger } from '../../lib/common/utils';
+import { PaymasterItem } from './modalItem/paymasterItem';
+import { TranscationDataItem } from './modalItem/transcationDataItem';
 
 export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -38,12 +40,12 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const projectSetting = useProjectSetting();
   const [isTxHandling, setTxHandling] = useModalLoading(modalParam);
   const [tokensQuery, tokenInfos] = useQueryTokens(currentChainId);
-  const [gasQuery, paymasterInfos] = useQueryGas(param?.txn?.txReq);
 
   // Mainly used for UI display
   const [uiDecodeDatas, setUiDecodeDatas] = useState<IDecodeTranscation[]>(null);
   const [approveSelectedIndex, setApproveSelectedIndex] = useState(eApproveType.KeepUnlimted);
   const [approveSliderValue, setApproveSliderValue] = useState(1);
+  const [selectedPayinfo, setSelectedPayinfo] = useState<PaymasterInfo>(null);
 
   useEffect(() => {
     if (!modalParam.visible) {
@@ -101,7 +103,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
   const onConfirmClick = useCallback(async () => {
     if (!param) return;
-    if (!tokenInfos || !paymasterInfos || !paymasterInfos.length) return;
+    if (!tokenInfos || !selectedPayinfo) return;
     if (isTxHandling) return;
     // const tx = param.txn.txReq;
     if (!param?.decodeDatas) return;
@@ -140,7 +142,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         setTxHandling(false);
         hideModal();
         param.txn.txHash = txHash;
-        param.txn.txGas = paymasterInfos[0]; // todo 
+        param.txn.txGas = selectedPayinfo;
         transactionPending.addCurPending(param.txn);
         navigate(Screens.Wallet);
       }
@@ -158,7 +160,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       await param.continueClick(txs);
     }
 
-  }, [param, isTxHandling, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, paymasterInfos]);
+  }, [param, isTxHandling, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, selectedPayinfo]);
 
   const onCancelClick = () => {
     if (!param) return;
@@ -254,59 +256,25 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
             {/* ---------------------Transcation Data------------------------- */}
             {
               uiDecodeDatas && (
-                <BaseFoldFrame
-                  header={`Transcation Data(${uiDecodeDatas.length})`}
-                  style={{ marginTop: 20 }}>
-                  {
-                    uiDecodeDatas.map((decodetxn, index) => {
-                      return (
-                        <MVStack stretchW key={hashcodeObj(decodetxn) + index}
-                          style={{ borderRadius: 10, padding: 15, marginBottom: 10, backgroundColor: 'rgba(1,1,1,0.05)' }}>
-                          <MText numberOfLines={null} style={{ color: eColor.GrayContentText }}>
-                            {
-                              JSON.stringify(decodetxn.originTxReq, null, 2)
-                            }
-                          </MText>
-                        </MVStack>
-                      )
-                    })
-                  }
-                </BaseFoldFrame>
+                <TranscationDataItem uiDecodeDatas={uiDecodeDatas} />
               )
             }
 
             {/* ---------------------Fee------------------------- */}
             {
               uiDecodeDatas && (
-                <>
-                  <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
-                    <MText>Fee</MText>
-                  </MHStack>
-
-                  {
-                    tokenInfos && paymasterInfos && paymasterInfos.length ? (
-                      <MVStack style={{ marginBottom: 20 }}>
-                        {
-                          paymasterInfos.map((gasInfo, index) => {
-                            const ownToken = tokenInfos && tokenInfos.find(t => t.token.address == gasInfo.token.address);
-                            return (<NetworkFeeItem key={hashcodeObj(gasInfo) + index} gasInfo={gasInfo} ownToken={ownToken} />)
-                          })
-                        }
-                      </MVStack>)
-                      : (
-                        <MVStack style={{ marginVertical: 20 }}>
-                          <MLoading />
-                        </MVStack>
-                      )
-                  }
-                </>
+                <PaymasterItem
+                  selectedPayinfo={selectedPayinfo}
+                  setSelectedPayinfo={setSelectedPayinfo}
+                  tokenInfos={tokenInfos}
+                  txq={param?.txn?.txReq} />
               )
             }
 
           </ScrollView>
         </MVStack>
         <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick}
-          isConfirmLoading={isTxHandling} isConfirmEnable={!!tokenInfos && !!paymasterInfos && !!paymasterInfos.length} />
+          isConfirmLoading={isTxHandling} isConfirmEnable={!!tokenInfos && !!selectedPayinfo} />
       </MVStack>
     </BaseModal >
   );
