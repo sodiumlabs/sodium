@@ -15,7 +15,7 @@ export default function MSlider(props: { onSliderValueChange: (progress: number)
     removeClassName();
   }, [value]);
   return (
-    <Slider
+    <Slider style={{ marginTop: 5, marginBottom: 5 }}
       onFocus={() => removeClassName()}
       value={value}
       min={0}

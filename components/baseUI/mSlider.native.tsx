@@ -11,6 +11,7 @@ export default function MSlider(props: { onSliderValueChange: (progress: number)
       minimumValue={0}
       maximumValue={1}
       step={0.01}
+      tapToSeek
       onValueChange={onSliderValueChange}
       minimumTrackTintColor={eColor.Blue}
       maximumTrackTintColor={eColor.Black}

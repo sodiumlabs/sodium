@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   },
   connected: {
     // flex: 1,
-    // height: 63,
+    height: 134,
     backgroundColor: 'rgba(217, 217, 217, 0.2)',
     padding: 15,
     marginBottom: 15,

@@ -1,11 +1,12 @@
 import { FixedNumber } from '@ethersproject/bignumber';
-import { Radio, RadioGroup } from '@ui-kitten/components';
 import { BigNumber } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import { ERC20Approve } from "../../../abi/erc20";
+import { useQueryToken } from '../../../lib/api/tokens';
 import { formatWei2Price, removeAllDecimalPoint } from '../../../lib/common/common';
+import { Logger } from '../../../lib/common/utils';
 import { useAuth } from "../../../lib/data/auth";
-import { eApproveType, MaxFixedNumber } from "../../../lib/define";
+import { eApproveType } from "../../../lib/define";
 import { eColor } from '../../../lib/globalStyles';
 import { IconTokenDefault } from '../../../lib/imageDefine';
 import { BaseFoldFrame } from "../../base/baseFoldFrame";
@@ -13,12 +14,11 @@ import MAvatar from '../../baseUI/mAvatar';
 import { MDivider } from '../../baseUI/mDivider';
 import MHStack from "../../baseUI/mHStack";
 import MImage from "../../baseUI/mImage";
+import MPressable from '../../baseUI/mPressable';
+import MSlider from '../../baseUI/mSlider';
 import MText from "../../baseUI/mText";
 import MVStack from "../../baseUI/mVStack";
-import { Platform } from 'react-native';
-import { Logger } from '../../../lib/common/utils';
-import MSlider from '../../baseUI/mSlider';
-import { useQueryToken } from '../../../lib/api/tokens';
+import { MRadioItem } from '../../item/radioItem';
 
 
 export const ApproveItem = (props: {
@@ -100,87 +100,36 @@ export const ApproveItem = (props: {
               <MText style={{ color: eColor.GrayContentText }}>{approveValue}</MText>
             </MHStack>
           </MHStack>
-          {
-            Platform.OS == 'web' && <RadioWeb approveSelectedIndex={approveSelectedIndex} setApproveSelectedIndex={setApproveSelectedIndex} disabled={disabled} sliderBox={sliderBox} />
-          }
-          {
-            Platform.OS != 'web' && <RadioNative approveSelectedIndex={approveSelectedIndex} setApproveSelectedIndex={setApproveSelectedIndex} disabled={disabled} sliderBox={sliderBox} />
-          }
+          <RadioGroup approveSelectedIndex={approveSelectedIndex} setApproveSelectedIndex={setApproveSelectedIndex} disabled={disabled} sliderBox={sliderBox} />
         </>
       }
     </BaseFoldFrame>
   )
 }
 
-
-function RadioNative(props: { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox }) {
+function RadioGroup(props: { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox }) {
   const { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox } = props;
-  const status = "info";
+  const types = ["Set the Maximum Allowance", "Revoke Immediately After This Transaction", "Set the Unlimted Allowance"];
   return (
-    <MVStack>
-      <RadioGroup
-        selectedIndex={approveSelectedIndex}
-        onChange={index => setApproveSelectedIndex(index)}>
-        <Radio style={{ marginBottom: 30, position: 'relative' }} status={status} disabled={disabled}>
-          <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-        </Radio>
-        <Radio status={status} disabled={disabled}>
-          <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
-        </Radio>
-        <Radio status={status} disabled={disabled}>
-          <MText style={{ marginLeft: 10 }}>Set the Unlimted Allowance</MText>
-        </Radio>
-      </RadioGroup>
-
+    <MVStack >
       {
-        Platform.OS != 'web' && (
-          <MHStack style={{ width: "80%", height: 30, position: 'absolute', left: 30, top: 30, zIndex: 1 }}>
-            <MHStack stretchW>
-              {sliderBox}
-            </MHStack>
-          </MHStack>
-        )
-      }
-
-
-    </MVStack>
-  )
-}
-
-
-function RadioWeb(props: { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox }) {
-  const { approveSelectedIndex, setApproveSelectedIndex, disabled, sliderBox } = props;
-  const status = "info";
-  return (
-    <MVStack>
-      <RadioGroup
-        selectedIndex={approveSelectedIndex}
-        onChange={index => setApproveSelectedIndex(index)}>
-        <Radio style={{ marginBottom: 30, position: 'relative' }} status={status} disabled={disabled}>
-
-          <>
-            <MText style={{ marginLeft: 10 }}>Set the Maximum Allowance</MText>
-            <MHStack style={{ width: "80%", height: 30, position: 'absolute', left: 30, top: 32, zIndex: 1 }}>
-              <MHStack stretchW>
-                {sliderBox}
+        types.map((item: string, index) => {
+          const isSelected = approveSelectedIndex == index;
+          return (
+            <MVStack stretchW>
+              <MPressable disabled={disabled} key={item} onPress={() => { setApproveSelectedIndex(index) }} style={{ flexDirection: 'row', marginVertical: 8, width: '100%' }} >
+                <MRadioItem checked={isSelected} />
+                <MText style={{ marginLeft: 10, color: isSelected ? eColor.Blue : eColor.Blackest }} >{item}</MText>
+              </MPressable>
+              <MHStack style={{ paddingHorizontal: 25 }}>
+                {
+                  index == 0 && (sliderBox)
+                }
               </MHStack>
-            </MHStack>
-          </>
-
-
-        </Radio>
-        <Radio status={status} disabled={disabled}>
-          <>
-            <MText style={{ marginLeft: 10 }}>Revoke Immediately After This Transaction</MText>
-          </>
-        </Radio>
-        <Radio status={status} disabled={disabled}>
-          <>
-            <MText style={{ marginLeft: 10 }}>Set the Unlimted Allowance</MText>
-          </>
-
-        </Radio>
-      </RadioGroup>
+            </MVStack>
+          )
+        })
+      }
     </MVStack>
   )
 }
