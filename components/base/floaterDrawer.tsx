@@ -197,7 +197,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         <MHStack style={[styles.connected]}>
           <MVStack style={{ flex: 1 }}>
             <MText>Connected</MText>
-            <NetworkRadioGroup style={{ marginTop: 10 }} />
+            <NetworkRadioGroup style={{ marginTop: 12 }} />
           </MVStack>
         </MHStack>
 

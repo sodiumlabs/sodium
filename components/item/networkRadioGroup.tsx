@@ -12,6 +12,7 @@ import MVStack from "../baseUI/mVStack";
 import { MRadioItem } from "./radioItem";
 import { eColor } from "../../lib/globalStyles";
 import { capitalize } from "../../lib/common";
+import { NetWorkIconMap } from "../../lib/define";
 
 
 export function NetworkRadioGroup(props: ViewProps) {
@@ -34,7 +35,7 @@ export function NetworkRadioGroup(props: ViewProps) {
           const isSelected = currentChainId == networkItem.chainId;
           return (
             <MPressable key={index + "" + networkItem.chainId} onPress={() => { changeNetwork(networkItem) }} style={{ flexDirection: 'row', marginVertical: 5 }} >
-              <MImage w={20} h={20} uri={""} source={IconTokenDefault} />
+              <MImage w={16} h={16} uri={""} source={NetWorkIconMap[networkItem.name]} />
               <MText style={{ marginLeft: 10, color: isSelected ? eColor.Blue : eColor.Blackest }} >{capitalize(networkItem.name)}</MText>
               <Spacer />
               <MRadioItem checked={isSelected} />
