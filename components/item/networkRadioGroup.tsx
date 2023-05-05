@@ -18,7 +18,11 @@ import { NetWorkIconMap } from "../../lib/define";
 export function NetworkRadioGroup(props: ViewProps) {
 
   const getSortMainNetwork = () => {
-    return mainNetworks.sort((a, b) => a.chainId - b.chainId);
+    return mainNetworks.sort((a, b) => {
+      if (a.name < b.name) return 1;
+      if (a.name > b.name) return -1;
+      return 0;
+    });
   }
   const currentChainId = useCurrentChainId();
   const changeNetwork = (nw: NetworkConfig) => {
