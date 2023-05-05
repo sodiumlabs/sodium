@@ -40,6 +40,11 @@ export function SendScreen(props) {
   const [inputTokenCount, setInputTokenCount] = useState('');
   const [isCanSend, setIsCanSend] = useState(false);
 
+  // Modify the chain and reset the data
+  useEffect(() => {
+    setSelectedOption(null);
+  }, [currentChainId]);
+
   const onChangeAddressText = (text: string) => {
     setInputAddress(text.trim());
   }

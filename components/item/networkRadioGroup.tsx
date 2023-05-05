@@ -35,7 +35,7 @@ export function NetworkRadioGroup(props: ViewProps) {
           const isSelected = currentChainId == networkItem.chainId;
           return (
             <MPressable key={index + "" + networkItem.chainId} onPress={() => { changeNetwork(networkItem) }} style={{ flexDirection: 'row', marginVertical: 7 }} >
-              <MImage w={16} h={16} source={NetWorkIconMap[networkItem.name]} />
+              <MImage style={{ marginLeft: 2 }} w={16} h={16} source={NetWorkIconMap[networkItem.name]} />
               <MText style={{ marginLeft: 10, color: isSelected ? eColor.Blue : eColor.Blackest }} >{capitalize(networkItem.name)}</MText>
               <Spacer />
               <MRadioItem checked={isSelected} />

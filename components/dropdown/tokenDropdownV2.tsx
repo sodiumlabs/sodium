@@ -27,15 +27,29 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
     setSelectedOption(option);
     setIsDropdownVisible(false);
   };
+  // If nothing is selected, close the dropdown immediately
+  useEffect(() => {
+    if (!selectedOption) {
+      setIsDropdownVisible(false);
+    }
+  }, [selectedOption])
 
   useEffect(() => {
-    if (selectedOption == null && options != null) {
+    if (!options) return;
+    if (!selectedOption) {
       if (defaultOption) {
-        handleOptionPress(options.find(item => item.token.address == defaultOption.token.address));
+        const option = options.find(item => item.token.symbol == defaultOption.token.symbol);
+        handleOptionPress(option || options[0]);
       } else {
         handleOptionPress(options[0]);
       }
-
+    } else {
+      // debugger
+      // If the selected item is not found in the collection, the data has changed
+      const index = options.findIndex(item => item.token.symbol == selectedOption.token.symbol);
+      if (index == -1) {
+        handleOptionPress(options[0]);
+      }
     }
   }, [selectedOption, options, defaultOption])
 
@@ -58,7 +72,7 @@ export const TokenDropdown = (props: { options: IUserTokenInfo[], selectedOption
             keyExtractor={(item, index) => index.toString()}
             renderItem={({ item, index }) => (
               <>
-                <TokenItem option={item} isSelected={selectedOption.token.address == item.token.address} handleOptionPress={handleOptionPress} />
+                <TokenItem option={item} isSelected={selectedOption.token.symbol == item.token.symbol} handleOptionPress={handleOptionPress} />
                 {index != options.length - 1 && (<MDivider />)}
               </>
 
