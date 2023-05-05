@@ -1,12 +1,11 @@
-import { useStore } from '@nanostores/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { useQueryTokens } from '../../lib/api/tokens';
 import { showUpdateScanModal } from '../../lib/data/modal';
 import { Screens, fixWidth } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { useDimensionSize } from '../../lib/hook/dimension';
-import { currentChainIdAtom } from '../../lib/network';
+import { useCurrentChainId } from '../../lib/network';
 import { BaseScreen } from "../base/baseScreen";
 import Information from '../base/information';
 import { navigationRef } from '../base/navigation';
@@ -26,13 +25,17 @@ import { RequestTranscation } from '../transcation/requestTranscation';
 
 
 export function WalletScreen() {
-  const chainId = useStore(currentChainIdAtom);
+  const chainId = useCurrentChainId();
   const [tokensQuery, tokenInfos, usdBalance] = useQueryTokens(chainId);
   const [searchText, setSearchText] = useState<string>('');
   const dimension = useDimensionSize();
   const onChangeText = (text: string) => {
     setSearchText(text);
   }
+  useEffect(() => {
+    tokensQuery.remove();
+    tokensQuery.refetch();
+  }, [chainId]);
 
   return (
     <BaseScreen >

@@ -4,7 +4,6 @@ import { useQueryHistory } from '../../lib/api/history';
 import { HistoryTime } from "../../lib/common/time";
 import { fixWidth } from "../../lib/define";
 import { useDimensionSize } from '../../lib/hook/dimension';
-import { currentChainIdAtom } from '../../lib/network';
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import { Spacer } from "../base/spacer";
@@ -13,9 +12,10 @@ import { MLoading } from "../baseUI/mLoading";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
+import { useCurrentChainId } from '../../lib/network';
 
 export function HistoryScreen() {
-  const chainId = useStore(currentChainIdAtom);
+  const chainId = useCurrentChainId();
   const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(chainId);
   const dimension = useDimensionSize();
 

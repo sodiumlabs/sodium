@@ -9,6 +9,7 @@ export enum eColor {
   Blue = '#1C92FF',
   HoverBlue = '#1983e6',
   Black = '#8B8E9E',
+  Blackest = '#000000',
   HoverBlack = '#7d808e',
   Border = '#EEF0F2',
   GrayText = '#9F9F9F',

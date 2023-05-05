@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useQuery, UseQueryResult } from "react-query";
+import { UseQueryResult, useQuery } from "react-query";
+import { Logger } from "../common/utils";
 import { useAuth } from "../data/auth";
 import { IDepositItemData, IDepositToken, ISelectItemData } from "../define";
+import { useCurrentChainId } from "../network";
 import { GetWyreDepositCurrenciesReturn, RequestWyreDepositArgs, RequestWyreDepositReturn, RequestWyrePreDepositArgs, RequestWyrePreDepositReturn, WyreService } from "../wyre";
-import { useQueryNetwork } from "./network";
-import { Logger } from "../common/utils";
 
 export const DepositAtLeastAmount = 10;
 // ***************************************Deposit***********************************************
@@ -28,14 +28,14 @@ const fetchDeposit = async (chainId: number): Promise<IDepositItemData[]> => {
 }
 
 export const useQueryDeposit = (): [UseQueryResult, IDepositItemData[]] => {
-  const [queryNetwork, network] = useQueryNetwork();
-  const depositQuery = useQuery(["fetchDeposit", network?.chainId], () => fetchDeposit(network?.chainId), { enabled: false });
+  const chainId = useCurrentChainId();
+  const depositQuery = useQuery(["fetchDeposit", chainId], () => fetchDeposit(chainId), { enabled: false });
   useEffect(() => {
-    if (network?.chainId) {
+    if (chainId) {
       depositQuery.remove();
       depositQuery.refetch();
     }
-  }, [network?.chainId])
+  }, [chainId])
   return [depositQuery, depositQuery.data];
 };
 
@@ -51,13 +51,13 @@ const fetchDepositUrl = async (param: RequestWyreDepositArgs): Promise<RequestWy
 
 
 export const useQueryDepositUrl = (youPayTokenCount: number, curYouPayTokenData: IDepositToken, curYouBuyTokenData: IDepositToken): [UseQueryResult, RequestWyreDepositReturn] => {
-  const [queryNetwork, network] = useQueryNetwork();
+  const chainId = useCurrentChainId();
   const auth = useAuth();
   const param = {
     'request': {
       'amount': +youPayTokenCount,
       'destCurrency': curYouBuyTokenData?.tokenID,
-      'networkId': network?.chainId + '',
+      'networkId': chainId + '',
       'sourceCurrency': curYouPayTokenData?.tokenID,
       'walletAddress': auth.blockchainAddress
     }
@@ -78,16 +78,16 @@ const fetchWyreDepositCurrencies = async (): Promise<GetWyreDepositCurrenciesRet
 
 
 export const useQueryDepositCurrencies = (): [UseQueryResult, ISelectItemData[], ISelectItemData[], Dispatch<SetStateAction<ISelectItemData[]>>, Dispatch<SetStateAction<ISelectItemData[]>>] => {
-  const [queryNetwork, network] = useQueryNetwork();
+  const chainId = useCurrentChainId();
   const [youBuyTokens, setYouBuyTokens] = useState<ISelectItemData[]>(null);
   const [youPayTokens, setYouPayTokens] = useState<ISelectItemData[]>(null);
   const depositCurrenciesQuery = useQuery(["fetchWyreDepositCurrencies"], () => fetchWyreDepositCurrencies(), { enabled: false });
   useEffect(() => {
-    if (network?.chainId) {
+    if (chainId) {
       depositCurrenciesQuery.remove();
       depositCurrenciesQuery.refetch();
     }
-  }, [network?.chainId])
+  }, [chainId])
 
 
   useEffect(() => {
@@ -129,12 +129,13 @@ const fetchWyrePreDeposit = async (param: RequestWyrePreDepositArgs): Promise<Re
 
 
 export const useQueryPreDeposit = (youPayTokenCount: number, curYouPayTokenData: IDepositToken, curYouBuyTokenData: IDepositToken): [UseQueryResult, RequestWyrePreDepositReturn] => {
-  const [queryNetwork, network] = useQueryNetwork();
+
+  const chainId = useCurrentChainId();
   const auth = useAuth();
   const param = {
     'request': {
       'amount': youPayTokenCount,
-      'networkId': network?.chainId + '',
+      'networkId': chainId + '',
       'sourceCurrency': curYouPayTokenData?.tokenID,
       'destCurrency': curYouBuyTokenData?.tokenID,
       'walletAddress': auth.blockchainAddress
@@ -145,13 +146,13 @@ export const useQueryPreDeposit = (youPayTokenCount: number, curYouPayTokenData:
   useEffect(() => {
     if (!youPayTokenCount) return;
     if (+youPayTokenCount < DepositAtLeastAmount) return;
-    if (!network?.chainId) return;
+    if (!chainId) return;
     if (!curYouPayTokenData?.tokenID) return;
     if (!curYouBuyTokenData?.tokenID) return;
     // preDepositQuery.remove();
     preDepositQuery.refetch();
 
-  }, [youPayTokenCount, network?.chainId, curYouPayTokenData?.tokenID, curYouBuyTokenData?.tokenID])
+  }, [youPayTokenCount, chainId, curYouPayTokenData?.tokenID, curYouBuyTokenData?.tokenID])
 
 
   return [preDepositQuery, preDepositQuery.data];

@@ -5,9 +5,9 @@
 import { useEffect, useState } from 'react';
 import { Linking, Pressable, StyleSheet } from 'react-native';
 import { DepositAtLeastAmount, useQueryDepositCurrencies, useQueryDepositUrl, useQueryPreDeposit } from '../../lib/api/deposit';
-import { useQueryNetwork } from '../../lib/api/network';
 import { IDepositItemData, IDepositToken, ISelectItemData } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { useCurrentNetwork } from '../../lib/network';
 import MButton from '../baseUI/mButton';
 import { MButtonText } from '../baseUI/mButtonText';
 import MHStack from '../baseUI/mHStack';
@@ -18,7 +18,7 @@ import { DepositTokenDropdown } from '../dropdown/depositTokenDropdown';
 
 export default function DepositItem(props: { depositItemData: IDepositItemData, isSelected: boolean, onDeposiItemClick: (item: IDepositItemData) => void }) {
   const { depositItemData, isSelected, onDeposiItemClick } = props;
-  const [queryNetwork, network] = useQueryNetwork();
+  const network = useCurrentNetwork();
   const [youPayTokenCount, setYouPayTokenCount] = useState<string>('');
   const [isCanDeposit, setIsCanDeposit] = useState(false);
 

@@ -1,13 +1,12 @@
 import { Linking, ScrollView, StyleSheet } from 'react-native';
 // import { Button, Card, Modal, Text } from '@ui-kitten/components';
 import { TransactionHistory } from '@0xsodium/provider';
-import { useQueryNetwork } from '../../lib/api/network';
 import { capitalize } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { useAuth } from '../../lib/data/authAtom';
 import { IModalParam } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
-import { getTranscationExplorer } from '../../lib/network';
+import { getTranscationExplorer, useCurrentNetwork } from '../../lib/network';
 import { BaseModal } from '../base/baseModal';
 import CopyButton from '../baseUI/copyButton';
 import MButton from '../baseUI/mButton';
@@ -24,9 +23,7 @@ export const TranscationDetailModal = (props: { hideModal: () => void, modalPara
   const { modalParam, hideModal } = props;
 
   const auth = useAuth();
-  const [queryNetwork, network] = useQueryNetwork();
-
-  // if (!modalParam.param) return <></>
+  const network = useCurrentNetwork();
 
   const history = modalParam.param as TransactionHistory;
   let transfer;

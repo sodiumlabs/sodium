@@ -1,4 +1,3 @@
-import { useStore } from '@nanostores/react';
 import { Linking, ScrollView, StyleSheet } from "react-native";
 import { useQueryHistory } from "../../lib/api/history";
 import { formatWei2Price } from "../../lib/common/common";
@@ -7,7 +6,7 @@ import { IUserTokenInfo, Screens, fixWidth } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconTokenDefault } from "../../lib/imageDefine";
-import { currentChainIdAtom } from '../../lib/network';
+import { useCurrentChainId } from '../../lib/network';
 import { BaseFoldFrame } from "../base/baseFoldFrame";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
@@ -28,7 +27,7 @@ import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
-  const chainId = useStore(currentChainIdAtom);
+  const chainId = useCurrentChainId();
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(chainId, tokenInfo.token.address);
 

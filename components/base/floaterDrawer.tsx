@@ -1,9 +1,12 @@
-import { useRef, useState, useMemo, useEffect } from 'react';
+import { useStore } from '@nanostores/react';
+import { atom } from 'nanostores';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet } from 'react-native';
-import { useQueryNetwork } from '../../lib/api/network';
 import { waitTime } from '../../lib/common/common';
 import { loginOut } from '../../lib/data/auth';
 import { useAuth } from '../../lib/data/authAtom';
+import { showUpdateFullScreenModal } from '../../lib/data/modal';
+import { useProfile } from '../../lib/data/profile';
 import { Screens } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { IconArrowL, IconForkClose, IconMore } from '../../lib/imageDefine';
@@ -13,24 +16,20 @@ import MButton, { MButtomTheme } from '../baseUI/mButton';
 import { MButtonText } from '../baseUI/mButtonText';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
+import MPressable from '../baseUI/mPressable';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 import { LogoutLoading } from '../full/logoutLoading';
-import { showUpdateFullScreenModal } from '../../lib/data/modal';
-import { navigate, navigationRef } from './navigation';
-import { useProfile } from '../../lib/data/profile';
-import MPressable from '../baseUI/mPressable';
 import SettingSvg from '../svg/settingSvg';
 import SignOutSvg from '../svg/signOutSvg';
-import { atom } from 'nanostores';
-import { useStore } from '@nanostores/react';
+import { navigate, navigationRef } from './navigation';
+import { NetworkRadioGroup } from '../item/networkRadioGroup';
 
 const tryFoldFloaterDrawerAtom = atom(false);
 export const tryFoldFloaterDrawer = () => {
   tryFoldFloaterDrawerAtom.set(!tryFoldFloaterDrawerAtom.get());
 }
 export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) {
-
   // ------ ------ ------ ------ anim  ------ ------ ------ ------ ------
   const minHeaderHeight = 44;
   const backgroundHeightAnim = useRef(new Animated.Value(minHeaderHeight)).current;
@@ -142,7 +141,6 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
   // ------ ------ ------ ------service logic ------ ------ ------ ------ ------ ------
   const auth = useAuth();
   const profile = useProfile();
-  const [queryNetwork, network] = useQueryNetwork();
 
   const onSettingsClick = () => {
     foldAnim();
@@ -199,7 +197,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         <MHStack style={[styles.connected]}>
           <MVStack style={{ flex: 1 }}>
             <MText>Connected</MText>
-            <MText style={{ marginTop: 5, color: "#6B6B6B" }}>{network?.name}</MText>
+            <NetworkRadioGroup style={{ marginTop: 10 }} />
           </MVStack>
         </MHStack>
 
@@ -215,7 +213,7 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
         </MHStack>
       </MVStack>
     )
-  }, [auth.blockchainAddress, profile.authorizedSource, profile.userName, network?.name])
+  }, [auth.blockchainAddress, profile.authorizedSource, profile.userName])
 
   return (
     <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
@@ -256,7 +254,7 @@ const styles = StyleSheet.create({
   },
   connected: {
     // flex: 1,
-    height: 63,
+    // height: 63,
     backgroundColor: 'rgba(217, 217, 217, 0.2)',
     padding: 15,
     marginBottom: 15,

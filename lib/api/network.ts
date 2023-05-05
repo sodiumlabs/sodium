@@ -13,9 +13,9 @@ export const fetchNetwork = async (): Promise<NetworkConfig> => {
   return network;
 };
 
-export const useQueryNetwork = (): [UseQueryResult, NetworkConfig] => {
-  const query = useQuery(['fetchNetwork'], () => fetchNetwork());
-  const network = query.data as NetworkConfig;
-  return [query, network];
-};
+// export const useQueryNetwork = (): [UseQueryResult, NetworkConfig] => {
+//   const query = useQuery(['fetchNetwork'], () => fetchNetwork());
+//   const network = query.data as NetworkConfig;
+//   return [query, network];
+// };
 
