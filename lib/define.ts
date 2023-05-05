@@ -10,6 +10,7 @@ import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { Session } from './provider/types';
 import { JsonFragment } from '@ethersproject/abi';
 import { ERC20OrNativeTokenMetadata } from '@0xsodium/utils/dist/declarations/src/erc20';
+import { IconMumbai, IconPolygon, IconSodium } from './imageDefine';
 
 export const fixWidth = 720;
 export const designWidth = 1280;
@@ -212,4 +213,10 @@ export interface IApp {
   uri: string
   supportChainIds: number[]
   supportedMobile: boolean
+}
+
+export const NetWorkIconMap = {
+  polygon: IconPolygon,
+  sodiumt: IconSodium,
+  mumbai: IconMumbai
 }
