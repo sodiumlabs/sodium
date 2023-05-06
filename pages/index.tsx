@@ -49,6 +49,12 @@ import { Logger } from '../lib/common/utils';
 
 const queryClient = new QueryClient(
   {
+    defaultOptions: {
+      queries: {
+        cacheTime: 0,
+        refetchOnWindowFocus: true
+      }
+    },
     queryCache: new QueryCache({
       onError: (error: Error) => {
         showErrorModal(error.message);

@@ -1,36 +1,30 @@
 import { BigNumber, FixedNumber } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
-import { encodeERC20Approve, ERC20Approve } from '../../abi/erc20';
-import { useQueryGas } from '../../lib/api/gas';
-import { useQueryTokens } from '../../lib/api/tokens';
+import { ERC20Approve, encodeERC20Approve } from '../../abi/erc20';
 import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
-import { getNetwork } from '../../lib/network';
 import { formatTimeYMDHMS } from '../../lib/common/time';
+import { Logger } from '../../lib/common/utils';
 import { useProjectSetting } from '../../lib/data/project';
-import { eApproveType, IDecodeTranscation, IModalParam, ISignTranscationModalParam, MaxFixedNumber, PaymasterInfo, Screens } from '../../lib/define';
-import { eColor } from '../../lib/globalStyles';
+import { IDecodeTranscation, IModalParam, ISignTranscationModalParam, MaxFixedNumber, PaymasterInfo, Screens, eApproveType } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
+import { getNetwork, useMabyeCurrentChainId } from '../../lib/network';
 import { transactionPending } from '../../lib/transaction/pending';
-import { BaseFoldFrame } from '../base/baseFoldFrame';
 import { BaseModal } from '../base/baseModal';
+import { navigate } from '../base/navigation';
 import MHStack from '../baseUI/mHStack';
 import MLineLR from '../baseUI/mLineLR';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import NetworkFeeItem from '../item/networkFeeItem';
 import { ApproveItem } from './modalItem/approveItem';
 import { ApproveRevokeItem } from './modalItem/approveRevokeItem';
 import { ModalTitle } from './modalItem/modalTitle';
 import { OperateBtnItem } from './modalItem/operateBtnItem';
-import { TransferItem } from './modalItem/transferItem';
-import { navigate } from '../base/navigation';
-import { useMabyeCurrentChainId } from '../../lib/network';
-import { ABITransaction } from './transactionDecodes';
-import { Logger } from '../../lib/common/utils';
 import { PaymasterItem } from './modalItem/paymasterItem';
 import { TranscationDataItem } from './modalItem/transcationDataItem';
+import { TransferItem } from './modalItem/transferItem';
+import { ABITransaction } from './transactionDecodes';
 
 export const SignTranscationModal = (props: { hideModal: () => void, modalParam: IModalParam }) => {
   const { modalParam, hideModal } = props;
@@ -39,7 +33,6 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   const currentNetwork = getNetwork(currentChainId);
   const projectSetting = useProjectSetting();
   const [isTxHandling, setTxHandling] = useModalLoading(modalParam);
-  const [tokensQuery, tokenInfos] = useQueryTokens(currentChainId);
 
   // Mainly used for UI display
   const [uiDecodeDatas, setUiDecodeDatas] = useState<IDecodeTranscation[]>(null);
@@ -52,6 +45,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       setApproveSelectedIndex(eApproveType.KeepUnlimted);
       setApproveSliderValue(1);
       setUiDecodeDatas(null);
+      setSelectedPayinfo(null);
     } else {
       setUiDecodeDatas(param?.decodeDatas);
     }
@@ -103,7 +97,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
   const onConfirmClick = useCallback(async () => {
     if (!param) return;
-    if (!tokenInfos || !selectedPayinfo) return;
+    if (!selectedPayinfo) return;
     if (isTxHandling) return;
     // const tx = param.txn.txReq;
     if (!param?.decodeDatas) return;
@@ -160,7 +154,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       await param.continueClick(txs);
     }
 
-  }, [param, isTxHandling, approveSliderValue, param?.decodeDatas, approveSelectedIndex, tokenInfos, selectedPayinfo]);
+  }, [param, isTxHandling, approveSliderValue, param?.decodeDatas, approveSelectedIndex, selectedPayinfo]);
 
   const onCancelClick = () => {
     if (!param) return;
@@ -266,15 +260,16 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                 <PaymasterItem
                   selectedPayinfo={selectedPayinfo}
                   setSelectedPayinfo={setSelectedPayinfo}
-                  tokenInfos={tokenInfos}
-                  txq={param?.txn?.txReq} />
+                  txq={param?.txn?.txReq}
+                  visible={modalParam.visible}
+                />
               )
             }
 
           </ScrollView>
         </MVStack>
         <OperateBtnItem onCancelClick={onCancelClick} onConfirmClick={onConfirmClick}
-          isConfirmLoading={isTxHandling} isConfirmEnable={!!tokenInfos && !!selectedPayinfo} />
+          isConfirmLoading={isTxHandling} isConfirmEnable={!!selectedPayinfo} />
       </MVStack>
     </BaseModal >
   );

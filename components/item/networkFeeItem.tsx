@@ -1,20 +1,19 @@
 
 
-import { Pressable, StyleSheet, TextInputProps } from 'react-native';
+import { Pressable, PressableProps, StyleSheet } from 'react-native';
 import { formatWei2Price, token2Usd } from '../../lib/common/common';
-import { IUserTokenInfo, PaymasterInfo } from '../../lib/define';
+import { PaymasterInfo } from '../../lib/define';
 import { eColor, globalStyle } from '../../lib/globalStyles';
+import { IconTokenDefault } from '../../lib/imageDefine';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import MLineLR from '../baseUI/mLineLR';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
-import { IconLogo, IconTokenDefault } from '../../lib/imageDefine';
-import { PressableProps } from 'react-native';
 
-export default function NetworkFeeItem(props: PressableProps & { isSelected: boolean, gasInfo: PaymasterInfo, ownToken: IUserTokenInfo }) {
-  const { isSelected, gasInfo, ownToken, ...reset } = props;
-
+export default function NetworkFeeItem(props: PressableProps & { isSelected: boolean, gasInfo: PaymasterInfo }) {
+  const { isSelected, gasInfo, ...reset } = props;
+  const ownToken = gasInfo.userTokenInfo;
   const balance = !ownToken ? '0' : `${formatWei2Price(ownToken.balance.toString(), ownToken.token.decimals)} ${ownToken.token.symbol}`
   const gasUsd = !ownToken ? '0' : token2Usd(gasInfo.amount.toString(), gasInfo.token.decimals, ownToken.rate + '', true);
 

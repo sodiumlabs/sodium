@@ -4,6 +4,7 @@ import { useQuery, UseQueryResult } from "react-query";
 import { useAuth } from '../data/authAtom';
 import { AuthData, PaymasterInfo } from "../define";
 import { Logger } from "../common/utils";
+import { fetchTokens } from "./tokens";
 
 const fetchGas = async (txn: TransactionRequest, authData: AuthData): Promise<PaymasterInfo[]> => {
   Logger.debug("fetchGas");
@@ -14,6 +15,11 @@ const fetchGas = async (txn: TransactionRequest, authData: AuthData): Promise<Pa
   // txn.maxFeePerGas = gasSuggest.fast.maxFeePerGas;
 
   const paymasterInfo = await authData.web3signer.getPaymasterInfos(txn) as PaymasterInfo[];
+  for (let i = 0; i < paymasterInfo.length; i++) {
+    const userInfos = await fetchTokens(paymasterInfo[i].token.address, paymasterInfo[i].token.chainId);
+    const userInfo = userInfos.find((info) => info.token.symbol == paymasterInfo[i].token.symbol);
+    paymasterInfo[i].userTokenInfo = userInfo;
+  }
   Logger.debug("fetchGas result");
   Logger.debug(paymasterInfo);
   return paymasterInfo;

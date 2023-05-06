@@ -167,6 +167,7 @@ export type PaymasterInfo = {
   };
   amount: BigNumber;
   expiry: number;
+  userTokenInfo: IUserTokenInfo;
 }
 
 export interface ITranscation {
