@@ -15,10 +15,12 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { CodeItemText } from "../item/codeItemText";
+import { UseTopCenterScale } from '../base/scaleInit';
 
 export function RecoveryCodeScreen() {
   // const auth = useAuth();
   const dimension = useDimensionSize();
+  const topCenterStyle = UseTopCenterScale();
   const [isNewRecoveryCode, setIsNewRecoveryCode] = useState<boolean>(false);
   const generateClick = () => {
     setIsNewRecoveryCode(true);
@@ -28,7 +30,7 @@ export function RecoveryCodeScreen() {
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MVStack stretchW style={{ alignItems: 'center' }}>
-            <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+            <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
               <ScreenTitle title="Recovery Code" />
               <MVStack>
                 <MText style={{ marginBottom: 5 }}>Two-factor recovery codes</MText>

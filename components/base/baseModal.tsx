@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Animated, BackHandler, Dimensions, Easing, Modal, StyleSheet, TouchableWithoutFeedback, ViewProps } from 'react-native';
+import { Animated, Dimensions, Easing, Modal, StyleSheet, TouchableWithoutFeedback, ViewProps } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { fixWidth } from '../../lib/define';
 import { useAdapterWeb } from '../../lib/hook/adapter';
 import { useDimensionSize } from '../../lib/hook/dimension';
-import { ModalCloseButton } from '../baseUI/modalCloseButton';
 import MVStack from '../baseUI/mVStack';
+import { ModalCloseButton } from '../baseUI/modalCloseButton';
+import { UseCenterScale } from './scaleInit';
 
 export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?: boolean, isAnim?: boolean, hideModal: (immediately?: boolean) => void, contentHeight?: number, contentStyle?: any, hideImmediately?: boolean }) => {
   const screenHeight = Dimensions.get('screen').height;
@@ -19,6 +20,7 @@ export const BaseModal = (props: ViewProps & { visible?: boolean, isFullScreen?:
   const backgroundPosAnim = useRef(new Animated.Value(0)).current;
   const isAdapterWeb = useAdapterWeb();
   const insets = useSafeAreaInsets();
+  const centerStyle = UseCenterScale();
 
   // 'visible' is the player request to hide and show
   // 'uiVisible' is the real hiding and display of Modal Windows

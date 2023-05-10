@@ -27,6 +27,7 @@ import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from '../baseUI/screenTitle';
 import { TokenDropdown } from "../dropdown/tokenDropdownV2";
 import { Logger } from '../../lib/common/utils';
+import { UseTopCenterScale } from '../base/scaleInit';
 
 
 export function SendScreen(props) {
@@ -40,6 +41,7 @@ export function SendScreen(props) {
   const [inputTokenCount, setInputTokenCount] = useState('');
   const [isCanSend, setIsCanSend] = useState(false);
 
+  const topCenterStyle = UseTopCenterScale();
   // Modify the chain and reset the data
   useEffect(() => {
     setSelectedOption(null);
@@ -131,7 +133,7 @@ export function SendScreen(props) {
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <ScreenTitle title="Send" />
             <MVStack style={[styles.send, globalStyle.whiteBorderWidth]} stretchW>
               <TokenDropdown options={tokenInfos} defaultOption={defaultToken} selectedOption={selectedOption} setSelectedOption={setSelectedOption} />

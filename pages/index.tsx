@@ -22,6 +22,7 @@ import {
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { BaseUIInit } from '../components/base/baseUIInit';
+import ScaleInit from '../components/base/scaleInit';
 import {
   AllowanceScreen,
   CoinScreen,
@@ -45,7 +46,6 @@ import { updateCurScreenTab } from '../lib/data/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
 import { asyncSession, initHandler, proxyChannel } from '../lib/provider';
-import { Logger } from '../lib/common/utils';
 
 const queryClient = new QueryClient(
   {
@@ -131,12 +131,14 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <BaseUIInit />
+      <ScaleInit />
       <StatusBar style="dark" backgroundColor='#F7F7F7' />
       <ApplicationProvider {...eva} theme={eva.light}>
         <QueryClientProvider client={queryClient}>
           <NavigationContainer ref={navigationRef} onReady={() => isNavigationReadyAtom.set(true)} onStateChange={handleStateChange}>
             <ModalInit />
             <NavigationInit />
+
             <BarUI />
 
             {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}

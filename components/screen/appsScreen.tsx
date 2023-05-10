@@ -13,11 +13,13 @@ import { LocalStorage } from '@0xsodium/provider';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View } from 'react-native';
 import { WebView } from '../../features/appgallery/gallerywebview';
+import { UseTopCenterScale } from "../base/scaleInit";
 
 LocalStorage.use(AsyncStorage);
 
 export function AppsScreen() {
     const dimension = useDimensionSize();
+    const topCenterStyle = UseTopCenterScale();
     const [apps, setApps] = React.useState<IApp[]>([]);
     const currentChainId = useCurrentChainId();
     const [currentApp, setCurrentApp] = React.useState<IApp>(null);

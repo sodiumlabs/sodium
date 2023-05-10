@@ -13,15 +13,17 @@ import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
+import { UseTopCenterScale } from "../base/scaleInit";
 
 export function SecurityScreen() {
   // const auth = useAuth();
   const dimension = useDimensionSize();
+  const topCenterStyle = UseTopCenterScale();
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <ScreenTitle title="Security" />
             <MVStack>
               {/* <MDivider style={{ marginVertical: 10 }} /> */}

@@ -10,17 +10,19 @@ import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { globalStyle, eColor } from '../../lib/globalStyles';
 import { useProfile } from '../../lib/data/profile';
+import { UseTopCenterScale } from "../base/scaleInit";
 
 export function ProfileScreen() {
   const auth = useAuth();
   const profile = useProfile();
   const dimension = useDimensionSize();
+  const topCenterStyle = UseTopCenterScale();
   // const nav = useNavigation();
   return (
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <ScreenTitle title="Profile" />
 
             <MVStack stretchW style={[styles.item, globalStyle.whiteBorderWidth]}>

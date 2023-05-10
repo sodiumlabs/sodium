@@ -22,6 +22,7 @@ import ScanSvg from '../svg/scanSvg';
 import SendSvg from '../svg/sendSvg';
 import { PendingTranscation } from '../transcation/pendingTranscation';
 import { RequestTranscation } from '../transcation/requestTranscation';
+import { UseScale, UseTopCenterScale } from '../base/scaleInit';
 
 
 export function WalletScreen() {
@@ -36,12 +37,12 @@ export function WalletScreen() {
     tokensQuery.remove();
     tokensQuery.refetch();
   }, [chainId]);
-
+  const scaleStyle = UseTopCenterScale();
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]} >
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, scaleStyle]} >
             <MVStack style={styles.balance}>
               <MText style={{ fontWeight: '700' }} >Balance</MText>
               <MText style={{ marginTop: 10, fontWeight: '700' }} fontSize={30} >${usdBalance.toFixed(2)}</MText>

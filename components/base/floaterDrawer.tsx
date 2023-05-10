@@ -24,6 +24,7 @@ import SettingSvg from '../svg/settingSvg';
 import SignOutSvg from '../svg/signOutSvg';
 import { navigate, navigationRef } from './navigation';
 import { NetworkRadioGroup } from '../item/networkRadioGroup';
+import { UseTopRightScale } from './scaleInit';
 
 const tryFoldFloaterDrawerAtom = atom(false);
 export const tryFoldFloaterDrawer = () => {
@@ -214,9 +215,9 @@ export default function FloaterDrawer(props: { hasNavigationBarBack: boolean }) 
       </MVStack>
     )
   }, [auth.blockchainAddress, profile.authorizedSource, profile.userName])
-
+  const scaleStyle = UseTopRightScale();
   return (
-    <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }]}>
+    <Animated.View style={[styles.animContainer, { height: backgroundHeightAnim }, scaleStyle]}>
       <MVStack stretchW onLayout={onLayout}  >
 
         <Animated.View style={{ zIndex: 100, transform: [{ translateY: headerOffsetAnim }] }} >

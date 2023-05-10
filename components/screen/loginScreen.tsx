@@ -20,6 +20,7 @@ import { FailModalItem } from "../modal/modalItem/failModalItem";
 import SteamSvg from '../svg/steamSvg';
 import TwitterSvg from '../svg/twitterSvg';
 import { Logger } from '../../lib/common/utils';
+import { UseTopCenterScale } from '../base/scaleInit';
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"
@@ -33,6 +34,7 @@ const redirect = AuthSession.makeRedirectUri({
 export function LoginScreen() {
   const dimension = useDimensionSize();
   const projectSetting = useProjectSetting();
+  const topCenterStyle = UseTopCenterScale();
 
   const loginClick = async () => {
     // return loginIn("r.albert.huang@gmail.com3");
@@ -75,7 +77,7 @@ export function LoginScreen() {
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
       <ScrollView style={{ width: '100%', height: '100%', paddingHorizontal: 15 }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}  >
+          <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}  >
             {/* <MText>Sign into web3</MText> */}
             <MImage source={IconLogo} w={60} h={60} style={{ marginBottom: 10 }} />
             <ScreenTitle title="Sign into web3" />

@@ -16,18 +16,20 @@ import ProfileSvg from "../svg/profileSvg";
 import GearSvg from '../svg/gearSvg';
 import PhoneSvg from '../svg/phoneSvg';
 import { useCurrentChainId } from "../../lib/network";
+import { UseTopCenterScale } from "../base/scaleInit";
 
 
 export function SettingScreen() {
   const dimension = useDimensionSize();
   const currentChainId = useCurrentChainId();
   const [queryAllowance, allowances, onScroll] = useQueryAllowances(currentChainId);
+  const topCenterStyle = UseTopCenterScale();
 
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <ScreenTitle title="Setting" />
             <SettingItem source={<ProfileSvg />} onPress={() => navigationRef.navigate(Screens.Profile)} >
               <MText style={{ fontWeight: '700' }} >Profile</MText>

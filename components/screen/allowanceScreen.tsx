@@ -13,16 +13,19 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { AllowanceItem } from "../item/allowanceItem";
+import { UseTopCenterScale } from "../base/scaleInit";
 
 export function AllowanceScreen() {
   const currentChainId = useCurrentChainId();
   const [queryAllowance, allowances, onScroll] = useQueryAllowances(currentChainId);
   const dimension = useDimensionSize();
+  const topCenterStyle = UseTopCenterScale();
+
   return (
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <ScreenTitle title="Allowance Sessions" />
             <MText numberOfLines={null}>You're currently signed in to your sodium wallet on these sessions.Pay close attention and make sure to remove sessions you are no longer using for better security.</MText>
             <MHStack stretchW style={{ marginTop: 20 }}>

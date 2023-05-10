@@ -13,17 +13,18 @@ import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
 import { useCurrentChainId } from '../../lib/network';
+import { UseTopCenterScale } from '../base/scaleInit';
 
 export function HistoryScreen() {
   const chainId = useCurrentChainId();
   const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(chainId);
   const dimension = useDimensionSize();
-
+  const topCenterStyle = UseTopCenterScale();
   return (
     <BaseScreen >
       <ScrollView style={{ width: '100%', height: '100%' }} onScroll={onScroll} scrollEventThrottle={50} >
         <MVStack stretchW stretchH style={{ alignItems: 'center' }}>
-          <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             {/* <MText style={{ marginTop: 20, marginBottom: 30, fontWeight: '700' }}>Transaction History </MText> */}
             <ScreenTitle title="Transaction History" />
             {/* <RequestTranscation /> */}

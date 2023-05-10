@@ -17,12 +17,14 @@ import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { CodeItemText } from "../item/codeItemText";
+import { UseTopCenterScale } from '../base/scaleInit';
 
 export function SetupAuthScreen() {
   // const auth = useAuth();
   const dimension = useDimensionSize();
   const [step, setStep] = useState<number>(1);
   const [authCode, setAuthCode] = useState<string>('');
+  const topCenterStyle = UseTopCenterScale();
 
   const onInputAuthCode = (text: string) => {
     const value = text.replace(/[^\d]/g, '');
@@ -37,7 +39,7 @@ export function SetupAuthScreen() {
     <BaseScreen isNavigationBarBack >
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <ScreenTitle title="Reconfigure two-factor authentication (2FA)" />
             <MHStack stretchW style={{ justifyContent: 'space-evenly', marginBottom: 20 }}>
               <StepItem step={1} isSelected={1 <= step} />

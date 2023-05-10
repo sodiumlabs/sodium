@@ -10,11 +10,13 @@ import { MLoading } from "../baseUI/mLoading";
 import MVStack from "../baseUI/mVStack";
 import { ScreenTitle } from "../baseUI/screenTitle";
 import DepositItem from "../item/depositItem";
+import { UseTopCenterScale } from "../base/scaleInit";
 
 export function DepositScreen() {
   const dimension = useDimensionSize();
   const [depositQuery, depositItems] = useQueryDeposit();
   const [curDepositItem, setCurDepositItem] = useState<IDepositItemData>(null);
+  const topCenterStyle = UseTopCenterScale();
   useEffect(() => {
     if (depositItems && depositItems.length > 0) {
       setCurDepositItem(depositItems[0]);
@@ -32,7 +34,7 @@ export function DepositScreen() {
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <ScreenTitle title="Deposit" />
             {
               depositItems && depositItems.length > 0 && depositItems.map((data, index) => {

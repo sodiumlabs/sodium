@@ -24,9 +24,11 @@ import { MLoading } from "../baseUI/mLoading";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
 import { ClassifyHistoryItem } from "../item/classifyHistoryItem";
+import { UseTopCenterScale } from "../base/scaleInit";
 
 export function CoinScreen(props) {
   const dimension = useDimensionSize();
+  const topCenterStyle = UseTopCenterScale();
   const chainId = useCurrentChainId();
   const tokenInfo = props.route.params as IUserTokenInfo;
   const [queryHistory, transHistoryMap, onScroll] = useQueryHistory(chainId, tokenInfo.token.address);
@@ -35,7 +37,7 @@ export function CoinScreen(props) {
     <BaseScreen isNavigationBarBack>
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={{ alignItems: 'center', marginTop: 20 }}>
-          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }]}>
+          <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
             <MImage w={60} h={60} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
             <MText style={{ marginTop: 20, marginBottom: 12, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
             {/* <MHStack stretchW style={{ justifyContent: 'center' }}>
