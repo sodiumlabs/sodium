@@ -5,7 +5,7 @@ import { atom } from 'nanostores';
 export const xtestNetworks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
     return {
         ...n,
-        isDefaultChain: false,
+        isDefaultChain: true,
         isAuthChain: false,
         rpcUrl: "https://polygon-mumbai.g.alchemy.com/v2/fIbA8DRSTQXPAhcHKiPFo19SPqhHNHam",
         bundlerUrl: "https://bundler-mumbai.melandworld.com/",
@@ -19,8 +19,8 @@ xtestNetworks.push({
     chainId: 777,
     nativeTokenSymbol: "TSODO",
     subgraphHost: "https://graphql-graph-node-sodiumt.melandworld.com",
-    isDefaultChain: true,
-    isAuthChain: true,
+    isDefaultChain: false,
+    isAuthChain: false,
     rpcUrl: "https://sodiumnode.melandworld.com",
     bundlerUrl: "https://bundler-sodiumt.melandworld.com/",
     blockExplorer: {
