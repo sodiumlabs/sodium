@@ -6,7 +6,7 @@ export const xtestNetworks = testnetNetworks.filter(n => n.name == "mumbai").map
     return {
         ...n,
         isDefaultChain: true,
-        isAuthChain: false,
+        isAuthChain: true,
         rpcUrl: "https://polygon-mumbai.g.alchemy.com/v2/fIbA8DRSTQXPAhcHKiPFo19SPqhHNHam",
         bundlerUrl: "https://bundler-mumbai.melandworld.com/",
     }
