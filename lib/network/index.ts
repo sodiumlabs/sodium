@@ -13,21 +13,21 @@ export const xtestNetworks = testnetNetworks.filter(n => n.name == "mumbai").map
 });
 
 // sodium test net
-xtestNetworks.push({
-    name: "sodiumt",
-    title: "sodium test network",
-    chainId: 777,
-    nativeTokenSymbol: "TSODO",
-    subgraphHost: "https://graphql-graph-node-sodiumt.melandworld.com",
-    isDefaultChain: false,
-    isAuthChain: false,
-    rpcUrl: "https://sodiumnode.melandworld.com",
-    bundlerUrl: "https://bundler-sodiumt.melandworld.com/",
-    blockExplorer: {
-        name: 'SodiumtScan (Sodium TestNet)',
-        rootUrl: "http://18.141.11.82:4000/",
-    }
-})
+// xtestNetworks.push({
+//     name: "sodiumt",
+//     title: "sodium test network",
+//     chainId: 777,
+//     nativeTokenSymbol: "TSODO",
+//     subgraphHost: "https://graphql-graph-node-sodiumt.melandworld.com",
+//     isDefaultChain: false,
+//     isAuthChain: false,
+//     rpcUrl: "https://sodiumnode.melandworld.com",
+//     bundlerUrl: "https://bundler-sodiumt.melandworld.com/",
+//     blockExplorer: {
+//         name: 'SodiumtScan (Sodium TestNet)',
+//         rootUrl: "http://18.141.11.82:4000/",
+//     }
+// })
 
 // TODO fix sodium.js
 export const xmainNetworks = mainnetNetworks.filter(n => n.name == "polygon").map((n) => {
