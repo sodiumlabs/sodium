@@ -50,7 +50,7 @@ export const ConnectModal = (props: { hideModal: () => void, modalParam: IModalP
     >
 
       <MVStack stretchH stretchW style={{ 'alignItems': 'center', padding: 15 }}>
-        <MText style={{ fontWeight: '700', textAlign: 'center' }} numberOfLines={null}>Do you want to allow {param?.options?.origin} to connect to your wallet?</MText>
+        <MText style={{ fontWeight: '700', textAlign: 'center' }} numberOfLines={null}>Do you want to allow to connect to your wallet?</MText>
         <Spacer />
         <MVStack stretchW style={{ alignItems: 'center' }}>
           <MButton stretchW onPress={onCancelClick} >
