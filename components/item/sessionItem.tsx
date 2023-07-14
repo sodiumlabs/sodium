@@ -7,12 +7,18 @@ import { MDivider } from "../baseUI/mDivider";
 import MLineLR from "../baseUI/mLineLR";
 import MText from "../baseUI/mText";
 import MVStack from "../baseUI/mVStack";
+import { Session } from "../../lib/auth";
 
-export function SessionItem(props: { isSelected: boolean }) {
-  const { isSelected } = props;
+export function SessionItem(props: { isSelected: boolean, session: Session, onLogout: (session: Session) => void }) {
+  const { isSelected, session } = props;
   const selectStyle = {
     borderColor: isSelected ? eColor.Blue : eColor.Border
   }
+
+  const onLogout = () => {
+    props.onLogout(session);
+  }
+
   return (
     <MVStack stretchW style={[styles.container, globalStyle.whiteBorderWidth, selectStyle]}>
       <MLineLR
@@ -20,19 +26,15 @@ export function SessionItem(props: { isSelected: boolean }) {
         left={<MText style={{ fontWeight: '700', flex: 1 }} >Carbon scrub</MText>}
         right={<MText style={{ fontWeight: '700', color: eColor.GrayText }} fontSize={12} >{isSelected ? "Current Session" : ""}</MText>} />
       <MText >Session key</MText>
-      <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>0x899880842ejlrjljr</MText>
+      <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>{session.sessionKey}</MText>
       <MDivider style={{ marginVertical: 10 }} />
       <MText>Device</MText>
-      <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>MacIntel</MText>
+      <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>{session.deviceInfo}</MText>
       <MDivider style={{ marginVertical: 10 }} />
       <MText>Last Seen</MText>
-      <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>{formatTimeYMDHMS(new Date().getTime())}</MText>
+      <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>{formatTimeYMDHMS(session.lastSeen * 1000)}</MText>
       <MDivider style={{ marginVertical: 10 }} />
-
-      <MText>Networks</MText>
-      <MText style={{ color: eColor.GrayContentText, marginTop: 5 }}>Polygon</MText>
-
-      <MButton style={{ marginTop: 10 }} >
+      <MButton style={{ marginTop: 10 }} onPress={onLogout} >
         <MButtonText title={"Sign out"} />
       </MButton>
     </MVStack>

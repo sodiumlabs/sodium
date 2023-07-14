@@ -54,7 +54,12 @@ export class WalletPrompter implements WalletUserPrompter {
     }
 
     promptSendTransaction(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions): Promise<string> {
-        Logger.debug("WalletPrompter promptSendTransaction");
+        Logger.debug({
+            title: "WalletPrompter promptSendTransaction",
+            txn: txn,
+            chaindId: chaindId,
+            options: options
+        });
         return this.handleSignOrSendTranscation(txn, chaindId, options, "send");
     }
 

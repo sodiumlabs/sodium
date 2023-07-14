@@ -11,6 +11,7 @@ import * as WebBrowser from 'expo-web-browser';
 import MButton from '../components/baseUI/mButton';
 import { MButtonText } from '../components/baseUI/mButtonText';
 
+const channel = "AuthPopupChannel";
 export default function AuthCallbackScreen() {
     const dimension = useDimensionSize();
     const [result, setResult] = React.useState<WebBrowser.WebBrowserCompleteAuthSessionResult>();
@@ -30,6 +31,8 @@ export default function AuthCallbackScreen() {
         } else if (result.type == "failed") {
             return "auth failed " + result.message
         } else {
+            window.localStorage.removeItem(channel);
+            // window.close();
             return "auth success"
         }
     }, [result])

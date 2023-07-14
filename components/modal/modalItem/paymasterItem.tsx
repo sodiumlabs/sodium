@@ -14,12 +14,13 @@ export function PaymasterItem(props: ViewProps & {
   selectedPayinfo: PaymasterInfo,
   setSelectedPayinfo: Dispatch<SetStateAction<PaymasterInfo>>,
   txq: TransactionRequest,
+  chainId: number,
   visible: boolean
 }) {
 
   const { selectedPayinfo, setSelectedPayinfo, txq, visible } = props;
 
-  const [gasQuery, paymasterInfos] = useQueryGas(txq);
+  const [gasQuery, paymasterInfos] = useQueryGas(txq, props.chainId);
   // const [tokensQuery, tokenInfos] = useQueryTokens(currentChainId);
 
   useEffect(() => {

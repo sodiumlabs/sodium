@@ -1,7 +1,3 @@
-
-
-
-
 import { useEffect, useState } from 'react';
 import { Linking, Pressable, StyleSheet } from 'react-native';
 import { DepositAtLeastAmount, useQueryDepositCurrencies, useQueryDepositUrl, useQueryPreDeposit } from '../../lib/api/deposit';

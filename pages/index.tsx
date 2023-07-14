@@ -116,7 +116,6 @@ export default function App() {
     }).then(() => {
       if (Platform.OS != "web") {
         SplashScreen.hideAsync();
-        console.debug("close splash screen");
       }
     })
   }, [1])

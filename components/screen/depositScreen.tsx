@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ScrollView, StyleSheet } from "react-native";
-import { useQueryDeposit } from "../../lib/api/deposit";
 import { fixWidth, IDepositItemData } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { BaseScreen } from "../base/baseScreen";
@@ -14,6 +13,9 @@ import { UseTopCenterScale } from "../base/scaleInit";
 
 export function DepositScreen() {
   const dimension = useDimensionSize();
+  // @ts-ignore
+  // TODO
+  // 还没有接入入金模块
   const [depositQuery, depositItems] = useQueryDeposit();
   const [curDepositItem, setCurDepositItem] = useState<IDepositItemData>(null);
   const topCenterStyle = UseTopCenterScale();

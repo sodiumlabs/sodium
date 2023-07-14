@@ -50,7 +50,7 @@ export function WalletScreen() {
 
             <MHStack style={styles.operate}>
               <WalletButton source={<SendSvg />} title='Send' onPress={() => navigationRef.navigate(Screens.Send)} />
-              <WalletButton source={<DepositSvg />} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} />
+              {/* <WalletButton source={<DepositSvg />} title='Deposit' onPress={() => navigationRef.navigate(Screens.Deposit)} /> */}
               <WalletButton source={<ScanSvg />} title='Scan' onPress={() => showUpdateScanModal(true)} />
             </MHStack>
 

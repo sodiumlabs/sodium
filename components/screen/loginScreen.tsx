@@ -1,12 +1,10 @@
 import * as AuthSession from 'expo-auth-session';
-import { ScrollView, StyleSheet } from "react-native";
+import { Platform, ScrollView, StyleSheet } from "react-native";
 import { showUpdateComModal, showUpdateFullScreenModal } from "../../lib/data";
 import { loginIn } from '../../lib/data/auth';
-import { useProjectSetting } from '../../lib/data/project';
 import { fixWidth } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconLogo } from "../../lib/imageDefine";
-import { TwitterAuthService } from '../../lib/mpc-auth/twitter';
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import MButton from "../baseUI/mButton";
@@ -14,63 +12,103 @@ import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from "../baseUI/mHStack";
 import MImage from "../baseUI/mImage";
 import MVStack from '../baseUI/mVStack';
+import { makeRedirectUri, useAuthRequest } from 'expo-auth-session';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { LoginLoading } from "../full/loginLoading";
-import { FailModalItem } from "../modal/modalItem/failModalItem";
 import SteamSvg from '../svg/steamSvg';
 import TwitterSvg from '../svg/twitterSvg';
-import { Logger } from '../../lib/common/utils';
+import * as Google from 'expo-auth-session/providers/google';
+import * as React from 'react';
 import { UseTopCenterScale } from '../base/scaleInit';
+import { AuthService, getAuthService } from '../../lib/auth';
+import { FailModalItem } from '../modal/modalItem/failModalItem';
+import { getDevice } from '../../lib/auth/device';
+import { ethers } from 'ethers';
 
 const projectNameForProxy = "@sodiumlabs/sodium";
 const path = "expo-auth-session"
 
-const redirect = AuthSession.makeRedirectUri({
+const redirectUri = makeRedirectUri({
+  scheme: 'com.sodiumlabs.sodium',
   projectNameForProxy: projectNameForProxy,
-  useProxy: true,
   path: path
 });
 
+const googleDiscovery: Partial<Google.GoogleAuthRequestConfig> = {
+  webClientId: "241812371246-5q72o46n1mh2arkqur1qv2qk01vn0v24.apps.googleusercontent.com",
+  redirectUri: redirectUri,
+  usePKCE: true,
+  selectAccount: true,
+}
+
+const useProxy = false;
+
+// 
+
 export function LoginScreen() {
   const dimension = useDimensionSize();
-  const projectSetting = useProjectSetting();
   const topCenterStyle = UseTopCenterScale();
 
-  const loginClick = async () => {
-    // return loginIn("r.albert.huang@gmail.com3");
-    showUpdateFullScreenModal(true, <LoginLoading />);
-    const twauth = new TwitterAuthService("https://twitter-auth.melandworld.com", global.fetch);
-    const { authURL } = await twauth.authURL({
+  const wallet = ethers.Wallet.createRandom();
+  const [__, googleResponse, googlePromptAsync] = Google.useAuthRequest({
+    state: wallet.address,
+    ...googleDiscovery
+  });
+
+  const authGoogle = async (accessToken: string) => {
+    const authService = getAuthService();
+
+    const isSafe = false;
+    const device = getDevice();
+    const preAuthId = `google${accessToken}`;
+
+    const authHash = ethers.utils.id(preAuthId);
+
+    const sig = await wallet.signMessage(authHash);
+    authService.preAuth({
       request: {
-        oauthCallback: redirect
+        authHash: authHash,
+        sessionKey: wallet.address,
+        authSignature: sig,
       }
     });
-    const authResponse = await AuthSession.startAsync({
-      authUrl: authURL,
-      projectNameForProxy: projectNameForProxy
+
+    const result = await authService.authSessionWithGoogle({
+      request: {
+        authToken: accessToken,
+        isSafe: isSafe,
+        sessionKey: wallet.address,
+        deviceInfo: device.deviceInfo,
+        deviceId: device.deviceId,
+      }
     });
-    Logger.debug('Auth response received!');
-    Logger.debug(authResponse);
-    if (authResponse.type == "error") {
+
+    await loginIn(
+      result.response,
+      wallet,
+    );
+  }
+
+  React.useEffect(() => {
+    if (googleResponse) {
+      showUpdateFullScreenModal(false);
+    }
+    console.debug(googleResponse, "googleResponse");
+    if (googleResponse?.type === 'success') {
+      authGoogle(googleResponse.params.access_token)
+    }
+    if (googleResponse?.type === 'error') {
       let msg = "AuthSession failed, user did not authorize the app";
-      if (authResponse.error) {
-        msg = authResponse.error.message;
+      if (googleResponse.error) {
+        msg = googleResponse.error.message;
       }
       showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={msg} /> });
-    } else if (authResponse.type == "success") {
-      if (authResponse.params["oauth_token"]) {
-        const result = await twauth.auth({
-          request: {
-            token: authResponse.params["oauth_token"],
-            verifier: authResponse.params["oauth_verifier"],
-            messageHash: ""
-          }
-        });
-        await loginIn(result.response.authId);
-      }
     }
+  }, [googleResponse]);
 
-    showUpdateFullScreenModal(false);
+  const googleOAuth2Login = async () => {
+    showUpdateFullScreenModal(true, <LoginLoading />);
+    googlePromptAsync({ useProxy: useProxy })
   }
 
   return (
@@ -82,11 +120,8 @@ export function LoginScreen() {
             <MImage source={IconLogo} w={60} h={60} style={{ marginBottom: 10 }} />
             <ScreenTitle title="Sign into web3" />
             <MVStack stretchW style={{ maxWidth: 300 }} >
-              <MButton imageIcon={<SteamSvg height={18} width={18} />} style={{ marginBottom: 10 }} onPress={loginClick} >
-                <MButtonText title={"Steam Login"} />
-              </MButton>
-              <MButton imageIcon={<TwitterSvg height={18} width={18} />} onPress={loginClick} >
-                <MButtonText title={"Twitter Login"} />
+              <MButton imageIcon={<SteamSvg height={18} width={18} />} style={{ marginBottom: 10 }} onPress={googleOAuth2Login} >
+                <MButtonText title={"Google Login"} />
               </MButton>
             </MVStack>
             {/* <Spacer /> */}

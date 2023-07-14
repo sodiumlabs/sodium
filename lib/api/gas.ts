@@ -6,8 +6,7 @@ import { AuthData, PaymasterInfo } from "../define";
 import { Logger } from "../common/utils";
 import { fetchTokens } from "./tokens";
 
-const fetchGas = async (txn: TransactionRequest, authData: AuthData): Promise<PaymasterInfo[]> => {
-  Logger.debug("fetchGas");
+const fetchGas = async (txn: TransactionRequest, authData: AuthData, chainId: number): Promise<PaymasterInfo[]> => {
   // const gasSuggest = await authData.web3signer.getGasSuggest() as GasSuggest;
   // Logger.debug("fetchGas GasSuggest");
   // Logger.debug(gasSuggest);
@@ -20,14 +19,12 @@ const fetchGas = async (txn: TransactionRequest, authData: AuthData): Promise<Pa
     const userInfo = userInfos.find((info) => info.token.symbol == paymasterInfo[i].token.symbol);
     paymasterInfo[i].userTokenInfo = userInfo;
   }
-  Logger.debug("fetchGas result");
-  Logger.debug(paymasterInfo);
   return paymasterInfo;
 };
 
-export const useQueryGas = (txn: TransactionRequest): [UseQueryResult, PaymasterInfo[]] => {
+export const useQueryGas = (txn: TransactionRequest, chainId: number): [UseQueryResult, PaymasterInfo[]] => {
   const authData = useAuth();
-  const gasQuery = useQuery(['fetchGas', txn], () => fetchGas(txn, authData), { enabled: false });
+  const gasQuery = useQuery(['fetchGas', txn], () => fetchGas(txn, authData, chainId), { enabled: false });
   const paymasterInfos = gasQuery.data as PaymasterInfo[];
 
   useEffect(() => {

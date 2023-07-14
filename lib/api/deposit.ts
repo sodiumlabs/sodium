@@ -22,8 +22,6 @@ const fetchDeposit = async (chainId: number): Promise<IDepositItemData[]> => {
     currencies: currentResults.canBuyTokens.map(curr => curr.name)
     // currencies: ['token1', 'token2', 'token3']
   });
-  Logger.debug("fetchDeposit");
-  Logger.debug(depositItems);
   return depositItems;
 }
 
@@ -44,8 +42,6 @@ export const useQueryDeposit = (): [UseQueryResult, IDepositItemData[]] => {
 const fetchDepositUrl = async (param: RequestWyreDepositArgs): Promise<RequestWyreDepositReturn> => {
   // debugger
   const result = WyreService.instance.requestWyreDeposit(param);
-  Logger.debug("fetchDepositUrl");
-  Logger.debug(result);
   return result;
 }
 
@@ -71,8 +67,6 @@ const fetchWyreDepositCurrencies = async (): Promise<GetWyreDepositCurrenciesRet
   // const networkId = queryKey[1] as number;
   const result = await WyreService.instance.getWyreDepositCurrencies();
   // const result = { "receiveCurrencies": [{ "name": "USD", "icon": "" }, { "name": "EUR", "icon": "" }, { "name": "GBP", "icon": "" }], "canBuyTokens": [{ "name": "MATIC", "icon": "https://etherscan.io/token/images/polygonnew_32.png" }, { "name": "USDC", "icon": "https://meland.ai/centre-usdc_28.webp" }] };
-  Logger.debug("fetchWyreDepositCurrencies");
-  Logger.debug(result);
   return result;
 }
 
@@ -122,8 +116,6 @@ export const useQueryDepositCurrencies = (): [UseQueryResult, ISelectItemData[],
 const fetchWyrePreDeposit = async (param: RequestWyrePreDepositArgs): Promise<RequestWyrePreDepositReturn> => {
   const result = await WyreService.instance.requestWyrePreDeposit(param);
   // const result = { "fees": { "MATIC": 5.4751320822e-8, "USD": 5 }, "exchangeRate": 1.258919481096297, "destAmount": 6.2945973507301645 };
-  Logger.debug("fetchWyrePreDeposit");
-  Logger.debug(result);
   return result;
 }
 

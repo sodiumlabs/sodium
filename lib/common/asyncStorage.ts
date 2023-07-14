@@ -1,9 +1,9 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { eStotageKey, ITranscation } from "../define";
-import { Wallet } from '../fixedEthersWallet';
-import { Platform as SodiumPlatform } from '@0xsodium/config';
+import { Wallet } from 'ethers';
 import { WalletConnectSessionSerialized } from '../walletconnect';
 import { Logger } from "./utils";
+import { AuthSessionResponse } from '../auth';
 
 export const saveTxnQueue = (key: eStotageKey, queue: readonly ITranscation[]) => {
   AsyncStorage.setItem(key, JSON.stringify(queue));
@@ -20,14 +20,15 @@ export const loadTxnQueue = async (key: eStotageKey): Promise<ITranscation[]> =>
   }
 }
 
-export const saveSession = async (s: { sodiumUserId: string, platform: string, w: Wallet }) => {
-  console.debug("save session");
+export const saveSessionByWallet = async (s: { 
+  authResp: AuthSessionResponse, 
+  w: Wallet
+}) => {
   return AsyncStorage.setItem("@sodium.wallet.session", JSON.stringify({
-    sodiumUserId: s.sodiumUserId,
-    platform: "web",
-
+    authResp: s.authResp,
+    type: "eoa",
     // TODO
-    // https://docs.expo.dev/versions/latest/sdk/securestore/#usage
+    // https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/deriveKey
     pk: s.w.privateKey
   }));
 }
@@ -36,16 +37,17 @@ export const clearSession = async () => {
   return AsyncStorage.removeItem("@sodium.wallet.session");
 }
 
-export const loadSession = async (): Promise<{ sodiumUserId: string, platform: SodiumPlatform, w: Wallet } | null> => {
+export const loadSession = async (): Promise<{
+  authResp: AuthSessionResponse,
+  extData: string
+} | null> => {
   const value = await AsyncStorage.getItem("@sodium.wallet.session");
   try {
     if (value && value != "") {
-      console.debug("sync session")
       const sessionSerialized = JSON.parse(value);
       return Promise.resolve({
-        sodiumUserId: sessionSerialized.sodiumUserId,
-        platform: sessionSerialized.platform,
-        w: new Wallet(sessionSerialized.pk)
+        authResp: sessionSerialized.authResp,
+        extData: sessionSerialized.pk
       })
     }
   } catch (error) {

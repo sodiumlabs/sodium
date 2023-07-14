@@ -261,6 +261,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   selectedPayinfo={selectedPayinfo}
                   setSelectedPayinfo={setSelectedPayinfo}
                   txq={param?.txn?.txReq}
+                  chainId={param?.chaindId}
                   visible={modalParam.visible}
                 />
               )

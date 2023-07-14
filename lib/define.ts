@@ -9,7 +9,7 @@ import { ERC20Approve } from '../abi/erc20';
 import { WebViewSource } from 'react-native-webview/lib/WebViewTypes';
 import { Session } from './provider/types';
 import { JsonFragment } from '@ethersproject/abi';
-import { ERC20OrNativeTokenMetadata } from '@0xsodium/utils/dist/declarations/src/erc20';
+import { ERC20OrNativeTokenMetadata } from '@0xsodium/utils';
 import { IconMumbai, IconPolygon, IconSodium } from './imageDefine';
 
 export const fixWidth = 720;

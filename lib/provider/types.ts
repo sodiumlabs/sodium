@@ -1,12 +1,15 @@
 import { WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 import { Account } from '@0xsodium/wallet';
-import { Platform as SodiumPlatform } from '@0xsodium/config';
-import { Wallet } from 'ethers';
+import { AuthSessionResponse } from '../auth';
+import { Signer as AbstractSigner } from 'ethers';
+
+// TODO
+// 支持safe session
 
 export type Session = {
-    sodiumUserId: string,
-    platform: SodiumPlatform, 
-    w: Wallet
+    sessionKeyOwner: AbstractSigner
+    sessionKeyOwnerAddress: string
+    sodiumNetworkResponse: AuthSessionResponse
 }
 
 export type SodiumWallet = {

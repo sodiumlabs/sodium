@@ -1,37 +1,56 @@
 import { WalletRequestHandler, WalletUserPrompter, Web3Signer, Web3Provider } from '@0xsodium/provider';
 import { Account, AccountOptions } from '@0xsodium/wallet';
-import { Platform } from 'react-native';
-import { Platform as SodiumPlatform } from '@0xsodium/config';
-import { Wallet } from '../fixedEthersWallet';
 import { WalletPrompter } from './prompter';
-import { loadSession, saveSession } from '../common/asyncStorage';
+import { loadSession } from '../common/asyncStorage';
 import { walletAtom, walletHandlerAtom } from './atom';
 import { Session } from './types';
 import { testNetworks, mainNetworks, getCurrentChainId, currentChainIdAtom, networks } from '../network';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthSessionResponse, getAuthService } from '../auth';
+import { Signer as AbstractSigner, Wallet } from 'ethers';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
 
-export const logout = () => {
-    AsyncStorage.clear().then(() => walletAtom.set(null))
-    // clearSession().then(() => walletAtom.set(null));
+export const logout = async () => {
+    return AsyncStorage.clear().then(() => walletAtom.set(null))
 }
+
+let latestTimer: any = null;
 
 walletAtom.subscribe(newValue => {
     if (newValue == null) {
 
     } else {
-        saveSession(newValue.session);
+        // saveSession(newValue.session);
 
         // temp fix
         // 在UI让用户更新钱包合约
-        newValue.signer.getWalletUpgradeTransactions().then(txs => {
-            if (txs.length > 0) {
-                newValue.signer.sendTransaction(txs);
-            }
+        // newValue.signer.getWalletUpgradeTransactions().then(txs => {
+        //     if (txs.length > 0) {
+        //         newValue.signer.sendTransaction(txs);
+        //     }
 
-            console.debug("auto update wallet", txs.length, txs)
-        })
+        //     console.debug("auto update wallet", txs.length, txs)
+        // })
+
+        /// 每5秒查询一次session是否有效
+        const authService = getAuthService();
+
+        // if (newValue.session) {
+        //     if (latestTimer) {
+        //         clearInterval(latestTimer);
+        //     }
+        //     latestTimer = setInterval(() => {
+        //         authService.checkSessionKey({
+        //             accountId: newValue.address.toLocaleLowerCase(),
+        //             sessionKey: newValue.session.sessionKeyOwnerAddress
+        //         }).then(res => {
+        //             if (!res.valid) {
+        //                 logout()
+        //             }
+        //         })
+        //     }, 5000);
+        // }
     }
 })
 
@@ -41,6 +60,11 @@ currentChainIdAtom.subscribe(newChainId => {
         if (walletHandler.defaultNetworkId != newChainId) {
             walletHandler.setDefaultNetwork(newChainId);
         }
+    }
+
+    const wallet = walletAtom.get();
+    if (wallet && wallet.web3signer) {
+        wallet.web3signer.setDefaultChainId(newChainId);
     }
 });
 
@@ -60,18 +84,34 @@ export const initHandler = (): WalletRequestHandler => {
 }
 
 export const asyncSession = async () => {
+    return;
     const s = await loadSession();
     if (s) {
+        const sessionKeyOwner = new Wallet(s.extData);
+        const sodiumNetworkResponse = s.authResp;
+        const ownerAddress = await sessionKeyOwner.getAddress();
+        const session: Session = {
+            sodiumNetworkResponse: sodiumNetworkResponse,
+            sessionKeyOwner: sessionKeyOwner,
+            sessionKeyOwnerAddress: ownerAddress,
+        }
         const options: AccountOptions = {
             networks: networks,
             initialConfig: {
-                platform: s.platform,
-                sodiumUserId: s.sodiumUserId,
+                accountSlat: sodiumNetworkResponse.account.salt,
+                address: sodiumNetworkResponse.account.id,
+                isSafe: false,
             }
         };
-        const w = s.w;
-        const account = new Account(options, w);
-        await signIn(account, s, false);
+        const account = new Account(
+            options,
+            session.sessionKeyOwner,
+            {
+                addSessionStruct: sodiumNetworkResponse.authSession,
+                authProof: sodiumNetworkResponse.authSessionProof
+            }
+        );
+        return signIn(account, session, true);
     }
 }
 
@@ -93,30 +133,31 @@ const signIn = async (account: Account, session: Session, connect: boolean) => {
     });
 }
 
-export const initWallet = async (authId: string) => {
+export const initWalletWithSession = async (
+    sodiumNetworkResponse: AuthSessionResponse,
+    sessionKeyOwner: AbstractSigner,
+) => {
+    const ownerAddress = await sessionKeyOwner.getAddress();
     const session: Session = {
-        platform: getCurrentSodiumPlatform(),
-        sodiumUserId: authId,
-        w: Wallet.createRandom()
+        sodiumNetworkResponse: sodiumNetworkResponse,
+        sessionKeyOwner: sessionKeyOwner,
+        sessionKeyOwnerAddress: ownerAddress,
     }
     const options: AccountOptions = {
         networks: networks,
         initialConfig: {
-            platform: session.platform,
-            sodiumUserId: session.sodiumUserId,
+            accountSlat: sodiumNetworkResponse.account.salt,
+            address: sodiumNetworkResponse.account.id,
+            isSafe: false,
         }
     };
-    const account = new Account(options, session.w);
+    const account = new Account(
+        options,
+        session.sessionKeyOwner,
+        {
+            addSessionStruct: sodiumNetworkResponse.authSession,
+            authProof: sodiumNetworkResponse.authSessionProof
+        }
+    );
     return signIn(account, session, true);
-}
-
-function getCurrentSodiumPlatform(): SodiumPlatform {
-    if (Platform.OS == "web") {
-        return "web";
-    } else if (Platform.OS == "ios" || Platform.OS == "android") {
-        return "mobile";
-    } else if (Platform.OS == "windows" || Platform.OS == "macos") {
-        return "pc";
-    }
-    throw new Error("invalid platform");
 }

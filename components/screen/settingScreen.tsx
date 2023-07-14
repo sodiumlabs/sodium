@@ -17,13 +17,32 @@ import GearSvg from '../svg/gearSvg';
 import PhoneSvg from '../svg/phoneSvg';
 import { useCurrentChainId } from "../../lib/network";
 import { UseTopCenterScale } from "../base/scaleInit";
-
+import { getAuthService, Session } from "../../lib/auth";
+import { useAuth } from "../../lib/data/authAtom";
+import { useEffect, useState } from "react";
 
 export function SettingScreen() {
   const dimension = useDimensionSize();
   const currentChainId = useCurrentChainId();
   const [queryAllowance, allowances, onScroll] = useQueryAllowances(currentChainId);
   const topCenterStyle = UseTopCenterScale();
+  const auth = useAuth();
+
+  const [sessions, setSessions] = useState<Session[]>([]);
+
+  const fetchSessions = async () => {
+    const authService = getAuthService();
+    const rv = await authService.fetchSessions({
+      accountId: auth.blockchainAddress.toLocaleLowerCase(),
+    });
+    setSessions(rv.sessions);
+  }
+
+  useEffect(() => {
+    if (auth.isLogin) {
+      fetchSessions();
+    }
+  }, [auth])
 
   return (
     <BaseScreen >
@@ -39,10 +58,9 @@ export function SettingScreen() {
               <MText style={{ fontWeight: '700' }}>Security</MText>
             </SettingItem>
 
-
             <SettingItem source={<PhoneSvg />} onPress={() => navigationRef.navigate(Screens.Session)} >
               <MText style={{ fontWeight: '700' }}>Active Sessions</MText>
-              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> 2 Active Sessions</MText>
+              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> {sessions.length} Active Sessions</MText>
             </SettingItem>
 
             <SettingItem source={<PhoneSvg />} onPress={() => navigationRef.navigate(Screens.Allowance)} >
