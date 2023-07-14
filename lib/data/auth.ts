@@ -7,6 +7,7 @@ import { setProfile } from './profile';
 import { ProfileData } from '../define';
 import { AuthSessionResponse } from '../auth';
 import { Wallet } from 'ethers';
+import { saveSessionByWallet } from '../common';
 
 authAtom.subscribe((value) => {
   if (value.isLogin) {
@@ -37,8 +38,8 @@ export const loginIn = async (
     sessionKeyOwner,
   );
 
-  // await saveSessionByWallet({
-  //   authResp: sodiumNetworkResponse,
-  //   w: sessionKeyOwner
-  // });
+  await saveSessionByWallet({
+    authResp: sodiumNetworkResponse,
+    w: sessionKeyOwner
+  });
 }

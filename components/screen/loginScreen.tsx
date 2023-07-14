@@ -112,6 +112,10 @@ export function LoginScreen() {
   }
 
   return (
+    <></>
+  )
+
+  return (
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
       <ScrollView style={{ width: '100%', height: '100%', paddingHorizontal: 15 }}>
         <MVStack stretchW style={{ alignItems: 'center' }}>

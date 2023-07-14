@@ -33,24 +33,24 @@ walletAtom.subscribe(newValue => {
         //     console.debug("auto update wallet", txs.length, txs)
         // })
 
-        /// 每5秒查询一次session是否有效
+        // / 每5秒查询一次session是否有效
         const authService = getAuthService();
 
-        // if (newValue.session) {
-        //     if (latestTimer) {
-        //         clearInterval(latestTimer);
-        //     }
-        //     latestTimer = setInterval(() => {
-        //         authService.checkSessionKey({
-        //             accountId: newValue.address.toLocaleLowerCase(),
-        //             sessionKey: newValue.session.sessionKeyOwnerAddress
-        //         }).then(res => {
-        //             if (!res.valid) {
-        //                 logout()
-        //             }
-        //         })
-        //     }, 5000);
-        // }
+        if (newValue.session) {
+            if (latestTimer) {
+                clearInterval(latestTimer);
+            }
+            latestTimer = setInterval(() => {
+                authService.checkSessionKey({
+                    accountId: newValue.address.toLocaleLowerCase(),
+                    sessionKey: newValue.session.sessionKeyOwnerAddress
+                }).then(res => {
+                    if (!res.valid) {
+                        logout()
+                    }
+                })
+            }, 5000);
+        }
     }
 })
 
@@ -84,7 +84,6 @@ export const initHandler = (): WalletRequestHandler => {
 }
 
 export const asyncSession = async () => {
-    return;
     const s = await loadSession();
     if (s) {
         const sessionKeyOwner = new Wallet(s.extData);

@@ -137,7 +137,6 @@ export default function App() {
           <NavigationContainer ref={navigationRef} onReady={() => isNavigationReadyAtom.set(true)} onStateChange={handleStateChange}>
             <ModalInit />
             <NavigationInit />
-
             <BarUI />
 
             {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
