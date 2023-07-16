@@ -21,7 +21,7 @@ export const lumiHardhat: NetworkConfig = {
     isDefaultChain: true,
     isAuthChain: true,
     rpcUrl: "http://18.142.121.214:8545",
-    bundlerUrl: "http://18.142.121.214:4337",
+    bundlerUrl: "http://bundler-lumidev.melandworld.com",
     centerData: {
 
     }
