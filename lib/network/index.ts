@@ -20,8 +20,8 @@ export const lumiHardhat: NetworkConfig = {
     nativeTokenSymbol: "ETH",
     isDefaultChain: true,
     isAuthChain: true,
-    rpcUrl: "http://18.142.121.214:8545",
-    bundlerUrl: "http://bundler-lumidev.melandworld.com",
+    rpcUrl: "https://sodiumnode.melandworld.com/",
+    bundlerUrl: "https://bundler-lumidev.melandworld.com",
     centerData: {
 
     }
