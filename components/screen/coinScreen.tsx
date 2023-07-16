@@ -38,7 +38,7 @@ export function CoinScreen(props) {
       <ScrollView style={{ width: '100%', height: '100%', }} onScroll={onScroll} scrollEventThrottle={50}>
         <MVStack stretchW style={{ alignItems: 'center', marginTop: 20 }}>
           <MVStack stretchW style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}>
-            <MImage w={60} h={60} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
+            <MImage w={60} h={60} uri={tokenInfo.token.centerData?.logoURI} source={IconTokenDefault} />
             <MText style={{ marginTop: 20, marginBottom: 12, fontWeight: '700' }}>{tokenInfo.token.symbol}</MText>
             {/* <MHStack stretchW style={{ justifyContent: 'center' }}>
               <MImage size={16} />
@@ -61,11 +61,11 @@ export function CoinScreen(props) {
             <BaseFoldFrame header={"Detail"} defaultExpansion>
 
               <MText style={{ marginBottom: 10 }}>Description</MText>
-              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData.description || 'unknown'}</MText>
+              <MText style={{ color: eColor.GrayContentText }} numberOfLines={undefined} >{tokenInfo.token.centerData?.description || 'unknown'}</MText>
 
               <MDivider style={{ marginVertical: 10 }} />
               <MText style={{ marginBottom: 10 }} >Website</MText>
-              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData.website)}>{tokenInfo.token.centerData.website || 'unknown'}</MText>
+              <MText style={{ color: eColor.GrayContentText }} onPress={() => Linking.openURL(tokenInfo.token.centerData?.website)}>{tokenInfo.token.centerData?.website || 'unknown'}</MText>
 
               {!tokenInfo.token.isNativeToken && (
                 <>

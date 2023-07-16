@@ -99,7 +99,7 @@ const TokenItem = (props: { option: IUserTokenInfo, isSelected: boolean, handleO
       style={[styles.option, { backgroundColor: isSelected || isItemHovered ? eColor.GrayHover : '#ffffff' }]}
     >
       <MHStack style={styles.sendCoin} stretchW>
-        <MImage w={32} h={32} uri={option.token.centerData.logoURI} source={IconTokenDefault} />
+        <MImage w={32} h={32} uri={option.token.centerData?.logoURI} source={IconTokenDefault} />
         <MVStack style={{ flex: 1, marginLeft: 8 }}>
           <MHStack style={{ flex: 1 }}>
             <MText style={{ fontWeight: '700' }} fontSize={14}>{option.token.symbol}</MText>

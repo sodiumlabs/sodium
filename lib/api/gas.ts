@@ -1,10 +1,18 @@
-import { GasSuggest, TransactionRequest } from "@0xsodium/transactions";
+import { TransactionRequest } from "@0xsodium/transactions";
 import { useEffect } from "react";
 import { useQuery, UseQueryResult } from "react-query";
-import { useAuth } from '../data/authAtom';
+import { authAtom, useAuth } from '../data/authAtom';
 import { AuthData, PaymasterInfo } from "../define";
-import { Logger } from "../common/utils";
 import { fetchTokens } from "./tokens";
+import { getAllPaymasterAndData } from '../provider';
+// // luausd
+// _addToken(0x4F88D8d12f517AA41e23B32DABD23A2D7f2dF6Db);
+// // usdt
+// _addToken(0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9);
+// // usdc
+// _addToken(0xaf88d065e77c8cC2239327C5EDb3A432268e5831);
+// // usdc.e
+// _addToken(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8);
 
 const fetchGas = async (txn: TransactionRequest, authData: AuthData, chainId: number): Promise<PaymasterInfo[]> => {
   // const gasSuggest = await authData.web3signer.getGasSuggest() as GasSuggest;
@@ -12,14 +20,7 @@ const fetchGas = async (txn: TransactionRequest, authData: AuthData, chainId: nu
   // Logger.debug(gasSuggest);
   // txn.maxPriorityFeePerGas = gasSuggest.fast.maxPriorityFeePerGas;
   // txn.maxFeePerGas = gasSuggest.fast.maxFeePerGas;
-
-  const paymasterInfo = await authData.web3signer.getPaymasterInfos(txn) as PaymasterInfo[];
-  for (let i = 0; i < paymasterInfo.length; i++) {
-    const userInfos = await fetchTokens(paymasterInfo[i].token.address, paymasterInfo[i].token.chainId);
-    const userInfo = userInfos.find((info) => info.token.symbol == paymasterInfo[i].token.symbol);
-    paymasterInfo[i].userTokenInfo = userInfo;
-  }
-  return paymasterInfo;
+  return getAllPaymasterAndData(txn, authData, chainId);
 };
 
 export const useQueryGas = (txn: TransactionRequest, chainId: number): [UseQueryResult, PaymasterInfo[]] => {

@@ -14,13 +14,16 @@ import MVStack from '../baseUI/mVStack';
 export default function CoinItem(props: TextInputProps & { tokenInfo: IUserTokenInfo }) {
   const { tokenInfo, style, ...reset } = props;
   const [isItemHovered, setIsItemHovered] = useState(false);
+
+  console.debug("tokenInfo", tokenInfo);
+
   return (
     <MPressable
       onHoverIn={() => setIsItemHovered(true)}
       onHoverOut={() => setIsItemHovered(false)}
       onPress={() => navigationRef.navigate(Screens.Coin, tokenInfo)}>
       <MHStack style={[styles.container, globalStyle.whiteBorderWidth, { backgroundColor: isItemHovered ? eColor.GrayHover : '#ffffff' }]} stretchW>
-        <MImage w={24} h={24} uri={tokenInfo.token.centerData.logoURI} source={IconTokenDefault} />
+        <MImage w={24} h={24} uri={tokenInfo.token.centerData?.logoURI} source={IconTokenDefault} />
         <MHStack style={{ flex: 1 }}>
           <MVStack style={{ flex: 1, marginLeft: 6 }}>
             <MText style={{ fontWeight: '700' }} fontSize={14} >{tokenInfo.token.symbol}</MText>

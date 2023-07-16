@@ -148,10 +148,10 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         hideModal();
         transactionPending.removeCurPending(param.txn);
       }
-      await param.continueClick(txs, onPendingStart, onPendingEnd, onError);
+      await param.continueClick(selectedPayinfo.userOp, onPendingStart, onPendingEnd, onError);
     }
     else {
-      await param.continueClick(txs);
+      await param.continueClick(selectedPayinfo.userOp);
     }
 
   }, [param, isTxHandling, approveSliderValue, param?.decodeDatas, approveSelectedIndex, selectedPayinfo]);

@@ -9,7 +9,11 @@ import { Signer as AbstractSigner } from 'ethers';
 export type Session = {
     sessionKeyOwner: AbstractSigner
     sessionKeyOwnerAddress: string
-    sodiumNetworkResponse: AuthSessionResponse
+    sodiumNetworkResponse?: AuthSessionResponse
+    authre: {
+        authProvider: string
+        displayName: string
+    }
 }
 
 export type SodiumWallet = {

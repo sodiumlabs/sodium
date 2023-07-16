@@ -13,10 +13,13 @@ import MVStack from '../baseUI/mVStack';
 
 export default function NetworkFeeItem(props: PressableProps & { isSelected: boolean, gasInfo: PaymasterInfo }) {
   const { isSelected, gasInfo, ...reset } = props;
-  const ownToken = gasInfo.userTokenInfo;
-  const balance = !ownToken ? '0' : `${formatWei2Price(ownToken.balance.toString(), ownToken.token.decimals)} ${ownToken.token.symbol}`
-  const gasUsd = !ownToken ? '0' : token2Usd(gasInfo.amount.toString(), gasInfo.token.decimals, ownToken.rate + '', true);
-
+  const token = gasInfo.token;
+  
+  const balance = `${formatWei2Price(gasInfo.balance.toString(), gasInfo.token.decimals)} ${gasInfo.token.symbol}`;
+  
+  // !ownToken ? '0' : `${formatWei2Price(ownToken.balance.toString(), ownToken.token.decimals)} ${ownToken.token.symbol}`
+  const gasUsd = token2Usd(gasInfo.amount.toString(), gasInfo.token.decimals, gasInfo.usdRate + '', true);;
+  
   const selectedStyle = {
     borderColor: isSelected ? eColor.Blue : eColor.Border
   }

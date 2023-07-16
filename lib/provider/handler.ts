@@ -1,58 +1,16 @@
 import { WalletRequestHandler, WalletUserPrompter, Web3Signer, Web3Provider } from '@0xsodium/provider';
 import { Account, AccountOptions } from '@0xsodium/wallet';
+import { createContext } from '@0xsodium/network';
+import { calcAccountAddress } from '@0xsodium/config';
 import { WalletPrompter } from './prompter';
 import { loadSession } from '../common/asyncStorage';
-import { walletAtom, walletHandlerAtom } from './atom';
+import { walletAtom, walletHandlerAtom, onboardAPIAtom } from './atom';
 import { Session } from './types';
 import { testNetworks, mainNetworks, getCurrentChainId, currentChainIdAtom, networks } from '../network';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthSessionResponse, getAuthService } from '../auth';
-import { Signer as AbstractSigner, Wallet } from 'ethers';
+import { Signer as AbstractSigner, Wallet, ethers } from 'ethers';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
-
-export const logout = async () => {
-    return AsyncStorage.clear().then(() => walletAtom.set(null))
-}
-
-let latestTimer: any = null;
-
-walletAtom.subscribe(newValue => {
-    if (newValue == null) {
-
-    } else {
-        // saveSession(newValue.session);
-
-        // temp fix
-        // 在UI让用户更新钱包合约
-        // newValue.signer.getWalletUpgradeTransactions().then(txs => {
-        //     if (txs.length > 0) {
-        //         newValue.signer.sendTransaction(txs);
-        //     }
-
-        //     console.debug("auto update wallet", txs.length, txs)
-        // })
-
-        // / 每5秒查询一次session是否有效
-        const authService = getAuthService();
-
-        if (newValue.session) {
-            if (latestTimer) {
-                clearInterval(latestTimer);
-            }
-            latestTimer = setInterval(() => {
-                authService.checkSessionKey({
-                    accountId: newValue.address.toLocaleLowerCase(),
-                    sessionKey: newValue.session.sessionKeyOwnerAddress
-                }).then(res => {
-                    if (!res.valid) {
-                        logout()
-                    }
-                })
-            }, 5000);
-        }
-    }
-})
 
 currentChainIdAtom.subscribe(newChainId => {
     const walletHandler = walletHandlerAtom.get();
@@ -86,6 +44,14 @@ export const initHandler = (): WalletRequestHandler => {
 export const asyncSession = async () => {
     const s = await loadSession();
     if (s) {
+        const sessionExpires = s.authResp.authSession.sessionExpires;
+        const now = parseInt(`${new Date().getTime() / 1000}`);
+
+        // 提前一小时过期防止发起交易的途中过期
+        if (sessionExpires - 3600 < now) {
+            return;
+        }
+
         const sessionKeyOwner = new Wallet(s.extData);
         const sodiumNetworkResponse = s.authResp;
         const ownerAddress = await sessionKeyOwner.getAddress();
@@ -93,6 +59,10 @@ export const asyncSession = async () => {
             sodiumNetworkResponse: sodiumNetworkResponse,
             sessionKeyOwner: sessionKeyOwner,
             sessionKeyOwnerAddress: ownerAddress,
+            authre: {
+                authProvider: sodiumNetworkResponse.authProvider,
+                displayName: sodiumNetworkResponse.displayName
+            }
         }
         const options: AccountOptions = {
             networks: networks,
@@ -141,6 +111,10 @@ export const initWalletWithSession = async (
         sodiumNetworkResponse: sodiumNetworkResponse,
         sessionKeyOwner: sessionKeyOwner,
         sessionKeyOwnerAddress: ownerAddress,
+        authre: {
+            authProvider: sodiumNetworkResponse.authProvider,
+            displayName: sodiumNetworkResponse.displayName
+        }
     }
     const options: AccountOptions = {
         networks: networks,
@@ -157,6 +131,39 @@ export const initWalletWithSession = async (
             addSessionStruct: sodiumNetworkResponse.authSession,
             authProof: sodiumNetworkResponse.authSessionProof
         }
+    );
+    return signIn(account, session, true);
+}
+
+export const initWalletWithEOA = async (
+    sessionKeyOwner: AbstractSigner,
+    label: string
+) => {
+    const ownerAddress = await sessionKeyOwner.getAddress();
+    const session: Session = {
+        sessionKeyOwner: sessionKeyOwner,
+        sessionKeyOwnerAddress: ownerAddress,
+        authre: {
+            authProvider: label,
+            displayName: ownerAddress
+        }
+    }
+
+    const salt = ethers.utils.keccak256(ownerAddress);
+    const context = createContext();
+    const walletAddress = calcAccountAddress(salt, context.factoryAddress);
+
+    const options: AccountOptions = {
+        networks: networks,
+        initialConfig: {
+            accountSlat: salt,
+            address: walletAddress,
+            isSafe: false,
+        }
+    };
+    const account = new Account(
+        options,
+        session.sessionKeyOwner
     );
     return signIn(account, session, true);
 }

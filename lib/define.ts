@@ -2,7 +2,7 @@ import { NetworkConfig } from '@0xsodium/network';
 import { ConnectOptions, MessageToSign, TransactionHistory, UserTokenInfo, WalletRequestHandler, Web3Signer } from '@0xsodium/provider';
 import { Transaction, TransactionRequest } from '@0xsodium/transactions';
 import { BigNumber, FixedNumber } from "@ethersproject/bignumber";
-import { Account } from '@0xsodium/wallet';
+import { Account, IUserOperation } from '@0xsodium/wallet';
 import { ReactNode } from 'react';
 import { ERC20Transfer } from '../abi';
 import { ERC20Approve } from '../abi/erc20';
@@ -118,7 +118,7 @@ export interface IDeployConfirmModalParam {
 }
 
 export interface ISignTranscationModalParam {
-  continueClick: (continueTxn: Transaction[], onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => Promise<void>,
+  continueClick: (userOp: IUserOperation, onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => Promise<void>,
   cancelClick: () => void,
   decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,
@@ -165,9 +165,11 @@ export type PaymasterInfo = {
       icon: string;
     };
   };
+  userOp: IUserOperation;
   amount: BigNumber;
+  balance: BigNumber;
+  usdRate: number;
   expiry: number;
-  userTokenInfo: IUserTokenInfo;
 }
 
 export interface ITranscation {

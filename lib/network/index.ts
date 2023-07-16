@@ -1,6 +1,7 @@
 import { testnetNetworks, mainnetNetworks, NetworkConfig } from '@0xsodium/network';
 import { useStore } from '@nanostores/react';
 import { atom } from 'nanostores';
+import { Chain } from '@web3-onboard/common';
 
 export const xtestNetworks = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
     return {
@@ -12,15 +13,19 @@ export const xtestNetworks = testnetNetworks.filter(n => n.name == "mumbai").map
     }
 });
 
-export const xlocalHarhat = testnetNetworks.filter(n => n.name == "mumbai").map((n) => {
-    return {
-        ...n,
-        isDefaultChain: false,
-        isAuthChain: false,
-        rpcUrl: "http://127.0.0.1:8545",
-        bundlerUrl: "http://127.0.0.1:4337",
+export const lumiHardhat: NetworkConfig = {
+    title: "Lumi Hardhat",
+    name: "lumi dev network",
+    chainId: 31337,
+    nativeTokenSymbol: "ETH",
+    isDefaultChain: true,
+    isAuthChain: true,
+    rpcUrl: "http://127.0.0.1:8545",
+    bundlerUrl: "http://127.0.0.1:4337",
+    centerData: {
+
     }
-});
+}
 
 // TODO fix sodium.js
 export const xmainNetworks = mainnetNetworks.filter(n => n.name == "polygon").map((n) => {
@@ -33,9 +38,28 @@ export const xmainNetworks = mainnetNetworks.filter(n => n.name == "polygon").ma
     }
 });
 
-export const networks = [...xmainNetworks, ...xtestNetworks];
+// export const networks = [...xmainNetworks, ...xtestNetworks];
+export const networks = [lumiHardhat];
 export const mainNetworks = networks;
 export const testNetworks = [];
+
+export const getWeb3OnboardNetworks = (): Chain[] => {
+    return networks.map(n => {
+        let blockExplorerUrl: string|undefined = undefined;
+
+        if (n.blockExplorer) {
+            blockExplorerUrl = n.blockExplorer.rootUrl;
+        }
+
+        return {
+            namespace: "evm",
+            id: `0x${n.chainId.toString(16)}`,
+            rpcUrl: n.rpcUrl,
+            token: n.nativeTokenSymbol,
+            blockExplorerUrl: blockExplorerUrl
+        } as Chain
+    })
+}
 
 export const currentChainIdAtom = atom<number>(networks.find(n => n.isDefaultChain).chainId);
 
@@ -70,6 +94,9 @@ export function getNetwork(chainId: number): NetworkConfig | undefined {
 
 export function getAddressExplorer(chainId: number, address: string): string | undefined {
     const network = getNetwork(chainId);
+    if (!network.blockExplorer) {
+        return undefined;
+    }
     if (network) {
         const link = network.blockExplorer.rootUrl + 'address/' + address;
         return link;

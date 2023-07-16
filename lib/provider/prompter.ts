@@ -14,6 +14,7 @@ import { transactionQueue } from '../transaction';
 import { walletAtom } from './atom';
 import { Logger } from '../common/utils';
 import { isOpenedAppByUri } from "../../lib/data/apps";
+import { IUserOperation } from '@0xsodium/wallet';
 
 export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
@@ -148,13 +149,14 @@ export class WalletPrompter implements WalletUserPrompter {
                 'decodeDatas': decodes,
             } as ITranscation;
             transactionQueue.add(txnWithTime);
-            const continueClick = async (continueTxn: TransactionRequest, onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => {
+            const continueClick = async (userOp: IUserOperation, onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => {
                 try {
                     let txnResponse;
                     if (handleName == "send") {
-                        txnResponse = await wallet.signer.sendTransaction(continueTxn, chaindId);
+                        txnResponse = await wallet.signer.sendUserOperationRaw(userOp, chaindId);
                     } else {
-                        txnResponse = await wallet.signer.signTransaction(continueTxn);
+                        throw new Error("not support");
+                        // txnResponse = await wallet.signer.signTransaction(continueTxn);
                     }
                     transactionQueue.removeByTxn(txnWithTime);
                     Logger.debug("txnResponse:" + JSON.stringify(txnResponse));
