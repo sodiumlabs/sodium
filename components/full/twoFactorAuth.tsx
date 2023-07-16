@@ -15,13 +15,13 @@ export const TwoFactorAuth = (props) => {
 
   const onAuthVerifyClick = async () => {
     showUpdateFullScreenModal(true, <LoginLoading />);
-    await loginIn("r.albert.huang@gmail.com");
+    // await loginIn("r.albert.huang@gmail.com");
     showUpdateFullScreenModal(false);
   }
 
   const onRecoveryVerifyClick = async () => {
     showUpdateFullScreenModal(true, <LoginLoading />);
-    await loginIn("r.albert.huang@gmail.com");
+    // await loginIn("r.albert.huang@gmail.com");
     navigationRef.navigate(Screens.Security);
     showUpdateFullScreenModal(false);
   }

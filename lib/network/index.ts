@@ -20,8 +20,8 @@ export const lumiHardhat: NetworkConfig = {
     nativeTokenSymbol: "ETH",
     isDefaultChain: true,
     isAuthChain: true,
-    rpcUrl: "http://127.0.0.1:8545",
-    bundlerUrl: "http://127.0.0.1:4337",
+    rpcUrl: "http://18.142.121.214:8545",
+    bundlerUrl: "http://18.142.121.214:4337",
     centerData: {
 
     }
