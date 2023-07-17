@@ -5,7 +5,7 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web-dev": "next dev --port 3000",
+    "web-dev": "next dev",
     "gen": "rimraf gen && typechain --target ethers-v5 --out-dir gen './abi/*.json'"
   },
   "engines": {
