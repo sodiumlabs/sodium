@@ -15,6 +15,7 @@ export default function MText(props: TextProps & { fontSize?: number }) {
 
 const styles = StyleSheet.create({
   container: {
+    // fontFamily: "Roboto"
     // color: '#FFFFFF'
   }
 });

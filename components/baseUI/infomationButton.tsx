@@ -8,8 +8,8 @@ export default function InfomationButton(props: PressableProps & { title?: strin
   const { title, source, style, ...reset } = props;
   return (
     <MPressable style={[styles.button, style as unknown]} {...reset}>
-      <MImage w={30} h={30} source={source} />
-      <MText style={{ fontWeight: '700', color: eColor.GrayText, marginTop: 20 }}> {title} </MText>
+      {/* <MImage w={30} h={30} source={source} /> */}
+      <MText style={{ color: eColor.GrayText, marginTop: 20 }}> {title} </MText>
     </MPressable>
   )
 }

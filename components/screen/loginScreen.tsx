@@ -1,9 +1,9 @@
-import { Platform, ScrollView, StyleSheet } from "react-native";
+import { Platform, ScrollView, StyleSheet, View } from "react-native";
 import { showUpdateComModal, showUpdateFullScreenModal } from "../../lib/data";
 import { loginIn, loginInWithEOA } from '../../lib/data/auth';
 import { fixWidth } from "../../lib/define";
 import { useDimensionSize } from "../../lib/hook/dimension";
-import { IconLogo } from "../../lib/imageDefine";
+import { IconGoogle, IconLogo, IconMetamask } from "../../lib/imageDefine";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
 import MButton from "../baseUI/mButton";
@@ -26,6 +26,7 @@ import { WalletState } from '@web3-onboard/core'
 import Onboard from '@web3-onboard/core'
 import injectedModule from '@web3-onboard/injected-wallets'
 import { getWeb3OnboardNetworks } from "../../lib/network";
+import MLoginButton from "../baseUI/mLoginButton";
 
 const webClientId = "241812371246-5q72o46n1mh2arkqur1qv2qk01vn0v24.apps.googleusercontent.com";
 
@@ -63,8 +64,8 @@ export function LoginScreen() {
           <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}  >
             {/* <MText>Sign into web3</MText> */}
             <MImage source={IconLogo} w={60} h={60} style={{ marginBottom: 10 }} />
-            <ScreenTitle title="Sign into web3" />
-            <MVStack stretchW style={{ maxWidth: 300 }} >
+            <ScreenTitle title="Sign into" />
+            <MVStack stretchW style={{ maxWidth: 300, marginTop: 30 }} >
               <GoogleOAuthProvider clientId={webClientId}>
                 <GoogleLoginButton></GoogleLoginButton>
               </GoogleOAuthProvider>
@@ -126,9 +127,11 @@ function ExternalEOALoginButton() {
   }
 
   return (
-    <MButton imageIcon={<SteamSvg height={18} width={18} />} style={{ marginBottom: 10 }} onPress={auth} >
-      <MButtonText title={"Web3 Connect"} />
-    </MButton>
+    <MLoginButton imageIcon={<MImage w={27} h={27} source={IconMetamask} />} style={{ marginBottom: 10 }} onPress={auth} >
+      <View style={{ width: 80, flexDirection: 'row', justifyContent: 'center' }}>
+        <MButtonText title={"Web3 Login"} style={{ color: '#1D92FF', fontWeight: '500' }} />
+      </View>
+    </MLoginButton>
   )
 }
 
@@ -185,9 +188,12 @@ function GoogleLoginButton() {
   }
 
   return (
-    <MButton imageIcon={<SteamSvg height={18} width={18} />} style={{ marginBottom: 10 }} onPress={googleOAuth2Login} >
-      <MButtonText title={"Google Login"} />
-    </MButton>
+    <MLoginButton imageIcon={<MImage w={21} h={21} source={IconGoogle} />} style={{ marginBottom: 10 }} onPress={googleOAuth2Login} >
+      <View style={{ width: 80, flexDirection: 'row', justifyContent: 'center' }}>
+        <MButtonText title={"Google"} style={{ color: '#1D92FF', fontWeight: '500' }} />
+      </View>
+
+    </MLoginButton>
   )
 }
 

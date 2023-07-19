@@ -32,4 +32,7 @@ export const IconTokenDefault = require('./../assets/token_default.png');
 export const IconMumbai = require('./../assets/net_mumbai.png');
 export const IconPolygon = require('./../assets/net_polygon.png');
 export const IconSodium = require('./../assets/net_sodium.png');
+
+export const IconGoogle = require('./../assets/google.png');
+export const IconMetamask = require('./../assets/metamask.png');
 // export const IconTokenDefault = require('./../assets/iconUsdt.png');
