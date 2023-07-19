@@ -1,5 +1,5 @@
 import { ConnectOptions, MessageToSign, PromptConnectDetails, WalletUserPrompter } from '@0xsodium/provider';
-import { TransactionRequest } from '@0xsodium/transactions';
+import { TransactionRequest, Transactionish } from '@0xsodium/transactions';
 import { waitNavigateInit } from '../../components/base/navigation';
 import { decodeTransactionRequest } from '../common/decode';
 import { getNetwork } from '../network';
@@ -132,7 +132,7 @@ export class WalletPrompter implements WalletUserPrompter {
         });
     }
 
-    handleSignOrSendTranscation(txn: TransactionRequest, chaindId?: number, options?: ConnectOptions, handleName?: string): Promise<string> {
+    handleSignOrSendTranscation(txn: Transactionish, chaindId?: number, options?: ConnectOptions, handleName?: string): Promise<string> {
         return new Promise(async (tResolve: (value: string) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
             const wallet = walletAtom.get();

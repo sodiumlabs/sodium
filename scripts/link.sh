@@ -13,5 +13,3 @@ yarn link /Users/alberthuang/code/sodium.js/packages/utils
 yarn link /Users/alberthuang/code/sodium.js/packages/estimator
 
 yarn link /Users/alberthuang/code/sodium.js/packages/graphquery
-
-yarn link /Users/alberthuang/code/sodium.js/packages/sdk4337

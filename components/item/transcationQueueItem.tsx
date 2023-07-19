@@ -7,13 +7,14 @@ import { IDecodeTranscation, ITranscation } from '../../lib/define';
 import { eColor } from '../../lib/globalStyles';
 import { IconForkClose } from '../../lib/imageDefine';
 import { transactionQueue } from '../../lib/transaction';
-import { showUpdateSignTranscationModal, showUpdateTranscationQueueModal } from '../../lib/data/modal';
+import { showUpdateSignTranscationModal } from '../../lib/data/modal';
 import MHStack from '../baseUI/mHStack';
 import MImage from '../baseUI/mImage';
 import { MLoading } from '../baseUI/mLoading';
 import MText from '../baseUI/mText';
 import { waitTime } from '../../lib/common/common';
 import { Logger } from '../../lib/common/utils';
+import { flattenAuxTransactions, Transaction, Transactionish } from "@0xsodium/transactions";
 
 export default function TranscationQueueItem(props: { transcation: ITranscation, hideModal: (immediately?: boolean) => void }) {
   const { transcation, hideModal } = props;
@@ -69,8 +70,8 @@ export default function TranscationQueueItem(props: { transcation: ITranscation,
 
       OperateTimeStamp.set(transcation.timeStamp);
       transactionQueue.removeByTxn(transcation);
-      const txr = await auth.web3signer.sendTransaction(transcation.txReq);
-      await txr.wait();
+
+      auth.web3signer.sendTransactionBatch(flattenAuxTransactions(transcation.txReq));
     }
   }, [auth, hideModal])
 

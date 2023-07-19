@@ -1,12 +1,12 @@
 import { Web3Signer } from "@0xsodium/provider";
-import { flattenAuxTransactions, Transaction, TransactionRequest } from "@0xsodium/transactions";
+import { flattenAuxTransactions, Transaction, Transactionish } from "@0xsodium/transactions";
 import { checkIsERC20Transfer, decodeERC20Transfer } from "../../abi";
 import { checkIsERC20Approve, decodeERC20Approve } from '../../abi/erc20';
 import { checkIsNativeTokenTransfer, decodeNativeTokenTransfer } from "../../abi/nativeToken";
 import { Contract, IDecodeTranscation } from "../define";
 
 
-export async function decodeTransactionRequest(txn: TransactionRequest, web3signer: Web3Signer, chainId: number) {
+export async function decodeTransactionRequest(txn: Transactionish, web3signer: Web3Signer, chainId: number) {
   const txs = flattenAuxTransactions(txn) as Transaction[];
   const decodes: IDecodeTranscation[] = [];
   for (let tx of txs) {

@@ -50,7 +50,9 @@ export function PaymasterItem(props: ViewProps & {
                 return (<NetworkFeeItem
                   isSelected={selectedPayinfo == gasInfo}
                   key={hashcodeObj(gasInfo) + index}
-                  gasInfo={gasInfo} />)
+                  gasInfo={gasInfo} 
+                  onPress={() => { setSelectedPayinfo(gasInfo) }}
+                />)
               })
             }
           </MVStack>)

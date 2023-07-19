@@ -21,7 +21,8 @@ export const lumiHardhat: NetworkConfig = {
     isDefaultChain: true,
     isAuthChain: true,
     rpcUrl: "https://sodiumnode.melandworld.com/",
-    bundlerUrl: "https://bundler-lumidev.melandworld.com",
+    // bundlerUrl: "https://bundler-lumidev.melandworld.com",
+    bundlerUrl: "http://127.0.0.1:4337",
     centerData: {
 
     }

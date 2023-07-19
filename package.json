@@ -38,11 +38,13 @@
     "@walletconnect/web3wallet": "^1.2.0",
     "@web3-onboard/core": "^2.20.4",
     "@web3-onboard/injected-wallets": "^2.10.2",
+    "@web3-onboard/walletconnect": "2.4.3-alpha.1",
     "browserify-zlib": "~0.1.4",
     "buffer": "^6.0.3",
     "dns.js": "^1.0.1",
     "eslint-config-next": "latest",
     "ethers": "^5.7.0",
+    "ethers-multicall-provider": "^3.1.1",
     "events": "^1.0.0",
     "expo": "~48.0.4",
     "expo-barcode-scanner": "~12.3.1",
@@ -109,7 +111,14 @@
   "resolutions": {
     "react-native-svg": "13.4.0",
     "@walletconnect/jsonrpc-ws-connection": "1.0.6",
-    "buffer": "6.0.3"
+    "buffer": "6.0.3",
+    "@0xsodium/config": "portal:/Users/alberthuang/code/sodium.js/packages/config",
+    "@0xsodium/wallet": "portal:/Users/alberthuang/code/sodium.js/packages/wallet",
+    "@0xsodium/network": "portal:/Users/alberthuang/code/sodium.js/packages/network",
+    "@0xsodium/provider": "portal:/Users/alberthuang/code/sodium.js/packages/provider",
+    "@0xsodium/transactions": "portal:/Users/alberthuang/code/sodium.js/packages/transactions",
+    "@0xsodium/utils": "portal:/Users/alberthuang/code/sodium.js/packages/utils",
+    "@0xsodium/graphquery": "portal:/Users/alberthuang/code/sodium.js/packages/graphquery"
   },
   "private": true
 }

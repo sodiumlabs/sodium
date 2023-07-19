@@ -35,7 +35,6 @@ export const TranscationQueueModal = (props: { hideModal: () => void, modalParam
             <ModalTitle title='Transaction' />
 
 
-
             {
               (!requestTranscations || requestTranscations.length <= 0) ? (
                 <MHStack stretchW style={{ justifyContent: 'center', alignItems: 'center' }}>

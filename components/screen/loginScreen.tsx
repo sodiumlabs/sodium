@@ -16,19 +16,21 @@ import { LoginLoading } from "../full/loginLoading";
 import SteamSvg from '../svg/steamSvg';
 import * as React from 'react';
 import { UseTopCenterScale } from '../base/scaleInit';
-import { AuthService, getAuthService } from '../../lib/auth';
-import { onboardAPIAtom, walletAtom } from '../../lib/provider';
+import { getAuthService } from '../../lib/auth';
+import { onboardAPIAtom } from '../../lib/provider';
 import { getDevice } from '../../lib/auth/device';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 import { ethers } from 'ethers';
 import { FailModalItem } from "../modal/modalItem/failModalItem";
-import { WalletState } from '@web3-onboard/core'
-import Onboard from '@web3-onboard/core'
-import injectedModule from '@web3-onboard/injected-wallets'
+import { WalletState } from '@web3-onboard/core';
+import Onboard from '@web3-onboard/core';
+import injectedModule from '@web3-onboard/injected-wallets';
 import { getWeb3OnboardNetworks } from "../../lib/network";
 import MLoginButton from "../baseUI/mLoginButton";
+import walletConnectModule from '@web3-onboard/walletconnect'
 
 const webClientId = "241812371246-5q72o46n1mh2arkqur1qv2qk01vn0v24.apps.googleusercontent.com";
+const wcProjectId = "3dea5e1f2e4c86222bd29888c46c4744";
 
 export function LoginScreen() {
   const dimension = useDimensionSize();
@@ -83,14 +85,45 @@ export function LoginScreen() {
   );
 }
 
-const injected = injectedModule()
 const chains = getWeb3OnboardNetworks();
+const injected = injectedModule();
+const wcV2InitOptions = {
+  /**
+   * Project ID associated with [WalletConnect account](https://cloud.walletconnect.com)
+   */
+  projectId: wcProjectId,
+  /**
+   * Chains required to be supported by all wallets connecting to your DApp
+   */
+  requiredChains: chains.map(c => parseInt(c.id)),
+}
+
+// initialize the module with options
+// If version isn't set it will default to V2 - V1 support will be completely removed shortly as it is deprecated
+const walletConnect = walletConnectModule(wcV2InitOptions)
 const onboard = Onboard({
-  wallets: [injected],
+  wallets: [injected, walletConnect],
   chains: chains,
   connect: {
+    disableClose: false,
     showSidebar: false,
     autoConnectLastWallet: true,
+    removeWhereIsMyWalletWarning: true,
+    iDontHaveAWalletLink: undefined,
+  },
+  appMetadata: {
+    name: "Sodium",
+    icon: '<svg>1</svg>',
+    description: "Sodium wallet connect"
+  },
+  theme: "light",
+  accountCenter: {
+    desktop: {
+      enabled: false,
+    },
+    mobile: {
+      enabled: false,
+    }
   }
 });
 function ExternalEOALoginButton() {
