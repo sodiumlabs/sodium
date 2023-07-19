@@ -28,7 +28,7 @@ currentChainIdAtom.subscribe(newChainId => {
 
 export const initHandler = (): WalletRequestHandler => {
     const walletHandler = new WalletRequestHandler(
-        null,
+        undefined,
         prompter,
         mainNetworks,
         testNetworks
