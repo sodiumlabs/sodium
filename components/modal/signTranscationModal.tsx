@@ -2,7 +2,7 @@ import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ERC20Approve, encodeERC20Approve } from '../../abi/erc20';
-import { hashcodeObj } from '../../lib/common/common';
+import { formatPrice2Wei, hashcodeObj } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { Logger } from '../../lib/common/utils';
 import { useProjectSetting } from '../../lib/data/project';
@@ -112,7 +112,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
         // const bigSlider = FixedNumber.fromString(approveInputValue.toFixed(2));
         // const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
-        const approveNum = BigNumber.from(approveInputValue);
+        const approveNum = BigNumber.from(formatPrice2Wei(approveInputValue.toString(), decodeApproveData.decodeApproveData.token.decimals));
         const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
         const transaction = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, approveNum, decodeApproveData.decodeApproveData.token.address);
         txs.splice(approveIndex, 1, transaction);
