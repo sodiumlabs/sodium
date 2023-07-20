@@ -34,6 +34,10 @@ export const ApproveItem = (props: {
   const [approveValueText, setApproveValueText] = useState('Unlimted');
 
   useEffect(() => {
+    setApproveInputValue(formatWei2Price(approveData.amount.toString(), approveData.token.decimals));
+  }, []);
+
+  useEffect(() => {
     if (approveTokenData == null) {
       return;
     }

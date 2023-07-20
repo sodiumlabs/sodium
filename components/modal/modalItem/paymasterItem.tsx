@@ -55,8 +55,7 @@ export function PaymasterItem(props: ViewProps & {
                   onPress={() => { onFeeItemClick(gasInfo) }}
                   isSelected={selectedPayinfo == gasInfo}
                   key={hashcodeObj(gasInfo) + index}
-                  gasInfo={gasInfo} 
-                  onPress={() => { setSelectedPayinfo(gasInfo) }}
+                  gasInfo={gasInfo}
                 />)
               })
             }
