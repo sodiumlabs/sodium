@@ -16,3 +16,19 @@ proxyChannel.app.handleMessage = () => {}
 export function useWalletHandler() {
     return useStore(walletHandlerAtom);
 }
+
+export function walletSyncReady(): Promise<void> {
+    return new Promise((resolve, reject) => {
+        const wallet = walletAtom.get();
+        if (wallet) {
+            resolve();
+        } else {
+            const unsubscribe = walletAtom.subscribe((wallet) => {
+                if (wallet) {
+                    unsubscribe();
+                    resolve();
+                }
+            });
+        }
+    });
+}

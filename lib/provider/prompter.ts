@@ -11,7 +11,7 @@ import {
 import { OperateTimeStamp } from '../data/operateTime';
 import { IDeployConfirmModalParam, ISignMessageModalParam, ISignTranscationModalParam, ITranscation } from '../define';
 import { transactionQueue } from '../transaction';
-import { walletAtom } from './atom';
+import { walletAtom, walletSyncReady } from './atom';
 import { Logger } from '../common/utils';
 import { isOpenedAppByUri } from "../../lib/data/apps";
 import { IUserOperation } from '@0xsodium/wallet';
@@ -20,6 +20,7 @@ export class WalletPrompter implements WalletUserPrompter {
     promptConnect(options?: ConnectOptions | undefined): Promise<PromptConnectDetails> {
         return new Promise(async (tResolve: (value: PromptConnectDetails) => void, tReject: (error: any) => void) => {
             await waitNavigateInit();
+            await walletSyncReady();
             const wallet = walletAtom.get();
             if (wallet === null) {
                 Logger.debug("WalletPrompter promptConnect auth is no Login,reject");
