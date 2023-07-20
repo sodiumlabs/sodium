@@ -181,6 +181,10 @@ export class WalletPrompter implements WalletUserPrompter {
                     transactionQueue.removeByTxn(txnWithTime);
                     tReject("user cancel");
                 },
+                estimateFailed: (msg: string) => {
+                    transactionQueue.removeByTxn(txnWithTime);
+                    tReject(msg);
+                },
                 decodeDatas: decodes,
                 options: options,
                 chaindId: chaindId,

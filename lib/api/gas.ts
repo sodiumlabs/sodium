@@ -14,18 +14,18 @@ import { getAllPaymasterAndData } from '../provider';
 // // usdc.e
 // _addToken(0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8);
 
-const fetchGas = async (txn: TransactionRequest, authData: AuthData, chainId: number): Promise<PaymasterInfo[]> => {
+const fetchGas = async (txn: TransactionRequest, authData: AuthData, chainId: number, estimateFailed: (msg: string) => void): Promise<PaymasterInfo[]> => {
   // const gasSuggest = await authData.web3signer.getGasSuggest() as GasSuggest;
   // Logger.debug("fetchGas GasSuggest");
   // Logger.debug(gasSuggest);
   // txn.maxPriorityFeePerGas = gasSuggest.fast.maxPriorityFeePerGas;
   // txn.maxFeePerGas = gasSuggest.fast.maxFeePerGas;
-  return getAllPaymasterAndData(txn, authData, chainId);
+  return getAllPaymasterAndData(txn, authData, chainId, estimateFailed);
 };
 
-export const useQueryGas = (txn: TransactionRequest, chainId: number): [UseQueryResult, PaymasterInfo[]] => {
+export const useQueryGas = (txn: TransactionRequest, chainId: number, estimateFailed: (msg: string) => void): [UseQueryResult, PaymasterInfo[]] => {
   const authData = useAuth();
-  const gasQuery = useQuery(['fetchGas', txn], () => fetchGas(txn, authData, chainId), { enabled: false });
+  const gasQuery = useQuery(['fetchGas', txn], () => fetchGas(txn, authData, chainId, estimateFailed), { enabled: false });
   const paymasterInfos = gasQuery.data as PaymasterInfo[];
 
   useEffect(() => {

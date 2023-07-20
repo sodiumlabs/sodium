@@ -13,6 +13,7 @@ import NetworkFeeItem from "../../item/networkFeeItem";
 export function PaymasterItem(props: ViewProps & {
   selectedPayinfo: PaymasterInfo,
   setSelectedPayinfo: Dispatch<SetStateAction<PaymasterInfo>>,
+  estimateFailed: (msg: string) => void,
   txq: TransactionRequest,
   chainId: number,
   visible: boolean
@@ -20,8 +21,7 @@ export function PaymasterItem(props: ViewProps & {
 
   const { selectedPayinfo, setSelectedPayinfo, txq, visible } = props;
 
-  const [gasQuery, paymasterInfos] = useQueryGas(txq, props.chainId);
-  // const [tokensQuery, tokenInfos] = useQueryTokens(currentChainId);
+  const [gasQuery, paymasterInfos] = useQueryGas(txq, props.chainId, props.estimateFailed);
 
   useEffect(() => {
     if (!visible) {

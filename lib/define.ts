@@ -120,6 +120,7 @@ export interface IDeployConfirmModalParam {
 export interface ISignTranscationModalParam {
   continueClick: (userOp: IUserOperation, onPendingStart?: (txHash: string) => void, onPendingEnd?: () => void, onError?: () => void) => Promise<void>,
   cancelClick: () => void,
+  estimateFailed: (msg: string) => void,
   decodeDatas: IDecodeTranscation[],
   options: ConnectOptions,
   chaindId: number,

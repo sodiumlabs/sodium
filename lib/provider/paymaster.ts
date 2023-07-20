@@ -81,8 +81,17 @@ export const buildSimulateStableCoinBalanceOf = (sender: string, tokenAddress: s
     ]);
 }
 
-export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: AuthData, chainId: number): Promise<PaymasterInfo[]> => {
-    const nativeTokenPaymaster = await getNativeTokenPaymasterAndData(txn, auth, getNetwork(chainId));
+export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: AuthData, chainId: number, estimateFailed: (msg: string) => void): Promise<PaymasterInfo[]> => {
+    const nativeTokenPaymaster = await getNativeTokenPaymasterAndData(txn, auth, getNetwork(chainId)).catch(
+        (error) => {
+            estimateFailed(error.message);
+        }
+    );
+
+    if (!nativeTokenPaymaster) {
+        return [];
+    }
+
     const paymasterInfos = [
         nativeTokenPaymaster
     ];

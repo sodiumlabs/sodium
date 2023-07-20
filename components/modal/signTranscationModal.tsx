@@ -163,6 +163,12 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
     hideModal();
   }
 
+  const onEstimateFailed = (msg: string) => {
+    if (!param) return;
+    hideModal();
+    param.estimateFailed(msg);
+  }
+
   return (
     <BaseModal
       visible={modalParam.visible}
@@ -264,6 +270,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                   txq={param?.txn?.txReq}
                   chainId={param?.chaindId}
                   visible={modalParam.visible}
+                  estimateFailed={onEstimateFailed}
                 />
               )
             }
