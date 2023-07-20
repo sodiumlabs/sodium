@@ -1,4 +1,5 @@
 import { ChainIdLike } from "@0xsodium/network/dist/declarations/src/config";
+import { ERC20OrNativeTokenMetadata } from "@0xsodium/utils";
 import { useQuery, UseQueryResult } from "react-query";
 import { token2Usd } from "../common/common";
 import { Logger } from "../common/utils";
@@ -55,7 +56,7 @@ const fetchToken = async (tokenAddress: string, chainId: ChainIdLike): Promise<I
   // const result = await authData.web3signer.getToken(tokenAddress, chainId) as ERC20OrNativeTokenMetadata;
   const results = await authData.web3signer.getTokens(authData.blockchainAddress, chainId) as IUserTokenInfo[];
   const token = results.find(item => {
-    return item.token.address == tokenAddress && item.token.chainId == chainId;
+    return item.token.address.toLocaleLowerCase() == tokenAddress.toLocaleLowerCase() && item.token.chainId == chainId;
   });
   Logger.debug("fetchToken");
   Logger.debug(token);
@@ -63,11 +64,12 @@ const fetchToken = async (tokenAddress: string, chainId: ChainIdLike): Promise<I
   return token;
 };
 
-export const useQueryToken = (tokenAddress: string, chainId: ChainIdLike): [UseQueryResult, IUserTokenInfo] => {
-  const tokensQuery = useQuery(['fetchToken', tokenAddress, chainId], () => {
+export const useQueryToken = (token: ERC20OrNativeTokenMetadata): [UseQueryResult, IUserTokenInfo] => {
+  const tokensQuery = useQuery(['fetchToken', token.address, token.chainId], () => {
     console.log("fetchToken");
-    return fetchToken(tokenAddress, chainId);
+    return fetchToken(token.address, token.chainId);
   });
-  const tokenData = tokensQuery.data as IUserTokenInfo;
+  let tokenData = tokensQuery.data as IUserTokenInfo;
+
   return [tokensQuery, tokenData];
 };

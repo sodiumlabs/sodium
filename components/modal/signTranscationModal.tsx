@@ -1,12 +1,12 @@
-import { BigNumber, FixedNumber } from 'ethers';
+import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { ScrollView, StyleSheet } from 'react-native';
 import { ERC20Approve, encodeERC20Approve } from '../../abi/erc20';
-import { hashcodeObj, removeAllDecimalPoint } from '../../lib/common/common';
+import { hashcodeObj } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
 import { Logger } from '../../lib/common/utils';
 import { useProjectSetting } from '../../lib/data/project';
-import { IDecodeTranscation, IModalParam, ISignTranscationModalParam, MaxFixedNumber, PaymasterInfo, Screens, eApproveType } from '../../lib/define';
+import { IDecodeTranscation, IModalParam, ISignTranscationModalParam, PaymasterInfo, Screens, eApproveType } from '../../lib/define';
 import { useModalLoading } from '../../lib/hook/modalLoading';
 import { getNetwork, useMabyeCurrentChainId } from '../../lib/network';
 import { transactionPending } from '../../lib/transaction/pending';
@@ -37,13 +37,13 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
   // Mainly used for UI display
   const [uiDecodeDatas, setUiDecodeDatas] = useState<IDecodeTranscation[]>(null);
   const [approveSelectedIndex, setApproveSelectedIndex] = useState(eApproveType.KeepUnlimted);
-  const [approveSliderValue, setApproveSliderValue] = useState(1);
+  const [approveInputValue, setApproveInputValue] = useState(1);
   const [selectedPayinfo, setSelectedPayinfo] = useState<PaymasterInfo>(null);
 
   useEffect(() => {
     if (!modalParam.visible) {
       setApproveSelectedIndex(eApproveType.KeepUnlimted);
-      setApproveSliderValue(1);
+      setApproveInputValue(0);
       setUiDecodeDatas(null);
       setSelectedPayinfo(null);
     } else {
@@ -81,7 +81,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       } else if (approveSelectedIndex == eApproveType.SetAllowance) {
         // const decodeApproveData = param.decodeDatas.find((decodeTxn) => !!decodeTxn.decodeApproveData);
 
-        // const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
+        // const bigSlider = FixedNumber.fromString(approveInputValue.toFixed(2));
         // const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
         // const revokeTx = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, approveNum, decodeApproveData.decodeApproveData.token.address);
 
@@ -93,7 +93,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
         setUiDecodeDatas(param?.decodeDatas);
       }
     })()
-  }, [approveSelectedIndex, approveSliderValue, param?.decodeDatas])
+  }, [approveSelectedIndex, approveInputValue, param?.decodeDatas])
 
   const onConfirmClick = useCallback(async () => {
     if (!param) return;
@@ -110,8 +110,9 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       if (approveSelectedIndex == eApproveType.SetAllowance) {
         Logger.debug("eApproveType.SetAllowance");
         // const bigFixed = FixedNumber.from(MaxBigNumber.toString());
-        const bigSlider = FixedNumber.fromString(approveSliderValue.toFixed(2));
-        const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
+        // const bigSlider = FixedNumber.fromString(approveInputValue.toFixed(2));
+        // const approveNum = BigNumber.from(removeAllDecimalPoint(MaxFixedNumber.mulUnsafe(bigSlider).toString()));
+        const approveNum = BigNumber.from(approveInputValue);
         const approveIndex = param.decodeDatas.findIndex((decodeTxn => !!decodeTxn.decodeApproveData));
         const transaction = await encodeERC20Approve(decodeApproveData.decodeApproveData.to, approveNum, decodeApproveData.decodeApproveData.token.address);
         txs.splice(approveIndex, 1, transaction);
@@ -154,7 +155,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
       await param.continueClick(selectedPayinfo.userOp);
     }
 
-  }, [param, isTxHandling, approveSliderValue, param?.decodeDatas, approveSelectedIndex, selectedPayinfo]);
+  }, [param, isTxHandling, approveInputValue, param?.decodeDatas, approveSelectedIndex, selectedPayinfo]);
 
   const onCancelClick = () => {
     if (!param) return;
@@ -218,8 +219,8 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                         approveData={decodeTxn.decodeApproveData}
                         approveSelectedIndex={approveSelectedIndex}
                         setApproveSelectedIndex={setApproveSelectedIndex}
-                        approveSliderValue={approveSliderValue}
-                        setApproveSliderValue={setApproveSliderValue} />
+                        approveInputValue={approveInputValue}
+                        setApproveInputValue={setApproveInputValue} />
                     ) : (
                       <ApproveRevokeItem
                         key={key}

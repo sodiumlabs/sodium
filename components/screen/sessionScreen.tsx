@@ -28,7 +28,7 @@ export function SessionScreen() {
     const rv = await authService.fetchSessions({
       accountId: _auth.blockchainAddress.toLocaleLowerCase(),
     });
-    setSessions(rv.sessions);
+    setSessions(rv.sessions || []);
   }
 
   const onLogout = async (session: Session) => {

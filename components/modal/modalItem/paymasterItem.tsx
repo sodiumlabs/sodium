@@ -36,6 +36,10 @@ export function PaymasterItem(props: ViewProps & {
     }
   }, [paymasterInfos])
 
+  const onFeeItemClick = (item: PaymasterInfo) => {
+    setSelectedPayinfo(item);
+  }
+
   return (
     <>
       <MHStack stretchW style={{ alignItems: 'center', marginTop: 24, marginBottom: 14 }}>
@@ -48,6 +52,7 @@ export function PaymasterItem(props: ViewProps & {
             {
               paymasterInfos.map((gasInfo, index) => {
                 return (<NetworkFeeItem
+                  onPress={() => { onFeeItemClick(gasInfo) }}
                   isSelected={selectedPayinfo == gasInfo}
                   key={hashcodeObj(gasInfo) + index}
                   gasInfo={gasInfo} 

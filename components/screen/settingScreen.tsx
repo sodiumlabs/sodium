@@ -35,7 +35,7 @@ export function SettingScreen() {
     const rv = await authService.fetchSessions({
       accountId: auth.blockchainAddress.toLocaleLowerCase(),
     });
-    setSessions(rv.sessions);
+    setSessions(rv.sessions || []);
   }
 
   useEffect(() => {
@@ -60,12 +60,12 @@ export function SettingScreen() {
 
             <SettingItem source={<PhoneSvg />} onPress={() => navigationRef.navigate(Screens.Session)} >
               <MText style={{ fontWeight: '700' }}>Active Sessions</MText>
-              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> {sessions.length} Active Sessions</MText>
+              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> {sessions?.length || 0} Active Sessions</MText>
             </SettingItem>
 
             <SettingItem source={<PhoneSvg />} onPress={() => navigationRef.navigate(Screens.Allowance)} >
               <MText style={{ fontWeight: '700' }}>Allowance</MText>
-              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> {allowances.length} Active Allowances</MText>
+              <MText style={{ color: eColor.GrayContentText, marginTop: 2 }}> {allowances?.length || 0} Active Allowances</MText>
             </SettingItem>
             <Spacer />
             <Information />
