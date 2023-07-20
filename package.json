@@ -12,12 +12,12 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@0xsodium/config": "^1.21.0",
-    "@0xsodium/network": "^1.21.0",
-    "@0xsodium/provider": "^1.21.0",
-    "@0xsodium/transactions": "^1.21.0",
-    "@0xsodium/utils": "^1.21.0",
-    "@0xsodium/wallet": "^1.21.0",
+    "@0xsodium/config": "^1.22.0",
+    "@0xsodium/network": "^1.22.0",
+    "@0xsodium/provider": "^1.22.0",
+    "@0xsodium/transactions": "^1.22.0",
+    "@0xsodium/utils": "^1.22.0",
+    "@0xsodium/wallet": "^1.22.0",
     "@0xsodium/wallet-contracts": "^0.0.8-beta",
     "@ethersproject/shims": "^5.7.0",
     "@eva-design/eva": "^2.1.1",
@@ -36,6 +36,7 @@
     "@walletconnect/react-native-compat": "^2.4.2",
     "@walletconnect/utils": "^2.4.2",
     "@walletconnect/web3wallet": "^1.2.0",
+    "@web3-onboard/coinbase": "^2.2.5",
     "@web3-onboard/core": "^2.20.4",
     "@web3-onboard/injected-wallets": "^2.10.2",
     "@web3-onboard/walletconnect": "2.4.3-alpha.1",
@@ -111,14 +112,7 @@
   "resolutions": {
     "react-native-svg": "13.4.0",
     "@walletconnect/jsonrpc-ws-connection": "1.0.6",
-    "buffer": "6.0.3",
-    "@0xsodium/config": "portal:/Users/alberthuang/code/sodium.js/packages/config",
-    "@0xsodium/wallet": "portal:/Users/alberthuang/code/sodium.js/packages/wallet",
-    "@0xsodium/network": "portal:/Users/alberthuang/code/sodium.js/packages/network",
-    "@0xsodium/provider": "portal:/Users/alberthuang/code/sodium.js/packages/provider",
-    "@0xsodium/transactions": "portal:/Users/alberthuang/code/sodium.js/packages/transactions",
-    "@0xsodium/utils": "portal:/Users/alberthuang/code/sodium.js/packages/utils",
-    "@0xsodium/graphquery": "portal:/Users/alberthuang/code/sodium.js/packages/graphquery"
+    "buffer": "6.0.3"
   },
   "private": true
 }

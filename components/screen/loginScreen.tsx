@@ -6,14 +6,12 @@ import { useDimensionSize } from "../../lib/hook/dimension";
 import { IconGoogle, IconLogo, IconMetamask } from "../../lib/imageDefine";
 import { BaseScreen } from "../base/baseScreen";
 import Information from "../base/information";
-import MButton from "../baseUI/mButton";
 import { MButtonText } from "../baseUI/mButtonText";
 import MHStack from "../baseUI/mHStack";
 import MImage from "../baseUI/mImage";
 import MVStack from '../baseUI/mVStack';
 import { ScreenTitle } from "../baseUI/screenTitle";
 import { LoginLoading } from "../full/loginLoading";
-import SteamSvg from '../svg/steamSvg';
 import * as React from 'react';
 import { UseTopCenterScale } from '../base/scaleInit';
 import { getAuthService } from '../../lib/auth';
@@ -28,6 +26,7 @@ import injectedModule from '@web3-onboard/injected-wallets';
 import { getWeb3OnboardNetworks } from "../../lib/network";
 import MLoginButton from "../baseUI/mLoginButton";
 import walletConnectModule from '@web3-onboard/walletconnect'
+import coinbaseModule from '@web3-onboard/coinbase'
 
 const webClientId = "241812371246-5q72o46n1mh2arkqur1qv2qk01vn0v24.apps.googleusercontent.com";
 const wcProjectId = "3dea5e1f2e4c86222bd29888c46c4744";
@@ -35,29 +34,6 @@ const wcProjectId = "3dea5e1f2e4c86222bd29888c46c4744";
 export function LoginScreen() {
   const dimension = useDimensionSize();
   const topCenterStyle = UseTopCenterScale();
-
-  // React.useEffect(() => {
-  //   if (googleResponse) {
-  //     showUpdateFullScreenModal(false);
-  //   }
-  //   console.debug(googleResponse, "googleResponse");
-  //   if (googleResponse?.type === 'success') {
-  //     authGoogle(googleResponse.params.access_token)
-  //   }
-  //   if (googleResponse?.type === 'error') {
-  //     let msg = "AuthSession failed, user did not authorize the app";
-  //     if (googleResponse.error) {
-  //       msg = googleResponse.error.message;
-  //     }
-  //     showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={msg} /> });
-  //   }
-  // }, [googleResponse]);
-
-  const googleOAuth2Login = async () => {
-    showUpdateFullScreenModal(true, <LoginLoading />);
-  }
-
-
 
   return (
     <BaseScreen hasNavigationBar={false} hasFloatingBar={false}>
@@ -100,16 +76,16 @@ const wcV2InitOptions = {
 
 // initialize the module with options
 // If version isn't set it will default to V2 - V1 support will be completely removed shortly as it is deprecated
-const walletConnect = walletConnectModule(wcV2InitOptions)
+const walletConnect = walletConnectModule(wcV2InitOptions);
+const coinbase = coinbaseModule();
 const onboard = Onboard({
-  wallets: [injected, walletConnect],
+  wallets: [injected, walletConnect, coinbase],
   chains: chains,
   connect: {
     disableClose: false,
-    showSidebar: false,
+    showSidebar: true,
     autoConnectLastWallet: true,
     removeWhereIsMyWalletWarning: true,
-    iDontHaveAWalletLink: undefined,
   },
   appMetadata: {
     name: "Sodium",
@@ -133,8 +109,29 @@ function ExternalEOALoginButton() {
     if (wallet != null) {
       const ethersProvider = new ethers.providers.Web3Provider(wallet.provider, 'any');
       const signer = ethersProvider.getSigner();
-      loginInWithEOA(signer, wallet.label);
-      onboardAPIAtom.set(onboard);
+
+      Promise.all([
+        // signer.signMessage("Welcome to sodium"),
+        signer.getAddress(),
+      ]).then((result) => {
+        // const sig = result[0];
+        // const signAddress = ethers.utils.recoverAddress(ethers.utils.toUtf8Bytes("Welcome to sodium"), sig);
+        // const walletAddress = result[1];
+        // if (signAddress.toLocaleLowerCase() != walletAddress.toLocaleLowerCase()) {
+          // throw new Error("EOA wallet only");
+        // }
+        // return;
+      }).then((result) => {
+        return loginInWithEOA(signer, wallet.label);
+      }).then((result) => {
+        onboardAPIAtom.set(onboard);
+      }).catch(error => {
+        console.error(error);
+        showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={error.message} /> });
+      })
+
+      // loginInWithEOA(signer, wallet.label);
+      // onboardAPIAtom.set(onboard);
     }
   }, [wallet]);
 
