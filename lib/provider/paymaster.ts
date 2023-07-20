@@ -1,10 +1,11 @@
 import { TransactionRequest } from "@0xsodium/transactions";
-import { StableCoinPaymaster__factory, ERC20__factory, Sodium__factory } from '@0xsodium/wallet-contracts';
+import { StableCoinPaymaster__factory, ERC20__factory, Sodium__factory, EntryPoint__factory } from '@0xsodium/wallet-contracts';
 import { getNetwork } from "../network";
 import { ethers } from 'ethers';
 import { PaymasterInfo, AuthData } from "../define";
 import { NetworkConfig, createContext } from "@0xsodium/network";
 import { MulticallWrapper } from 'ethers-multicall-provider';
+import { IUserOperation } from "@0xsodium/wallet";
 
 const StableCoinPaymasterByChainId = {
     31337: "0x441746A42c895e5b7e8C1136C7aE8ae3ff957dCc"
@@ -72,25 +73,11 @@ const getNativeTokenPaymasterAndData = async (txn: TransactionRequest, auth: Aut
     return paymasterInfo;
 }
 
-export const buildSimulateStableCoinPayTransfer = (paymaster: string, tokenAddress: string, gasTokenAmount: ethers.BigNumber) => {
+export const buildSimulateStableCoinBalanceOf = (sender: string, tokenAddress: string, gasTokenAmount: ethers.BigNumber) => {
     // 如果转账成功说明有足够的gas
     // 这样是为了防止用户支付gas的token和交易需要的token冲突。导致交易失败
-    const transferCalldata = ERC20__factory.createInterface().encodeFunctionData("transfer", [
-        paymaster,
-        gasTokenAmount
-    ]);
-
-    return Sodium__factory.createInterface().encodeFunctionData("execute", [
-        [
-            {
-                op: 0,
-                revertOnError: true,
-                gasLimit: 0,
-                target: tokenAddress,
-                value: 0,
-                data: transferCalldata
-            }
-        ]
+    return ERC20__factory.createInterface().encodeFunctionData("balanceOf", [
+        sender
     ]);
 }
 
@@ -116,6 +103,21 @@ export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: Auth
     const context = createContext(network.context);
     const provider = MulticallWrapper.wrap(new ethers.providers.JsonRpcProvider(network.rpcUrl));
     const contract = StableCoinPaymaster__factory.connect(stableCoinPaymaster, provider);
+    const entryPoint = EntryPoint__factory.connect(context.entryPointAddress, provider);
+
+    const simulateHandleOp = async (userOp: IUserOperation) => {
+        try {
+            await entryPoint.callStatic.simulateHandleOp({
+                ...userOp,
+                callData: "0x00000000"
+            }, userOp.sender, userOp.callData);
+        } catch(error) {
+            if (error.errorName == "ExecutionResult") {
+                return error.errorArgs[4];
+            }
+        }
+        return false;
+    }
 
     const stableCoinsPaymasterInfoPromises = stableCoins.map(async (payTokenAddress) => {
         const payToken = ERC20__factory.connect(payTokenAddress, provider);
@@ -127,7 +129,7 @@ export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: Auth
             payToken.name()
         ]);
 
-        if (balance.eq(ethers.utils.parseUnits("5", decimals))) {
+        if (balance.lt(ethers.utils.parseUnits("5", decimals))) {
             throw new Error("Insufficient balance");
         }
 
@@ -153,17 +155,11 @@ export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: Auth
         const expiry = parseInt(`${(new Date().getTime() + 1000 * 60) / 1000}`);
         const tokenAmount = await contract.getTokenValueOfEth(payTokenAddress, ethAmount);
 
-        const success = await auth.signer.simulateHandleOp(userOp, userOp.sender, buildSimulateStableCoinPayTransfer(
-            stableCoinPaymaster,
-            payTokenAddress,
-            tokenAmount
-        ));
+        const success = await simulateHandleOp(userOp);
 
         if (!success) {
             throw new Error("Insufficient balance");
         }
-
-        console.info("userOp", userOp)
 
         const paymasterInfo: PaymasterInfo = {
             id: paymasterAndData,
@@ -188,7 +184,7 @@ export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: Auth
         try {
             paymasterInfos.push(await stableCoinsPaymasterInfoPromises[i]);
         } catch (error) {
-            console.warn(error);
+            // console.warn(error);
             continue;
         }
     }

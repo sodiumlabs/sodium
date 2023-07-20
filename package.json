@@ -12,12 +12,12 @@
     "node": ">=16"
   },
   "dependencies": {
-    "@0xsodium/config": "^1.22.0",
-    "@0xsodium/network": "^1.22.0",
-    "@0xsodium/provider": "^1.22.0",
-    "@0xsodium/transactions": "^1.22.0",
-    "@0xsodium/utils": "^1.22.0",
-    "@0xsodium/wallet": "^1.22.0",
+    "@0xsodium/config": "^1.23.0",
+    "@0xsodium/network": "^1.23.0",
+    "@0xsodium/provider": "^1.23.0",
+    "@0xsodium/transactions": "^1.23.0",
+    "@0xsodium/utils": "^1.23.0",
+    "@0xsodium/wallet": "^1.23.0",
     "@0xsodium/wallet-contracts": "^0.0.8-beta",
     "@ethersproject/shims": "^5.7.0",
     "@eva-design/eva": "^2.1.1",
