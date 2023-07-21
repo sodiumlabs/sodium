@@ -43,15 +43,14 @@ export default function MButton(props: PressableProps & { theme?: typeof MButtom
           <MLoading />
         ) : (
           <MHStack style={{ justifyContent: 'center', alignItems: 'center' }} >
-            <MVStack style={{ marginRight: 6, justifyContent: 'center', alignItems: 'center' }}>
-              {
-                imageIcon
-              }
-              {/* {
-                imageIcon === undefined && <BtnTipSvg />
-              } */}
+            {
+              imageIcon != null && <MVStack style={{ marginRight: 6, justifyContent: 'center', alignItems: 'center' }}>
+                {
+                  imageIcon
+                }
+              </MVStack>
+            }
 
-            </MVStack>
             {
               props.children as React.ReactNode
             }

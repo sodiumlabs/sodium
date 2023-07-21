@@ -42,7 +42,7 @@ export function LoginScreen() {
           <MVStack stretchW stretchH style={[styles.container, { minHeight: dimension[1] }, topCenterStyle]}  >
             {/* <MText>Sign into web3</MText> */}
             <MImage source={IconLogo} w={60} h={60} style={{ marginBottom: 10 }} />
-            <ScreenTitle title="Sign into" />
+            <ScreenTitle title="Sign in" />
             <MVStack stretchW style={{ maxWidth: 300, marginTop: 30 }} >
               <GoogleOAuthProvider clientId={webClientId}>
                 <GoogleLoginButton></GoogleLoginButton>
@@ -118,7 +118,7 @@ function ExternalEOALoginButton() {
         // const signAddress = ethers.utils.recoverAddress(ethers.utils.toUtf8Bytes("Welcome to sodium"), sig);
         // const walletAddress = result[1];
         // if (signAddress.toLocaleLowerCase() != walletAddress.toLocaleLowerCase()) {
-          // throw new Error("EOA wallet only");
+        // throw new Error("EOA wallet only");
         // }
         // return;
       }).then((result) => {
