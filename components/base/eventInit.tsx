@@ -32,7 +32,7 @@ export const EventInit = () => {
     window.addEventListener('message', messageLisenter);
 
     return () => window.removeEventListener('message', messageLisenter);
-  }, []);
+  }, [signTranscationModal, signMessageModal, comModal]);
 
 
   return <></>
