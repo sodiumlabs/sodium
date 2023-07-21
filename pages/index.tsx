@@ -46,6 +46,7 @@ import { updateCurScreenTab } from '../lib/data/screen';
 import { Screens } from '../lib/define';
 import { useListenerDimensionSize } from '../lib/hook/dimension';
 import { asyncSession, initHandler, proxyChannel } from '../lib/provider';
+import { EventInit } from '../components/base/eventInit';
 
 const queryClient = new QueryClient(
   {
@@ -129,6 +130,7 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
+      <EventInit />
       <BaseUIInit />
       <ScaleInit />
       <StatusBar style="dark" backgroundColor='#F7F7F7' />
@@ -138,27 +140,6 @@ export default function App() {
             <ModalInit />
             <NavigationInit />
             <BarUI />
-
-            {/* screenOptions={{ headerShown: Platform.OS != 'web' }} */}
-            {/* <Stack.Navigator screenOptions={{ headerShown: false, animation: 'none' }}  >
-              <Stack.Screen name={Screens.Opening} component={OpeningScreen} />
-              <Stack.Screen name={Screens.Login} component={LoginScreen} />
-              <Stack.Screen name={Screens.Wallet} component={WalletScreen} />
-              <Stack.Screen name={Screens.Setting} component={SettingScreen} />
-              <Stack.Screen name={Screens.Profile} component={ProfileScreen} />
-              <Stack.Screen name={Screens.Session} component={SessionScreen} />
-              <Stack.Screen name={Screens.History} component={HistoryScreen} />
-              <Stack.Screen name={Screens.Coin} component={CoinScreen} />
-              <Stack.Screen name={Screens.Apps} component={AppsScreen} />
-              <Stack.Screen name={Screens.Send} component={SendScreen} />
-              <Stack.Screen name={Screens.Deposit} component={DepositScreen} />
-              <Stack.Screen name={Screens.Security} component={SecurityScreen} />
-              <Stack.Screen name={Screens.SetupAuth} component={SetupAuthScreen} />
-              <Stack.Screen name={Screens.RecoveryCode} component={RecoveryCodeScreen} />
-              <Stack.Screen name={Screens.Allowance} component={AllowanceScreen} />
-              <Stack.Screen name={Screens.AuthCallbackScreen} component={AuthCallbackScreen} />
-            </Stack.Navigator> */}
-
             <Tab.Navigator screenOptions={{ headerShown: false, tabBarShowLabel: false, tabBarStyle: { display: 'none' } }}   >
               <Tab.Screen name="Home" >
                 {() => (
