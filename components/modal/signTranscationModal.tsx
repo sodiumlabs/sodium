@@ -1,6 +1,6 @@
 import { BigNumber } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { ERC20Approve, encodeERC20Approve } from '../../abi/erc20';
 import { formatPrice2Wei, hashcodeObj } from '../../lib/common/common';
 import { formatTimeYMDHMS } from '../../lib/common/time';
@@ -247,7 +247,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
                     )
                   } else {
                     return (
-                      <></>
+                      <View key={key}></View>
                     )
                   }
                 })
