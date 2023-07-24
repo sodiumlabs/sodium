@@ -123,7 +123,7 @@ export function ABITransaction(props: Props) {
             )
         } else {
             return (
-                <MText style={{ color: eColor.Red }}>No Opensource</MText>
+                <MText style={{ color: eColor.Red }}>Not Opensource</MText>
             )
         }
     }, [opensource]);
