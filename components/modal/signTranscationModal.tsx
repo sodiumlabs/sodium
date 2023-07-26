@@ -256,7 +256,7 @@ export const SignTranscationModal = (props: { hideModal: () => void, modalParam:
 
             {/* ---------------------Transcation Data------------------------- */}
             {
-              uiDecodeDatas && (
+              uiDecodeDatas && ( // key={hashcodeObj(uiDecodeDatas)}
                 <TranscationDataItem uiDecodeDatas={uiDecodeDatas} />
               )
             }

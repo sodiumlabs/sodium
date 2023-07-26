@@ -1,16 +1,17 @@
 import { ViewProps } from "react-native"
 import { hashcodeObj } from "../../../lib/common"
+import { IDecodeTranscation } from "../../../lib/define"
 import { eColor } from "../../../lib/globalStyles"
 import { BaseFoldFrame } from "../../base/baseFoldFrame"
 import MText from "../../baseUI/mText"
 import MVStack from "../../baseUI/mVStack"
-import { IDecodeTranscation } from "../../../lib/define"
 
 
 export function TranscationDataItem(props: ViewProps & { uiDecodeDatas: IDecodeTranscation[] }) {
   const { uiDecodeDatas } = props;
   return (
     <BaseFoldFrame
+      maxHeight={300}
       header={`Transcation Data(${uiDecodeDatas.length})`}
       style={{ marginTop: 20 }}>
       {

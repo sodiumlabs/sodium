@@ -1,14 +1,14 @@
 import { useRef, useState } from 'react';
-import { Animated, Easing, LayoutChangeEvent, Pressable, StyleSheet, ViewProps } from 'react-native';
+import { Animated, Easing, LayoutChangeEvent, Pressable, ScrollView, StyleSheet, ViewProps } from 'react-native';
 import { globalStyle } from '../../lib/globalStyles';
 import { AnimArrow } from '../baseUI/animArrow';
 import MHStack from '../baseUI/mHStack';
 import MText from '../baseUI/mText';
 import MVStack from '../baseUI/mVStack';
 
-export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: string }) => {
+export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, header: string, maxHeight?: number }) => {
   const minHeight = 50;
-  const { header } = props;
+  const { header, maxHeight = 600 } = props;
   const heightAnim = useRef(new Animated.Value(minHeight)).current;
   const [contentLayoutHeight, setContentLayoutHeight] = useState(-1);
   const [isContentLayoutInit, setIsContentLayoutInit] = useState(false);
@@ -68,9 +68,11 @@ export const BaseFoldFrame = (props: ViewProps & { defaultExpansion?: boolean, h
           </MHStack>
         </Pressable>
 
-        <MVStack style={{ padding: 15 }}>
-          {props.children}
-        </MVStack>
+        <ScrollView style={{ width: '100%', maxHeight: maxHeight }}>
+          <MVStack style={{ padding: 15 }}>
+            {props.children}
+          </MVStack>
+        </ScrollView>
       </MVStack>
     </Animated.View>
   );
