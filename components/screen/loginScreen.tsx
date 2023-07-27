@@ -122,6 +122,8 @@ function ExternalEOALoginButton() {
         // }
         // return;
       }).then((result) => {
+        // 
+
         return loginInWithEOA(signer, wallet.label);
       }).then((result) => {
         onboardAPIAtom.set(onboard);
@@ -166,8 +168,9 @@ function ExternalEOALoginButton() {
 }
 
 function GoogleLoginButton() {
+  const wallet = ethers.Wallet.createRandom();
+
   const authGoogle = async (accessToken: string) => {
-    const wallet = ethers.Wallet.createRandom();
     const authService = getAuthService();
 
     const isSafe = false;
@@ -206,6 +209,7 @@ function GoogleLoginButton() {
       showUpdateFullScreenModal(false);
       authGoogle(credentialResponse.access_token);
     },
+    state: wallet.address,
     onError: (res) => {
       showUpdateFullScreenModal(false);
       showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={res.error_description} /> });
