@@ -80,7 +80,7 @@ export const asyncSession = async () => {
                 authProof: sodiumNetworkResponse.authSessionProof
             }
         );
-        return signIn(account, session, true);
+        return signIn(account, session, false);
     }
 }
 
