@@ -1,6 +1,15 @@
 import { useStore } from "@nanostores/react";
 import { useEffect } from "react";
-import { comModalAtom, showUpdateComModal, showUpdateSignMessageModal, showUpdateSignTranscationModal, showUpdateTranscationDetailModal, signMessageModalAtom, signTranscationModalAtom } from "../../lib/data";
+import { 
+  comModalAtom, 
+  showUpdateComModal, 
+  showUpdateSignMessageModal, 
+  showUpdateSignTranscationModal, 
+  showUpdateConnectModal,
+  connectModalAtom,
+  signMessageModalAtom, 
+  signTranscationModalAtom,
+} from "../../lib/data";
 
 export const EventInit = () => {
 
@@ -11,15 +20,13 @@ export const EventInit = () => {
   useEffect(() => {
     const messageLisenter = (event) => {
       const messageFromParent = event.data;
-      console.log('Message from parent wallet:', messageFromParent);
-
       try {
         const data = JSON.parse(messageFromParent);
         if (data.type == "close") {
-          console.log('Message from parent wallet: close');
           showUpdateSignTranscationModal(false, null, signTranscationModal.uniqueKey, true);
           showUpdateSignMessageModal(false, null, signMessageModal.uniqueKey, true);
           showUpdateComModal(false, null, comModal.uniqueKey, true);
+          showUpdateConnectModal(false, null, comModal.uniqueKey, true);
         }
       } catch {
 
@@ -32,7 +39,7 @@ export const EventInit = () => {
     window.addEventListener('message', messageLisenter);
 
     return () => window.removeEventListener('message', messageLisenter);
-  }, [signTranscationModal, signMessageModal, comModal]);
+  }, [signTranscationModal, signMessageModal, comModal, connectModalAtom]);
 
 
   return <></>
