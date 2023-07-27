@@ -4,10 +4,10 @@ import { createContext } from '@0xsodium/network';
 import { calcAccountAddress } from '@0xsodium/config';
 import { WalletPrompter } from './prompter';
 import { loadSession } from '../common/asyncStorage';
-import { walletAtom, walletHandlerAtom, onboardAPIAtom } from './atom';
+import { walletAtom, walletHandlerAtom } from './atom';
 import { Session } from './types';
 import { testNetworks, mainNetworks, getCurrentChainId, currentChainIdAtom, networks } from '../network';
-import { AuthSessionResponse, getAuthService } from '../auth';
+import { AuthSessionResponse } from '../auth';
 import { Signer as AbstractSigner, Wallet, ethers } from 'ethers';
 
 const prompter: WalletUserPrompter = new WalletPrompter();
@@ -137,7 +137,8 @@ export const initWalletWithSession = async (
 
 export const initWalletWithEOA = async (
     sessionKeyOwner: AbstractSigner,
-    label: string
+    label: string,
+    autoConnect: boolean,
 ) => {
     const ownerAddress = await sessionKeyOwner.getAddress();
     const session: Session = {
@@ -165,5 +166,5 @@ export const initWalletWithEOA = async (
         options,
         session.sessionKeyOwner
     );
-    return signIn(account, session, true);
+    return signIn(account, session, autoConnect);
 }

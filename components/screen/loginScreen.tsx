@@ -104,6 +104,7 @@ const onboard = Onboard({
 });
 function ExternalEOALoginButton() {
   const [wallet, setWallet] = React.useState<WalletState | null>(null);
+  const [autoConnect, setAutoConnect] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     if (wallet != null) {
@@ -111,31 +112,18 @@ function ExternalEOALoginButton() {
       const signer = ethersProvider.getSigner();
 
       Promise.all([
-        // signer.signMessage("Welcome to sodium"),
         signer.getAddress(),
       ]).then((result) => {
-        // const sig = result[0];
-        // const signAddress = ethers.utils.recoverAddress(ethers.utils.toUtf8Bytes("Welcome to sodium"), sig);
-        // const walletAddress = result[1];
-        // if (signAddress.toLocaleLowerCase() != walletAddress.toLocaleLowerCase()) {
-        // throw new Error("EOA wallet only");
-        // }
-        // return;
       }).then((result) => {
-        // 
-
-        return loginInWithEOA(signer, wallet.label);
+        return loginInWithEOA(signer, wallet.label, autoConnect);
       }).then((result) => {
         onboardAPIAtom.set(onboard);
       }).catch(error => {
         console.error(error);
         showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={error.message} /> });
       })
-
-      // loginInWithEOA(signer, wallet.label);
-      // onboardAPIAtom.set(onboard);
     }
-  }, [wallet]);
+  }, [wallet, autoConnect]);
 
   React.useEffect(() => {
     const wallets = onboard.state.select("wallets");
@@ -155,6 +143,7 @@ function ExternalEOALoginButton() {
   })
 
   const auth = async () => {
+    setAutoConnect(true);
     return onboard.connectWallet();
   }
 

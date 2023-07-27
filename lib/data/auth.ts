@@ -103,10 +103,12 @@ export const loginIn = async (
 
 export const loginInWithEOA = async (
   owner: ETHSigner,
-  label: string
+  label: string,
+  autoConnect: boolean
 ) => {
   return initWalletWithEOA(
     owner,
-    label
+    label,
+    autoConnect
   );
 }
