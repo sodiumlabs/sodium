@@ -16,52 +16,52 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/abi@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/abi@npm:1.32.0"
-  checksum: aee7ed6e47c680c8a05b8d817fb16f5a17ec7d0c633380004c6a13750990ede1b74a5c68610efc652149c7906bf85b51dbf3fb0f918891c7541a2e9c537e539d
+"@0xsodium/abi@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/abi@npm:1.33.0"
+  checksum: 36b9aab709c1cb67c56fcc60f4727034927e8a855048aeffa6edf6effbaf5c581400fab2419c015673796c7e66b404d2a4437d3aa8b9a0acb18c909e02abef95
   languageName: node
   linkType: hard
 
-"@0xsodium/auth@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/auth@npm:1.32.0"
+"@0xsodium/auth@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/auth@npm:1.33.0"
   dependencies:
     "@0xsequence/ethauth": ^0.8.1
-    "@0xsodium/abi": ^1.32.0
-    "@0xsodium/config": ^1.32.0
-    "@0xsodium/network": ^1.32.0
-    "@0xsodium/utils": ^1.32.0
-    "@0xsodium/wallet": ^1.32.0
+    "@0xsodium/abi": ^1.33.0
+    "@0xsodium/config": ^1.33.0
+    "@0xsodium/network": ^1.33.0
+    "@0xsodium/utils": ^1.33.0
+    "@0xsodium/wallet": ^1.33.0
     ethers: ^5.7.0
-  checksum: 73e0c8ad9192240b6a04d599f337eeabb4fec6a4eedd1351ad6c2fe8379b9be5235bc153366699a6e5128430dd3e6ce9652aacb74d5a0bbce2750d697957aad5
+  checksum: 833e44ca182e60da1b7261fa932a481d42d401cfc41e61e094adedd2a78c002cbc4381893a2b86669cad5f62c8eeec86b67cd24aa048339e715952abb49c31e0
   languageName: node
   linkType: hard
 
-"@0xsodium/config@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/config@npm:1.32.0"
+"@0xsodium/config@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/config@npm:1.33.0"
   dependencies:
-    "@0xsodium/abi": ^1.32.0
-    "@0xsodium/multicall": ^1.32.0
-    "@0xsodium/network": ^1.32.0
-    "@0xsodium/utils": ^1.32.0
+    "@0xsodium/abi": ^1.33.0
+    "@0xsodium/multicall": ^1.33.0
+    "@0xsodium/network": ^1.33.0
+    "@0xsodium/utils": ^1.33.0
     "@0xsodium/wallet-contracts": 0.0.8-beta
     ethers: ^5.7.0
-  checksum: 1011d6d5c25b8ddcb7a62d1b581c2ca7d89490ca4f98e3c6595bdd5daaa43ff510593b3105794f78ae5901aef3407bf039dec28e65399436a0d140c0288c368e
+  checksum: 2c57b4a7564d71edba76fed4dc2d8ff5a20d1b8b03035d954a2b95bef6a7c6e313975e9ac078184d05d625c6a2e57b46d9d9c46378aeecca3399157e29b95821
   languageName: node
   linkType: hard
 
-"@0xsodium/graphquery@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/graphquery@npm:1.32.0"
+"@0xsodium/graphquery@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/graphquery@npm:1.33.0"
   dependencies:
     "@0xsodium/wallet-contracts": 0.0.8-beta
     "@ethersproject/abstract-signer": ^5.7.0
     ethers: ^5.7.0
     graphql: 16.6.0
     graphql-request: ^5.1.0
-  checksum: cf212992f7760236507dc7d4161910413969359fae24426db1f0fc3bb88db4da7ca990f1f35f1af7facdfc63ff3ae8d99640fc88a6f2a969032f584d058067cc
+  checksum: a11682813dd90a3af17bd16aeae088e3e5cec62824574ad2bc713a8954ba3a0c6def012388b7bab166d5d36b722894b89525d39caf24c868eb3844c09dbb1f06
   languageName: node
   linkType: hard
 
@@ -72,42 +72,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/multicall@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/multicall@npm:1.32.0"
+"@0xsodium/multicall@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/multicall@npm:1.33.0"
   dependencies:
-    "@0xsodium/abi": ^1.32.0
-    "@0xsodium/network": ^1.32.0
-    "@0xsodium/utils": ^1.32.0
+    "@0xsodium/abi": ^1.33.0
+    "@0xsodium/network": ^1.33.0
+    "@0xsodium/utils": ^1.33.0
     "@ethersproject/providers": ^5.7.0
     ethers: ^5.7.0
-  checksum: 86bccaf7d4b37e118666a88677b4f22a2a03d613df16e3f9d081348a552edf5a7245c750add5a0470e8a042ae190c2676de2f55e9d7e37233d3da710f6cc94f5
+  checksum: 3eb2adc75a4718253ea3da4ccc18e9083523a380f3a6f702fca0d1babcb9a3b22f68d2c3b39bcb0beab6698453da26979566938a0d2c8f908e49fbf3aee192dd
   languageName: node
   linkType: hard
 
-"@0xsodium/network@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/network@npm:1.32.0"
+"@0xsodium/network@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/network@npm:1.33.0"
   dependencies:
-    "@0xsodium/utils": ^1.32.0
+    "@0xsodium/utils": ^1.33.0
     "@ethersproject/providers": ^5.7.0
     ethers: ^5.7.0
-  checksum: 1486f3dd02ba98aa5a0faa1899253892f78566a56dbab7f3743f9dc4142d209b43004be0bc8d0db135a71890593e1878dec64da49c621ad1beaeb22e13910749
+  checksum: d9282956846eabe1afa15169f4027b946b8f591156a261107884ff1d09d333db41e5de6e4b80552e8be4a86fc6ff53c432dc059b704576c57795afe0e4d9383e
   languageName: node
   linkType: hard
 
-"@0xsodium/provider@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/provider@npm:1.32.0"
+"@0xsodium/provider@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/provider@npm:1.33.0"
   dependencies:
-    "@0xsodium/abi": ^1.32.0
-    "@0xsodium/auth": ^1.32.0
-    "@0xsodium/config": ^1.32.0
-    "@0xsodium/graphquery": ^1.32.0
-    "@0xsodium/network": ^1.32.0
-    "@0xsodium/transactions": ^1.32.0
-    "@0xsodium/utils": ^1.32.0
-    "@0xsodium/wallet": ^1.32.0
+    "@0xsodium/abi": ^1.33.0
+    "@0xsodium/auth": ^1.33.0
+    "@0xsodium/config": ^1.33.0
+    "@0xsodium/graphquery": ^1.33.0
+    "@0xsodium/network": ^1.33.0
+    "@0xsodium/transactions": ^1.33.0
+    "@0xsodium/utils": ^1.33.0
+    "@0xsodium/wallet": ^1.33.0
     "@0xsodium/wallet-contracts": 0.0.8-beta
     "@ethersproject/abstract-signer": ^5.7.0
     "@ethersproject/hash": ^5.7.0
@@ -117,27 +117,27 @@ __metadata:
     eventemitter2: ^6.4.5
     moize: ^6.1.5
     webextension-polyfill-ts: ^0.26.0
-  checksum: ad0110a6cc33b2c1685f2d36f6611c04caba7cb0fb63ffadb0f3fbb4f3d960568b2e90563799c7cd5cdad4ab6f8c495e37fbf84a10b0fb73dd792f7e47929793
+  checksum: 9788f2a5f5c52b48f89716f5a552a6b277cd3e26ea6a01797478a80922cfbf6e11441c0b968933764cfb9f6ccbba5f6bdba709e9cc7c143eed209eef1c73db16
   languageName: node
   linkType: hard
 
-"@0xsodium/transactions@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/transactions@npm:1.32.0"
+"@0xsodium/transactions@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/transactions@npm:1.33.0"
   dependencies:
-    "@0xsodium/abi": ^1.32.0
-    "@0xsodium/network": ^1.32.0
-    "@0xsodium/utils": ^1.32.0
+    "@0xsodium/abi": ^1.33.0
+    "@0xsodium/network": ^1.33.0
+    "@0xsodium/utils": ^1.33.0
     "@0xsodium/wallet-contracts": 0.0.8-beta
     "@ethersproject/abi": ^5.7.0
     ethers: ^5.7.0
-  checksum: 8d48100c1f005f3ac0e3add2a3ab4fa65e182689f12f61cd8660734b0227adb1c894f5ee81e1f6c6d85f4da58183a9ae57698a180afcf8388396cee663cf8400
+  checksum: fa479a527202b5aa6c999836e22fafcb1c5290208f2519b9cb6a7fa402b8859190825c6b3bcd6a0ac96bece9d1f84a8418f648de7624ac8c58fba11a907911d4
   languageName: node
   linkType: hard
 
-"@0xsodium/utils@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/utils@npm:1.32.0"
+"@0xsodium/utils@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/utils@npm:1.33.0"
   dependencies:
     "@0xsodium/wallet-contracts": 0.0.8-beta
     "@ethersproject/abstract-signer": ^5.7.0
@@ -145,7 +145,7 @@ __metadata:
     buffer: ^6.0.3
     ethers: ^5.7.0
     js-base64: ^3.7.2
-  checksum: 38d704bf3048eb310e7727295815646ab356c5334ad2f9740972013cd1cedfe3c920033c3eb29a666e0b7374b7ee3cf27eacf0a80d6fa47de46c3afb7091a42f
+  checksum: 66ddea441f34411f8d8b33b8e40dc58491735cc6684363a35b83c42d53db178a9e4b2960c50e44278a59e6bf6a7718a01f675987710c27dcaae0f74fe03b2f82
   languageName: node
   linkType: hard
 
@@ -158,16 +158,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@0xsodium/wallet@npm:^1.32.0":
-  version: 1.32.0
-  resolution: "@0xsodium/wallet@npm:1.32.0"
+"@0xsodium/wallet@npm:^1.33.0":
+  version: 1.33.0
+  resolution: "@0xsodium/wallet@npm:1.33.0"
   dependencies:
-    "@0xsodium/abi": ^1.32.0
-    "@0xsodium/config": ^1.32.0
+    "@0xsodium/abi": ^1.33.0
+    "@0xsodium/config": ^1.33.0
     "@0xsodium/guard": ^1.17.0
-    "@0xsodium/network": ^1.32.0
-    "@0xsodium/transactions": ^1.32.0
-    "@0xsodium/utils": ^1.32.0
+    "@0xsodium/network": ^1.33.0
+    "@0xsodium/transactions": ^1.33.0
+    "@0xsodium/utils": ^1.33.0
     "@0xsodium/wallet-contracts": 0.0.8-beta
     "@ethersproject/abi": ^5.7.0
     "@ethersproject/properties": ^5.7.0
@@ -175,7 +175,7 @@ __metadata:
     ethers: ^5.7.0
     fetch-ponyfill: ^7.1.0
     userop: ^0.2.0
-  checksum: 94fb92672d2d4d4c8689462d81d117d787b84b061811d1bf79482c5c2c558282cdf4c85f710fdec76e0288bc2f78c9d7372bf6dba176e63591fd7d0149e4be30
+  checksum: cdfaa0e3b9baa0e81e0e101fd5b2e4fd59a8fbb06f4fdd3ade1c8f1efcb19510b86aeb2983c6788827d9c2a30056e53660306163e3da11d379b682098f469a25
   languageName: node
   linkType: hard
 
@@ -20704,12 +20704,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "sodium@workspace:."
   dependencies:
-    "@0xsodium/config": ^1.32.0
-    "@0xsodium/network": ^1.32.0
-    "@0xsodium/provider": ^1.32.0
-    "@0xsodium/transactions": ^1.32.0
-    "@0xsodium/utils": ^1.32.0
-    "@0xsodium/wallet": ^1.32.0
+    "@0xsodium/config": ^1.33.0
+    "@0xsodium/network": ^1.33.0
+    "@0xsodium/provider": ^1.33.0
+    "@0xsodium/transactions": ^1.33.0
+    "@0xsodium/utils": ^1.33.0
+    "@0xsodium/wallet": ^1.33.0
     "@0xsodium/wallet-contracts": ^0.0.8-beta
     "@babel/core": ^7.12.9
     "@babel/plugin-proposal-export-namespace-from": ^7.18.9
