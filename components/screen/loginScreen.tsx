@@ -203,6 +203,13 @@ function GoogleLoginButton() {
       showUpdateFullScreenModal(false);
       showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error={res.error_description} /> });
     },
+    onNonOAuthError: (res) => {
+      showUpdateFullScreenModal(false);
+      if (res.type == "popup_closed") {
+        return;
+      }
+      showUpdateComModal(true, { 'height': 400, 'reactNode': <FailModalItem error="open auth window failed" /> });
+    },
   });
 
   const googleOAuth2Login = async () => {

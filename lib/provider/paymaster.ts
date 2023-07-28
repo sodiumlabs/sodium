@@ -120,7 +120,7 @@ export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: Auth
                 ...userOp,
                 callData: "0x00000000"
             }, userOp.sender, userOp.callData);
-        } catch(error) {
+        } catch (error) {
             if (error.errorName == "ExecutionResult") {
                 return error.errorArgs[4];
             }
@@ -190,12 +190,11 @@ export const getAllPaymasterAndData = async (txn: TransactionRequest, auth: Auth
     });
 
     for (let i = 0; i < stableCoinsPaymasterInfoPromises.length; i++) {
-        try {
-            paymasterInfos.push(await stableCoinsPaymasterInfoPromises[i]);
-        } catch (error) {
-            // console.warn(error);
-            continue;
-        }
+        await stableCoinsPaymasterInfoPromises[i].then((paymasterInfo) => {
+            paymasterInfos.push(paymasterInfo);
+        }).catch((error) => {
+            // ignore
+        });
     }
 
     return paymasterInfos;
